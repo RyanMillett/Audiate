@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="big_text_size">80sp</dimen>
+    <dimen name="medium_text_size">50sp</dimen>
+    <dimen name="small_text_size">30sp</dimen>
+    <dimen name="menu_button_width">100dp</dimen>
+    <dimen name="buttons_padding">10dp</dimen>
+    <dimen name="buttons_text_margin">20dp</dimen>
+    <dimen name="edit_text_width">600dp</dimen>
+    <dimen name="ear_training_buttons">250dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+</resources>

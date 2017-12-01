@@ -1,0 +1,67 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Audiate</string>
+    <string name="splash_screen_text">Audiate</string>
+
+    <!-- Log-In -->
+    <string name="log_in_button">Log In</string>
+    <string name="create_profile_button">Create Profile</string>
+
+    <!-- Create / Edit Profile -->
+    <string name="user_name_email">User Name or Email</string>
+    <string name="user_name">User Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="detect_vocal_range_button">Detect Vocal Range</string>
+
+
+    <!-- Main Menu -->
+    <string name="main_menu">Main Menu</string>
+    <string name="ear_training_button">Ear Training</string>
+    <string name="general_settings">General Settings</string>
+    <string name="sight_singing_button">Sight Singing</string>
+    <string name="sound_library_button">Sound Library</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="log_out_button">Log Out</string>
+
+
+    <!-- Ear Training -->
+    <string name="chord_quiz_button">Chord Quiz</string>
+    <string name="modality_quiz_button">Modality Quiz</string>
+    <string name="ear_training_settings">Ear Training Settings</string>
+    <string name="interval_quiz_button">Interval Quiz</string>
+    <string name="ear_training_menu">Ear Training Menu</string>
+    <string name="return_text">Return to Main Menu</string>
+    <string name="interval_directory">Interval List Directory</string>
+    <string name="chord_directory">Chord List Directory</string>
+    <string name="modality_directory">Modality List Directory</string>
+
+
+    <!-- Ear Training Quiz -->
+    <string name="question">Question %1$d of %2$d</string>
+    <string name="guess">Guess the %1$s</string>
+    <string name="incorrect_answer">Incorrect!</string>
+    <string name="results">%1$d guesses, %2$.01f%% correct</string>
+    <string name="guess_interval">Guess the Interval</string>
+    <string name="chord_type">Chords</string>
+    <string name="mode_type">Modes</string>
+
+
+    <!-- Ear Training Quiz Settings -->
+    <string name="intervals">Intervals</string>
+    <string name="intervals_description">How difficult would you like the interval quiz?</string>
+    <string name="pref_default">@string/intervals</string>
+    <string name="pref_key">pref_quiz_type</string>
+    <string name="quiz_type">Type of Quiz</string>
+    <string name="quiz_type_description">Choose interval, chord, or modal</string>
+    <string name="number_of_buttons">Number of Buttons</string>
+    <string name="number_of_buttons_description">2, 4, 6, or 8 guess buttons</string>
+    <string name="restarting_quiz">Quiz will restart with your new settings</string>
+    <string name="reset_quiz">Reset Quiz</string>
+    <string name="default_quiz_type">Interval</string>
+
+
+</resources>
