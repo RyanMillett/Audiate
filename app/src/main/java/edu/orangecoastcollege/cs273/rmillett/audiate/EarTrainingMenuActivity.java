@@ -16,7 +16,7 @@ public class EarTrainingMenuActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void selectionHandler(View view) {
+    public void earTrainingExerciseSelectionHandler(View view) {
         // TODO: this method
         // displays exercise options in a ListView based on selected button (intervals/chords/modeScales)
     }

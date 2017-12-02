@@ -9,29 +9,14 @@ import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    private DBHelper mDBHelper;
-    private List<ChordScale> allScalesList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        deleteDatabase(DBHelper.DATABASE_NAME);
-        mDBHelper = new DBHelper(this);
-        allScalesList = mDBHelper.importScalesFromSCL();
-
     }
 
-    public void earTraining(View view) {
-        // TODO: this method
-    }
-
-    public void sightSinging(View view) {
-        // TODO: this method
-    }
-
-    public void soundLibrary(View view) {
+    public void activitySelectionHandler(View view) {
         // TODO: this method
     }
 

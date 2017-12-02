@@ -9,7 +9,6 @@
     tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.MainMenuActivity"
     >
 
-
     <TextView
         android:id="@+id/mainMenuTitleTextView"
         android:layout_width="match_parent"
@@ -38,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="earTraining"/>
+            android:onClick="activitySelectionHandler"/>
 
         <Button
             android:id="@+id/sightSingingButton"
@@ -47,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="sightSinging"/>
+            android:onClick="activitySelectionHandler"
+            android:layout_marginBottom="50dp"/>
 
         <Button
             android:id="@+id/libraryButton"
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="soundLibrary"/>
+            android:onClick="activitySelectionHandler"/>
 
     </LinearLayout>
 
