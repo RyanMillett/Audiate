@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // TODO: figure out how to add chord members
     private static final String FIELD_CHORD_DESCRIPTION = "chord_description";
 
-    private static boolean isInteger(String str) {
+    private boolean isInteger(String str) {
         str = str.trim();
         if (str == null) {
             return false;
@@ -280,11 +280,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 // Description
                 line = br.readLine();
                 while (!isInteger(line)) {
-                    if (line.equalsIgnoreCase("!")) {
+                    if (line.contains("!")) {
                         line = br.readLine();
-                    }
-                    else if (line.startsWith("!") && line.length() > 1) {
-                        description += "\n" + line.replace("!","").trim();
                     }
                     else {
                         description = line;
