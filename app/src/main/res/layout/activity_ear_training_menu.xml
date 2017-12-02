@@ -6,88 +6,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.MainMenuActivity"
-    >
-
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.EarTrainingMenuActivity">
 
     <TextView
-        android:id="@+id/mainMenuTitleTextView"
+        android:id="@+id/ear_training_menu_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="25dp"
-        android:text="@string/main_menu"
+        android:text="@string/ear_training_exercise_selection"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
     <LinearLayout
-        android:id="@+id/activityButtonLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="3">
+
+    <LinearLayout
+        android:id="@+id/earTrainingButtonLinearLayout"
         android:paddingVertical="@dimen/buttons_padding"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_gravity="top"
+        android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/earTrainingButton"
-            android:layout_marginTop="150dp"
-            android:text="@string/ear_training_button"
+            android:id="@+id/intervalExerciseButton"
+            android:text="@string/interval_identification_exercises_button"
             android:textSize="@dimen/small_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="earTraining"/>
+            android:onClick="selectionHandler"/>
 
         <Button
-            android:id="@+id/sightSingingButton"
-            android:text="@string/sight_singing_button"
+            android:id="@+id/chordQualityExerciseButton"
+            android:text="@string/chord_quality_exercises_button"
             android:textSize="@dimen/small_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="sightSinging"/>
+            android:onClick="selectionHandler"/>
 
         <Button
-            android:id="@+id/libraryButton"
-            android:text="@string/sound_library_button"
+            android:id="@+id/scalesModesExerciseButton"
+            android:text="@string/modeScale_exercises_button"
             android:textSize="@dimen/small_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:onClick="soundLibrary"/>
+            android:onClick="selectionHandler"/>
+
+        <TextView
+            android:id="@+id/earTrainingSelectionDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/small_text_size"
+            android:hint="Selection description..."/>
 
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/earTrainingExercisesListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    </LinearLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:paddingVertical="@dimen/buttons_padding"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <Button
-            android:id="@+id/editProfileButton"
-            android:text="@string/edit_profile_button"
+            android:id="@+id/earTrainingStartActivityButton"
+            android:text="@string/start_exercise_button"
             android:textSize="@dimen/small_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="editProfile"/>
+            android:onClick="startActivity"/>
 
         <Button
-            android:id="@+id/logoutButton"
-            android:text="@string/log_out_button"
+            android:id="@+id/earTrainingHelpButton"
+            android:text="@string/exercise_help_button"
             android:textSize="@dimen/small_text_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="logOut"/>
-
+            android:onClick="help"/>
 
     </LinearLayout>
+
 
 
 

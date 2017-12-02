@@ -14,25 +14,23 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void earTraining(View view) {
-
+        // TODO: this method
     }
 
     public void sightSinging(View view) {
-
-
+        // TODO: this method
     }
 
     public void soundLibrary(View view) {
-
-
+        // TODO: this method
     }
 
     public void editProfile(View view) {
-
+        // TODO: this method
     }
 
     public void logOut(View view) {
-
+        // TODO: this method
     }
 
 }

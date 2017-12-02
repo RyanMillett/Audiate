@@ -6,6 +6,7 @@
     <!-- Log-In -->
     <string name="log_in_button">Log In</string>
     <string name="create_profile_button">Create Profile</string>
+    <string name="about_button">About "Audiate"</string>
 
     <!-- Create / Edit Profile -->
     <string name="user_name_email">User Name or Email</string>
@@ -17,28 +18,26 @@
     <string name="cancel_button">Cancel</string>
     <string name="detect_vocal_range_button">Detect Vocal Range</string>
 
-
     <!-- Main Menu -->
     <string name="main_menu">Main Menu</string>
     <string name="ear_training_button">Ear Training</string>
-    <string name="general_settings">General Settings</string>
     <string name="sight_singing_button">Sight Singing</string>
     <string name="sound_library_button">Sound Library</string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile_button">Edit Profile</string>
     <string name="log_out_button">Log Out</string>
+    <string name="general_settings">General Settings</string>
 
+    <!-- Exercise Selection Texts -->
+    <string name="return_to_main_button">Return to Main Menu</string>
+    <string name="start_exercise_button">Start Exercise</string>
+    <string name="exercise_help_button">Help</string>
 
-    <!-- Ear Training -->
-    <string name="chord_quiz_button">Chord Quiz</string>
-    <string name="modality_quiz_button">Modality Quiz</string>
-    <string name="ear_training_settings">Ear Training Settings</string>
-    <string name="interval_quiz_button">Interval Quiz</string>
-    <string name="ear_training_menu">Ear Training Menu</string>
-    <string name="return_text">Return to Main Menu</string>
-    <string name="interval_directory">Interval List Directory</string>
-    <string name="chord_directory">Chord List Directory</string>
-    <string name="modality_directory">Modality List Directory</string>
-
+    <!-- Ear Training Exercises Selection Menu -->
+    <string name="ear_training_exercise_selection">Ear Training Exercises</string>
+    <string name="interval_identification_exercises_button">Interval Identification</string>
+    <string name="chord_quality_exercises_button">Chord Quality</string>
+    <string name="modeScale_exercises_button">Scales and Modes</string>
+    <string name="ear_training_menu_button">Ear Training Menu</string>
 
     <!-- Ear Training Quiz -->
     <string name="question">Question %1$d of %2$d</string>
