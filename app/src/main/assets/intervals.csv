@@ -1,0 +1,580 @@
+﻿1,tonic,1/1,0.000
+2,schisma (3 to the 8th/2 to the 12th x 5/8),32805/32768,1.954
+3,unnamed,126/125,13.795
+4,unnamed,121/120,14.367
+5,unnamed,100/99,17.399
+6,unnamed,99/98,17.576
+7,syntonic comma,81/80,21.506
+8,Pythagorean comma (3 to the 12th/2 to the 19th),531441/524288,23.46
+9,65th harmonic,65/64,26.841
+10,unnamed,64/63,27.264
+11,unnamed,63/62,27.7
+12,unnamed,58/57,30.109
+13,unnamed,57/56,30.642
+14,Ptolemy's enharmonic,56/55,31.194
+15,unnamed,55/54,31.767
+16,unnamed,52/51,33.617
+17,unnamed,51/50,34.283
+18,unnamed,50/49,34.976
+19,unnamed,49/48,35.697
+20,inferior quarter-tone (Ptolemy),46/45,38.051
+21,unnamed,45/44,38.906
+22,diminished second (16/15 x 24/25),128/125,41.059
+23,enharmonic diesis (Avicenna),525/512,43.408
+24,unnamed,40/39,43.831
+25,superior quarter-tone (Eratosthenes),39/38,44.97
+26,unnamed,77/75,45.561
+27,superior quarter-tone (Archytas),36/35,48.77
+28,unnamed,250/243,49.166
+29,E.T. 1/4-tone approximation,35/34,50.184
+30,unnamed,34/33,51.682
+31,33rd harmonic,33/32,53.273
+32,inferior quarter-tone (Didymus),32/31,54.964
+33,unnamed,125/121,56.305
+34,superior quarter-tone (Didymus),31/30,56.767
+35,unnamed,30/29,58.692
+36,unnamed,29/28,60.751
+37,unnamed,57/55,61.836
+38,inferior quarter-tone (Archytas),28/27,62.961
+39,unnamed,80/77,66.17
+40,unnamed,27/26,65.337
+41,1/3-tone (Avicenna),26/25,67.9
+42,unnamed,51/49,69.259
+43,unnamed,126/121,70.1
+44,minor 5-limit half-step,25/24,70.672
+45,unnamed,24/23,73.681
+46,unnamed,117/112,75.612
+47,unnamed,23/22,76.956
+48,67th harmonic,67/64,79.307
+49,"hard 1/2-step (Ptolemy, Avicenna, Safiud)",22/21,80.537
+50,unnamed,21/20,84.467
+51,unnamed,81/77,87.676
+52,unnamed,20/19,88.801
+53,Pythagorean half-step,256/243,90.225
+54,unnamed,58/55,91.946
+55,limma ascendant,135/128,92.179
+56,unnamed,96/91,92.601
+57,unnamed,19/18,93.603
+58,unnamed,55/52,97.104
+59,unnamed,128/121,97.364
+60,E.T. half-step approximation,18/17,98.955
+
+62,ET half-step approximation,89/84,100.099
+63,unnamed,35/33,101.867
+64,unnamed,52/49,102.876
+65,unnamed,86/81,103.698
+66,overtone half-step,17/16,104.955
+67,unnamed,33/31,108.237
+68,unnamed,49/46,109.377
+69,major 5-limit half-step,16/15,111.731
+70,unnamed,31/29,115.458
+71,unnamed,77/72,116.234
+72,Cowell just half-step,15/14,119.443
+73,unnamed,29/27,123.712
+74,unnamed,14/13,128.298
+75,69th harmonic,69/64,130.229
+76,unnamed,55/51,130.721
+77,alternate Renaissance half-step,27/25,133.238
+78,unnamed,121/112,133.81
+79,3/4-tone (Avicenna),13/12,138.573
+80,unnamed,64/59,140.828
+81,unnamed,38/35,142.373
+82,unnamed,63/58,143.159
+83,unnamed,88/81,143.498
+84,unnamed,25/23,144.353
+85,unnamed,62/57,145.568
+86,unnamed,135/124,147.143
+87,unnamed,49/45,147.428
+88,"undecimal ""median"" 1/2-step",12/11,150.637
+89,unnamed,59/54,153.307
+90,35th harmonic,35/32,155.14
+91,unnamed,23/21,157.493
+92,unnamed,57/52,158.94
+93,unnamed,34/31,159.92
+94,unnamed,800/729,160.897
+95,unnamed,56/51,161.915
+96,unnamed,10/11,165.004
+97,unnamed,54/49,168.213
+98,unnamed,32/29,170.423
+99,unnamed,21/19,173.268
+100,unnamed,31/28,176.21
+101,unnamed,567/512,176.646
+102,unnamed,51/46,178.636
+103,71st harmonic,71/64,179.697
+104,minor whole-tone,10/9,182.404
+105,unnamed,49/44,186.334
+106,unnamed,39/35,187.343
+107,unnamed,29/26,189.05
+108,unnamed,125/112,190.115
+109,unnamed,48/43,190.437
+110,unnamed,19/17,192.558
+111,unnamed,160/143,194.468
+112,unnamed,28/25,196.198
+113,unnamed,121/108,196.771
+114,unnamed,55/49,199.98
+
+116,unnamed,64/57,200.532
+117,major whole-tone,9/8,203.91
+118,unnamed,62/55,207.404
+119,unnamed,44/39,208.835
+120,unnamed,35/31,210.104
+121,unnamed,26/23,212.253
+122,unnamed,112/99,213.598
+123,unnamed,17/15,216.687
+124,unnamed,25/22,221.309
+125,unnamed,58/51,222.667
+126,unnamed,256/225,223.463
+127,unnamed,33/29,223.696
+128,unnamed,729/640,225.416
+129,unnamed,57/50,226.841
+130,73rd harmonic,73/64,227.789
+131,septimal whole-tone,8/7,231.174
+132,unnamed,63/55,235.104
+133,unnamed,55/48,235.677
+134,unnamed,39/34,237.527
+135,unnamed,225/196,238.886
+136,unnamed,31/27,239.171
+137,unnamed,147/128,239.607
+138,unnamed,169/147,241.449
+139,unnamed,23/20,241.961
+140,unnamed,2187/1900,243.545
+141,unnamed,38/33,244.24
+142,diminished third (6/5 x 24/25),144/125,244.969
+143,unnamed,121/105,245.541
+144,unnamed,15/13,247.741
+145,unnamed,52/45,250.304
+146,37th harmonic,37/32,251.344
+147,unnamed,81/70,252.68
+148,unnamed,125/108,253.076
+149,unnamed,22/19,253.805
+150,unnamed,51/44,255.592
+151,consonant interval (Avicenna),196/169,256.596
+152,unnamed,29/25,256.95
+153,unnamed,36/31,258.874
+154,unnamed,93/80,260.677
+155,unnamed,57/49,261.816
+156,unnamed,64/55,262.368
+157,septimal minor third,7/6,266.871
+158,unnamed,90/77,270.08
+159,augmented second (9/8 x 25/24),75/64,274.582
+160,unnamed,34/29,275.378
+161,unnamed,88/75,276.736
+162,unnamed,27/23,277.591
+163,unnamed,20/17,281.358
+164,unnamed,33/28,284.447
+165,unnamed,46/39,285.792
+166,unnamed,13/11,289.21
+167,unnamed,58/49,291.925
+168,unnamed,45/38,292.711
+169,Pythagorean minor third,32/27,294.135
+170,overtone minor third,19/16,297.513
+
+172,unnamed,25/21,301.847
+173,unnamed,31/26,304.508
+174,unnamed,105/88,305.777
+175,unnamed,55/46,309.357
+176,5-limit minor third,6/5,315.641
+177,77th harmonic,77/64,320.144
+178,unnamed,35/29,325.562
+179,unnamed,29/24,327.622
+180,unnamed,75/62,329.547
+181,unnamed,98/81,329.832
+182,unnamed,121/100,330.008
+183,unnamed,23/19,330.761
+184,unnamed,63/52,332.208
+185,unnamed,40/33,333.041
+186,unnamed,17/14,336.13
+187,unnamed,243/200,337.148
+188,unnamed,62/51,338.125
+189,unnamed,28/23,340.552
+190,39th harmonic,39/32,342.483
+191,unnamed,128/105,342.905
+192,unnamed,8000/6561,343.301
+193,"undecimal ""median"" third",11/9,347.408
+194,unnamed,60/49,350.617
+195,unnamed,49/40,351.338
+196,unnamed,38/31,352.477
+197,unnamed,27/22,354.547
+198,unnamed,16/13,359.472
+199,79th harmonic,79/64,364.537
+200,unnamed,100/81,364.807
+201,unnamed,121/98,364.984
+202,unnamed,21/17,365.825
+203,unnamed,99/80,368.914
+204,unnamed,26/21,369.747
+205,unnamed,57/46,371.194
+206,unnamed,31/25,372.408
+207,unnamed,36/29,374.333
+208,unnamed,56/45,378.602
+209,unnamed,96/77,381.811
+210,"Pythagorean ""schismatic"" third",8192/6561,384.36
+211,5-limit major third,5/4,386.314
+212,unnamed,64/51,393.09
+213,unnamed,49/39,395.169
+214,unnamed,44/35,396.178
+215,unnamed,39/31,397.447
+216,unnamed,34/27,399.09
+
+218,unnamed,63/50,400.108
+219,unnamed,121/96,400.681
+220,unnamed,29/23,401.303
+221,unnamed,125/99,403.713
+222,unnamed,24/19,404.442
+223,unnamed,512/405,405.866
+224,unnamed,62/49,407.384
+225,Pythagorean major third,81/64,407.82
+226,unnamed,19/15,409.244
+227,unnamed,33/26,412.745
+228,unnamed,80/63,413.578
+229,unnamed,14/11,417.508
+230,unnamed,51/40,420.597
+231,unnamed,125/98,421.289
+232,unnamed,23/18,424.364
+233,diminished fourth,32/25,427.373
+234,41st harmonic,41/32,429.062
+235,unnamed,50/39,430.145
+236,unnamed,77/60,431.875
+237,septimal major third,9/7,435.084
+238,unnamed,58/45,439.353
+239,unnamed,49/38,440.139
+240,unnamed,40/31,441.278
+241,unnamed,31/24,443.081
+242,unnamed,1323/1024,443.517
+243,unnamed,128/99,444.772
+244,unnamed,22/17,446.363
+245,unnamed,57/44,448.15
+246,unnamed,162/125,448.879
+247,unnamed,35/27,449.275
+248,83rd harmonic,83/64,450.047
+249,unnamed,100/77,452.484
+250,unnamed,13/10,454.214
+251,augmented third (5/4 x 25/24),125/96,456.986
+252,unnamed,30/23,459.994
+253,unnamed,64/49,462.348
+254,unnamed,98/75,463.069
+255,unnamed,17/13,464.428
+256,unnamed,72/55,466.278
+257,unnamed,55/42,466.851
+258,unnamed,38/29,467.936
+259,septimal fourth,21/16,470.781
+260,unnamed,46/35,473.135
+261,unnamed,25/19,475.114
+262,unnamed,320/243,476.539
+263,unnamed,29/22,478.259
+264,unnamed,675/512,478.492
+265,unnamed,33/25,480.646
+266,unnamed,45/34,485.286
+267,85th harmonic,85/64,491.269
+268,perfect fourth,4/3,498.045
+
+270,unnamed,75/56,505.757
+271,unnamed,51/38,509.397
+272,43rd harmonic,43/32,511.518
+273,unnamed,121/90,512.412
+274,unnamed,39/29,512.905
+275,unnamed,35/26,514.612
+276,unnamed,66/49,515.621
+277,unnamed,31/23,516.761
+278,unnamed,27/20,519.551
+279,unnamed,23/17,523.319
+280,unnamed,42/31,525.745
+281,unnamed,19/14,528.687
+282,unnamed,110/81,529.812
+283,87th harmonic,87/64,531.532
+284,unnamed,34/25,532.328
+285,unnamed,49/36,533.742
+286,unnamed,15/11,536.951
+287,unnamed,512/375,539.104
+288,unnamed,26/19,543.015
+289,unnamed,63/46,544.462
+290,unnamed,48/35,546.815
+291,unnamed,1000/729,547.211
+292,undecimal tritone (11th harmonic),11/8,551.318
+293,unnamed,62/45,554.812
+294,unnamed,40/29,556.737
+295,unnamed,29/21,558.796
+296,unnamed,112/81,561.006
+297,unnamed,18/13,563.382
+298,augmented fourth (4/3 x 25/24),25/18,568.717
+299,89th harmonic,89/64,570.88
+300,unnamed,32/23,571.726
+301,unnamed,39/28,573.657
+302,unnamed,46/33,575.001
+303,unnamed,88/63,578.582
+304,septimal tritone,7/5,582.512
+305,unnamed,108/77,585.721
+306,low Pythagorean tritone,1024/729,588.27
+307,high 5-limit tritone,45/32,590.224
+308,unnamed,38/27,591.648
+309,unnamed,31/22,593.718
+310,unnamed,55/39,595.149
+311,unnamed,24/17,597
+
+313,unnamed,99/70,600.088
+314,unnamed,17/12,603
+315,unnamed,44/31,606.282
+316,unnamed,125/88,607.623
+317,unnamed,27/19,608.352
+318,91st harmonic,91/64,609.354
+319,low 5-limit tritone,64/45,609.776
+320,high Pythagorean tritone,729/512,611.73
+321,unnamed,57/40,613.154
+322,unnamed,77/54,614.279
+323,septimal tritone,10/7,617.488
+324,unnamed,63/44,621.418
+325,unnamed,33/23,624.999
+326,unnamed,56/39,626.343
+327,23rd harmonic,23/16,628.274
+328,diminished fifth (3/2 x 24/25),36/25,631.283
+329,unnamed,121/84,631.855
+330,unnamed,49/34,632.696
+331,unnamed,13/9,636.618
+332,unnamed,81/56,638.994
+333,unnamed,55/38,640.119
+334,unnamed,42/29,641.204
+335,unnamed,29/20,643.263
+336,unnamed,45/31,645.188
+337,93rd harmonic,93/64,646.991
+338,unnamed,16/11,648.682
+339,unnamed,51/35,651.771
+340,unnamed,729/500,652.789
+341,unnamed,35/24,653.185
+342,unnamed,19/13,656.985
+343,unnamed,375/256,660.896
+344,unnamed,22/15,663.049
+345,47th harmonic,47/32,665.507
+346,unnamed,72/49,666.258
+347,unnamed,25/17,667.672
+348,unnamed,81/55,670.188
+349,unnamed,28/19,671.313
+350,unnamed,31/21,674.255
+351,unnamed,189/128,674.691
+352,unnamed,34/23,676.681
+353,"dissonant ""wolf"" 5-limit fifth",40/27,680.449
+354,unnamed,46/31,683.239
+355,95th harmonic,95/64,683.827
+356,unnamed,49/33,684.379
+357,unnamed,52/35,685.388
+358,unnamed,58/39,687.095
+359,unnamed,125/84,688.16
+360,unnamed,112/75,694.243
+361,unnamed,121/81,694.816
+
+363,perfect fifth,3/2,701.955
+364,unnamed,121/80,716.322
+365,unnamed,50/33,719.354
+366,97th harmonic,97/64,719.895
+367,unnamed,1024/675,721.508
+368,unnamed,44/29,721.741
+369,unnamed,243/160,723.461
+370,unnamed,38/25,724.886
+371,unnamed,35/23,726.865
+372,unnamed,32/21,729.219
+373,unnamed,29/19,732.064
+374,unnamed,84/55,733.149
+375,unnamed,55/36,733.722
+376,unnamed,26/17,735.572
+377,unnamed,75/49,736.931
+378,49th harmonic,49/32,737.652
+379,unnamed,23/15,740.006
+380,diminished sixth (8/5 x 24/25),192/125,743.014
+381,unnamed,20/13,745.786
+382,unnamed,77/50,747.516
+383,unnamed,54/35,750.725
+384,unnamed,125/81,751.121
+385,unnamed,17/11,753.637
+386,99th harmonic,99/64,755.228
+387,unnamed,48/31,756.919
+388,unnamed,31/20,758.722
+389,unnamed,45/29,760.674
+390,septimal minor sixth,14/9,764.916
+391,unnamed,120/77,768.125
+392,unnamed,39/25,769.855
+393,augmented fifth,25/16,772.627
+394,unnamed,36/23,775.636
+395,undecimal minor sixth,11/7,782.492
+396,unnamed,63/40,786.422
+397,unnamed,52/33,787.255
+398,101st harmonic,101/64,789.854
+399,unnamed,30/19,790.756
+400,Pythagorean minor sixth,128/81,792.18
+401,unnamed,49/31,792.616
+402,unnamed,405/256,794.134
+403,unnamed,19/12,795.558
+404,unnamed,46/29,798.697
+405,unnamed,100/63,799.892
+
+407,unnamed,27/17,800.91
+408,unnamed,62/39,802.553
+409,unnamed,35/22,803.822
+410,51st harmonic,51/32,806.91
+411,5-limit minor sixth,8/5,813.686
+412,"Pythagorean ""schismatic"" sixth",6561/4096,815.64
+413,unnamed,77/48,818.189
+414,unnamed,45/28,821.398
+415,103rd harmonic,103/64,823.801
+416,unnamed,29/18,825.667
+417,unnamed,50/31,827.592
+418,unnamed,121/75,828.053
+419,unnamed,21/13,830.253
+420,unnamed,55/34,832.676
+421,unnamed,34/21,834.175
+422,unnamed,81/50,835.193
+423,unnamed,125/77,838.797
+424,overtone sixth,13/8,840.528
+425,unnamed,57/35,844.328
+426,unnamed,44/27,845.453
+427,unnamed,31/19,847.523
+428,unnamed,80/49,848.662
+429,unnamed,49/30,849.383
+430,"undecimal ""median"" sixth",18/11,852.592
+431,105th harmonic,105/64,857.095
+432,unnamed,64/39,857.517
+433,unnamed,23/14,859.448
+434,unnamed,51/31,861.875
+435,unnamed,400/243,862.852
+436,unnamed,28/17,863.87
+437,unnamed,33/20,866.959
+438,unnamed,38/23,869.239
+439,unnamed,81/49,870.168
+440,unnamed,48/29,872.378
+441,53rd harmonic,53/32,873.505
+442,unnamed,58/35,874.438
+443,unnamed,63/38,875.223
+444,unnamed,128/77,879.856
+445,107th harmonic,107/64,889.76
+446,5-limit major sixth,5/3,884.359
+447,unnamed,57/34,894.513
+448,unnamed,52/31,895.492
+449,unnamed,42/25,898.153
+450,unnamed,121/72,898.726
+
+452,unnamed,32/19,902.487
+453,Pythagorean major sixth,27/16,905.865
+454,unnamed,49/29,908.075
+455,unnamed,22/13,910.79
+456,unnamed,39/23,914.208
+457,unnamed,56/33,915.553
+458,unnamed,17/10,918.642
+459,109th harmonic,109/64,921.821
+460,unnamed,46/27,922.409
+461,unnamed,75/44,923.264
+462,unnamed,29/17,924.622
+463,diminished seventh (16/9 x 24/25),128/75,925.418
+464,unnamed,77/45,929.92
+465,septimal major sixth,12/7,933.129
+466,55th harmonic,55/32,937.632
+467,unnamed,31/18,941.126
+468,unnamed,441/256,941.562
+469,unnamed,50/29,943.05
+470,unnamed,19/11,946.195
+471,unnamed,216/125,946.924
+472,unnamed,121/70,947.496
+473,unnamed,45/26,949.696
+474,unnamed,26/15,952.259
+475,111th harmonic,111/64,953.299
+476,augmented sixth (5/3 x 25/24),125/72,955.031
+477,unnamed,33/19,955.76
+478,unnamed,40/23,958.039
+479,unnamed,54/31,960.829
+480,unnamed,96/55,964.323
+481,unnamed,110/63,964.896
+482,septimal minor seventh,7/4,968.826
+483,unnamed,58/33,976.304
+484,unnamed,225/128,976.537
+485,unnamed,51/29,977.333
+486,unnamed,44/25,978.691
+487,unnamed,30/17,983.313
+488,113th harmonic,113/64,984.215
+489,unnamed,99/56,986.402
+490,unnamed,23/13,987.747
+491,unnamed,62/35,989.896
+492,unnamed,39/22,991.165
+493,unnamed,55/31,992.596
+494,Pythagorean small min. seventh,16/9,996.09
+495,57th harmonic,57/32,999.468
+
+497,unnamed,98/55,1000.02
+498,unnamed,25/14,1003.802
+499,unnamed,34/19,1007.442
+500,unnamed,52/29,1010.95
+501,unnamed,88/49,1013.666
+502,115th harmonic,115/64,1014.588
+503,5-limit large minor seventh,9/5,1017.596
+504,unnamed,56/31,1023.79
+505,unnamed,38/21,1026.732
+506,29th harmonic,29/16,1029.577
+507,unnamed,49/27,1031.787
+508,unnamed,20/11,1034.996
+509,unnamed,51/28,1038.085
+510,unnamed,729/400,1039.103
+511,unnamed,31/17,1040.08
+512,unnamed,42/23,1042.507
+513,117th harmonic,117/64,1044.438
+514,unnamed,64/35,1044.86
+515,unnamed,4000/2187,1045.256
+516,"undecimal ""median"" seventh",11/6,1049.363
+517,unnamed,90/49,1052.572
+518,unnamed,57/31,1054.432
+519,unnamed,46/25,1055.647
+520,unnamed,81/44,1056.502
+521,unnamed,35/19,1057.627
+522,59th harmonic,59/32,1059.172
+523,unnamed,24/13,1061.427
+524,unnamed,50/27,1066.762
+525,unnamed,63/34,1067.78
+526,unnamed,13/7,1071.702
+527,119th harmonic,119/64,1073.781
+528,unnamed,54/29,1076.288
+529,unnamed,28/15,1080.557
+530,unnamed,58/31,1084.542
+531,5-limit major seventh,15/8,1088.269
+532,unnamed,62/33,1091.763
+533,unnamed,32/17,1095.045
+534,unnamed,49/26,1097.124
+535,unnamed,66/35,1098.133
+
+537,unnamed,17/9,1101.045
+538,121st harmonic,121/64,1102.636
+539,unnamed,125/66,1105.668
+540,unnamed,36/19,1106.397
+541,unnamed,256/135,1107.821
+542,unnamed,55/29,1108.054
+543,Pythagorean major seventh,243/128,1109.775
+544,unnamed,19/10,1111.199
+545,unnamed,40/21,1115.533
+546,61st harmonic,61/32,1116.885
+547,unnamed,21/11,1119.463
+548,unnamed,44/23,1123.044
+549,unnamed,23/12,1126.319
+550,unnamed,48/25,1129.328
+551,unnamed,121/63,1129.9
+552,123rd harmonic,123/64,1131.017
+553,unnamed,25/13,1132.1
+554,unnamed,77/40,1133.83
+555,unnamed,52/27,1134.663
+556,septimal major seventh,27/14,1137.039
+557,unnamed,56/29,1139.249
+558,unnamed,29/15,1141.308
+559,unnamed,60/31,1143.233
+560,31st harmonic,31/16,1145.036
+561,unnamed,64/33,1146.727
+562,unnamed,33/17,1148.318
+563,unnamed,243/125,1150.834
+564,unnamed,35/18,1151.23
+565,unnamed,39/20,1156.169
+566,augmented seventh (15/8 x 25/24),125/64,1158.941
+567,unnamed,88/45,1161.094
+568,unnamed,45/23,1161.949
+569,unnamed,96/49,1164.303
+570,unnamed,49/25,1165.024
+571,unnamed,51/26,1166.383
+572,unnamed,108/55,1168.233
+573,unnamed,55/28,1168.806
+574,unnamed,57/29,1169.891
+575,63rd harmonic,63/32,1172.736
+576,unnamed,160/81,1178.494
+577,unnamed,99/50,1182.601
+578,unnamed,125/63,1186.205
+579,127th harmonic,127/64,1186.422
+580,octave,2/1,1200

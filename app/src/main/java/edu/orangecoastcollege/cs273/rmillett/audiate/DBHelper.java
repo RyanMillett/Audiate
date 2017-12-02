@@ -244,27 +244,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 // Get basic information parameters
                 // Line 1
-                name = br.readLine().replace("! ", "");
+                line = br.readLine().replace("!", "");
+                name = line.trim();
                 sclFileName = name;
-                Log.e(TAG, "Name->" + name + "\n");
                 // Format name
                 name.replace("_", " ");
                 name.replace(".scl", "");
                 // TODO: format capitalization
 
                 // Line 2
-                br.readLine(); // SKIP (scala comment)
+                line = br.readLine();
+                if (line.equalsIgnoreCase("!")) {
+                    description = br.readLine();
+                    size = Integer.parseInt(br.readLine());
+                }
+                else {
+                    description = line;
+                    size = Integer.parseInt(br.readLine());
+                }
 
-                // Line 3
-                description = br.readLine();
-                Log.e(TAG, "Description->" + description + "\n");
-
-                // Line 4
-                size = Integer.parseInt(br.readLine().replace(" ", ""));
-                Log.e(TAG, "Size->" + size + "\n");
-
-                // Line 5
-                br.readLine(); // SKIP (scala comment)
+                Log.e(TAG, "sclFileName->" + sclFileName + "\n");
+                Log.e(TAG, "name->" + name + "\n");
+                Log.e(TAG, "description->" + description + "\n");
+                Log.e(TAG, "size->" + size + "\n");
 
                 // Build scale
                 scale = new ChordScale(name, size, description, sclFileName);
