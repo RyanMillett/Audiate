@@ -5,12 +5,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import java.util.List;
+
 public class MainMenuActivity extends AppCompatActivity {
+
+    private DBHelper mDBHelper;
+    private List<ChordScale> allScalesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        deleteDatabase(DBHelper.DATABASE_NAME);
+        mDBHelper = new DBHelper(this);
+        allScalesList = mDBHelper.importScalesFromSCL();
+
     }
 
     public void earTraining(View view) {

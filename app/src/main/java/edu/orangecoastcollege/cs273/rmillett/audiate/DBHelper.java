@@ -53,6 +53,31 @@ public class DBHelper extends SQLiteOpenHelper {
     // TODO: figure out how to add chord members
     private static final String FIELD_CHORD_DESCRIPTION = "chord_description";
 
+    private static boolean isInteger(String str) {
+        str = str.trim();
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
@@ -227,7 +252,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // member variables
         String name;
         int size;
-        String description;
+        String description = "";
         String sclFileName;
 
         AssetManager manager = mContext.getAssets();
@@ -243,25 +268,31 @@ public class DBHelper extends SQLiteOpenHelper {
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
                 // Get basic information parameters
-                // Line 1
+                // Line 1, .scl file name
                 line = br.readLine().replace("!", "");
-                name = line.trim();
-                sclFileName = name;
+                sclFileName = line.trim();
+
                 // Format name
-                name.replace("_", " ");
-                name.replace(".scl", "");
+                name = sclFileName.replace(".scl", "");
+                name = name.replace("_", " ");
                 // TODO: format capitalization
 
-                // Line 2
+                // Description
                 line = br.readLine();
-                if (line.equalsIgnoreCase("!")) {
-                    description = br.readLine();
-                    size = Integer.parseInt(br.readLine());
+                while (!isInteger(line)) {
+                    if (line.equalsIgnoreCase("!")) {
+                        line = br.readLine();
+                    }
+                    else if (line.startsWith("!") && line.length() > 1) {
+                        description += "\n" + line.replace("!","").trim();
+                    }
+                    else {
+                        description = line;
+                    }
                 }
-                else {
-                    description = line;
-                    size = Integer.parseInt(br.readLine());
-                }
+
+                // Size
+                size = Integer.parseInt(line);
 
                 Log.e(TAG, "sclFileName->" + sclFileName + "\n");
                 Log.e(TAG, "name->" + name + "\n");
@@ -272,21 +303,33 @@ public class DBHelper extends SQLiteOpenHelper {
                 scale = new ChordScale(name, size, description, sclFileName);
                 scale.addChordMember(new Note("Tonic"));
 
-                String intervalLine; // chord member interval
+                line = br.readLine();
                 double interval; // decimal used for multiplication
-                while ((intervalLine = br.readLine()) != null) {
-                    // parse intervals, add to scale
-                    if (intervalLine.contains(".")) { // interval is in CENTS
-                        interval =
-                                IntervalHandler.convertCentsToDecimal(Double.parseDouble(intervalLine));
-                        scale.addChordMember(new Note(
-                                scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                int i = size;
+                while (i-- > 0) {
+                    if (line.equalsIgnoreCase("!")) {
+                        line = br.readLine();
                     }
-                    else if (intervalLine.contains("/")) { // interval is a RATIO
-                        interval = IntervalHandler.convertRatioToDecimal(intervalLine);
-                        scale.addChordMember(new Note(
-                                scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                    else {
+                        // parse intervals, add to scale
+                        //line = line.replace(" ", "");
+                        line = line.replaceAll("[^\\d./]", "");
+
+                        Log.e(TAG, "line->" + line + "\n");
+                        if (line.contains(".")) { // interval is in CENTS
+                            interval =
+                                    IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
+                            scale.addChordMember(new Note(
+                                    scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                        }
+                        else if (line.contains("/")) { // interval is a RATIO
+                            interval = IntervalHandler.convertRatioToDecimal(line);
+                            scale.addChordMember(new Note(
+                                    scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                        }
                     }
+                    //Log.e(TAG, "interval->" + line + " ");
+                    line = br.readLine();
                 }
                 allScalesList.add(scale);
                 addScale(scale);
