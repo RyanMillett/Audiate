@@ -324,10 +324,12 @@ public class DBHelper extends SQLiteOpenHelper {
                             }
                             Log.i(TAG, "interval->" + line + " ");
                             line = br.readLine();
-                        } catch (NumberFormatException e) {
+                        }
+                        catch (NumberFormatException e) {
                             Log.e(TAG,"NumberFormatException, line->" + line);
                             e.printStackTrace();
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e) {
                             Log.e(TAG,"IOException, line->" + line);
                             e.printStackTrace();
                         }
