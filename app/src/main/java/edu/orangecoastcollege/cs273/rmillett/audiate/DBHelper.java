@@ -278,23 +278,23 @@ public class DBHelper extends SQLiteOpenHelper {
                 // TODO: format capitalization
 
                 // Description
-                line = br.readLine();
                 while (!isInteger(line)) {
                     if (line.contains("!")) {
                         line = br.readLine();
                     }
                     else {
                         description = line;
+                        line = br.readLine();
                     }
                 }
 
                 // Size
-                size = Integer.parseInt(line);
+                size = Integer.parseInt(line.trim());
 
-                Log.e(TAG, "sclFileName->" + sclFileName + "\n");
-                Log.e(TAG, "name->" + name + "\n");
-                Log.e(TAG, "description->" + description + "\n");
-                Log.e(TAG, "size->" + size + "\n");
+                Log.i(TAG, "sclFileName->" + sclFileName + "\n");
+                Log.i(TAG, "name->" + name + "\n");
+                Log.i(TAG, "description->" + description + "\n");
+                Log.i(TAG, "size->" + size + "\n");
 
                 // Build scale
                 scale = new ChordScale(name, size, description, sclFileName);
@@ -303,30 +303,36 @@ public class DBHelper extends SQLiteOpenHelper {
                 line = br.readLine();
                 double interval; // decimal used for multiplication
                 int i = size;
-                while (i-- > 0) {
-                    if (line.equalsIgnoreCase("!")) {
+                while (i >= 0 && line != null) {
+                    if (line.startsWith("!")) {
                         line = br.readLine();
                     }
                     else {
-                        // parse intervals, add to scale
-                        //line = line.replace(" ", "");
-                        line = line.replaceAll("[^\\d./]", "");
-
-                        Log.e(TAG, "line->" + line + "\n");
-                        if (line.contains(".")) { // interval is in CENTS
-                            interval =
-                                    IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
-                            scale.addChordMember(new Note(
-                                    scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
-                        }
-                        else if (line.contains("/")) { // interval is a RATIO
-                            interval = IntervalHandler.convertRatioToDecimal(line);
-                            scale.addChordMember(new Note(
-                                    scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                        try {
+                            // parse intervals, add to scale
+                            line = line.trim();
+                            if (line.contains(".")) { // interval is in CENTS
+                                interval =
+                                        IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
+                                scale.addChordMember(new Note(
+                                        scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                            }
+                            else if (line.contains("/")) { // interval is a RATIO
+                                interval = IntervalHandler.convertRatioToDecimal(line);
+                                scale.addChordMember(new Note(
+                                        scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                            }
+                            Log.i(TAG, "interval->" + line + " ");
+                            line = br.readLine();
+                        } catch (NumberFormatException e) {
+                            Log.e(TAG,"NumberFormatException, line->" + line);
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            Log.e(TAG,"IOException, line->" + line);
+                            e.printStackTrace();
                         }
                     }
-                    //Log.e(TAG, "interval->" + line + " ");
-                    line = br.readLine();
+                    i--;
                 }
                 allScalesList.add(scale);
                 addScale(scale);
