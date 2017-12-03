@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +56,9 @@ public class LibraryActivity extends AppCompatActivity {
     private CheckBox aux1CheckBox;
     private CheckBox aux2CheckBox;
 
+    private Button testFundamentalButton;
+    private Button playSelectionButton;
+
     private LibraryListAdapter mLibraryListAdapter;
 
     private Note fundamental;
@@ -101,6 +105,7 @@ public class LibraryActivity extends AppCompatActivity {
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
 
         // playback settings group
+        // TODO: add OnCheckedListener
         mode1RadioButton = findViewById(R.id.mode1RadioButton);
         mode1RadioButton.setChecked(true); // Default playback mode
         mode2RadioButton = findViewById(R.id.mode2RadioButton);
@@ -109,6 +114,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         aux1CheckBox = findViewById(R.id.aux1CheckBox);
         aux2CheckBox = findViewById(R.id.aux2CheckBox);
+
+        testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
+        playSelectionButton = findViewById(R.id.playSelectionButton);
 
         fundamental = new Note("Fundamental");
         chord = new ChordScale();
@@ -140,72 +148,57 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     /**
-     * Plays a short audio sample of a frequency entered in the <code>setFundamentalEditText</code>.
-     * If no frequency is entered, the default frequency of 440Hz will be used.
+     * Handles audio playback
      *
      * @param view
      */
-    public void testFundamental(View view) {
+    public void playbackHandler(View view) {
 
-        // TODO: consider adding this to an OnChangeListener if possible
-        if (setFundamentalEditText.getText().toString().trim().length() > 0)
-            fundamental.setPitchFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
-        fundamental.setDurationMilliseconds(DEFAULT_BLOCK_LENGTH_MILLISECONDS);
-        mSoundObjectPlayer.loadSoundObject(fundamental);
-
-        // Play fundamental frequency
-        mSoundObjectPlayer.play();
-
-        // TODO: disable/change color of button on play, re-enable on stop
-
-    }
-
-    /**
-     * Plays a short sample of the selected <code>ChordScale</code>
-     *
-     * @param view
-     */
-    public void playSelection(View view) {
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
         if (setFundamentalEditText.getText().toString().trim().length() > 0)
             fundamental.setPitchFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
 
-        // TODO: make dynamic, currently hard-coded for testing purposes only
-        // Build chord
-        chord.clearAllChordMembers();
-        chord.addChordMember(fundamental);
-        chord.addChordMember(new Note(
-                fundamental.getPitchFrequency()
-                        * IntervalHandler.convertRatioToDecimal("5/4")));
-        chord.addChordMember(new Note(
-                fundamental.getPitchFrequency()
-                        * IntervalHandler.convertRatioToDecimal("3/2")));
-        chord.addChordMember(new Note(
-                fundamental.getPitchFrequency()
-                        * IntervalHandler.convertRatioToDecimal("7/4")));
+        // Determine button ID
+        Button selectedButton = (Button) view;
+        if (selectedButton == testFundamentalButton) {
+            fundamental.setDurationMilliseconds(DEFAULT_BLOCK_LENGTH_MILLISECONDS);
+            mSoundObjectPlayer.loadSoundObject(fundamental);
 
-        detectPlaybackMode();
+            // Play fundamental frequency
+            mSoundObjectPlayer.play();
+        }
+        else if (selectedButton == playSelectionButton) {  // AND something has been selected!!!!
+            // TODO: make dynamic, currently hard-coded for testing purposes only
+            // Build chord
+            chord.clearAllChordMembers();
+            chord.addChordMember(fundamental);
+            chord.addChordMember(new Note(
+                    fundamental.getPitchFrequency()
+                            * IntervalHandler.convertRatioToDecimal("5/4")));
+            chord.addChordMember(new Note(
+                    fundamental.getPitchFrequency()
+                            * IntervalHandler.convertRatioToDecimal("3/2")));
+            chord.addChordMember(new Note(
+                    fundamental.getPitchFrequency()
+                            * IntervalHandler.convertRatioToDecimal("7/4")));
 
-        // TODO: add to OnChangeListener
-        // Load SoundObject into SoundObjectPlayer
-        mSoundObjectPlayer.loadSoundObject(chord);
+            detectPlaybackMode();
 
-        // Play SoundObject
-        mSoundObjectPlayer.play();
+            // TODO: add to OnChangeListener
+            // Load SoundObject into SoundObjectPlayer
+            mSoundObjectPlayer.loadSoundObject(chord);
+
+            // Play SoundObject
+            mSoundObjectPlayer.play();
+        }
 
         // TODO: disable/change color of button on play, re-enable on stop
 
     }
 
-    public void displaySelectionDetails(View view) {
-        if (view instanceof LinearLayout) {
-            LinearLayout selectedLayout = (LinearLayout) view;
-            ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
-            Log.i("LibraryActivity", selectedChordScale.getName());
-            intervalDisplayTextView.setText(selectedChordScale.getName());
-            selectionDisplayTextView.setText(selectedChordScale.getDescription());
-        }
+    public void selectionDetailsHandler(View view) {
+        // TODO: this method
     }
 
     // TODO: consider adding this to an OnChangeListener if possible
