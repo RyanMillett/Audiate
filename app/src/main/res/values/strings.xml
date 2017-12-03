@@ -71,6 +71,7 @@
     <string name="playback_mode3">Mode 3</string>
     <string name="playback_mode4">Mode 4</string>
     <string name="aux1">aux1</string>
+    <string name="aux2">aux2</string>
     <string name="play_selection">Play Selection</string>
 
     <!-- Ear Training Quiz Settings -->

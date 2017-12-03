@@ -42,15 +42,17 @@ public class LibraryActivity extends AppCompatActivity {
     private TextView intervalDisplayTextView;
     private TextView selectionDisplayTextView;
     private ListView libraryListView;
-    private Spinner librarySpinner;
+    private Spinner selectMaterialSpinner;
+    private Spinner sortBySpinner;
 
     // playback mode Radio Group
-    private RadioButton blockRadioButton;
-    private RadioButton arpUpRadioButton;
-    private RadioButton arpDownRadioButton;
-    private RadioButton albertiRadioButton;
+    private RadioButton mode1RadioButton;
+    private RadioButton mode2RadioButton;
+    private RadioButton mode3RadioButton;
+    private RadioButton mode4RadioButton;
 
-    private CheckBox loopCheckBox; // TODO: rethink this option
+    private CheckBox aux1CheckBox;
+    private CheckBox aux2CheckBox;
 
     private LibraryListAdapter mLibraryListAdapter;
 
@@ -79,7 +81,8 @@ public class LibraryActivity extends AppCompatActivity {
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
-        librarySpinner = findViewById(R.id.materialSelectionSpinner);
+        selectMaterialSpinner = findViewById(R.id.materialSelectionSpinner);
+        sortBySpinner = findViewById(R.id.sortMaterialSelectionSpinner);
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
         filteredChordScaleList = new ArrayList<>(allIntervalsList);
@@ -87,25 +90,40 @@ public class LibraryActivity extends AppCompatActivity {
                 R.layout.audition_room_list_item, filteredChordScaleList);
         libraryListView.setAdapter(mLibraryListAdapter);
 
-        // spinner adapter
-        ArrayAdapter<String> librarySpinnerAdapter =
+        // spinner adapters
+        ArrayAdapter<String> selectMaterialSpinnerAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterials());
-        librarySpinner.setAdapter(librarySpinnerAdapter);
+        selectMaterialSpinner.setAdapter(selectMaterialSpinnerAdapter);
 
-        blockRadioButton = findViewById(R.id.mode1RadioButton);
-        blockRadioButton.setChecked(true); // Default playback mode
-        arpUpRadioButton = findViewById(R.id.mode2RadioButton);
-        arpDownRadioButton = findViewById(R.id.mode3RadioButton);
-        albertiRadioButton = findViewById(R.id.mode4RadioButton);
-        albertiRadioButton.setEnabled(false); // TODO: disable for now, fix buffer size problem
-        loopCheckBox = findViewById(R.id.aux1CheckBox);
-        loopCheckBox.setEnabled(false); // TODO: implement this feature
+        ArrayAdapter<String> sortMaterialBySpinnerAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
+        sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
+
+        // playback settings group
+        mode1RadioButton = findViewById(R.id.mode1RadioButton);
+        mode1RadioButton.setChecked(true); // Default playback mode
+        mode2RadioButton = findViewById(R.id.mode2RadioButton);
+        mode3RadioButton = findViewById(R.id.mode3RadioButton);
+        mode4RadioButton = findViewById(R.id.mode4RadioButton);
+
+        aux1CheckBox = findViewById(R.id.aux1CheckBox);
+        aux2CheckBox = findViewById(R.id.aux2CheckBox);
 
         fundamental = new Note("Fundamental");
         chord = new ChordScale();
 
         mSoundObjectPlayer = new SoundObjectPlayer();
 
+    }
+
+    // TODO: make this dynamic——currently hard-coded for testing purposes
+    private String[] getAllSortCriteria() {
+        String[] sortByCriteria = new String[10];
+
+        sortByCriteria[0] = "[Sort Musical Material]";
+
+
+        return sortByCriteria;
     }
 
     // TODO: make this dynamic——currently hard-coded for testing purposes
@@ -192,11 +210,11 @@ public class LibraryActivity extends AppCompatActivity {
     // TODO: consider adding this to an OnChangeListener if possible
     private void detectPlaybackMode() {
         // Set PlayBack mode
-        if (arpUpRadioButton.isChecked()) {
+        if (mode2RadioButton.isChecked()) {
             chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
             chord.setDurationMilliseconds(DEFAULT_ARP_LENGTH_MILLISECONDS);
         }
-        else if (arpDownRadioButton.isChecked()) {
+        else if (mode3RadioButton.isChecked()) {
             chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
             chord.setDurationMilliseconds(DEFAULT_ARP_LENGTH_MILLISECONDS);
         }

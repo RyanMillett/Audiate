@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -21,17 +22,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainMenuActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".DetectVocalRangeActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ExerciseSelectionMenuActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".LibraryActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".DetectVocalRangeActivity">
-        </activity>
+
     </application>
 
 </manifest>
