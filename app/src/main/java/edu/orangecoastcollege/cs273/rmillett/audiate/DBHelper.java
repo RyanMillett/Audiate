@@ -270,7 +270,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 // Size
                 size = Integer.parseInt(line.trim());
 
-                Log.i(TAG, "sclFileName->" + sclFileName + "\n");
+                int scaleNum = 1;
+                Log.i(TAG, "(Scale No.: " + scaleNum++ + ") sclFileName->" + sclFileName + "\n");
 //                Log.i(TAG, "name->" + name + "\n");
 //                Log.i(TAG, "description->" + description + "\n");
 //                Log.i(TAG, "size->" + size + "\n");

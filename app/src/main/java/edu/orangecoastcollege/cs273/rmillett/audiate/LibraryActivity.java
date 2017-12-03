@@ -83,6 +83,8 @@ public class LibraryActivity extends AppCompatActivity {
 //        allIntervalsList = db.getAllIntervals();
 //        allScalesList = db.importScalesFromSCL();
 
+        // TODO: get full library from MainMenu
+
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);

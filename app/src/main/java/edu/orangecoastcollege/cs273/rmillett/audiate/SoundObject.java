@@ -1,5 +1,9 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * <code>SoundObject</code> is the abstract class for <code>Note</code>, <code>ChordScale</code>,
  * <code>Melody</code>, and <code>ChordSequence</code> objects.
@@ -14,7 +18,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
  * @author Ryan Millett
  * @version 2.0
  */
-public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
+public abstract class SoundObject implements Parcelable { // TODO: implement PLAYABLE interface (?)
 
     /**
      * int constant used as a default duration in milliseconds for all <code>SoundObjects</code>.

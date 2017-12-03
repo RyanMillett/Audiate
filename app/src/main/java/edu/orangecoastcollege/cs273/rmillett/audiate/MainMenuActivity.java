@@ -2,7 +2,6 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +13,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private DBHelper mDBHelper;
 
+    private Library mLibrary;
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
     private List<ChordScale> mAllScalesList;
@@ -28,9 +28,11 @@ public class MainMenuActivity extends AppCompatActivity {
         mDBHelper.importIntervalsFromCSV("intervals.csv");
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
-        // TODO: get all chords
-        mAllChordsList = new ArrayList<>(4);
+        mAllChordsList = new ArrayList<>(4); // TODO: get all chords
         mAllScalesList = mDBHelper.importScalesFromSCL();
+
+        mLibrary = new Library();
+        // TODO: load lists into Library
 
     }
 
@@ -39,6 +41,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         // Intent
         Intent intent;
+
+        // Bundle
+        Bundle bundle = new Bundle();
 
         // get selected button
         Button selectedButton = (Button) view;
