@@ -271,9 +271,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 size = Integer.parseInt(line.trim());
 
                 Log.i(TAG, "sclFileName->" + sclFileName + "\n");
-                Log.i(TAG, "name->" + name + "\n");
-                Log.i(TAG, "description->" + description + "\n");
-                Log.i(TAG, "size->" + size + "\n");
+//                Log.i(TAG, "name->" + name + "\n");
+//                Log.i(TAG, "description->" + description + "\n");
+//                Log.i(TAG, "size->" + size + "\n");
 
                 // Build scale
                 scale = new ChordScale(name, size, description, sclFileName);
@@ -309,7 +309,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                 scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
                             }
 
-                            Log.i(TAG, "interval->" + line + " ");
+                            //Log.i(TAG, "interval->" + line + " ");
 
                             // get next line
                             line = br.readLine();

@@ -1,5 +1,6 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -73,10 +74,10 @@ public class LibraryActivity extends AppCompatActivity {
 
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
-        db.importIntervalsFromCSV("intervals.csv");
-
-        allIntervalsList = db.getAllIntervals();
-        allScalesList = db.importScalesFromSCL();
+//        db.importIntervalsFromCSV("intervals.csv");
+//
+//        allIntervalsList = db.getAllIntervals();
+//        allScalesList = db.importScalesFromSCL();
 
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
