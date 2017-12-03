@@ -23,6 +23,7 @@
     <string name="detect_vocal_range_activity_info_text">TODO: add activity instructions here…</string>
     <string name="detect_high_note">Detect High Note</string>
     <string name="detect_low_note">Detect Low Note</string>
+    <string name="confirm_vocal_range">Confirm Vocal Range</string>
 
     <!-- Main Menu -->
     <string name="main_menu">Main Menu</string>
