@@ -24,10 +24,13 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
  * successive notes.
  *
  * @author Ryan Millett
- * @version 1.2
+ * @version 1.3
  */
 public class IntervalHandler {
 
+    // TODO: make constants compatible with 24-TET + 36-TET
+
+    public static final String UNKNOWN_NOTE = "";
     public static final String FLAT = "\u266D";
     public static final String SHARP = "\u266F";
     public static final String C = "C";
@@ -47,7 +50,6 @@ public class IntervalHandler {
     public static final String A_SHARP = A + SHARP;
     public static final String B = "B";
     public static final String B_FLAT = B + FLAT;
-    public static final String UNKNOWN_NOTE = "";
 
     /**
      * Constant array of double values representing frequencies in Hertz that correspond to a pitch
@@ -69,6 +71,9 @@ public class IntervalHandler {
                 1760.00, 1864.66, 1975.53, 2093.00, 2217.46, 2349.32, 2489.02, 2637.02, 2793.83,
                 2959.96, 3135.96, 3322.44, 3520.00, 3729.31, 3951.07, 4186.01};
 
+    /**
+     * Constant array of String values representing pitch class names.
+     */
     public static final String[] NOTES =
             new String[]{A, A_SHARP, B, C, C_SHARP, D, D_SHARP, E, F, F_SHARP, G, G_SHARP};
 
@@ -161,6 +166,7 @@ public class IntervalHandler {
     }
 
     private static int binSearch(double frequencyInHz, double[] freqsArray, int min, int max) {
+        // base case
         if (min + 1 >= max) {
             return min;
         }
