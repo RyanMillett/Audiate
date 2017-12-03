@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.DetectVocalRangeActivity">
+
+
+    <TextView
+        android:id="@+id/detectVocalRangeHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="@string/detect_vocal_range_button"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/detectVocalRangeInstructionsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="@string/detect_vocal_range_activity_info_text"/>
+
+    <LinearLayout
+        android:id="@+id/detectVocalRangeResultsLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="75dp"
+        android:layout_gravity="center"
+        android:padding="@dimen/buttons_padding"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/detectVocalRangeImageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="50dp"/>
+
+        <TextView
+            android:id="@+id/highNoteResultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/buttons_padding"
+            android:hint="[HIGH NOTE]"
+            android:layout_marginVertical="10dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/lowNoteResultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/buttons_padding"
+            android:hint="[LOW NOTE]"
+            android:layout_marginVertical="10dp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/detectVocalRangeButtonGroupLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/buttons_padding">
+
+        <Button
+            android:id="@+id/detectHighNoteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/buttons_padding"
+            android:text="@string/detect_high_note"/>
+
+        <Button
+            android:id="@+id/detectLowNoteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/buttons_padding"
+            android:text="@string/detect_low_note"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

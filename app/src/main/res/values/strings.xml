@@ -18,6 +18,12 @@
     <string name="cancel_button">Cancel</string>
     <string name="detect_vocal_range_button">Detect Vocal Range</string>
 
+    <!-- Detect Vocal Range Activity -->
+    <string name="detect_vocal_range_activity_title_text">@string/detect_vocal_range_button</string>
+    <string name="detect_vocal_range_activity_info_text">TODO: add activity instructions here…</string>
+    <string name="detect_high_note">Detect High Note</string>
+    <string name="detect_low_note">Detect Low Note</string>
+
     <!-- Main Menu -->
     <string name="main_menu">Main Menu</string>
     <string name="ear_training_button">Ear Training</string>
@@ -33,12 +39,12 @@
     <string name="start_exercise_button">Start Exercise</string>
     <string name="exercise_help_button">Help</string>
 
-        <!-- Ear Training Exercises Selection Menu -->
-        <string name="ear_training_exercise_selection">Ear Training Exercises</string>
-        <string name="interval_identification_exercises_button">Interval Identification</string>
-        <string name="chord_quality_exercises_button">Chord Quality</string>
-        <string name="modeScale_exercises_button">Scales and Modes</string>
-        <string name="ear_training_menu_button">Ear Training Menu</string>
+    <!-- Ear Training Exercises Selection Menu -->
+    <string name="ear_training_exercise_selection">Ear Training Exercises</string>
+    <string name="interval_identification_exercises_button">Interval Identification</string>
+    <string name="chord_quality_exercises_button">Chord Quality</string>
+    <string name="modeScale_exercises_button">Scales and Modes</string>
+    <string name="ear_training_menu_button">Ear Training Menu</string>
 
     <!-- Ear Training Quiz -->
     <string name="question">Question %1$d of %2$d</string>
