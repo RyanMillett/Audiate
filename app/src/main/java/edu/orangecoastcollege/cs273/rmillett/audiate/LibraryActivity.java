@@ -79,7 +79,7 @@ public class LibraryActivity extends AppCompatActivity {
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
-        librarySpinner = findViewById(R.id.librarySpinner);
+        librarySpinner = findViewById(R.id.materialSelectionSpinner);
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
         filteredChordScaleList = new ArrayList<>(allIntervalsList);

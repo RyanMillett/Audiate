@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="25dp"
-        android:hint="[Title Text]"
+        android:hint="@string/exercise_selection_menu_title"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
