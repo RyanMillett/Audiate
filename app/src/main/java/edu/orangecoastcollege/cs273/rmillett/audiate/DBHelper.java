@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @author Ryan Millett
- * @version 1.0
+ * @version 1.2
  */
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -37,14 +37,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_INTERVAL_CENTS = "interval_cents";
     private static final String FIELD_INTERVAL_DESCRIPTION = "interval_description";
 
-    // Table of scales
-    private static final String SCALES_TABLE = "Scales";
-    private static final String SCALES_KEY_FIELD_ID = "_id";
-    private static final String FIELD_SCALE_NAME = "scale_name";
-    private static final String FIELD_SCALE_SIZE = "scale_size";
-    private static final String FIELD_SCALE_DESCRIPTION = "scale_description";
-    private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
-
     // Table of chords
     private static final String CHORDS_TABLE = "Chords";
     private static final String CHORDS_KEY_FIELD_ID = "_id";
@@ -53,30 +45,13 @@ public class DBHelper extends SQLiteOpenHelper {
     // TODO: figure out how to add chord members
     private static final String FIELD_CHORD_DESCRIPTION = "chord_description";
 
-    private boolean isInteger(String str) {
-        str = str.trim();
-        if (str == null) {
-            return false;
-        }
-        int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
-    }
+    // Table of scales
+    private static final String SCALES_TABLE = "Scales";
+    private static final String SCALES_KEY_FIELD_ID = "_id";
+    private static final String FIELD_SCALE_NAME = "scale_name";
+    private static final String FIELD_SCALE_SIZE = "scale_size";
+    private static final String FIELD_SCALE_DESCRIPTION = "scale_description";
+    private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,6 +70,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + FIELD_INTERVAL_DESCRIPTION + ")";
         sqLiteDatabase.execSQL(createQuery);
 
+        // Create Chords table
+        createQuery = "CREATE TABLE " + CHORDS_TABLE + "("
+                + CHORDS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
+                + FIELD_CHORD_NAME + " TEXT, "
+                + FIELD_CHORD_SIZE + " INTEGER, "
+                // TODO: figure out how to add chord members
+                + FIELD_CHORD_DESCRIPTION + " TEXT" + ")";
+        sqLiteDatabase.execSQL(createQuery);
+
         // Create Scales table
         createQuery = "CREATE TABLE " + SCALES_TABLE + "("
                 + SCALES_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
@@ -103,20 +87,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 + FIELD_SCALE_DESCRIPTION + " TEXT, "
                 + FIELD_SCALE_SCL_FILE_NAME + " TEXT" + ")";
         sqLiteDatabase.execSQL(createQuery);
-
-        // Create Chords table
-        createQuery = "CREATE TABLE " + CHORDS_TABLE + "("
-                + CHORDS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
-                + FIELD_CHORD_NAME + " TEXT, "
-                + FIELD_CHORD_SIZE + " INTEGER" + ")";
-        sqLiteDatabase.execSQL(createQuery);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + INTERVALS_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SCALES_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CHORDS_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SCALES_TABLE);
 
         onCreate(sqLiteDatabase);
     }
@@ -134,19 +111,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addScale(ChordScale scale) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(FIELD_SCALE_NAME, scale.getName());
-        values.put(FIELD_SCALE_SIZE, scale.getSize());
-        values.put(FIELD_SCALE_DESCRIPTION, scale.getDescription());
-        values.put(FIELD_SCALE_SCL_FILE_NAME, scale.getSCLfileName());
-
-        db.insert(SCALES_TABLE, null, values);
-        db.close();
-    }
-
     public void addChord(ChordScale chord) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -160,41 +124,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<ChordScale> getAllIntervals() {
-        List<ChordScale> allIntervalsList = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(
-                INTERVALS_TABLE,
-                new String[]{
-                        INTERVALS_KEY_FIELD_ID,
-                        FIELD_INTERVAL_NAME,
-                        FIELD_INTERVAL_RATIO,
-                        FIELD_INTERVAL_CENTS,
-                        FIELD_INTERVAL_DESCRIPTION
-                },
-                null,
-                null,
-                null, null, null, null);
+    public void addScale(ChordScale scale) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        if (cursor.moveToFirst()) {
-            do {
-                // build interval
-                ChordScale interval =
-                        new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
-                interval.addChordMember(new Note("Fundamental"));
-                interval.addChordMember(new Note(cursor.getString(1),
-                        interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * IntervalHandler.convertRatioToDecimal(cursor.getString(2)),
-                        cursor.getString(2)));
-                interval.setDescription(cursor.getString(4));
+        values.put(FIELD_SCALE_NAME, scale.getName());
+        values.put(FIELD_SCALE_SIZE, scale.getSize());
+        values.put(FIELD_SCALE_DESCRIPTION, scale.getDescription());
+        values.put(FIELD_SCALE_SCL_FILE_NAME, scale.getSCLfileName());
 
-                // add to list
-                allIntervalsList.add(interval);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        sqLiteDatabase.close();
-        return allIntervalsList;
+        db.insert(SCALES_TABLE, null, values);
+        db.close();
     }
 
     public boolean importIntervalsFromCSV(String csvFileName) {
@@ -242,6 +182,46 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public List<ChordScale> getAllIntervals() {
+        List<ChordScale> allIntervalsList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // build interval
+                ChordScale interval =
+                        new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
+                interval.addChordMember(new Note("Fundamental"));
+                interval.addChordMember(new Note(cursor.getString(1),
+                        interval.getChordMemberAtPos(0).getPitchFrequency()
+                                * IntervalHandler.convertRatioToDecimal(cursor.getString(2)),
+                        cursor.getString(2)));
+                interval.setDescription(cursor.getString(4));
+
+                // add to list
+                allIntervalsList.add(interval);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allIntervalsList;
+    }
+
+    // TODO: import/get all chords
+
+    // TODO: consolidate this with a "Scala handler" method in IntervalHandler helper method
     public List<ChordScale> importScalesFromSCL() {
         // create list with at least 4k initial capacity
         List<ChordScale> allScalesList = new ArrayList<>(5000);
@@ -252,7 +232,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // member variables
         String name;
         int size;
-        String description = "";
+        String description = "No description.";
         String sclFileName;
 
         AssetManager manager = mContext.getAssets();
@@ -267,7 +247,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 InputStream inputStream = manager.open("scl/" + file);
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-                // Get basic information parameters
                 // Line 1, .scl file name
                 line = br.readLine().replace("!", "");
                 sclFileName = line.trim();
@@ -278,7 +257,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 // TODO: format capitalization
 
                 // Description
-                while (!isInteger(line)) {
+                while (!IntervalHandler.isInteger(line)) {
                     if (line.contains("!")) {
                         line = br.readLine();
                     }
@@ -309,29 +288,37 @@ public class DBHelper extends SQLiteOpenHelper {
                     }
                     else {
                         try {
-                            // parse intervals, add to scale
+                            // trim leading white-space
                             line = line.trim();
+
+                            // check if line contains any text other than a double or a ratio
+                            if (line.contains(" ")){
+                                line = line.substring(0, line.indexOf(" "));
+                            }
+                            else if (line.contains("!")) {
+                                line = line.substring(0, line.indexOf("!"));
+                            }
+
+                            // parse intervals, add to scale
                             if (line.contains(".")) { // interval is in CENTS
-                                interval =
-                                        IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
-                                scale.addChordMember(new Note(
-                                        scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                                interval = IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
+                                scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
                             }
                             else if (line.contains("/")) { // interval is a RATIO
                                 interval = IntervalHandler.convertRatioToDecimal(line);
-                                scale.addChordMember(new Note(
-                                        scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
+                                scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
                             }
+
                             Log.i(TAG, "interval->" + line + " ");
+
+                            // get next line
                             line = br.readLine();
                         }
                         catch (NumberFormatException e) {
-                            Log.e(TAG,"NumberFormatException, line->" + line);
-                            e.printStackTrace();
+                            Log.e(TAG,"NumberFormatException: " + sclFileName + ", line->" + line + "\n");
                         }
                         catch (IOException e) {
-                            Log.e(TAG,"IOException, line->" + line);
-                            e.printStackTrace();
+                            Log.e(TAG,"IOException: " + sclFileName + ", line->" + line + "\n");
                         }
                     }
                     i--;

@@ -1,5 +1,11 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.res.AssetManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Helper class used to handle intervals expressed in either ratios/fractions or cents for the purpose
  * of frequency calculations.
@@ -24,9 +30,11 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
  * successive notes.
  *
  * @author Ryan Millett
- * @version 1.3
+ * @version 1.4
  */
 public class IntervalHandler {
+
+    private static String TAG = "IntervalHandler";
 
     // TODO: make constants compatible with 24-TET + 36-TET
 
@@ -148,6 +156,37 @@ public class IntervalHandler {
     }
 
     /**
+     * Determines if a String can be parsed as an Integer
+     *
+     * @param str String to be parsed
+     * @return true of String can be parsed as Integer, false otherwise
+     */
+    public static boolean isInteger(String str) {
+        str = str.trim();
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      *
      *
      * @param frequencyInHz
@@ -155,7 +194,8 @@ public class IntervalHandler {
      */
     public static String parsePitchClassFromFrequency(double frequencyInHz) {
 
-        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES, 0, _12_TET_PITCH_FREQUENCIES.length);
+        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES,
+                0, _12_TET_PITCH_FREQUENCIES.length);
 
         if (i < 12) {
             return NOTES[i];
@@ -165,23 +205,23 @@ public class IntervalHandler {
         }
     }
 
-    private static int binSearch(double frequencyInHz, double[] freqsArray, int min, int max) {
+    private static int binSearch(double frequencyInHz, double[] freqsArray, int minIdx, int maxIdx) {
         // base case
-        if (min + 1 >= max) {
-            return min;
+        if (minIdx + 1 >= maxIdx) {
+            return minIdx;
         }
 
         // binary search
-        int pivot = (min + (max - 1) / 2);
+        int pivot = (minIdx + (maxIdx - 1) / 2);
         double midVal = freqsArray[pivot];
         if (frequencyInHz == midVal) {
             return pivot;
         }
         else if (frequencyInHz < midVal) {
-            return binSearch(frequencyInHz, freqsArray, min, pivot);
+            return binSearch(frequencyInHz, freqsArray, minIdx, pivot);
         }
         else {
-            return binSearch(frequencyInHz, freqsArray, pivot + 1, max);
+            return binSearch(frequencyInHz, freqsArray, pivot + 1, maxIdx);
         }
     }
 }
