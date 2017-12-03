@@ -32,12 +32,12 @@
     <string name="start_exercise_button">Start Exercise</string>
     <string name="exercise_help_button">Help</string>
 
-    <!-- Ear Training Exercises Selection Menu -->
-    <string name="ear_training_exercise_selection">Ear Training Exercises</string>
-    <string name="interval_identification_exercises_button">Interval Identification</string>
-    <string name="chord_quality_exercises_button">Chord Quality</string>
-    <string name="modeScale_exercises_button">Scales and Modes</string>
-    <string name="ear_training_menu_button">Ear Training Menu</string>
+        <!-- Ear Training Exercises Selection Menu -->
+        <string name="ear_training_exercise_selection">Ear Training Exercises</string>
+        <string name="interval_identification_exercises_button">Interval Identification</string>
+        <string name="chord_quality_exercises_button">Chord Quality</string>
+        <string name="modeScale_exercises_button">Scales and Modes</string>
+        <string name="ear_training_menu_button">Ear Training Menu</string>
 
     <!-- Ear Training Quiz -->
     <string name="question">Question %1$d of %2$d</string>
@@ -48,6 +48,20 @@
     <string name="chord_type">Chords</string>
     <string name="mode_type">Modes</string>
 
+    <!-- Sound Library Activity -->
+    <string name="header_info_hint">Header text / info / instructions...</string>
+    <string name="select_material">Select material to audition: </string>
+    <string name="set_fundamental_frequency_hint">Set fundamental frequency in Hertz</string>
+    <string name="test_fundamental_frequency">(Test Fundamental Frequency)</string>
+    <string name="selection_name">Selection Name</string>
+    <string name="selection_description">Selection Description...</string>
+    <string name="playback_options">-- Playback Options --</string>
+    <string name="playback_mode1">Mode 1</string>
+    <string name="playback_mode2">Mode 2</string>
+    <string name="playback_mode3">Mode 3</string>
+    <string name="playback_mode4">Mode 4</string>
+    <string name="aux1">aux1</string>
+    <string name="play_selection">Play Selection</string>
 
     <!-- Ear Training Quiz Settings -->
     <string name="intervals">Intervals</string>

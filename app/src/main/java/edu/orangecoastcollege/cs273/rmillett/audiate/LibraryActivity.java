@@ -92,13 +92,13 @@ public class LibraryActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterials());
         librarySpinner.setAdapter(librarySpinnerAdapter);
 
-        blockRadioButton = findViewById(R.id.blockRadioButton);
+        blockRadioButton = findViewById(R.id.mode1RadioButton);
         blockRadioButton.setChecked(true); // Default playback mode
-        arpUpRadioButton = findViewById(R.id.arpUpRadioButton);
-        arpDownRadioButton = findViewById(R.id.arpDownRadioButton);
-        albertiRadioButton = findViewById(R.id.albertiRadioButton);
+        arpUpRadioButton = findViewById(R.id.mode2RadioButton);
+        arpDownRadioButton = findViewById(R.id.mode3RadioButton);
+        albertiRadioButton = findViewById(R.id.mode4RadioButton);
         albertiRadioButton.setEnabled(false); // TODO: disable for now, fix buffer size problem
-        loopCheckBox = findViewById(R.id.loopCheckBox);
+        loopCheckBox = findViewById(R.id.aux1CheckBox);
         loopCheckBox.setEnabled(false); // TODO: implement this feature
 
         fundamental = new Note("Fundamental");

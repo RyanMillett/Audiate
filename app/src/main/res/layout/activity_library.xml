@@ -16,7 +16,7 @@
         android:id="@+id/headerTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:hint="Header text / info / instructions..."
+        android:hint="@string/header_info_hint"
         android:layout_weight="1"/>
 
     <LinearLayout
@@ -25,11 +25,10 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Select material to audition: "
+            android:text="@string/select_material"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/filterTextView"
-            />
+            android:id="@+id/filterTextView"/>
 
         <Spinner
             android:id="@+id/librarySpinner"
@@ -50,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Set fundamental frequency in Hertz"
+            android:hint="@string/set_fundamental_frequency_hint"
             android:inputType="number"
             android:textAlignment="center"/>
 
@@ -59,12 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="testFundamental"
-            android:text="(Test Fundamental Frequency)"/>
-
+            android:text="@string/test_fundamental_frequency"/>
 
     </LinearLayout>
-
-
 
     <ListView
         android:id="@+id/libraryListView"
@@ -79,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="Selection Name"
+        android:hint="@string/selection_name"
         android:textAlignment="center"
         android:textSize="30sp"/>
 
@@ -89,7 +85,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:hint="Selection Description..."/>
+        android:hint="@string/selection_description"/>
 
     <TextView
         android:id="@+id/playbackOptionsTextView"
@@ -97,7 +93,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:text="-- Playback Options --"/>
+        android:text="@string/playback_options"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,48 +101,49 @@
         android:orientation="horizontal">
 
         <RadioGroup
+            android:id="@+id/playbackOptionsRadioGroup"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/blockRadioButton"
+                android:id="@+id/mode1RadioButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Block Chord"/>
+                android:text="@string/playback_mode1"/>
 
             <RadioButton
-                android:id="@+id/arpUpRadioButton"
+                android:id="@+id/mode2RadioButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Arpeggio Up"/>
+                android:text="@string/playback_mode2"/>
 
 
             <RadioButton
-                android:id="@+id/arpDownRadioButton"
+                android:id="@+id/mode3RadioButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Arpeggio Down"/>
+                android:text="@string/playback_mode3"/>
 
             <RadioButton
-                android:id="@+id/albertiRadioButton"
+                android:id="@+id/mode4RadioButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Alberti"/>
+                android:text="@string/playback_mode4"/>
 
         </RadioGroup>
 
         <CheckBox
-            android:id="@+id/loopCheckBox"
+            android:id="@+id/aux1CheckBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Loop"/>
+            android:text="@string/aux1"/>
 
     </LinearLayout>
 
@@ -156,6 +153,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="playSelection"
-        android:text="Play Selection"/>
+        android:text="@string/play_selection"/>
 
 </LinearLayout>
