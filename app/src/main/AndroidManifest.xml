@@ -2,6 +2,7 @@
           package="edu.orangecoastcollege.cs273.rmillett.audiate">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -21,17 +22,15 @@
         </activity>
 
         <activity
-            android:name=".LogInActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity
             android:name=".MainMenuActivity"
-            android:parentActivityName=".LogInActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ExerciseSelectionMenuActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".LibraryActivity"
             android:screenOrientation="portrait"/>
 
     </application>

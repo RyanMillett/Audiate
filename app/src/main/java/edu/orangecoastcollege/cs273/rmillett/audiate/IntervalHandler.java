@@ -28,6 +28,50 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
  */
 public class IntervalHandler {
 
+    public static final String FLAT = "\u266D";
+    public static final String SHARP = "\u266F";
+    public static final String C = "C";
+    public static final String C_SHARP = C + SHARP;
+    public static final String D = "D";
+    public static final String D_FLAT = D + FLAT;
+    public static final String D_SHARP = D + SHARP;
+    public static final String E = "E";
+    public static final String E_FLAT = E + FLAT;
+    public static final String F = "F";
+    public static final String F_SHARP = F + SHARP;
+    public static final String G = "G";
+    public static final String G_FLAT = G + FLAT;
+    public static final String G_SHARP = G + SHARP;
+    public static final String A = "A";
+    public static final String A_FLAT = A + FLAT;
+    public static final String A_SHARP = A + SHARP;
+    public static final String B = "B";
+    public static final String B_FLAT = B + FLAT;
+    public static final String UNKNOWN_NOTE = "";
+
+    /**
+     * Constant array of double values representing frequencies in Hertz that correspond to a pitch
+     * class in the 12-tone equal-temperament system.
+     *
+     * A4 (A above middle-C) corresponds to 440Hz.
+     *
+     */
+    public static final double[] _12_TET_PITCH_FREQUENCIES =
+            new double[]{
+                27.5000, 29.1352, 30.8677, 32.7032, 34.6478, 36.7081, 38.8909, 41.2034, 43.6535,
+                46.2493, 48.9994, 51.9131, 55.0000, 58.2705, 61.7354, 65.4064, 69.2957, 73.4162,
+                77.7817, 82.4069, 87.3071, 92.4986, 97.9989, 103.826, 110.000, 116.541, 123.471,
+                130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998, 207.652,
+                220.000, 233.082, 246.942, 261.626, 277.183, 293.665, 311.127, 329.628, 349.228,
+                369.994, 391.995, 415.305, 440.000, 466.164, 493.883, 523.251, 554.365, 587.330,
+                622.254, 659.255, 698.456, 739.989, 783.991, 830.609, 880.000, 932.328, 987.767,
+                1046.50, 1108.73, 1174.66, 1244.51, 1318.51, 1396.91, 1479.98, 1567.98, 1661.22,
+                1760.00, 1864.66, 1975.53, 2093.00, 2217.46, 2349.32, 2489.02, 2637.02, 2793.83,
+                2959.96, 3135.96, 3322.44, 3520.00, 3729.31, 3951.07, 4186.01};
+
+    public static final String[] NOTES =
+            new String[]{A, A_SHARP, B, C, C_SHARP, D, D_SHARP, E, F, F_SHARP, G, G_SHARP};
+
     /**
      * Converts a decimal (double value) to a string representing the approximate fraction equivalent
      *
@@ -96,5 +140,42 @@ public class IntervalHandler {
      */
     public static double convertCentsToDecimal(double cents) {
         return Math.pow(2, cents / 1200);
+    }
+
+    /**
+     *
+     *
+     * @param frequencyInHz
+     * @return
+     */
+    public static String parsePitchClassFromFrequency(double frequencyInHz) {
+
+        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES, 0, _12_TET_PITCH_FREQUENCIES.length);
+
+        if (i < 12) {
+            return NOTES[i];
+        }
+        else {
+            return NOTES[i % 12];
+        }
+    }
+
+    private static int binSearch(double frequencyInHz, double[] freqsArray, int min, int max) {
+        if (min + 1 >= max) {
+            return min;
+        }
+
+        // binary search
+        int pivot = (min + (max - 1) / 2);
+        double midVal = freqsArray[pivot];
+        if (frequencyInHz == midVal) {
+            return pivot;
+        }
+        else if (frequencyInHz < midVal) {
+            return binSearch(frequencyInHz, freqsArray, min, pivot);
+        }
+        else {
+            return binSearch(frequencyInHz, freqsArray, pivot + 1, max);
+        }
     }
 }
