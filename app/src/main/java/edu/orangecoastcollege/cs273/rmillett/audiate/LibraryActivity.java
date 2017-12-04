@@ -87,6 +87,7 @@ public class LibraryActivity extends AppCompatActivity {
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
         filteredChordScaleList = new ArrayList<>(allIntervalsList);
+
         mLibraryListAdapter = new LibraryListAdapter(this,
                 R.layout.audition_room_list_item, filteredChordScaleList);
         libraryListView.setAdapter(mLibraryListAdapter);
