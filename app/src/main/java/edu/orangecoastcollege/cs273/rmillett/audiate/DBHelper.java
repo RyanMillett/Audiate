@@ -154,7 +154,7 @@ public class DBHelper extends SQLiteOpenHelper {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length !=4) {
-                    Log.d("Library", "Skipping Bad CSV Row" + Arrays.toString(fields));
+                    Log.d("SoundObjectLibrary", "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
                 //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
@@ -241,6 +241,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             String fileList[] = manager.list("scl");
 
+            int scaleNum = 1;
             // loop through each .scl file in the scl directory
             for (String file : fileList) {
                 // file is one .scl file
@@ -270,7 +271,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 // Size
                 size = Integer.parseInt(line.trim());
 
-                int scaleNum = 1;
                 Log.i(TAG, "(Scale No.: " + scaleNum++ + ") sclFileName->" + sclFileName + "\n");
 //                Log.i(TAG, "name->" + name + "\n");
 //                Log.i(TAG, "description->" + description + "\n");

@@ -31,12 +31,6 @@ public class Note extends SoundObject {
     private double mPitchFrequency;
     private String mRatio;
 
-    private Note(Parcel parcel) {
-        mName = parcel.readString();
-        mPitchFrequency = parcel.readDouble();
-        mRatio = parcel.readString();
-    }
-
     /**
      * Default constructor
      */
@@ -126,39 +120,4 @@ public class Note extends SoundObject {
     public void setRatio(String ratio) {
         mRatio = ratio;
     }
-
-    /**
-     * Returns 0 if it is a standard parcel, else if it uses files need to return file
-     * descriptors
-     * @return 0
-     */
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    /**
-     * Write all the member variables of the class to the parcel
-     * User specifies the data types
-     * @param parcel The package with details about the Game
-     * @param i Any custom flags (with files)
-     */
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mName);
-        parcel.writeDouble(mPitchFrequency);
-        parcel.writeString(mRatio);
-    }
-
-    public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>() {
-        @Override
-        public Note createFromParcel(Parcel parcel) {
-            return new Note(parcel);
-        }
-
-        @Override
-        public Note[] newArray(int size) {
-            return new Note[size];
-        }
-    };
 }

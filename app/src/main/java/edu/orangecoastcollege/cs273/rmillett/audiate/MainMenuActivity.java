@@ -13,7 +13,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private DBHelper mDBHelper;
 
-    private Library mLibrary;
+    private SoundObjectLibrary mMasterChordScaleLibrary;
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
     private List<ChordScale> mAllScalesList;
@@ -31,8 +31,11 @@ public class MainMenuActivity extends AppCompatActivity {
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
         mAllScalesList = mDBHelper.importScalesFromSCL();
 
-        mLibrary = new Library();
-        // TODO: load lists into Library
+        mMasterChordScaleLibrary = new SoundObjectLibrary("MasterLibrary", 3);
+        // load lists into SoundObjectLibrary
+        mMasterChordScaleLibrary.addList(mAllIntervalsList);
+        mMasterChordScaleLibrary.addList(mAllChordsList);
+        mMasterChordScaleLibrary.addList(mAllScalesList);
 
     }
 
@@ -52,18 +55,16 @@ public class MainMenuActivity extends AppCompatActivity {
         if (selectedButton == findViewById(R.id.earTrainingButton)) {
             intent = new Intent(this, ExerciseSelectionMenuActivity.class);
             // TODO: put extra
-            startActivity(intent);
         }
         else if (selectedButton == findViewById(R.id.sightSingingButton)) {
             intent = new Intent(this, ExerciseSelectionMenuActivity.class);
             // TODO: put extra
-            startActivity(intent);
         }
-        else if (selectedButton == findViewById(R.id.libraryButton)) {
+        else {
             intent = new Intent(this, LibraryActivity.class);
             // TODO: put extra
-            startActivity(intent);
         }
+        startActivity(intent);
     }
 
     public void editProfile(View view) {
@@ -73,5 +74,4 @@ public class MainMenuActivity extends AppCompatActivity {
     public void logOut(View view) {
         // TODO: this method
     }
-
 }

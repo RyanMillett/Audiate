@@ -56,7 +56,7 @@
     <string name="chord_type">Chords</string>
     <string name="mode_type">Modes</string>
 
-    <!-- Sound Library Activity -->
+    <!-- SoSoundObjectLibraryrary Activity -->
     <string name="header_info_hint">Header text / info / instructions...</string>
     <string name="select_material">Select material to audition: </string>
     <string name="sort_material">Sort by: </string>

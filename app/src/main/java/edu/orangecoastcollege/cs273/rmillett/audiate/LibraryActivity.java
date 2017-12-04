@@ -76,14 +76,7 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
-//        db.importIntervalsFromCSV("intervals.csv");
-//
-//        allIntervalsList = db.getAllIntervals();
-//        allScalesList = db.importScalesFromSCL();
-
-        // TODO: get full library from MainMenu
+        // TODO: get full library from MainMenu, initialize lists
 
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
@@ -92,6 +85,7 @@ public class LibraryActivity extends AppCompatActivity {
         sortBySpinner = findViewById(R.id.sortMaterialSelectionSpinner);
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
+
         filteredChordScaleList = new ArrayList<>(allIntervalsList);
         mLibraryListAdapter = new LibraryListAdapter(this,
                 R.layout.audition_room_list_item, filteredChordScaleList);

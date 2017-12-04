@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author Ryan Millett
  * @version 2.0
  */
-public abstract class SoundObject implements Parcelable { // TODO: implement PLAYABLE interface (?)
+public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
 
     /**
      * int constant used as a default duration in milliseconds for all <code>SoundObjects</code>.
