@@ -33,10 +33,12 @@
 
         <activity
             android:name=".ExerciseSelectionMenuActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".LibraryActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
 
     </application>
