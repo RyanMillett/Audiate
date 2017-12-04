@@ -160,7 +160,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-                String name = fields[1].trim();
+                String name = fields[1].trim().equalsIgnoreCase("unnamed") ? fields[2].trim() : fields[1].trim();
                 String ratio = fields[2].trim();
                 double cents = Double.parseDouble(fields[3].trim());
 

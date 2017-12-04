@@ -29,6 +29,7 @@
 
         <activity
             android:name=".DetectVocalRangeActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -36,10 +37,17 @@
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".EarTrainingQuizActivity"
+            android:parentActivityName=".ExerciseSelectionMenuActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".LibraryActivity"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
+
+
 
     </application>
 

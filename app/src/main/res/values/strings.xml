@@ -40,6 +40,9 @@
     <string name="start_exercise_button">Start Exercise</string>
     <string name="exercise_help_button">Help</string>
 
+            <string name="historical">HISTORICAL</string>
+            <string name="harmonic">HARMONIC</string>
+
     <!-- Ear Training Exercises Selection Menu -->
     <string name="ear_training_exercise_selection">Ear Training Exercises</string>
     <string name="interval_identification_exercises_button">Interval Identification</string>
