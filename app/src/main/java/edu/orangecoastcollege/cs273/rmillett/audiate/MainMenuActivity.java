@@ -31,11 +31,11 @@ public class MainMenuActivity extends AppCompatActivity {
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
         mAllScalesList = mDBHelper.importScalesFromSCL();
 
-        mMasterChordScaleLibrary = new SoundObjectLibrary("MasterLibrary", 3);
-        // load lists into SoundObjectLibrary
-        mMasterChordScaleLibrary.addList(mAllIntervalsList);
-        mMasterChordScaleLibrary.addList(mAllChordsList);
-        mMasterChordScaleLibrary.addList(mAllScalesList);
+//        mMasterChordScaleLibrary = new SoundObjectLibrary("MasterLibrary", 3);
+//        // load lists into SoundObjectLibrary
+//        mMasterChordScaleLibrary.addList(mAllIntervalsList);
+//        mMasterChordScaleLibrary.addList(mAllChordsList);
+//        mMasterChordScaleLibrary.addList(mAllScalesList);
 
     }
 

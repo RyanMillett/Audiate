@@ -1,21 +1,17 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -86,11 +82,11 @@ public class LibraryActivity extends AppCompatActivity {
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
-        filteredChordScaleList = new ArrayList<>(allIntervalsList);
+//        filteredChordScaleList = new ArrayList<>(allIntervalsList);
 
-        mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.audition_room_list_item, filteredChordScaleList);
-        libraryListView.setAdapter(mLibraryListAdapter);
+//        mLibraryListAdapter = new LibraryListAdapter(this,
+//                R.layout.audition_room_list_item, filteredChordScaleList);
+//        libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =
