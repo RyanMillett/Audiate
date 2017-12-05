@@ -27,7 +27,7 @@ import java.util.Collections;
  *
  *
  * @author Ryan Millett
- * @version 3.0
+ * @version 2.1
  */
 public class SoundObjectPlayer {
 
@@ -43,6 +43,11 @@ public class SoundObjectPlayer {
 
     // TODO: constructors(?)
 
+    public void playSoundObject(SoundObject soundObject) {
+        loadSoundObject(soundObject);
+        play();
+    }
+
     /**
      * Loads a <code>SoundObject</code> into the <code>SoundObjectPlayer</code> and parses it based
      * on subclass. The <code>SoundObject</code> is sent to a private inner method which constructs
@@ -50,7 +55,7 @@ public class SoundObjectPlayer {
      *
      * @param soundObject <code>SoundObject</code> to be parsed and interpreted as an audio signal.
      */
-    public void loadSoundObject(SoundObject soundObject) {
+    private void loadSoundObject(SoundObject soundObject) {
         // Parse SoundObject and playback mode
         if (soundObject instanceof Note ||
                 (soundObject instanceof ChordScale && ((ChordScale) soundObject).getPlayBackMode()
@@ -180,7 +185,7 @@ public class SoundObjectPlayer {
     /**
      * Plays an audio interpretation of a loaded <code>SoundObject</code>
      */
-    public void play() {
+    private void play() {
         // TODO: thread this
         mAudioTrack.play();
     }

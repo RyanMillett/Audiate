@@ -110,7 +110,7 @@ public class PitchDetector {
     }
 
     private void getPitchClass(float frequencyInHz) {
-        mPitchClass = IntervalHandler.parsePitchClassFromFrequency(frequencyInHz);
+        mPitchClass = Music.parsePitchClassFromFrequency(frequencyInHz);
     }
 
     private void getAudioPermissions(Context context, Activity activity) {

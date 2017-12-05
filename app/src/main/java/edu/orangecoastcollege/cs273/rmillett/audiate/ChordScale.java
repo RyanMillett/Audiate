@@ -215,7 +215,7 @@ public class ChordScale extends SoundObject {
      *          two chord members.
      */
     public String getIntervalRatio(int pos1, int pos2) {
-        return IntervalHandler.convertDecimalToRatio(mChordMembers.get(pos1).getPitchFrequency()
+        return Music.convertDecimalToRatio(mChordMembers.get(pos1).getPitchFrequency()
                 / mChordMembers.get(pos2).getPitchFrequency());
     }
 
@@ -230,11 +230,11 @@ public class ChordScale extends SoundObject {
      */
     public double getIntervalDistanceInCents(int pos1, int pos2) {
         // Get whole-number ratio
-        String ratio = IntervalHandler.convertDecimalToRatio(
+        String ratio = Music.convertDecimalToRatio(
                         this.getChordMemberAtPos(pos2).getPitchFrequency()
                                 / this.getChordMemberAtPos(pos1).getPitchFrequency());
         // Convert to cents
-        return IntervalHandler.convertRatioToCents(ratio);
+        return Music.convertRatioToCents(ratio);
     }
 
     /**

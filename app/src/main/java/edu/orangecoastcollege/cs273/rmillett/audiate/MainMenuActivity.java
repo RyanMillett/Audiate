@@ -13,7 +13,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private DBHelper mDBHelper;
 
-    private SoundObjectLibrary mMasterChordScaleLibrary;
+    private ChordScaleLibrary mMasterChordScaleLibrary;
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
     private List<ChordScale> mAllScalesList;
@@ -31,12 +31,11 @@ public class MainMenuActivity extends AppCompatActivity {
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
         mAllScalesList = mDBHelper.importScalesFromSCL();
 
-//        mMasterChordScaleLibrary = new SoundObjectLibrary("MasterLibrary", 3);
-//        // load lists into SoundObjectLibrary
-//        mMasterChordScaleLibrary.addList(mAllIntervalsList);
-//        mMasterChordScaleLibrary.addList(mAllChordsList);
-//        mMasterChordScaleLibrary.addList(mAllScalesList);
-
+        mMasterChordScaleLibrary = new ChordScaleLibrary("AllChordScalesLibrary", 3);
+        // load lists into ChordScaleLibrary
+        mMasterChordScaleLibrary.addList(mAllIntervalsList);
+        mMasterChordScaleLibrary.addList(mAllChordsList);
+        mMasterChordScaleLibrary.addList(mAllScalesList);
     }
 
     public void activitySelectionHandler(View view) {

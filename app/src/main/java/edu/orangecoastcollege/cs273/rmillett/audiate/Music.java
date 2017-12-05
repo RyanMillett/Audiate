@@ -1,11 +1,5 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.content.res.AssetManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * Helper class used to handle intervals expressed in either ratios/fractions or cents for the purpose
  * of frequency calculations.
@@ -32,9 +26,9 @@ import java.io.InputStream;
  * @author Ryan Millett
  * @version 1.4
  */
-public class IntervalHandler {
+public class Music {
 
-    private static String TAG = "IntervalHandler";
+    private static String TAG = "Music";
 
     // TODO: make constants compatible with 24-TET + 36-TET
 
@@ -138,7 +132,7 @@ public class IntervalHandler {
      * @return double value of ratio expressed in cents
      */
     public static double convertRatioToCents(String ratio) {
-        return 1200 * Math.log(IntervalHandler.convertRatioToDecimal(ratio)) / Math.log(2);
+        return 1200 * Math.log(Music.convertRatioToDecimal(ratio)) / Math.log(2);
     }
 
     /**

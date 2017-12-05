@@ -53,6 +53,26 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_SCALE_DESCRIPTION = "scale_description";
     private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
 
+    // TODO: Relational tables
+    // Intervals:
+        // ALL intervals (full 580 list)
+        // Harmonics (up to 127th)
+        // Historical (all named intervals)
+        // Diatonic Just-Intoned
+        // Dodecaphonic Just-Intoned
+        // Diatonic-Chromatic Just and E.T.
+        // All Just-Intervals
+    // Chords:
+        // Triads -> Maj, min, Aug, dim
+        // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
+        // Just vs. E.T. triads/7ths
+    // Scales:
+        // ALL scales (full 4,000+ list)
+        // Heptatonic (diatonic) scales and modes
+            // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
+        // Olivier Messiaen's "Modes of Limited Transposition"
+
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
@@ -154,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length !=4) {
-                    Log.d("SoundObjectLibrary", "Skipping Bad CSV Row" + Arrays.toString(fields));
+                    Log.d("ChordScaleLibrary", "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
                 //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
@@ -168,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 interval.addChordMember(new Note("Fundamental"));
                 interval.addChordMember(new Note(name,
                         interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * IntervalHandler.convertRatioToDecimal(ratio), ratio));
+                                * Music.convertRatioToDecimal(ratio), ratio));
                 interval.setDescription("Size in cents: " + cents);
 
                 // add to DB
@@ -206,7 +226,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 interval.addChordMember(new Note("Fundamental"));
                 interval.addChordMember(new Note(cursor.getString(1),
                         interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * IntervalHandler.convertRatioToDecimal(cursor.getString(2)),
+                                * Music.convertRatioToDecimal(cursor.getString(2)),
                         cursor.getString(2)));
                 interval.setDescription(cursor.getString(4));
 
@@ -219,9 +239,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return allIntervalsList;
     }
 
-    // TODO: import/get all chords
+    // TODO: import/get all chords method(s)
 
-    // TODO: consolidate this with a "Scala handler" method in IntervalHandler helper method
+    // TODO: consolidate this with a "Scala handler" method in Music helper method
     public List<ChordScale> importScalesFromSCL() {
         // create list with at least 4k initial capacity
         List<ChordScale> allScalesList = new ArrayList<>(5000);
@@ -258,7 +278,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 // TODO: format capitalization
 
                 // Description
-                while (!IntervalHandler.isInteger(line)) {
+                while (!Music.isInteger(line)) {
                     if (line.contains("!")) {
                         line = br.readLine();
                     }
@@ -292,7 +312,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             // trim leading white-space
                             line = line.trim();
 
-                            // check if line contains any text other than a double or a ratio
+                            // remove any text other than a double or a ratio value
                             if (line.contains(" ")){
                                 line = line.substring(0, line.indexOf(" "));
                             }
@@ -302,11 +322,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
                             // parse intervals, add to scale
                             if (line.contains(".")) { // interval is in CENTS
-                                interval = IntervalHandler.convertCentsToDecimal(Double.parseDouble(line));
+                                interval = Music.convertCentsToDecimal(Double.parseDouble(line));
                                 scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
                             }
                             else if (line.contains("/")) { // interval is a RATIO
-                                interval = IntervalHandler.convertRatioToDecimal(line);
+                                interval = Music.convertRatioToDecimal(line);
                                 scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
                             }
 

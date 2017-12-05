@@ -156,34 +156,28 @@ public class LibraryActivity extends AppCompatActivity {
         Button selectedButton = (Button) view;
         if (selectedButton == testFundamentalButton) {
             fundamental.setDurationMilliseconds(DEFAULT_BLOCK_LENGTH_MILLISECONDS);
-            mSoundObjectPlayer.loadSoundObject(fundamental);
+            mSoundObjectPlayer.playSoundObject(fundamental);
 
-            // Play fundamental frequency
-            mSoundObjectPlayer.play();
         }
-        else if (selectedButton == playSelectionButton) {  // AND something has been selected!!!!
+        else if (selectedButton == playSelectionButton) {  // TODO: AND something has been selected!!!!
             // TODO: make dynamic, currently hard-coded for testing purposes only
             // Build chord
             chord.clearAllChordMembers();
             chord.addChordMember(fundamental);
             chord.addChordMember(new Note(
                     fundamental.getPitchFrequency()
-                            * IntervalHandler.convertRatioToDecimal("5/4")));
+                            * Music.convertRatioToDecimal("5/4")));
             chord.addChordMember(new Note(
                     fundamental.getPitchFrequency()
-                            * IntervalHandler.convertRatioToDecimal("3/2")));
+                            * Music.convertRatioToDecimal("3/2")));
             chord.addChordMember(new Note(
                     fundamental.getPitchFrequency()
-                            * IntervalHandler.convertRatioToDecimal("7/4")));
+                            * Music.convertRatioToDecimal("7/4")));
 
             detectPlaybackMode();
 
-            // TODO: add to OnChangeListener
-            // Load SoundObject into SoundObjectPlayer
-            mSoundObjectPlayer.loadSoundObject(chord);
-
-            // Play SoundObject
-            mSoundObjectPlayer.play();
+            // Load and Play SoundObject
+            mSoundObjectPlayer.playSoundObject(chord);
         }
 
         // TODO: disable/change color of button on play, re-enable on stop

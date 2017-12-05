@@ -3,18 +3,19 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: make parcelable
 /**
  *
  * @author Ryan Millett
  * @version 1.0
  */
-public class SoundObjectLibrary {
+public class ChordScaleLibrary {
 
     private String mName;
     private int mSize;
     private List<List<ChordScale>> mRecords;
 
-    public SoundObjectLibrary(String name, int size) {
+    public ChordScaleLibrary(String name, int size) {
         mName = name;
         mSize = size;
         mRecords = new ArrayList<>(mSize);
@@ -24,5 +25,4 @@ public class SoundObjectLibrary {
         mRecords.add(newList);
         mSize++;
     }
-
 }

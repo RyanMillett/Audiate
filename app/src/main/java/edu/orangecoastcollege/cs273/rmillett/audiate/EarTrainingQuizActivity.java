@@ -32,7 +32,6 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
 
     private Button[] mButtons = new Button[4];
 
-
     // This list contains all materials
     private List<ChordScale> mAllChordScaleList;
 
@@ -41,6 +40,8 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
     private List<ChordScale> mAllScalesList;
 
     private List<ChordScale> mQuizList;
+
+    private String mQuizType; // Stores what quiz choice is selected (interval, chord, or mode)
 
     private ChordScale mCorrectChordScale;
     private String mCorrectAnswer;
@@ -54,10 +55,8 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
     private TextView mQuestionNumberTextView; // shows the current question number
     private ImageView mEarTrainingImageView; // this loads a play button with an interval behind it
     private TextView mAnswerTextView; // displays the correct answer
+
     private TextView mGuessTextView;
-
-    private String mQuizType; // Stores what quiz choice is selected (interval, chord, or mode)
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +98,6 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         // Sets all the chordScales to just intervals
         mAllChordScaleList = mAllIntervalsList;
 
-
         // The TextViews and ImageView
         mEarTrainingImageView = (ImageView) findViewById(R.id.earTrainingImageView);
         mQuestionNumberTextView = (TextView) findViewById(R.id.questionNumberTextView);
@@ -110,24 +108,20 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         // Sets the TextView
         mQuestionNumberTextView.setText(getString(R.string.question, 1, QUESTIONS_IN_QUIZ));
 
-
         // Instantiate the Buttons
         mButtons[0] = (Button) findViewById(R.id.button);
         mButtons[1] = (Button) findViewById(R.id.button2);
         mButtons[2] = (Button) findViewById(R.id.button3);
         mButtons[3] = (Button) findViewById(R.id.button4);
 
-
         // Add Condition Statements Later
         mQuizList = new ArrayList<>(QUESTIONS_IN_QUIZ);
-
 
         rng = new SecureRandom();
         handler = new Handler();
 
         resetQuiz();
     }
-
 
     private void resetQuiz() {
 
@@ -155,7 +149,6 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         }
         */
 
-
         while(mQuizList.size() < QUESTIONS_IN_QUIZ) {
             int randomPosition = rng.nextInt(mAllIntervalsList.size());
             ChordScale randomChordScale = mAllChordScaleList.get(randomPosition);
@@ -168,18 +161,16 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         loadNextChordScale();
     }
 
-
     private void loadNextChordScale() {
 
         mCorrectChordScale = mQuizList.remove(0);
 
         mAnswerTextView.setText("");
 
-
         int questionNumber = QUESTIONS_IN_QUIZ - mQuizList.size();
         mQuestionNumberTextView.setText(getString(R.string.question, questionNumber, QUESTIONS_IN_QUIZ));
 
-//        // Assigning the correct SoundObject/ChordScale
+//        // Assigning the correct ChordScale
 //        mSoundObjectPlayer.loadSoundObject(mCorrectChordScale);
 
         // Check the correct answer
@@ -188,14 +179,13 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         mQuizList = new ArrayList<>(mAllIntervalsList);
         mCorrectAnswer = mCorrectChordScale.getName();
 
-
         // Shuffles the Collection
         do {
             Collections.shuffle(mQuizList);
         }
         while (mQuizList.subList(0, mButtons.length).contains(mCorrectAnswer));
 
-        // Sets the button to the correct SoundObject/ChordScale
+        // Sets the button to the correct ChordScale
         for(int i = 0; i < mButtons.length; i++)
         {
             mButtons[i].setEnabled(true);
@@ -206,11 +196,9 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         mButtons[rng.nextInt(mButtons.length)].setText(mCorrectAnswer);
     }
 
-
     public void makeGuess(View v) {
-
-        Button clickedButton = (Button) v;
-        String guess = clickedButton.getText().toString();
+        Button selectedButton = (Button) v;
+        String guess = selectedButton.getText().toString();
 
         mTotalGuesses++;
 
@@ -245,25 +233,18 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
                 builder.show();
             }
         } else {
-            clickedButton.setEnabled(false);
+            selectedButton.setEnabled(false);
             mAnswerTextView.setText(getString(R.string.incorrect_answer));
             mAnswerTextView.setTextColor(ContextCompat.getColor(this, R.color.incorrect_answer));
         }
-
     }
 
-
     /**
-     * This will play the correct SoundObject/ChordScale
+     * This will play the correct SoundObject
      * so the user can listen and make a correct guess.
      * @param v
      */
-    public void playChordScale(View v)
-    {
-        // Assigning the correct SoundObject/ChordScale
-        mSoundObjectPlayer.loadSoundObject(mCorrectChordScale);
-
-        mSoundObjectPlayer.play();
-
+    public void playChordScale(View v) {
+        mSoundObjectPlayer.playSoundObject(mCorrectChordScale);
     }
 }
