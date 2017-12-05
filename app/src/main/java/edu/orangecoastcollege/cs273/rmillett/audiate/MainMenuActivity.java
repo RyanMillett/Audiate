@@ -29,7 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
-        mAllScalesList = mDBHelper.importScalesFromSCL();
+        // mAllScalesList = mDBHelper.importScalesFromSCL();
 
         mMasterChordScaleLibrary = new ChordScaleLibrary("AllChordScalesLibrary", 3);
         // load lists into ChordScaleLibrary
@@ -72,5 +72,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void logOut(View view) {
         // TODO: this method
+    }
+
+    /**
+     * Launches the GoogleMaps Activity
+     * @param view
+     */
+    public void activityGoogleMaps(View view)
+    {
+        Intent launchGoogleMaps = new Intent(this, GoogleMapsActivity.class);
+        startActivity(launchGoogleMaps);
+
     }
 }

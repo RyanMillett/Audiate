@@ -26,8 +26,10 @@
             android:value="@string/google_maps_key"/>
         <activity
             android:name=".MainMenuActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
         <activity android:name=".GoogleMapsActivity"
+            android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
         <activity

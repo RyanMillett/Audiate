@@ -35,10 +35,13 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
 
     private GoogleMap mMap;
 
+    // Google API client is "fused" services for all apps on the device (location, maps, play store)
     private GoogleApiClient mGoogleApiClient;
 
-    private Location mLocation;
+    // Last Location is the last latitude and longitude reported
+    private Location mLastLocation;
 
+    // Location requests are made every x seconds
     private LocationRequest mLocationRequest;
 
     @Override
@@ -83,10 +86,10 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void handleNewLocation(Location newLocation) {
-        mLocation = newLocation;
+        mLastLocation = newLocation;
         mMap.clear();
 
-        LatLng myCoordinate = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+        LatLng myCoordinate = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         mMap.addMarker(new MarkerOptions()
                 .position(myCoordinate)
                 .title("Current Location")
@@ -116,10 +119,10 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
-        mLocation = LocationServices.FusedLocationApi
+        mLastLocation = LocationServices.FusedLocationApi
                 .getLastLocation(mGoogleApiClient);
 
-        handleNewLocation(mLocation);
+        handleNewLocation(mLastLocation);
     }
 
     @Override
@@ -127,15 +130,15 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == COARSE_LOCATION_REQUEST_CODE) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                mLocation = new Location("");
-                mLocation.setLatitude(0.0);
-                mLocation.setLongitude(0.0);
+                mLastLocation = new Location("");
+                mLastLocation.setLatitude(0.0);
+                mLastLocation.setLongitude(0.0);
             } else {
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                mLocation = LocationServices.FusedLocationApi
+                mLastLocation = LocationServices.FusedLocationApi
                         .getLastLocation(mGoogleApiClient);
             }
-            handleNewLocation(mLocation);
+            handleNewLocation(mLastLocation);
         }
     }
 
