@@ -102,7 +102,7 @@ public class LibraryActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
 
-        ArrayAdapter<String>
+//        ArrayAdapter<String>
 
         // playback settings group
         // TODO: add OnCheckedListener
