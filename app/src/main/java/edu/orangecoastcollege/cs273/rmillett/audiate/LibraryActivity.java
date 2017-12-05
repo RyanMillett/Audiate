@@ -49,17 +49,22 @@ public class LibraryActivity extends AppCompatActivity {
     private RadioButton mode3RadioButton;
     private RadioButton mode4RadioButton;
 
+    // playback mode CheckBox group
     private CheckBox aux1CheckBox;
     private CheckBox aux2CheckBox;
 
+    // playback buttons
     private Button testFundamentalButton;
     private Button playSelectionButton;
 
+    // List adapter
     private LibraryListAdapter mLibraryListAdapter;
 
+    // SoundObjects
     private Note fundamental;
     private ChordScale chord;
 
+    // Player
     private SoundObjectPlayer mSoundObjectPlayer;
 
     /**
@@ -78,7 +83,7 @@ public class LibraryActivity extends AppCompatActivity {
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
         selectMaterialSpinner = findViewById(R.id.materialSelectionSpinner);
-        sortBySpinner = findViewById(R.id.sortMaterialSelectionSpinner);
+        sortBySpinner = findViewById(R.id.filterMaterialSpinner);
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
@@ -96,6 +101,8 @@ public class LibraryActivity extends AppCompatActivity {
         ArrayAdapter<String> sortMaterialBySpinnerAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
+
+        ArrayAdapter<String>
 
         // playback settings group
         // TODO: add OnCheckedListener
