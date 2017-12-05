@@ -32,6 +32,7 @@
     <string name="sound_library_button">Sound Library</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="log_out_button">Log Out</string>
+    <string name="google_maps_button">Google Maps</string>
     <string name="general_settings">General Settings</string>
 
     <!-- Exercise Selection Texts -->

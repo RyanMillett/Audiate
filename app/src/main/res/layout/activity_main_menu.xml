@@ -58,6 +58,15 @@
             android:layout_gravity="center_horizontal"
             android:onClick="activitySelectionHandler"/>
 
+        <Button
+            android:id="@+id/googleMapsButton"
+            android:textSize="@dimen/small_text_size"
+            android:text="@string/google_maps_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:onClick="activityGoogleMaps"/>
+
     </LinearLayout>
 
     <LinearLayout
