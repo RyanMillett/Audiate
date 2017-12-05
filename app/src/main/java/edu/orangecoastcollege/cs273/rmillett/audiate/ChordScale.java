@@ -177,6 +177,18 @@ public class ChordScale extends SoundObject {
         return mChordMembers.get(pos);
     }
 
+    public void resetFundamentalFrequency(double newFundamentalFrequency) {
+        // reset fundamental
+        this.getChordMemberAtPos(0).setPitchFrequency(newFundamentalFrequency);
+
+        // adjust all chord members
+        for (int i = 1; i <= this.getSize(); ++i) {
+            this.getChordMemberAtPos(i).setPitchFrequency(
+                    Music.convertRatioToDecimal(getChordMemberAtPos(i)
+                            .getRatio()) * newFundamentalFrequency);
+        }
+    }
+
     /**
      * Gets a list of all the pitch frequencies of each chord member contained in the <code>ChordScale</code>.
      *

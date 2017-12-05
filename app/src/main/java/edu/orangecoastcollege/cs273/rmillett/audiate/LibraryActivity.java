@@ -140,6 +140,15 @@ public class LibraryActivity extends AppCompatActivity {
         return musicalMaterials;
     }
 
+    // TODO: make this dynamic——currently hard-coded for testing purposes
+    private String[] getAllFilters() {
+        String[] filters = new String[5];
+
+        filters[0] = "[Filter Musical Material]";
+
+        return filters;
+    }
+
     /**
      * Handles audio playback
      *
