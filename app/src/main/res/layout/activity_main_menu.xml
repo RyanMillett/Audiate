@@ -10,12 +10,23 @@
     >
 
     <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="25dp"
+        android:layout_weight="0.5"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="@dimen/medium_text_size"/>
+
+    <TextView
         android:id="@+id/mainMenuTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="25dp"
+        android:layout_weight=".5"
         android:text="@string/main_menu"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
@@ -57,15 +68,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="activitySelectionHandler"/>
-
-        <Button
-            android:id="@+id/googleMapsButton"
-            android:textSize="@dimen/small_text_size"
-            android:text="@string/google_maps_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="activityGoogleMaps"/>
 
     </LinearLayout>
 

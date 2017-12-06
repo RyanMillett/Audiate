@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,11 @@ import java.util.List;
 public class MainMenuActivity extends AppCompatActivity {
 
     private DBHelper mDBHelper;
+
+    User user;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
@@ -29,6 +38,13 @@ public class MainMenuActivity extends AppCompatActivity {
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
         mAllScalesList = mDBHelper.importScalesFromSCL();
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
+
+        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
 
     }
 
@@ -62,7 +78,10 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void logOut(View view) {
-        // TODO: this method
+        mAuth.signOut();
+        finish();
+        Intent logInIntent = new Intent(this, LogInActivity.class);
+        startActivity(logInIntent);
     }
 
 

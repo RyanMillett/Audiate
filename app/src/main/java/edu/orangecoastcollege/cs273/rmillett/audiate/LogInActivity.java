@@ -1,7 +1,6 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -133,10 +132,7 @@ public class LogInActivity extends AppCompatActivity {
                     if(task.isSuccessful())
                     {
                         mUser = mAuth.getCurrentUser();
-                        if (mUser.isEmailVerified())
-                            goToMain();
-                        else
-                            Toast.makeText(LogInActivity.this, "Please verify your account in the email: " + mUser.getEmail(), Toast.LENGTH_LONG).show();
+                        goToMain();
                     }
                     else {
                         Toast.makeText(LogInActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();

@@ -27,6 +27,7 @@
         <activity android:name=".LogInActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ProfileActivity"
+                  android:parentActivityName=".LogInActivity"
                   android:screenOrientation="portrait"/>
         <activity
             android:name=".MainMenuActivity"
