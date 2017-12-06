@@ -65,12 +65,5 @@ public class MainMenuActivity extends AppCompatActivity {
         // TODO: this method
     }
 
-    /**
-     * Launches the GoogleMaps Activity
-     * @param view
-     */
-    public void activityGoogleMaps(View view) {
-        Intent launchGoogleMaps = new Intent(this, GoogleMapsActivity.class);
-        startActivity(launchGoogleMaps);
-    }
+
 }

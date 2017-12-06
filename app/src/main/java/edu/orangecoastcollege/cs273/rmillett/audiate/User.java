@@ -50,44 +50,46 @@ public class User implements Parcelable {
 
     public long getId() { return mId; }
 
-    public String getmUserName() {
+    public void setId(long id) { mId = id; }
+
+    public String getUserName() {
         return mUserName;
     }
 
-    public void setmUserName(String mUserName) {
-        this.mUserName = mUserName;
+    public void setUserName(String userName) {
+        mUserName = userName;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
-        this.mEmail = mEmail;
+    public void setEmail(String email) {
+        mEmail = email;
     }
 
-    public String getmLowPitch() {
+    public String getLowPitch() {
         return mLowPitch;
     }
 
-    public void setmLowPitch(String mLowPitch) {
-        this.mLowPitch = mLowPitch;
+    public void setLowPitch(String lowPitch) {
+        mLowPitch = lowPitch;
     }
 
-    public String getmHighPitch() {
+    public String getHighPitch() {
         return mHighPitch;
     }
 
-    public void setmHighPitch(String mHighPitch) {
-        this.mHighPitch = mHighPitch;
+    public void setHighPitch(String highPitch) {
+        mHighPitch = highPitch;
     }
 
-    public String getmVocalRange() {
+    public String getVocalRange() {
         return mVocalRange;
     }
 
-    public void setmVocalRange(String mVocalRange) {
-        this.mVocalRange = mVocalRange;
+    public void setVocalRange(String vocalRange) {
+        mVocalRange = vocalRange;
     }
 
     @Override

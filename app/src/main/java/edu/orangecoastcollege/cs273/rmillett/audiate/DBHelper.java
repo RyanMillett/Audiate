@@ -53,6 +53,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_SCALE_DESCRIPTION = "scale_description";
     private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
 
+    // Table of users
+    private static final String USERS_TABLE = "Users";
+    private static final String USERS_KEY_FIELD_ID = "id";
+    private static final String FIELD_USER_NAME = "user_name";
+    private static final String FIELD_EMAIL = "email";
+    private static final String FIELD_LOW_PITCH = "low_pitch";
+    private static final String FIELD_HIGH_PITCH = "high_pitch";
+    private static final String FIELD_VOCAL_RANGE = "vocal_range";
+
     // TODO: Relational tables
     // Intervals:
         // ALL intervals (full 580 list)
@@ -107,6 +116,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 + FIELD_SCALE_DESCRIPTION + " TEXT, "
                 + FIELD_SCALE_SCL_FILE_NAME + " TEXT" + ")";
         sqLiteDatabase.execSQL(createQuery);
+
+        // Create Users table
+        createQuery = "CREATE TABLE " + USERS_TABLE + "("
+                + USERS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
+                + FIELD_USER_NAME + " TEXT, "
+                + FIELD_EMAIL + " TEXT, "
+                + FIELD_LOW_PITCH + " TEXT, "
+                + FIELD_HIGH_PITCH + " TEXT, "
+                + FIELD_VOCAL_RANGE + " TEXT" + ")";
+        sqLiteDatabase.execSQL(createQuery);
     }
 
     @Override
@@ -114,6 +133,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + INTERVALS_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CHORDS_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SCALES_TABLE);
+
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
 
         onCreate(sqLiteDatabase);
     }
@@ -155,6 +176,136 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(SCALES_TABLE, null, values);
         db.close();
+    }
+
+    /**
+     * This adds a user to the database.
+     * Each user contains a user name, email, low pitch, high pitch,
+     * and vocal range.
+     * @param user
+     */
+    public void addUser(User user)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_USER_NAME, user.getUserName());
+        values.put(FIELD_EMAIL, user.getEmail());
+        values.put(FIELD_LOW_PITCH, user.getLowPitch());
+        values.put(FIELD_HIGH_PITCH, user.getHighPitch());
+        values.put(FIELD_VOCAL_RANGE, user.getVocalRange());
+
+        long id = db.insert(USERS_TABLE, null, values);
+
+        user.setId(id);
+
+        db.close();
+    }
+
+    /**
+     * This gets a list of all the users from the database.
+     * @return
+     */
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> userList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                FIELD_USER_NAME, FIELD_EMAIL,
+                FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
+                FIELD_VOCAL_RANGE},
+                null,
+                null,
+                null, null, null, null);
+        if(cursor.moveToFirst()) {
+            do {
+                User user = new User(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5));
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        return userList;
+    }
+
+    /**
+     * This deletes a user from the database.
+     * @param user
+     */
+    public void deleteUser(User user)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(USERS_TABLE, USERS_KEY_FIELD_ID + " = ?",
+                new String[] {String.valueOf(user.getId())});
+        db.close();
+    }
+
+    /**
+     * This deletes all the users from the database.
+     */
+    public void deleteAllUsers()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(USERS_TABLE, null, null);
+
+        db.close();
+    }
+
+    /**
+     * This updates the information from one user in the database.
+     * @param user
+     */
+    public void updateUser(User user)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_USER_NAME, user.getUserName());
+        values.put(FIELD_EMAIL, user.getEmail());
+        values.put(FIELD_LOW_PITCH, user.getLowPitch());
+        values.put(FIELD_HIGH_PITCH, user.getHighPitch());
+        values.put(FIELD_VOCAL_RANGE, user.getVocalRange());
+
+        db.update(USERS_TABLE, values, USERS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(user.getId())});
+        db.close();
+    }
+
+    /**
+     * This gets one user from the database.
+     * @param id
+     * @return
+     */
+    public User getUser(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                FIELD_USER_NAME, FIELD_EMAIL,
+                FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
+                FIELD_VOCAL_RANGE},
+                USERS_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+        if(cursor != null)
+            cursor.moveToFirst();
+
+        User user = new User(cursor.getLong(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5));
+
+        db.close();
+        return user;
     }
 
     public boolean importIntervalsFromCSV(String csvFileName) {

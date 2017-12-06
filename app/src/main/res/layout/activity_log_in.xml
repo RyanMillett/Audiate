@@ -47,25 +47,25 @@
         android:layout_weight="0.30">
 
         <Button
-            android:id="@+id/signInButton"
+            android:id="@+id/logInButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:padding="@dimen/buttons_padding"
             android:textSize="@dimen/medium_text_size"
-            android:onClick="LogIn"
+            android:onClick="handleLoginButtons"
             android:text="@string/log_in_button"/>
 
         <Button
-            android:id="@+id/newUserButton"
+            android:id="@+id/createProfileButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:padding="@dimen/buttons_padding"
             android:textSize="@dimen/medium_text_size"
-            android:onClick="createProfile"
+            android:onClick="handleLoginButtons"
             android:text="@string/create_profile_button"/>
     </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:clickable="true"
-            android:onClick="googleMaps"
+            android:onClick="activityGoogleMaps"
             app:srcCompat="@drawable/google_maps_icon"/>
 
         </LinearLayout>
