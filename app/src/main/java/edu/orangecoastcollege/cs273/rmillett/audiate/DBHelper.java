@@ -57,7 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String USERS_TABLE = "Users";
     private static final String USERS_KEY_FIELD_ID = "id";
     private static final String FIELD_USER_NAME = "user_name";
-    private static final String FIELD_EMAIL = "email";
     private static final String FIELD_LOW_PITCH = "low_pitch";
     private static final String FIELD_HIGH_PITCH = "high_pitch";
     private static final String FIELD_VOCAL_RANGE = "vocal_range";
@@ -121,7 +120,6 @@ public class DBHelper extends SQLiteOpenHelper {
         createQuery = "CREATE TABLE " + USERS_TABLE + "("
                 + USERS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
                 + FIELD_USER_NAME + " TEXT, "
-                + FIELD_EMAIL + " TEXT, "
                 + FIELD_LOW_PITCH + " TEXT, "
                 + FIELD_HIGH_PITCH + " TEXT, "
                 + FIELD_VOCAL_RANGE + " TEXT" + ")";
@@ -190,7 +188,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_USER_NAME, user.getUserName());
-        values.put(FIELD_EMAIL, user.getEmail());
         values.put(FIELD_LOW_PITCH, user.getLowPitch());
         values.put(FIELD_HIGH_PITCH, user.getHighPitch());
         values.put(FIELD_VOCAL_RANGE, user.getVocalRange());
@@ -212,7 +209,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = database.query(
                 USERS_TABLE,
                 new String[]{USERS_KEY_FIELD_ID,
-                FIELD_USER_NAME, FIELD_EMAIL,
+                FIELD_USER_NAME,
                 FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
                 FIELD_VOCAL_RANGE},
                 null,
@@ -224,8 +221,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5));
+                        cursor.getString(4));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -267,7 +263,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_USER_NAME, user.getUserName());
-        values.put(FIELD_EMAIL, user.getEmail());
         values.put(FIELD_LOW_PITCH, user.getLowPitch());
         values.put(FIELD_HIGH_PITCH, user.getHighPitch());
         values.put(FIELD_VOCAL_RANGE, user.getVocalRange());
@@ -288,7 +283,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 USERS_TABLE,
                 new String[]{USERS_KEY_FIELD_ID,
-                FIELD_USER_NAME, FIELD_EMAIL,
+                FIELD_USER_NAME,
                 FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
                 FIELD_VOCAL_RANGE},
                 USERS_KEY_FIELD_ID + "=?",
@@ -301,8 +296,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5));
+                cursor.getString(4));
 
         db.close();
         return user;

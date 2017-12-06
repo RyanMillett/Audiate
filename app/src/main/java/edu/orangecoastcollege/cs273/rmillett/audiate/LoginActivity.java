@@ -28,14 +28,14 @@ import com.google.firebase.auth.FirebaseUser;
  *
  * Created by Brian Wegener on 11/25/2017
  */
-public class LogInActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     // Animation = used for tween(ed) animations
     private Animation alphaAnim;
 
-    // Connects views (texts/buttons) to the LogInActivity
-    private EditText emailLogInEditText;
+    // Connects views (texts/buttons) to the LoginActivity
+    private EditText userNameLoginEditText;
     private EditText passwordLogInEditText;
     private Button signInButton;
     private Button newUserButton;
@@ -63,7 +63,7 @@ public class LogInActivity extends AppCompatActivity {
         // Gets the current user
         mUser = mAuth.getCurrentUser();
 
-        emailLogInEditText = (EditText) findViewById(R.id.userNameLogInET);
+        userNameLoginEditText = (EditText) findViewById(R.id.userNameLogInET);
         passwordLogInEditText = (EditText) findViewById(R.id.passwordLogInET);
         signInButton = (Button) findViewById(R.id.logInButton);
         newUserButton = (Button) findViewById(R.id.createProfileButton);
@@ -84,8 +84,8 @@ public class LogInActivity extends AppCompatActivity {
     {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
         a.reset();
-        emailLogInEditText.clearAnimation();
-        emailLogInEditText.startAnimation(a);
+        userNameLoginEditText.clearAnimation();
+        userNameLoginEditText.startAnimation(a);
         passwordLogInEditText.clearAnimation();
         passwordLogInEditText.startAnimation(a);
         signInButton.clearAnimation();
@@ -104,8 +104,8 @@ public class LogInActivity extends AppCompatActivity {
      */
     private boolean isValidInput() {
         boolean valid = true;
-        if (TextUtils.isEmpty(emailLogInEditText.getText())) {
-            emailLogInEditText.setError("Required.");
+        if (TextUtils.isEmpty(userNameLoginEditText.getText())) {
+            userNameLoginEditText.setError("Required.");
             valid = false;
         }
         if (TextUtils.isEmpty(passwordLogInEditText.getText())) {
@@ -117,16 +117,16 @@ public class LogInActivity extends AppCompatActivity {
 
     /**
      * This allows the user to log in.
-     * @param email
+     * @param userName
      * @param password
      */
-    private void LogIn(String email, String password)
+    private void LogIn(String userName, String password)
     {
         if(!isValidInput())
             return;
         else
         {
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
@@ -135,7 +135,7 @@ public class LogInActivity extends AppCompatActivity {
                         goToMain();
                     }
                     else {
-                        Toast.makeText(LogInActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -158,7 +158,7 @@ public class LogInActivity extends AppCompatActivity {
                 break;
 
             case R.id.logInButton:
-                LogIn(emailLogInEditText.getText().toString(), passwordLogInEditText.getText().toString());
+                LogIn(userNameLoginEditText.getText().toString(), passwordLogInEditText.getText().toString());
                 break;
         }
     }

@@ -24,7 +24,6 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser mUser;
 
     private EditText userNameEditText;
-    private EditText emailEditText;
     private EditText passwordEditText;
 
     private TextView lowPitchTextView;
@@ -37,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         // This should allow the users to return to the
-        // LogInActivity
+        // LoginActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
@@ -57,11 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(userNameEditText.getText())) {
             userNameEditText.setError("Required.");
             valid = false;
-        }
-
-        if(TextUtils.isEmpty(emailEditText.getText())) {
-            emailEditText.setError("Required.");
-            valid  = false;
         }
 
         if(TextUtils.isEmpty(passwordEditText.getText())) {
@@ -94,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch(v.getId())
         {
             case R.id.confirmProfileButton:
-                createUser(userNameEditText.getText().toString(), emailEditText.getText().toString(), passwordEditText.getText().toString(),
+                createUser(userNameEditText.getText().toString(), passwordEditText.getText().toString(),
                         lowPitchTextView.getText().toString(), highPitchTextView.getText().toString(), vocalRangeTextView.getText().toString());
                 goToMain();
                 break;
@@ -106,12 +100,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange)
+    public void createUser(String userName, String password, String lowPitch, String highPitch, String vocalRange)
     {
         if(!profileComplete())
             return;
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
@@ -127,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // Adds the user to the database
-        mDBHelper.addUser(new User(userName, email, lowPitch, highPitch, vocalRange));
+        mDBHelper.addUser(new User(userName, lowPitch, highPitch, vocalRange));
     }
 
 

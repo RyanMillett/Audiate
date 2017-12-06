@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sheetmusic"
     android:orientation="vertical"
-    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.LogInActivity"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.LoginActivity"
     android:weightSum="1">
 
 
@@ -21,7 +20,7 @@
         android:imeOptions="actionDone"
         android:selectAllOnFocus="true"
         android:ems="10"
-        android:hint="@string/user_name_email"
+        android:hint="@string/user_name"
         android:inputType="textPersonName"
         android:text=""
         android:textAlignment="center"

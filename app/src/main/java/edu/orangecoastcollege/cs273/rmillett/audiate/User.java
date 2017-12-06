@@ -17,32 +17,29 @@ public class User implements Parcelable {
 
     private long mId;
     private String mUserName;
-    private String mEmail;
     private String mLowPitch;
     private String mHighPitch;
     private String mVocalRange;
 
 
-    public User(long id, String userName, String email, String lowPitch, String highPitch, String vocalRange)
+    public User(long id, String userName, String lowPitch, String highPitch, String vocalRange)
     {
         mId = id;
         mUserName = userName;
-        mEmail = email;
         mLowPitch = lowPitch;
         mHighPitch = highPitch;
         mVocalRange = vocalRange;
     }
 
-    public User(String userName, String email, String lowPitch, String highPitch, String vocalRange)
+    public User(String userName, String lowPitch, String highPitch, String vocalRange)
     {
-        this(-1, userName, email, lowPitch, highPitch, vocalRange);
+        this(-1, userName, lowPitch, highPitch, vocalRange);
     }
 
     protected User(Parcel in)
     {
         mId = in.readLong();
         mUserName = in.readString();
-        mEmail = in.readString();
         mLowPitch = in.readString();
         mHighPitch = in.readString();
         mVocalRange = in.readString();
@@ -58,14 +55,6 @@ public class User implements Parcelable {
 
     public void setUserName(String userName) {
         mUserName = userName;
-    }
-
-    public String getEmail() {
-        return mEmail;
-    }
-
-    public void setEmail(String email) {
-        mEmail = email;
     }
 
     public String getLowPitch() {
@@ -100,7 +89,6 @@ public class User implements Parcelable {
     {
         parcel.writeLong(mId);
         parcel.writeString(mUserName);
-        parcel.writeString(mEmail);
         parcel.writeString(mLowPitch);
         parcel.writeString(mHighPitch);
         parcel.writeString(mVocalRange);
@@ -123,7 +111,6 @@ public class User implements Parcelable {
     public String toString() {
         return "User{" +
                 "mUserName='" + mUserName + '\'' +
-                ", mEmail='" + mEmail + '\'' +
                 ", mLowPitch='" + mLowPitch + '\'' +
                 ", mHighPitch='" + mHighPitch + '\'' +
                 ", mVocalRange='" + mVocalRange + '\'' +

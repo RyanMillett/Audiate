@@ -80,7 +80,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void logOut(View view) {
         mAuth.signOut();
         finish();
-        Intent logInIntent = new Intent(this, LogInActivity.class);
+        Intent logInIntent = new Intent(this, LoginActivity.class);
         startActivity(logInIntent);
     }
 
