@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Ryan Millett
  * @version 2.0
  */
-public class ChordScale extends SoundObject {
+public class ChordScale extends SoundObject implements Parcelable {
 
     /**
      * String constant used to indicate that all chord members contained in a <code>ChordScale</code>
@@ -60,7 +60,13 @@ public class ChordScale extends SoundObject {
         mDescription = parcel.readString();
         mDurationMilliseconds = parcel.readInt();
         mSize = parcel.readInt();
-        mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
+        // NEW WAY: Read as an array of Notes, then add them to the ArrayList member variable
+        Note[] tempArray = (Note[]) parcel.readArray(Note.class.getClassLoader());
+        mChordMembers = new ArrayList<>(tempArray.length);
+        for (Note note : tempArray)
+            mChordMembers.add(note);
+        // OLD WAY: (BELOW)
+        //mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
         mPlayBackMode = parcel.readString();
         mSCLfileName = parcel.readString();
     }
