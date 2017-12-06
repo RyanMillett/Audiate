@@ -31,7 +31,8 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 finish();
 
-                Intent logInIntent = new Intent(SplashActivity.this, LogInActivity.class);
+                // TODO: temporarily re-routing the intent directly to MainMenu, change back to LogIn later
+                Intent logInIntent = new Intent(SplashActivity.this, MainMenuActivity.class);
 
                 startActivity(logInIntent);
 

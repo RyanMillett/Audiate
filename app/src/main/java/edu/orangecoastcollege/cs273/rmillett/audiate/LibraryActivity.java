@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,19 +16,6 @@ import android.widget.TextView;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
-
-    /**
-     * int constant value representing the default duration in milliseconds for single-notes and
-     * block chords
-     */
-    public static final int DEFAULT_BLOCK_LENGTH_MILLISECONDS
-            = SoundObject.DEFAULT_DURATION_MILLISECONDS;
-
-    /**
-     * int constant value representing the defaulting duration in milliseconds for sequences (e.g.
-     * arpeggios, scales, chord sequences, etc...)
-     */
-    public static final int DEFAULT_ARP_LENGTH_MILLISECONDS = 500;
 
     // DB and lists
     private DBHelper db;
@@ -173,35 +161,32 @@ public class LibraryActivity extends AppCompatActivity {
 
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
-        if (setFundamentalEditText.getText().toString().trim().length() > 0)
+        if (!TextUtils.isEmpty(setFundamentalEditText.getText())) {
             fundamental.setPitchFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
+        }
+
 
         // Determine button ID
-        Button selectedButton = (Button) view;
-        if (selectedButton == testFundamentalButton) {
-            fundamental.setDurationMilliseconds(DEFAULT_BLOCK_LENGTH_MILLISECONDS);
-            mSoundObjectPlayer.playSoundObject(fundamental);
-
-        }
-        else if (selectedButton == playSelectionButton) {  // TODO: AND something has been selected!!!!
-            // TODO: make dynamic, currently hard-coded for testing purposes only
-            // Build chord
-            chord.clearAllChordMembers();
-            chord.addChordMember(fundamental);
-            chord.addChordMember(new Note(
-                    fundamental.getPitchFrequency()
-                            * Music.convertRatioToDecimal("5/4")));
-            chord.addChordMember(new Note(
-                    fundamental.getPitchFrequency()
-                            * Music.convertRatioToDecimal("3/2")));
-            chord.addChordMember(new Note(
-                    fundamental.getPitchFrequency()
-                            * Music.convertRatioToDecimal("7/4")));
-
-            detectPlaybackMode();
-
-            // Load and Play SoundObject
-            mSoundObjectPlayer.playSoundObject(chord);
+        switch (view.getId()) {
+            case R.id.testFundamentalFreqButton:
+                fundamental.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+                mSoundObjectPlayer.playSoundObject(fundamental);
+                break;
+            case R.id.playSelectionButton: // TODO: AND something has been selected!!!!
+                // TODO: make dynamic, currently hard-coded for testing purposes only
+                // Build chord
+                chord.clearAllChordMembers();
+                chord.addChordMember(fundamental);
+                chord.addChordMember(new Note(fundamental.getPitchFrequency()
+                                * Music.convertRatioToDecimal("5/4")));
+                chord.addChordMember(new Note(fundamental.getPitchFrequency()
+                                * Music.convertRatioToDecimal("3/2")));
+                chord.addChordMember(new Note(fundamental.getPitchFrequency()
+                                * Music.convertRatioToDecimal("7/4")));
+                detectPlaybackMode();
+                // Load and Play SoundObject
+                mSoundObjectPlayer.playSoundObject(chord);
+                break;
         }
 
         // TODO: disable/change color of button on play, re-enable on stop
@@ -217,15 +202,15 @@ public class LibraryActivity extends AppCompatActivity {
         // Set PlayBack mode
         if (mode2RadioButton.isChecked()) {
             chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
-            chord.setDurationMilliseconds(DEFAULT_ARP_LENGTH_MILLISECONDS);
+            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
             chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
-            chord.setDurationMilliseconds(DEFAULT_ARP_LENGTH_MILLISECONDS);
+            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else {
             chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
-            chord.setDurationMilliseconds(DEFAULT_BLOCK_LENGTH_MILLISECONDS);
+            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
         }
     }
 }

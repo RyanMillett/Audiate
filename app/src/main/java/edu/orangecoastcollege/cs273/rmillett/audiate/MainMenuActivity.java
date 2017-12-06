@@ -24,7 +24,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
-    private List<ChordScale> mAllScalesList;
+    //private List<ChordScale> mAllScalesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,14 @@ public class MainMenuActivity extends AppCompatActivity {
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
-        mAllScalesList = mDBHelper.importScalesFromSCL();
+        //mAllScalesList = mDBHelper.importScalesFromSCL();
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
         TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
 
-        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
+//        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
 
     }
 
@@ -67,7 +67,7 @@ public class MainMenuActivity extends AppCompatActivity {
         // Load ChordScaleLibraries
         activityIntent.putExtra("AllIntervalsList", mAllIntervalsList.toArray());
         activityIntent.putExtra("AllChordsList", mAllChordsList.toArray());
-        activityIntent.putExtra("AllScalesList", mAllScalesList.toArray());
+        //activityIntent.putExtra("AllScalesList", mAllScalesList.toArray());
 
         // Launch activity
         startActivity(activityIntent);
