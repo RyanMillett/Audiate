@@ -19,9 +19,14 @@ import android.os.Parcelable;
 public abstract class SoundObject implements Parcelable { // TODO: implement PLAYABLE interface (?)
 
     /**
-     * int constant used as a default duration in milliseconds for all <code>SoundObjects</code>.
+     * int constant used as a default long duration in milliseconds for all <code>SoundObjects</code>.
      */
-    public static final int DEFAULT_DURATION_MILLISECONDS = 3 * 1000;
+    public static final int DEFAULT_DURATION_MILLISECONDS_LONG = 3 * 1000;
+
+    /**
+     * int constant used as a default short duration in milliseconds for all <code>SoundObjects</code>.
+     */
+    public static final int DEFAULT_DURATION_MILLISECONDS_SHORT = 500;
 
     protected long mId;
     protected String mName;
@@ -35,7 +40,7 @@ public abstract class SoundObject implements Parcelable { // TODO: implement PLA
         mId = -1;
         mName = "";
         mDescription = "No information";
-        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS_LONG;
     }
 
     /**
@@ -47,7 +52,7 @@ public abstract class SoundObject implements Parcelable { // TODO: implement PLA
         mId = -1;
         mName = name;
         mDescription = "No information";
-        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS_LONG;
     }
 
     /**
@@ -59,7 +64,7 @@ public abstract class SoundObject implements Parcelable { // TODO: implement PLA
         mId = id;
         mName = name;
         mDescription = "No information";
-        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = DEFAULT_DURATION_MILLISECONDS_LONG;
     }
 
     /**

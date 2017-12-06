@@ -41,26 +41,20 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(mResourceId, null);
 
-        LinearLayout libraryListLinearLayout =
-                (LinearLayout) view.findViewById(R.id.libraryListItemLinearLayout);
-        TextView libraryListNameTextView =
-                (TextView) view.findViewById(R.id.libraryListNameTextView);
-        TextView libraryListDescription1TextView =
-                (TextView) view.findViewById(R.id.libraryListDescription1TextView);
-        TextView libraryListDescription2TextView =
-                (TextView) view.findViewById(R.id.libraryListDescription2TextView);
+        LinearLayout libraryListLinearLayout
+                = view.findViewById(R.id.libraryListItemLinearLayout);
+        TextView libraryListNameTextView
+                = view.findViewById(R.id.libraryListNameTextView);
+        TextView libraryListDescription1TextView
+                = view.findViewById(R.id.libraryListDescription1TextView);
+        TextView libraryListDescription2TextView
+                = view.findViewById(R.id.libraryListDescription2TextView);
 
         libraryListLinearLayout.setTag(selectedChordScale);
 
-        if (selectedChordScale.getName().equalsIgnoreCase("unnamed")) {
-            libraryListNameTextView.setText(selectedChordScale.getChordMemberAtPos(1).getRatio());
-            libraryListDescription1TextView.setText(selectedChordScale.getDescription());
-        }
-        else {
-            libraryListNameTextView.setText(selectedChordScale.getName());
-            libraryListDescription1TextView.setText("Ratio: " + selectedChordScale.getChordMemberAtPos(1).getRatio());
-            libraryListDescription2TextView.setText(selectedChordScale.getDescription());
-        }
+        libraryListNameTextView.setText(selectedChordScale.getName());
+        libraryListDescription1TextView.setText(selectedChordScale.getDescription());
+
 
         return view;
     }

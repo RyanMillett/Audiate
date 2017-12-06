@@ -79,7 +79,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mSize = 2;
         mChordMembers = new ArrayList<>(mSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
@@ -94,7 +94,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mSize = 2;
         mChordMembers = new ArrayList<>(mSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
@@ -104,7 +104,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mSize = size;
         mChordMembers = new ArrayList<>(mSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
@@ -114,7 +114,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mSize = size;
         mChordMembers = new ArrayList<>(mSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
         mSCLfileName = sclFileName;
     }
@@ -130,7 +130,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mSize = size;
         mChordMembers = new ArrayList<>(mSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
