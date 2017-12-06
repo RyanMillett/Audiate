@@ -40,8 +40,10 @@ public class LibraryActivity extends AppCompatActivity {
     private TextView intervalDisplayTextView;
     private TextView selectionDisplayTextView;
     private ListView libraryListView;
+
     private Spinner selectMaterialSpinner;
     private Spinner sortBySpinner;
+    private Spinner filterBySpinner;
 
     // playback mode Radio Group
     private RadioButton mode1RadioButton;
@@ -82,8 +84,10 @@ public class LibraryActivity extends AppCompatActivity {
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
+
         selectMaterialSpinner = findViewById(R.id.materialSelectionSpinner);
-        sortBySpinner = findViewById(R.id.filterMaterialSpinner);
+        sortBySpinner = findViewById(R.id.sortMaterialSpinner);
+        filterBySpinner = findViewById(R.id.filterMaterialSpinner);
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
@@ -102,7 +106,10 @@ public class LibraryActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
 
-//        ArrayAdapter<String>
+        ArrayAdapter<String> filterMaterialSpinnerAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllFilters());
+        filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
+
 
         // playback settings group
         // TODO: add OnCheckedListener
@@ -126,32 +133,33 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     // TODO: make this dynamic——currently hard-coded for testing purposes
-    private String[] getAllSortCriteria() {
-        String[] sortByCriteria = new String[10];
-
-        sortByCriteria[0] = "[Sort Musical Material]";
-
-
-        return sortByCriteria;
-    }
-
-    // TODO: make this dynamic——currently hard-coded for testing purposes
     private String[] getAllMusicalMaterials() {
         String[] musicalMaterials = new String[4];
 
-        musicalMaterials[0] = "[Select Musical Material]";
-        musicalMaterials[1] = "Intervals";
-        musicalMaterials[2] = "Scales";
-        musicalMaterials[3] = "Chords";
+        musicalMaterials[0] = getString(R.string.select_materials);
+        musicalMaterials[1] = getString(R.string.select_intervals);
+        musicalMaterials[2] = getString(R.string.select_chords);
+        musicalMaterials[3] = getString(R.string.select_scales);
 
         return musicalMaterials;
+    }
+
+    // TODO: make this dynamic——currently hard-coded for testing purposes
+    private String[] getAllSortCriteria() {
+        String[] sortByCriteria = new String[10];
+
+        // TODO: Change based on what material is selected
+        sortByCriteria[0] = "[Sort " + "" + "]";
+
+        return sortByCriteria;
     }
 
     // TODO: make this dynamic——currently hard-coded for testing purposes
     private String[] getAllFilters() {
         String[] filters = new String[5];
 
-        filters[0] = "[Filter Musical Material]";
+        // TODO: Change based on what material is selected
+        filters[0] = "[Filter " + "" + "]";
 
         return filters;
     }

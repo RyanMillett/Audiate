@@ -31,6 +31,15 @@ public class Note extends SoundObject {
     private double mPitchFrequency;
     private String mRatio;
 
+    private Note(Parcel parcel) {
+        mId = parcel.readLong();
+        mName = parcel.readString();
+        mDescription = parcel.readString();
+        mDurationMilliseconds = parcel.readInt();
+        mPitchFrequency = parcel.readDouble();
+        mRatio = parcel.readString();
+    }
+
     /**
      * Default constructor
      */
@@ -120,4 +129,33 @@ public class Note extends SoundObject {
     public void setRatio(String ratio) {
         mRatio = ratio;
     }
+
+    // ---------------------------------------------------- //
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(mId);
+        parcel.writeString(mName);
+        parcel.writeString(mDescription);
+        parcel.writeInt(mDurationMilliseconds);
+        parcel.writeDouble(mPitchFrequency);
+        parcel.writeString(mRatio);
+    }
+
+    public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel parcel) {
+            return new Note(parcel);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 }

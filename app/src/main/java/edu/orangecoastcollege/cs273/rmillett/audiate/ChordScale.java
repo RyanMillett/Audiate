@@ -1,5 +1,8 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -50,6 +53,17 @@ public class ChordScale extends SoundObject {
     private ArrayList<Note> mChordMembers;
     private String mPlayBackMode;
     private String mSCLfileName;
+
+    private ChordScale(Parcel parcel) {
+        mId = parcel.readLong();
+        mName = parcel.readString();
+        mDescription = parcel.readString();
+        mDurationMilliseconds = parcel.readInt();
+        mSize = parcel.readInt();
+        mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
+        mPlayBackMode = parcel.readString();
+        mSCLfileName = parcel.readString();
+    }
 
     /**
      * Default constructor
@@ -288,4 +302,33 @@ public class ChordScale extends SoundObject {
     public void setSCLfileName(String SCLfileName) {
         this.mSCLfileName = SCLfileName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(mId);
+        parcel.writeString(mName);
+        parcel.writeString(mDescription);
+        parcel.writeInt(mDurationMilliseconds);
+        parcel.writeInt(mSize);
+        parcel.writeArray(mChordMembers.toArray());
+        parcel.writeString(mPlayBackMode);
+        parcel.writeString(mSCLfileName);
+    }
+
+    public static final Parcelable.Creator<ChordScale> CREATOR = new Creator<ChordScale>() {
+        @Override
+        public ChordScale createFromParcel(Parcel parcel) {
+            return new ChordScale(parcel);
+        }
+
+        @Override
+        public ChordScale[] newArray(int size) {
+            return new ChordScale[size];
+        }
+    };
 }

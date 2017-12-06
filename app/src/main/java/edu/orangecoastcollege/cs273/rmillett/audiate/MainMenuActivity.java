@@ -13,7 +13,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private DBHelper mDBHelper;
 
-    private ChordScaleLibrary mMasterChordScaleLibrary;
     private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
     private List<ChordScale> mAllScalesList;
@@ -29,41 +28,33 @@ public class MainMenuActivity extends AppCompatActivity {
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
-        // mAllScalesList = mDBHelper.importScalesFromSCL();
+        mAllScalesList = mDBHelper.importScalesFromSCL();
 
-        mMasterChordScaleLibrary = new ChordScaleLibrary("AllChordScalesLibrary", 3);
-        // load lists into ChordScaleLibrary
-        mMasterChordScaleLibrary.addList(mAllIntervalsList);
-        mMasterChordScaleLibrary.addList(mAllChordsList);
-        mMasterChordScaleLibrary.addList(mAllScalesList);
     }
 
     public void activitySelectionHandler(View view) {
-        // TODO: finish this method
-
         // Intent
-        Intent intent;
-
-        // Bundle
-        Bundle bundle = new Bundle();
+        Intent activityIntent;
 
         // get selected button
         Button selectedButton = (Button) view;
 
         // determine selected button
-        if (selectedButton == findViewById(R.id.earTrainingButton)) {
-            intent = new Intent(this, ExerciseSelectionMenuActivity.class);
-            // TODO: put extra
+        switch (view.getId()) {
+            case R.id.libraryButton:
+                activityIntent = new Intent(this, LibraryActivity.class);
+                break;
+            default:
+                activityIntent = new Intent(this, ExerciseSelectionMenuActivity.class);
         }
-        else if (selectedButton == findViewById(R.id.sightSingingButton)) {
-            intent = new Intent(this, ExerciseSelectionMenuActivity.class);
-            // TODO: put extra
-        }
-        else {
-            intent = new Intent(this, LibraryActivity.class);
-            // TODO: put extra
-        }
-        startActivity(intent);
+
+        // Load ChordScaleLibraries
+        activityIntent.putExtra("AllIntervalsList", mAllIntervalsList.toArray());
+        activityIntent.putExtra("AllChordsList", mAllChordsList.toArray());
+        activityIntent.putExtra("AllScalesList", mAllScalesList.toArray());
+
+        // Launch activity
+        startActivity(activityIntent);
     }
 
     public void editProfile(View view) {
@@ -78,10 +69,8 @@ public class MainMenuActivity extends AppCompatActivity {
      * Launches the GoogleMaps Activity
      * @param view
      */
-    public void activityGoogleMaps(View view)
-    {
+    public void activityGoogleMaps(View view) {
         Intent launchGoogleMaps = new Intent(this, GoogleMapsActivity.class);
         startActivity(launchGoogleMaps);
-
     }
 }

@@ -174,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length !=4) {
-                    Log.d("ChordScaleLibrary", "Skipping Bad CSV Row" + Arrays.toString(fields));
+                    Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
                 //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
