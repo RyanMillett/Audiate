@@ -24,6 +24,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
+        <activity android:name=".LogInActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileActivity"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".MainMenuActivity"
             android:exported="true"

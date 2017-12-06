@@ -1,7 +1,7 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">Audiate</string>
-    <string name="splash_screen_text">Audiate</string>
+    <string name="app_name" translatable="false">Audiate</string>
+    <string name="splash_screen_text" translatable="false">Audiate</string>
 
     <!-- Log-In -->
     <string name="log_in_button">Log In</string>
@@ -19,7 +19,7 @@
     <string name="detect_vocal_range_button">Detect Vocal Range</string>
 
     <!-- Detect Vocal Range Activity -->
-    <string name="detect_vocal_range_activity_title_text">@string/detect_vocal_range_button</string>
+    <string name="detect_vocal_range_activity_title_text" translatable="false">@string/detect_vocal_range_button</string>
     <string name="detect_vocal_range_activity_info_text">TODO: add activity instructions here…</string>
     <string name="detect_high_note">Detect High Note</string>
     <string name="detect_low_note">Detect Low Note</string>
@@ -80,15 +80,15 @@
     <string name="playback_mode2">Mode 2</string>
     <string name="playback_mode3">Mode 3</string>
     <string name="playback_mode4">Mode 4</string>
-    <string name="aux1">aux1</string>
-    <string name="aux2">aux2</string>
+    <string name="aux1" translatable="false">aux1</string>
+    <string name="aux2" translatable="false">aux2</string>
     <string name="play_selection">Play Selection</string>
 
     <!-- Ear Training Quiz Settings -->
     <string name="intervals">Intervals</string>
     <string name="intervals_description">How difficult would you like the interval quiz?</string>
-    <string name="pref_default">@string/intervals</string>
-    <string name="pref_key">pref_quiz_type</string>
+    <string name="pref_default" translatable="false">@string/intervals</string>
+    <string name="pref_key" translatable="false">pref_quiz_type</string>
     <string name="quiz_type">Type of Quiz</string>
     <string name="quiz_type_description">Choose interval, chord, or modal</string>
     <string name="number_of_buttons">Number of Buttons</string>
