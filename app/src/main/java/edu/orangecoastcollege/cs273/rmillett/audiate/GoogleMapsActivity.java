@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,6 +34,12 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     public static final int COARSE_LOCATION_REQUEST_CODE = 100;
 
 
+    private ChordScale mChordScale = new ChordScale("myLocationSound", 2);
+
+    private SoundObjectPlayer mSoundObjectPlayer;
+
+
+
     private GoogleMap mMap;
 
     // Google API client is "fused" services for all apps on the device (location, maps, play store)
@@ -48,6 +55,12 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_maps);
+
+        mChordScale.addChordMember(new Note("fundamental"));
+
+        mChordScale.addChordMember(new Note("interval"));
+
+        mSoundObjectPlayer = new SoundObjectPlayer();
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -157,10 +170,45 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         handleNewLocation(location);
     }
 
-    // TODO: Connect this to the audio player, use the latitude and longitude to play a ratio.
-    public void playLocation(View v)
+    /**
+     * This plays the location by getting the interval from the ChordScale
+     * and getting the pitch frequency by multiplying the dividend of mLastLocation.getLongitude
+     * divided by mLastLocation.getLatitude.
+     * @param view
+     */
+    public void playLocation(View view)
     {
+        // Calls onLocationChanged
+        onLocationChanged(mLastLocation);
 
+        // creates a new Chord Scale with a new Chord Member.
+
+        if(mLastLocation.getLongitude() > mLastLocation.getLatitude())
+            mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLongitude() / mLastLocation.getLatitude()));
+        else
+            mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLatitude() / mLastLocation.getLongitude()));
+
+
+        // Adds notes to the mChordScale
+        // mChordScale.addChordMember(new Note("interval", mChordScale.getChordMemberAtPos(1).getPitchFrequency() * interval));
+        // mChordScale.addChordMember(new Note("interval", mChordScale.getChordMemberAtPos(2).getPitchFrequency() * interval));
+        // mChordScale.addChordMember(new Note("interval", mChordScale.getChordMemberAtPos(3).getPitchFrequency() * interval));
+
+
+        Log.i("Google Maps Activity", "frequency of the interval" + mChordScale.getChordMemberAtPos(1).getPitchFrequency());
+
+        TextView logTV = (TextView) findViewById(R.id.logITV);
+
+        logTV.setText("Frequency of the interval: " + (String.valueOf(Math.abs(mChordScale.getChordMemberAtPos(1).getPitchFrequency()))));
+
+        // Sets the PlayBackMode to an Arpeggiator
+        mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
+
+        // Sets the duration in milliseconds for how long each note plays
+        mChordScale.setDurationMilliseconds(500);
+
+        // plays the sound object with the chord scale.
+        mSoundObjectPlayer.playSoundObject(mChordScale);
     }
 
 }
