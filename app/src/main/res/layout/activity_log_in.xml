@@ -11,7 +11,7 @@
 
 
     <EditText
-        android:id="@+id/userNameLogInET"
+        android:id="@+id/emailLoginET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -20,14 +20,14 @@
         android:imeOptions="actionDone"
         android:selectAllOnFocus="true"
         android:ems="10"
-        android:hint="@string/user_name"
-        android:inputType="textPersonName"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
     <EditText
-        android:id="@+id/passwordLogInET"
+        android:id="@+id/passwordLoginET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -46,7 +46,7 @@
         android:layout_weight="0.30">
 
         <Button
-            android:id="@+id/logInButton"
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"

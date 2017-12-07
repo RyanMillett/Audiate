@@ -30,15 +30,16 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "Audiate";
 
     // Animation = used for tween(ed) animations
     private Animation alphaAnim;
 
     // Connects views (texts/buttons) to the LoginActivity
-    private EditText userNameLoginEditText;
-    private EditText passwordLogInEditText;
-    private Button signInButton;
-    private Button newUserButton;
+    private EditText mEmailLoginEditText;
+    private EditText mPasswordLoginEditText;
+    private Button LoginButton;
+    private Button createProfileButton;
     private ImageView googleMaps;
 
     // Connects Firebase to the app
@@ -49,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * The <code>onCreate</code> sets up the authorization of the user from firebase.
      * It also instantiates the editTexts and buttons. It also launches the animation
-     * that brings the edit texts and buttons in.
+     * that brings the views in.
      * @param savedInstanceState
      */
     @Override
@@ -57,20 +58,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        // Views
+        mEmailLoginEditText = (EditText) findViewById(R.id.emailLoginET);
+        mPasswordLoginEditText = (EditText) findViewById(R.id.passwordLoginET);
+        LoginButton = (Button) findViewById(R.id.loginButton);
+        createProfileButton = (Button) findViewById(R.id.createProfileButton);
+        googleMaps = (ImageView) findViewById(R.id.googleMaps);
+
         // Initializes Firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
         // Gets the current user
         mUser = mAuth.getCurrentUser();
 
-        userNameLoginEditText = (EditText) findViewById(R.id.userNameLogInET);
-        passwordLogInEditText = (EditText) findViewById(R.id.passwordLogInET);
-        signInButton = (Button) findViewById(R.id.logInButton);
-        newUserButton = (Button) findViewById(R.id.createProfileButton);
-        googleMaps = (ImageView) findViewById(R.id.googleMaps);
-
+        // Runs the animation that brings the Views in
         RunAnimation();
 
+        // If user is already signed in go straight to main activity
         if (mUser != null)
             goToMain();
     }
@@ -96,12 +100,12 @@ public class LoginActivity extends AppCompatActivity {
      */
     private boolean isValidInput() {
         boolean valid = true;
-        if (TextUtils.isEmpty(userNameLoginEditText.getText())) {
-            userNameLoginEditText.setError("Required.");
+        if (TextUtils.isEmpty(mEmailLoginEditText.getText())) {
+            mEmailLoginEditText.setError("Required.");
             valid = false;
         }
-        if (TextUtils.isEmpty(passwordLogInEditText.getText())) {
-            passwordLogInEditText.setError("Required.");
+        if (TextUtils.isEmpty(mPasswordLoginEditText.getText())) {
+            mPasswordLoginEditText.setError("Required.");
             valid = false;
         }
         return valid;
@@ -109,22 +113,25 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * This allows the user to log in.
-     * @param userName
+     * @param email
      * @param password
      */
-    private void LogIn(String userName, String password)
+    private void Login(String email, String password)
     {
         if(!isValidInput())
             return;
         else
         {
-            mAuth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful())
                     {
                         mUser = mAuth.getCurrentUser();
-                        goToMain();
+                        if (mUser.isEmailVerified())
+                            goToMain();
+                        else
+                            Toast.makeText(LoginActivity.this, "Please verify your account in the email: " + mUser.getEmail(), Toast.LENGTH_LONG).show();
                     }
                     else {
                         Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
@@ -149,8 +156,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(launchProfile);
                 break;
 
-            case R.id.logInButton:
-                LogIn(userNameLoginEditText.getText().toString(), passwordLogInEditText.getText().toString());
+            case R.id.loginButton:
+                Login(mEmailLoginEditText.getText().toString(), mPasswordLoginEditText.getText().toString());
                 break;
         }
     }
@@ -173,14 +180,14 @@ public class LoginActivity extends AppCompatActivity {
     {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
         a.reset();
-        userNameLoginEditText.clearAnimation();
-        userNameLoginEditText.startAnimation(a);
-        passwordLogInEditText.clearAnimation();
-        passwordLogInEditText.startAnimation(a);
-        signInButton.clearAnimation();
-        signInButton.startAnimation(a);
-        newUserButton.clearAnimation();
-        newUserButton.startAnimation(a);
+        mEmailLoginEditText.clearAnimation();
+        mEmailLoginEditText.startAnimation(a);
+        mPasswordLoginEditText.clearAnimation();
+        mPasswordLoginEditText.startAnimation(a);
+        LoginButton.clearAnimation();
+        LoginButton.startAnimation(a);
+        createProfileButton.clearAnimation();
+        createProfileButton.startAnimation(a);
         googleMaps.clearAnimation();
         googleMaps.startAnimation(a);
     }
