@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void createUser(final String userName, String email, String password, String lowPitch, final String highPitch, final String vocalRange)
+    private void createUser(String email, String password)
     {
         if(!profileComplete())
             return;
@@ -134,8 +134,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // Adds the user to the database
-        //mDB.addUser(new User(userName, email, lowPitch, highPitch, vocalRange));
-        //User user = new User(userName, email, lowPitch, highPitch, vocalRange);
+        // User newUser = new User(userName, email, lowPitch, highPitch, vocalRange);
+        // mDB.addUser(newUser);
         //Log.i(TAG, "Check if user name is bwegener from database = " + user.getUserName());
     }
 
@@ -145,8 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch(v.getId())
         {
             case R.id.confirmProfileButton:
-                createUser(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(),
-                mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(), mVocalRangeTextView.getText().toString());
+                createUser(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
                 break;
 
             case R.id.detectVocalRangeButton:
@@ -156,5 +155,61 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+
+    // If I am unable to get firebase to work, this should add a user to the database
+    /*
+    public void confirmProfile(View v)
+    {
+        if(TextUtils.isEmpty(mUserNameEditText.getText())) {
+            mUserNameEditText.setError("Required.");
+        }
+
+        if(TextUtils.isEmpty(mEmailEditText.getText())) {
+            mEmailEditText.setError("Required.");
+        }
+
+        if(TextUtils.isEmpty(mPasswordEditText.getText())) {
+            mPasswordEditText.setError("Required.");
+        }
+
+        if(TextUtils.isEmpty(mLowPitchTextView.getText()))
+        {
+            mLowPitchTextView.setError("Complete Detect Vocal Range.");
+        }
+
+        if(TextUtils.isEmpty(mHighPitchTextView.getText()))
+        {
+            mHighPitchTextView.setError("Complete Detect Vocal Range.");
+        }
+
+        if(TextUtils.isEmpty(mVocalRangeTextView.getText()))
+        {
+            mVocalRangeTextView.setError("Complete Detect Vocal Range.");
+        }
+
+        if(TextUtils.isEmpty(mUserNameEditText.getText()) || TextUtils.isEmpty(mEmailEditText.getText())
+                || TextUtils.isEmpty(mPasswordEditText.getText()) || TextUtils.isEmpty(mLowPitchTextView.getText())
+                || TextUtils.isEmpty(mHighPitchTextView.getText()) || TextUtils.isEmpty(mVocalRangeTextView.getText()))
+            return;
+        else {
+            User newUser = new User(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(),
+                    mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(),
+                    mVocalRangeTextView.getText().toString()));
+            mDB.addUser(newUser);
+            usersListAdapter.add(newUser);
+            mUserNameEditText.setText("");
+            mLowPitchTextView.setText("");
+            mHighPitchTextView.setText("");
+            mVocalRangeTextView.setText("");
+            goToLogin();
+        }
+    }
+
+    public void detectVocalRange(View v)
+    {
+        Intent launchDetectVocalRange = new Intent(this, DetectVocalRangeActivity.class);
+        startActivity(launchDetectVocalRange);
+    }
+    */
 
 }
