@@ -44,7 +44,14 @@ public class MainMenuActivity extends AppCompatActivity {
 
         TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
 
-//        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
+        // Should display a welcome message to the user at the main menu
+        //welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
+
+
+        // If I have to go with alternate LoginActivity
+        // User selectedUser = getIntent().getExtras().getParcelable("SelectedUser");
+        // welcomeTextView.setText(getString(R.string.welcome_message, selectedUser.getUserName()));
+
 
     }
 

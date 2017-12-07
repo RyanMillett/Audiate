@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.AlternateLoginActivity">
+
+    <LinearLayout
+        android:id="@+id/gameEntryLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue_grey"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/createProfileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_profile_button"
+            android:onClick="createProfile" />
+
+        <Button
+            android:id="@+id/clearAllUsersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_all_users_button"
+            android:onClick="clearAllUsers"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/usersListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/royal_blue"
+        android:paddingBottom="4dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp" >
+
+    </ListView>
+
+</LinearLayout>
