@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -24,14 +26,17 @@ public class LibraryActivity extends AppCompatActivity {
     private List<ChordScale> allScalesList;
     private List<ChordScale> filteredChordScaleList;
 
+    // views
     private EditText setFundamentalEditText;
     private TextView intervalDisplayTextView;
     private TextView selectionDisplayTextView;
     private ListView libraryListView;
 
+    // spinners and adapters
     private Spinner selectMaterialSpinner;
     private Spinner sortBySpinner;
     private Spinner filterBySpinner;
+    ArrayAdapter<String> filterMaterialSpinnerAdapter;
 
     // playback mode Radio Group
     private RadioButton mode1RadioButton;
@@ -50,11 +55,10 @@ public class LibraryActivity extends AppCompatActivity {
     // List adapter
     private LibraryListAdapter mLibraryListAdapter;
 
-    // SoundObjects
-    private Note fundamental;
-    private ChordScale chord;
+    // SoundObject
+    private ChordScale mChordScale;
 
-    // Player
+    // SoundObjectPlayer
     private SoundObjectPlayer mSoundObjectPlayer;
 
     /**
@@ -67,7 +71,8 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        // TODO: get full library from MainMenu, initialize lists
+        deleteDatabase(DBHelper.DATABASE_NAME);
+        db = new DBHelper(this);
 
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
         intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
@@ -79,24 +84,27 @@ public class LibraryActivity extends AppCompatActivity {
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
-//        filteredChordScaleList = new ArrayList<>(allIntervalsList);
+        allIntervalsList = db.getAllIntervals();
 
-//        mLibraryListAdapter = new LibraryListAdapter(this,
-//                R.layout.audition_room_list_item, filteredChordScaleList);
-//        libraryListView.setAdapter(mLibraryListAdapter);
+        mLibraryListAdapter = new LibraryListAdapter(this,
+                R.layout.audition_room_list_item, allIntervalsList);
+        libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterials());
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterialTypes());
         selectMaterialSpinner.setAdapter(selectMaterialSpinnerAdapter);
+        selectMaterialSpinner.setOnItemSelectedListener(selectMaterialSpinnerLinstener);
+        selectMaterialSpinner.setSelection(0);
 
         ArrayAdapter<String> sortMaterialBySpinnerAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
+        // TODO: spinner listener
 
-        ArrayAdapter<String> filterMaterialSpinnerAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllFilters());
+        filterMaterialSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
+        // TODO: spinner listener
 
 
         // playback settings group
@@ -113,15 +121,52 @@ public class LibraryActivity extends AppCompatActivity {
         testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
         playSelectionButton = findViewById(R.id.playSelectionButton);
 
-        fundamental = new Note("Fundamental");
-        chord = new ChordScale();
+        mChordScale = new ChordScale("Selected ChordScale");
+        mChordScale.addChordMember(new Note("Fundamental"));
+        mChordScale.addChordMember(new Note("Interval"));
 
         mSoundObjectPlayer = new SoundObjectPlayer();
 
     }
 
-    // TODO: make this dynamic——currently hard-coded for testing purposes
-    private String[] getAllMusicalMaterials() {
+    public AdapterView.OnItemSelectedListener selectMaterialSpinnerLinstener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
+            String materialType = String.valueOf(spinner.getItemAtPosition(i));
+
+            // Update Library ListView
+            mLibraryListAdapter.clear();
+            if (materialType.equals(getString(R.string.select_materials))) {
+                // Do nothing
+            }
+            else if (materialType.equals(getString(R.string.select_intervals))) {
+                // All Intervals
+                mLibraryListAdapter.addAll(allIntervalsList);
+            }
+            else if (materialType.equals(getString(R.string.select_chords))) {
+                // All Chords
+                mLibraryListAdapter.addAll(allChordsList);
+            }
+            else if (materialType.equals(getString(R.string.select_scales))) {
+                // All Scales
+                mLibraryListAdapter.addAll(allScalesList);
+            }
+            mLibraryListAdapter.notifyDataSetChanged();
+
+            // Update "Filter" spinner adapter
+            filterMaterialSpinnerAdapter.clear();
+            filterMaterialSpinnerAdapter.addAll(getFilterCriteria());
+            filterMaterialSpinnerAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            // UNUSED
+        }
+    };
+
+    // TODO: make String[]s dynamic——currently hard-coded for testing purposes
+    private String[] getAllMusicalMaterialTypes() {
         String[] musicalMaterials = new String[4];
 
         musicalMaterials[0] = getString(R.string.select_materials);
@@ -132,22 +177,62 @@ public class LibraryActivity extends AppCompatActivity {
         return musicalMaterials;
     }
 
-    // TODO: make this dynamic——currently hard-coded for testing purposes
     private String[] getAllSortCriteria() {
-        String[] sortByCriteria = new String[10];
+        String[] sortByCriteria = new String[5];
 
-        // TODO: Change based on what material is selected
-        sortByCriteria[0] = "[Sort " + "" + "]";
+        sortByCriteria[0] = getString(R.string.sort_material);
+        sortByCriteria[1] = getString(R.string.sort_name_a_z);
+        sortByCriteria[2] = getString(R.string.sort_name_z_a);
+        sortByCriteria[3] = getString(R.string.sort_small_large);
+        sortByCriteria[4] = getString(R.string.sort_large_small);
 
         return sortByCriteria;
     }
 
-    // TODO: make this dynamic——currently hard-coded for testing purposes
-    private String[] getAllFilters() {
-        String[] filters = new String[5];
+    private String[] getFilterCriteria() {
+        String[] filters;
 
-        // TODO: Change based on what material is selected
-        filters[0] = "[Filter " + "" + "]";
+        switch (selectMaterialSpinner.getSelectedItemPosition()) {
+            case 0: // nothing selected
+                filters = new String[1];
+                filters[0] = getString(R.string.filter_material);
+                break;
+            case 1: // "Intervals" selected
+                filters = new String[9];
+                filters[0] = getString(R.string.filter_material);
+                filters[1] = "All " + getString(R.string.select_intervals);
+                filters[2] = "Harmonics (First 127)";
+                filters[3] = "Historical";
+                filters[4] = "Pythagorean";
+                filters[5] = "Equal-Tempered (by approximation)";
+                filters[6] = "Diatonic";
+                filters[7] = "Dodecaphonic";
+                filters[8] = "Misc./Unnamed";
+                break;
+            case 2: // "Chords" selected
+                filters = new String[6];
+                filters[0] = getString(R.string.filter_material);
+                filters[1] = "All " + getString(R.string.select_chords);
+                filters[2] = "Major";
+                filters[3] = "Minor";
+                filters[4] = "Augmented";
+                filters[5] = "Diminished";
+                break;
+            case 3: // "Scales" selected
+                filters = new String[7];
+                filters[0] = getString(R.string.filter_material);
+                filters[1] = "All " + getString(R.string.select_scales);
+                filters[2] = "5-note";
+                filters[3] = "7-note";
+                filters[4] = "12-note";
+                filters[5] = "Octavating";
+                filters[6] = "Non-Octavating";
+                break;
+            default: // nothing selected
+                filters = new String[1];
+                filters[0] = getString(R.string.filter_material);
+                break;
+        }
 
         return filters;
     }
@@ -162,30 +247,22 @@ public class LibraryActivity extends AppCompatActivity {
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
         if (!TextUtils.isEmpty(setFundamentalEditText.getText())) {
-            fundamental.setPitchFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
+            mChordScale.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
         }
-
 
         // Determine button ID
         switch (view.getId()) {
             case R.id.testFundamentalFreqButton:
-                fundamental.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-                mSoundObjectPlayer.playSoundObject(fundamental);
+                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+                mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
             case R.id.playSelectionButton: // TODO: AND something has been selected!!!!
                 // TODO: make dynamic, currently hard-coded for testing purposes only
-                // Build chord
-                chord.clearAllChordMembers();
-                chord.addChordMember(fundamental);
-                chord.addChordMember(new Note(fundamental.getPitchFrequency()
-                                * Music.convertRatioToDecimal("5/4")));
-                chord.addChordMember(new Note(fundamental.getPitchFrequency()
-                                * Music.convertRatioToDecimal("3/2")));
-                chord.addChordMember(new Note(fundamental.getPitchFrequency()
-                                * Music.convertRatioToDecimal("7/4")));
+                // TODO: Build mChordScale
+
                 detectPlaybackMode();
                 // Load and Play SoundObject
-                mSoundObjectPlayer.playSoundObject(chord);
+                mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
 
@@ -201,16 +278,16 @@ public class LibraryActivity extends AppCompatActivity {
     private void detectPlaybackMode() {
         // Set PlayBack mode
         if (mode2RadioButton.isChecked()) {
-            chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
-            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
-            chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
-            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else {
-            chord.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
-            chord.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
         }
     }
 }

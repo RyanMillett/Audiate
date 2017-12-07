@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+// TODO: fix Parcelable array issue
 /**
  * Subclass of <code>SoundObject</code> used to instantiate a <code>ChordScale</code> object.
  *
@@ -66,7 +67,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         for (Note note : tempArray)
             mChordMembers.add(note);
         // OLD WAY: (BELOW)
-        //mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
+//        mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
         mPlayBackMode = parcel.readString();
         mSCLfileName = parcel.readString();
     }
