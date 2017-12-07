@@ -374,12 +374,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 // build interval
                 ChordScale interval =
                         new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
-                interval.addChordMemberAt(0, new Note("Fundamental"));
-                interval.addChordMemberAt(1, new Note(cursor.getString(1),
+                interval.addChordMember(new Note("Fundamental"));
+                interval.addChordMember(new Note(cursor.getString(1),
                         interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * Music.convertRatioToDecimal(cursor.getString(2)),
-                        cursor.getString(2)));
-                interval.setDescription(cursor.getString(4));
+                                * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
 
                 // add to list
                 allIntervalsList.add(interval);

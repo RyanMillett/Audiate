@@ -165,6 +165,7 @@ public class LibraryActivity extends AppCompatActivity {
                 Log.i(TAG + "AllItvls", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
+                mode1RadioButton.setChecked(true);
                 mode1RadioButton.setText(getString(R.string.block_chord));
                 mode2RadioButton.setEnabled(true);
                 mode2RadioButton.setText(getString(R.string.arp_up));
@@ -182,6 +183,7 @@ public class LibraryActivity extends AppCompatActivity {
                 // TODO: add chords
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
+                mode1RadioButton.setChecked(true);
                 mode1RadioButton.setText(getString(R.string.block_chord));
                 mode2RadioButton.setEnabled(true);
                 mode2RadioButton.setText(getString(R.string.arp_up));
@@ -202,8 +204,8 @@ public class LibraryActivity extends AppCompatActivity {
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
-                mode1RadioButton.setChecked(true);
                 mode1RadioButton.setText(getString(R.string.cluster_chord));
+                mode2RadioButton.setChecked(true);
                 mode2RadioButton.setEnabled(true);
                 mode2RadioButton.setText(getString(R.string.scale_up));
                 mode3RadioButton.setEnabled(true);
@@ -329,14 +331,13 @@ public class LibraryActivity extends AppCompatActivity {
             LinearLayout selectedLayout = (LinearLayout) view;
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
             Log.i(TAG, selectedChordScale.getName());
-            int i = 1;
             mChordScale = selectedChordScale;
 
             if (selectedChordScale.getName().equalsIgnoreCase("unnamed")) {
                 displayNameTextView.setText(selectedChordScale.getChordMemberAtPos(1).getRatio());
             }
             else {
-//                displayNameTextView.setText(selectedChordScale.getName());
+                displayNameTextView.setText(selectedChordScale.getName());
             }
 
         }
