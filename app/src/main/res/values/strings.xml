@@ -77,8 +77,8 @@
     <string name="sort_none">[Sort by]</string>
     <string name="sort_name_a_z">Name A-Z</string>
     <string name="sort_name_z_a">Name Z-A</string>
-    <string name="sort_small_large">Size Small-Large</string>
-    <string name="sort_large_small">Size Large-Small</string>
+    <string name="sort_small_large">Size (Ascending)</string>
+    <string name="sort_large_small">Size (Descending)</string>
 
     <string name="header_info_hint">Header text / info / instructions...</string>
     <string name="select_material">Select material to audition: </string>

@@ -259,15 +259,16 @@ public class LibraryActivity extends AppCompatActivity {
 
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
-                filters = new String[8];
-                filters[0] = "All " + getString(R.string.select_intervals);
-                filters[1] = "Harmonics (First 127)";
-                filters[2] = "Historical";
-                filters[3] = "Pythagorean";
-                filters[4] = "Equal-Tempered (by approximation)";
-                filters[5] = "Diatonic";
-                filters[6] = "Dodecaphonic";
+                filters = new String[9];
+                filters[0] = "Heptatonic/Diatonic";
+                filters[1] = "Dodecaphonic";
+                filters[2] = "Equal-Tempered (by approximation)";
+                filters[3] = "Harmonics (First 127)";
+                filters[4] = "Historical";
+                filters[5] = "Pythagorean";
+                filters[6] = "Commas";
                 filters[7] = "Misc./Unnamed";
+                filters[8] = "All " + getString(R.string.select_intervals);
                 break;
             case 2: // "Chords" selected
                 filters = new String[5];
