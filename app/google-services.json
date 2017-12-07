@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "522651540176",
+    "firebase_url": "https://audiate-bed6d.firebaseio.com",
+    "project_id": "audiate-bed6d",
+    "storage_bucket": "audiate-bed6d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522651540176:android:181ca6e5f1ba4075",
+        "android_client_info": {
+          "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522651540176-qapra8mk9u69oa4vj1h3sqr8tbaob6vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate",
+            "certificate_hash": "c061ac24c2432e8cd3b7825e81ce8fafbf8ecc14"
+          }
+        },
+        {
+          "client_id": "522651540176-1has76a7nf8elfeksd909s5686eb72t2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI5HMcfpzHD0hTeKW0AT9rQ9qGYxItiOg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522651540176-1has76a7nf8elfeksd909s5686eb72t2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
