@@ -1,5 +1,7 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import java.io.BufferedReader;
+
 /**
  * Helper class used to handle intervals expressed in either ratios/fractions or cents for the purpose
  * of frequency calculations.
@@ -178,6 +180,31 @@ public class Music {
             }
         }
         return true;
+    }
+
+    public static double parseDecimalFromScalaLine(String line) {
+        double interval = 0.0;
+
+        // trim leading white-space
+        line = line.trim();
+
+        // remove any text other than a double or a ratio value
+        if (line.contains(" ")){
+            line = line.substring(0, line.indexOf(" "));
+        }
+        else if (line.contains("!")) {
+            line = line.substring(0, line.indexOf("!"));
+        }
+
+        // parse intervals, add to scale
+        if (line.contains(".")) { // interval is in CENTS
+            interval = Music.convertCentsToDecimal(Double.parseDouble(line));
+        }
+        else if (line.contains("/")) { // interval is a RATIO
+            interval = Music.convertRatioToDecimal(line);
+        }
+
+        return interval;
     }
 
     /**

@@ -50,7 +50,7 @@ public class ChordScale extends SoundObject implements Parcelable {
      */
     public static final String PLAYBACK_MODE_ALBERTI_BASS = "Alberti";
 
-    private int mSize;
+    private int mInitialSize;
     private ArrayList<Note> mChordMembers;
     private String mPlayBackMode;
     private String mSCLfileName;
@@ -60,7 +60,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         mName = parcel.readString();
         mDescription = parcel.readString();
         mDurationMilliseconds = parcel.readInt();
-        mSize = parcel.readInt();
+        mInitialSize = parcel.readInt();
         // NEW WAY: Read as an array of Notes, then add them to the ArrayList member variable
         Note[] tempArray = (Note[]) parcel.readArray(Note.class.getClassLoader());
         mChordMembers = new ArrayList<>(tempArray.length);
@@ -77,8 +77,8 @@ public class ChordScale extends SoundObject implements Parcelable {
      */
     public ChordScale() {
         super();
-        mSize = 2;
-        mChordMembers = new ArrayList<>(mSize);
+        mInitialSize = 2;
+        mChordMembers = new ArrayList<>(mInitialSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -92,28 +92,28 @@ public class ChordScale extends SoundObject implements Parcelable {
      */
     public ChordScale(String name) {
         super(name);
-        mSize = 2;
-        mChordMembers = new ArrayList<>(mSize);
+        mInitialSize = 2;
+        mChordMembers = new ArrayList<>(mInitialSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
 
-    public ChordScale(String name, int size) {
+    public ChordScale(String name, int initialSize) {
         super(name);
-        mSize = size;
-        mChordMembers = new ArrayList<>(mSize);
+        mInitialSize = initialSize;
+        mChordMembers = new ArrayList<>(mInitialSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
     }
 
-    public ChordScale(String name, int size, String description, String sclFileName) {
+    public ChordScale(String name, int initialSize, String description, String sclFileName) {
         super(name);
-        mSize = size;
-        mChordMembers = new ArrayList<>(mSize);
+        mInitialSize = initialSize;
+        mChordMembers = new ArrayList<>(mInitialSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
@@ -126,10 +126,10 @@ public class ChordScale extends SoundObject implements Parcelable {
      * @param name
      * @param id
      */
-    public ChordScale(long id, String name, int size) {
+    public ChordScale(long id, String name, int initialSize) {
         super(id, name);
-        mSize = size;
-        mChordMembers = new ArrayList<>(mSize);
+        mInitialSize = initialSize;
+        mChordMembers = new ArrayList<>(mInitialSize);
         mPlayBackMode = PLAYBACK_MODE_BLOCK_CHORD;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -144,7 +144,7 @@ public class ChordScale extends SoundObject implements Parcelable {
      *          the <code>ChordSequence</code>.
      */
     public int getSize() {
-        return mSize;
+        return mChordMembers.size();
     }
 
     /**
@@ -171,7 +171,11 @@ public class ChordScale extends SoundObject implements Parcelable {
     public void addChordMember(Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
         mChordMembers.add(note);
-        mSize++;
+    }
+
+    public void addChordMemberAt(int pos, Note note) {
+        note.setDurationMilliseconds(this.mDurationMilliseconds);
+        mChordMembers.add(pos, note);
     }
 
     /**
@@ -185,7 +189,6 @@ public class ChordScale extends SoundObject implements Parcelable {
     public void insertChordMemberAtPos(int pos, Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
         mChordMembers.add(pos, note);
-        mSize++;
     }
 
     /**
@@ -230,7 +233,7 @@ public class ChordScale extends SoundObject implements Parcelable {
      * @return array of Strings representing each chord member's relation to the root pitch.
      */
     public String[] getAllChordMemberRatios() {
-        String[] allChordMemberRatios = new String[this.mSize];
+        String[] allChordMemberRatios = new String[this.mInitialSize];
         int i = 0;
         for (Note note : this.mChordMembers) {
             allChordMemberRatios[i] = note.getRatio();
@@ -321,7 +324,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         parcel.writeString(mName);
         parcel.writeString(mDescription);
         parcel.writeInt(mDurationMilliseconds);
-        parcel.writeInt(mSize);
+        parcel.writeInt(mInitialSize);
         parcel.writeArray(mChordMembers.toArray());
         parcel.writeString(mPlayBackMode);
         parcel.writeString(mSCLfileName);

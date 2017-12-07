@@ -30,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "Audiate";
+    private static final String TAG = "LoginActivity";
 
     // Animation = used for tween(ed) animations
     private Animation alphaAnim;

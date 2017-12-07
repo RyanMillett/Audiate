@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,9 +15,12 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
+
+    private static final String TAG = "LibraryActivity";
 
     // DB and lists
     private DBHelper db;
@@ -83,17 +87,18 @@ public class LibraryActivity extends AppCompatActivity {
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
-        allIntervalsList = db.getAllIntervals();
+        db.importAllIntervalsFromCSV("intervals.csv");
+        filteredChordScaleList = new ArrayList<>(10);
 
         mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.library_list_item, allIntervalsList);
+                R.layout.library_list_item, filteredChordScaleList);
         libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterialTypes());
         selectMaterialSpinner.setAdapter(selectMaterialSpinnerAdapter);
-        selectMaterialSpinner.setOnItemSelectedListener(selectMaterialSpinnerLinstener);
+        selectMaterialSpinner.setOnItemSelectedListener(selectMaterialSpinnerListener);
         selectMaterialSpinner.setSelection(0);
 
         ArrayAdapter<String> sortMaterialBySpinnerAdapter =
@@ -128,7 +133,7 @@ public class LibraryActivity extends AppCompatActivity {
 
     }
 
-    public AdapterView.OnItemSelectedListener selectMaterialSpinnerLinstener = new AdapterView.OnItemSelectedListener() {
+    public AdapterView.OnItemSelectedListener selectMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
             String materialType = String.valueOf(spinner.getItemAtPosition(i));
@@ -137,18 +142,75 @@ public class LibraryActivity extends AppCompatActivity {
             mLibraryListAdapter.clear();
             if (materialType.equals(getString(R.string.select_materials))) {
                 // Do nothing
+//                mLibraryListAdapter.clear();
+                mode1RadioButton.setEnabled(false);
+                mode1RadioButton.setText("");
+                mode2RadioButton.setEnabled(false);
+                mode2RadioButton.setText("");
+                mode3RadioButton.setEnabled(false);
+                mode3RadioButton.setText("");
+                mode4RadioButton.setEnabled(false);
+                mode4RadioButton.setText("");
+                aux1CheckBox.setEnabled(false);
+                aux1CheckBox.setText("");
+                aux2CheckBox.setEnabled(false);
+                aux2CheckBox.setText("");
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                mLibraryListAdapter.addAll(allIntervalsList);
+                mLibraryListAdapter.addAll(allIntervalsList = db.getAllIntervals());
+                Log.i(TAG + "AllItvls", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
+                // Update playback options
+                mode1RadioButton.setEnabled(true);
+                mode1RadioButton.setText(getString(R.string.block_chord));
+                mode2RadioButton.setEnabled(true);
+                mode2RadioButton.setText(getString(R.string.arp_up));
+                mode3RadioButton.setEnabled(true);
+                mode3RadioButton.setText(getString(R.string.arp_down));
+                mode4RadioButton.setEnabled(false);
+                mode4RadioButton.setText("");
+                aux1CheckBox.setEnabled(true);
+                aux1CheckBox.setText(getString(R.string.aux_interval_invert));
+                aux2CheckBox.setEnabled(false);
+                aux2CheckBox.setText("");
             }
             else if (materialType.equals(getString(R.string.select_chords))) {
                 // All Chords
-                mLibraryListAdapter.addAll(allChordsList);
+                // TODO: add chords
+                // Update playback options
+                mode1RadioButton.setEnabled(true);
+                mode1RadioButton.setText(getString(R.string.block_chord));
+                mode2RadioButton.setEnabled(true);
+                mode2RadioButton.setText(getString(R.string.arp_up));
+                mode3RadioButton.setEnabled(true);
+                mode3RadioButton.setText(getString(R.string.arp_down));
+                mode4RadioButton.setEnabled(false);
+                mode4RadioButton.setText("");
+                aux1CheckBox.setEnabled(true);
+                aux1CheckBox.setText(getString(R.string.aux_chord_invert));
+                aux2CheckBox.setEnabled(false);
+                aux2CheckBox.setText("");
             }
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
+                // TODO: add scales
+                allScalesList = db.importAllScalesFromSCL();
                 mLibraryListAdapter.addAll(allScalesList);
+                Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
+                // Update playback options
+                mode1RadioButton.setEnabled(true);
+                mode1RadioButton.setChecked(true);
+                mode1RadioButton.setText(getString(R.string.cluster_chord));
+                mode2RadioButton.setEnabled(true);
+                mode2RadioButton.setText(getString(R.string.scale_up));
+                mode3RadioButton.setEnabled(true);
+                mode3RadioButton.setText(getString(R.string.scale_down));
+                mode4RadioButton.setEnabled(false);
+                mode4RadioButton.setText("");
+                aux1CheckBox.setEnabled(true);
+                aux1CheckBox.setText(getString(R.string.aux_scale_invert));
+                aux2CheckBox.setEnabled(false);
+                aux2CheckBox.setText("");
             }
             mLibraryListAdapter.notifyDataSetChanged();
 
@@ -177,13 +239,12 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     private String[] getAllSortCriteria() {
-        String[] sortByCriteria = new String[5];
+        String[] sortByCriteria = new String[4];
 
-        sortByCriteria[0] = getString(R.string.sort_material);
-        sortByCriteria[1] = getString(R.string.sort_name_a_z);
-        sortByCriteria[2] = getString(R.string.sort_name_z_a);
-        sortByCriteria[3] = getString(R.string.sort_small_large);
-        sortByCriteria[4] = getString(R.string.sort_large_small);
+        sortByCriteria[0] = getString(R.string.sort_small_large);
+        sortByCriteria[1] = getString(R.string.sort_large_small);
+        sortByCriteria[2] = getString(R.string.sort_name_a_z);
+        sortByCriteria[3] = getString(R.string.sort_name_z_a);
 
         return sortByCriteria;
     }
@@ -192,44 +253,37 @@ public class LibraryActivity extends AppCompatActivity {
         String[] filters;
 
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
-            case 0: // nothing selected
-                filters = new String[1];
-                filters[0] = getString(R.string.filter_material);
-                break;
             case 1: // "Intervals" selected
-                filters = new String[9];
-                filters[0] = getString(R.string.filter_material);
-                filters[1] = "All " + getString(R.string.select_intervals);
-                filters[2] = "Harmonics (First 127)";
-                filters[3] = "Historical";
-                filters[4] = "Pythagorean";
-                filters[5] = "Equal-Tempered (by approximation)";
-                filters[6] = "Diatonic";
-                filters[7] = "Dodecaphonic";
-                filters[8] = "Misc./Unnamed";
+                filters = new String[8];
+                filters[0] = "All " + getString(R.string.select_intervals);
+                filters[1] = "Harmonics (First 127)";
+                filters[2] = "Historical";
+                filters[3] = "Pythagorean";
+                filters[4] = "Equal-Tempered (by approximation)";
+                filters[5] = "Diatonic";
+                filters[6] = "Dodecaphonic";
+                filters[7] = "Misc./Unnamed";
                 break;
             case 2: // "Chords" selected
-                filters = new String[6];
-                filters[0] = getString(R.string.filter_material);
-                filters[1] = "All " + getString(R.string.select_chords);
-                filters[2] = "Major";
-                filters[3] = "Minor";
-                filters[4] = "Augmented";
-                filters[5] = "Diminished";
+                filters = new String[5];
+                filters[0] = "All " + getString(R.string.select_chords);
+                filters[1] = "Major";
+                filters[2] = "Minor";
+                filters[3] = "Augmented";
+                filters[4] = "Diminished";
                 break;
             case 3: // "Scales" selected
-                filters = new String[7];
-                filters[0] = getString(R.string.filter_material);
-                filters[1] = "All " + getString(R.string.select_scales);
-                filters[2] = "5-note";
-                filters[3] = "7-note";
-                filters[4] = "12-note";
-                filters[5] = "Octavating";
-                filters[6] = "Non-Octavating";
+                filters = new String[6];
+                filters[0] = "Octavating";
+                filters[1] = "Pentatonic";
+                filters[2] = "Heptatonic";
+                filters[3] = "Dodecaphonic";
+                filters[4] = "Non-Octavating";
+                filters[5] = "All " + getString(R.string.select_scales);
                 break;
             default: // nothing selected
                 filters = new String[1];
-                filters[0] = getString(R.string.filter_material);
+                filters[0] = "";
                 break;
         }
 
@@ -255,12 +309,8 @@ public class LibraryActivity extends AppCompatActivity {
                 mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
-            case R.id.playSelectionButton: // TODO: AND something has been selected!!!!
-                // TODO: make dynamic, currently hard-coded for testing purposes only
-                // TODO: Build mChordScale
-
+            case R.id.playSelectionButton:
                 detectPlaybackMode();
-                // Load and Play SoundObject
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
@@ -271,6 +321,7 @@ public class LibraryActivity extends AppCompatActivity {
 
     public void selectionDetailsHandler(View view) {
         // TODO: this method
+        // use this method to build ChordScale
     }
 
     // TODO: consider adding this to an OnChangeListener if possible

@@ -42,8 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CHORDS_KEY_FIELD_ID = "_id";
     private static final String FIELD_CHORD_NAME = "chord_name";
     private static final String FIELD_CHORD_SIZE = "chord_size";
-    // TODO: figure out how to add chord members
     private static final String FIELD_CHORD_DESCRIPTION = "chord_description";
+    private static final String FIELD_CHORD_SCL_FILE_NAME = "scl_file_name";
 
     // Table of scales
     private static final String SCALES_TABLE = "Scales";
@@ -104,8 +104,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + CHORDS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
                 + FIELD_CHORD_NAME + " TEXT, "
                 + FIELD_CHORD_SIZE + " INTEGER, "
-                // TODO: figure out how to add chord members
-                + FIELD_CHORD_DESCRIPTION + " TEXT" + ")";
+                + FIELD_CHORD_DESCRIPTION + " TEXT, "
+                +FIELD_CHORD_SCL_FILE_NAME + " TEXT" + ")";
         sqLiteDatabase.execSQL(createQuery);
 
         // Create Scales table
@@ -308,7 +308,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public boolean importIntervalsFromCSV(String csvFileName) {
+    public boolean importAllIntervalsFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
         try {
@@ -331,13 +331,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-                String name = fields[1].trim().equalsIgnoreCase("unnamed") ? fields[2].trim() : fields[1].trim();
+                String name = fields[1].trim();
                 String ratio = fields[2].trim();
                 double cents = Double.parseDouble(fields[3].trim());
 
-                ChordScale interval = new ChordScale(name);
-                interval.addChordMember(new Note("Fundamental"));
-                interval.addChordMember(new Note(name,
+                ChordScale interval = new ChordScale(name, 2);
+                interval.addChordMemberAt(0, new Note("Fundamental"));
+                interval.addChordMemberAt(1, new Note(name,
                         interval.getChordMemberAtPos(0).getPitchFrequency()
                                 * Music.convertRatioToDecimal(ratio), ratio));
                 interval.setDescription("Size in cents: " + cents);
@@ -393,7 +393,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // TODO: import/get all chords method(s)
 
     // TODO: consolidate this with a "Scala handler" method in Music helper method
-    public List<ChordScale> importScalesFromSCL() {
+    public List<ChordScale> importAllScalesFromSCL() {
         // create list with at least 4k initial capacity
         List<ChordScale> allScalesList = new ArrayList<>(5000);
 
@@ -412,7 +412,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             String fileList[] = manager.list("scl");
 
-            int scaleNum = 1;
+            int scaleNum = 1; // for logging purposes
             // loop through each .scl file in the scl directory
             for (String file : fileList) {
                 // file is one .scl file
@@ -428,7 +428,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 name = name.replace("_", " ");
                 // TODO: format capitalization
 
-                // Description
+                // Scale Description (if any)
                 while (!Music.isInteger(line)) {
                     if (line.contains("!")) {
                         line = br.readLine();
@@ -439,7 +439,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     }
                 }
 
-                // Size
+                // Scale Size
                 size = Integer.parseInt(line.trim());
 
                 Log.i(TAG, "(Scale No.: " + scaleNum++ + ") sclFileName->" + sclFileName + "\n");
@@ -455,33 +455,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 double interval; // decimal used for multiplication
                 int i = size;
                 while (i >= 0 && line != null) {
+                    // skip any scl comments
                     if (line.startsWith("!")) {
                         line = br.readLine();
                     }
                     else {
                         try {
-                            // trim leading white-space
-                            line = line.trim();
-
-                            // remove any text other than a double or a ratio value
-                            if (line.contains(" ")){
-                                line = line.substring(0, line.indexOf(" "));
-                            }
-                            else if (line.contains("!")) {
-                                line = line.substring(0, line.indexOf("!"));
-                            }
-
-                            // parse intervals, add to scale
-                            if (line.contains(".")) { // interval is in CENTS
-                                interval = Music.convertCentsToDecimal(Double.parseDouble(line));
-                                scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
-                            }
-                            else if (line.contains("/")) { // interval is a RATIO
-                                interval = Music.convertRatioToDecimal(line);
-                                scale.addChordMember(new Note(scale.getChordMemberAtPos(0).getPitchFrequency() * interval));
-                            }
-
-                            //Log.i(TAG, "interval->" + line + " ");
+                            interval = Music.parseDecimalFromScalaLine(line);
+                            scale.addChordMember(new Note(
+                                    scale.getChordMemberAtPos(0).getPitchFrequency()
+                                            * interval));
 
                             // get next line
                             line = br.readLine();

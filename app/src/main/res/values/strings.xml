@@ -88,13 +88,31 @@
     <string name="test_fundamental_frequency">(Test Fundamental Frequency)</string>
     <string name="selection_name">Selection Name</string>
     <string name="selection_description">Selection Description...</string>
+    <string name="interval_ratio">Ratio: </string>
+    <string name="interval_cents">Size in cents: </string>
+    <string name="chordScale_size">Size: </string>
+
     <string name="playback_settings">-- Playback Settings --</string>
     <string name="playback_mode1">Mode 1</string>
     <string name="playback_mode2">Mode 2</string>
     <string name="playback_mode3">Mode 3</string>
     <string name="playback_mode4">Mode 4</string>
+
+    <string name="block_chord">Block Chord</string>
+    <string name="arp_up">Arp. Up</string>
+    <string name="arp_down">Arp. Down</string>
+
+    <string name="cluster_chord">Cluster Chord</string>
+    <string name="scale_up">Scale Up</string>
+    <string name="scale_down">Scale Down</string>
+
     <string name="aux1" translatable="false">aux1</string>
     <string name="aux2" translatable="false">aux2</string>
+
+    <string name="aux_interval_invert">Invert Interval</string>
+    <string name="aux_chord_invert">Invert Chord</string>
+    <string name="aux_scale_invert">Invert Scale</string>
+
     <string name="play_selection">Play Selection</string>
 
     <!-- Ear Training Quiz Settings -->

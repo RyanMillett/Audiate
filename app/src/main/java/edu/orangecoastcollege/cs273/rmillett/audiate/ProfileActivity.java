@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "Audiate";
+    private static final String TAG = "ProfileActivity";
 
     private DBHelper mDB;
 

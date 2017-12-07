@@ -63,6 +63,7 @@
         <activity
             android:name=".LibraryActivity"
             android:parentActivityName=".MainMenuActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
 
     </application>
