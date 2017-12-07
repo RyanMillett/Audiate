@@ -14,7 +14,6 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -87,7 +86,7 @@ public class LibraryActivity extends AppCompatActivity {
         allIntervalsList = db.getAllIntervals();
 
         mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.audition_room_list_item, allIntervalsList);
+                R.layout.library_list_item, allIntervalsList);
         libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
