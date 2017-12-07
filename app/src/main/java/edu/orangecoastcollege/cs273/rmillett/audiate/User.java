@@ -60,13 +60,9 @@ public class User implements Parcelable {
         mUserName = userName;
     }
 
-    public String getEmail() {
-        return mEmail;
-    }
+    public String getEmail() { return mEmail; }
 
-    public void setEmail(String email) {
-        mEmail = email;
-    }
+    public void setEmail(String email) { mEmail = email; }
 
     public String getLowPitch() {
         return mLowPitch;

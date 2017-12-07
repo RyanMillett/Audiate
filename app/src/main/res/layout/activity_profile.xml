@@ -29,8 +29,9 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
@@ -42,7 +43,7 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
@@ -54,6 +55,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
+        android:text="Low Pitch: C1"
         android:hint="@string/low_pitch"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
@@ -66,11 +68,12 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/high_pitch"
-        android:text=""
+        android:text="High Pitch: C4"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
     <TextView
+        android:id="@+id/vocalRangeTextView"
         android:layout_width="@dimen/edit_text_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -78,7 +81,7 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/vocal_range"
-        android:text=""
+        android:text="Vocal Range: C1 - C4"
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"
         />
@@ -95,6 +98,7 @@
             android:layout_height="90dp"
             android:layout_margin="10dp"
             android:layout_gravity="center"
+            android:onClick="handleProfileButtons"
             android:text="@string/detect_vocal_range_button"
             android:textSize="@dimen/medium_text_size"/>
     </LinearLayout>
@@ -111,7 +115,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:onClick="createUser"
+            android:onClick="handleProfileButtons"
             android:padding="@dimen/buttons_padding"
             android:text="@string/confirm_profile_button"
             android:textSize="@dimen/medium_text_size"/>

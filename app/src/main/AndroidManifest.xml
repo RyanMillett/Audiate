@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.orangecoastcollege.cs273.rmillett.audiate">
+          package="edu.orangecoastcollege.cs273.rmillett.audiate">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -16,47 +16,54 @@
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
-        <activity android:name=".LogInActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileActivity"
-                  android:parentActivityName=".LogInActivity"
-                  android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        android:screenOrientation="portrait"/>
         <activity
             android:name=".MainMenuActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity android:name=".GoogleMapsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GoogleMapsActivity"
             android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".DetectVocalRangeActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ExerciseSelectionMenuActivity"
             android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".HelpActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HelpActivity"
             android:parentActivityName=".ExerciseSelectionMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".EarTrainingQuizActivity"
             android:exported="true"
             android:parentActivityName=".ExerciseSelectionMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LibraryActivity"
             android:parentActivityName=".MainMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
     </application>
 

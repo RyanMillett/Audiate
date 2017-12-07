@@ -28,17 +28,18 @@ import com.google.firebase.auth.FirebaseUser;
  *
  * Created by Brian Wegener on 11/25/2017
  */
-public class LogInActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "Audiate";
 
     // Animation = used for tween(ed) animations
     private Animation alphaAnim;
 
-    // Connects views (texts/buttons) to the LogInActivity
-    private EditText emailLogInEditText;
-    private EditText passwordLogInEditText;
-    private Button signInButton;
-    private Button newUserButton;
+    // Connects views (texts/buttons) to the LoginActivity
+    private EditText mEmailLoginEditText;
+    private EditText mPasswordLoginEditText;
+    private Button LoginButton;
+    private Button createProfileButton;
     private ImageView googleMaps;
 
     // Connects Firebase to the app
@@ -49,7 +50,7 @@ public class LogInActivity extends AppCompatActivity {
     /**
      * The <code>onCreate</code> sets up the authorization of the user from firebase.
      * It also instantiates the editTexts and buttons. It also launches the animation
-     * that brings the edit texts and buttons in.
+     * that brings the views in.
      * @param savedInstanceState
      */
     @Override
@@ -57,44 +58,39 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        // Views
+        mEmailLoginEditText = (EditText) findViewById(R.id.emailLoginET);
+        mPasswordLoginEditText = (EditText) findViewById(R.id.passwordLoginET);
+        LoginButton = (Button) findViewById(R.id.loginButton);
+        createProfileButton = (Button) findViewById(R.id.createProfileButton);
+        googleMaps = (ImageView) findViewById(R.id.googleMaps);
+
         // Initializes Firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
         // Gets the current user
         mUser = mAuth.getCurrentUser();
 
-        emailLogInEditText = (EditText) findViewById(R.id.userNameLogInET);
-        passwordLogInEditText = (EditText) findViewById(R.id.passwordLogInET);
-        signInButton = (Button) findViewById(R.id.logInButton);
-        newUserButton = (Button) findViewById(R.id.createProfileButton);
-        googleMaps = (ImageView) findViewById(R.id.googleMaps);
-
+        // Runs the animation that brings the Views in
         RunAnimation();
 
+        // If user is already signed in go straight to main activity
         if (mUser != null)
             goToMain();
     }
 
-
     /**
-     * This runs an alpha tween animation so that the edit texts, buttons, and
-     * image view are brought in through changing the opacity.
+     * This sends the user to the main menu activity.
      */
-    private void RunAnimation()
+    private void goToMain()
     {
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
-        a.reset();
-        emailLogInEditText.clearAnimation();
-        emailLogInEditText.startAnimation(a);
-        passwordLogInEditText.clearAnimation();
-        passwordLogInEditText.startAnimation(a);
-        signInButton.clearAnimation();
-        signInButton.startAnimation(a);
-        newUserButton.clearAnimation();
-        newUserButton.startAnimation(a);
-        googleMaps.clearAnimation();
-        googleMaps.startAnimation(a);
+        finish();
+        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
+        startActivity(mainMenuIntent);
     }
+
+
+
 
     /**
      * This checks to see if the input is valid.
@@ -104,12 +100,12 @@ public class LogInActivity extends AppCompatActivity {
      */
     private boolean isValidInput() {
         boolean valid = true;
-        if (TextUtils.isEmpty(emailLogInEditText.getText())) {
-            emailLogInEditText.setError("Required.");
+        if (TextUtils.isEmpty(mEmailLoginEditText.getText())) {
+            mEmailLoginEditText.setError("Required.");
             valid = false;
         }
-        if (TextUtils.isEmpty(passwordLogInEditText.getText())) {
-            passwordLogInEditText.setError("Required.");
+        if (TextUtils.isEmpty(mPasswordLoginEditText.getText())) {
+            mPasswordLoginEditText.setError("Required.");
             valid = false;
         }
         return valid;
@@ -120,7 +116,7 @@ public class LogInActivity extends AppCompatActivity {
      * @param email
      * @param password
      */
-    private void LogIn(String email, String password)
+    private void Login(String email, String password)
     {
         if(!isValidInput())
             return;
@@ -132,10 +128,13 @@ public class LogInActivity extends AppCompatActivity {
                     if(task.isSuccessful())
                     {
                         mUser = mAuth.getCurrentUser();
-                        goToMain();
+                        if (mUser.isEmailVerified())
+                            goToMain();
+                        else
+                            Toast.makeText(LoginActivity.this, "Please verify your account in the email: " + mUser.getEmail(), Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Toast.makeText(LogInActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -157,21 +156,12 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(launchProfile);
                 break;
 
-            case R.id.logInButton:
-                LogIn(emailLogInEditText.getText().toString(), passwordLogInEditText.getText().toString());
+            case R.id.loginButton:
+                Login(mEmailLoginEditText.getText().toString(), mPasswordLoginEditText.getText().toString());
                 break;
         }
     }
 
-    /**
-     * This sends the user to the main menu activity.
-     */
-    private void goToMain()
-    {
-        finish();
-        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
-        startActivity(mainMenuIntent);
-    }
 
     /**
      * Launches the GoogleMaps Activity
@@ -180,5 +170,25 @@ public class LogInActivity extends AppCompatActivity {
     public void activityGoogleMaps(View view) {
         Intent launchGoogleMaps = new Intent(this, GoogleMapsActivity.class);
         startActivity(launchGoogleMaps);
+    }
+
+    /**
+     * This runs an alpha tween animation so that the edit texts, buttons, and
+     * image view are brought in through changing the opacity.
+     */
+    private void RunAnimation()
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
+        a.reset();
+        mEmailLoginEditText.clearAnimation();
+        mEmailLoginEditText.startAnimation(a);
+        mPasswordLoginEditText.clearAnimation();
+        mPasswordLoginEditText.startAnimation(a);
+        LoginButton.clearAnimation();
+        LoginButton.startAnimation(a);
+        createProfileButton.clearAnimation();
+        createProfileButton.startAnimation(a);
+        googleMaps.clearAnimation();
+        googleMaps.startAnimation(a);
     }
 }

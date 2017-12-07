@@ -5,21 +5,24 @@
 
     <!-- Log-In -->
     <string name="log_in_button">Log In</string>
-    <string name="confirm_profile_button">Confirm Profile</string>
     <string name="about_button">About "Audiate"</string>
+    <string name="create_profile_button">Create Profile</string>
 
     <!-- Create / Edit Profile -->
-    <string name="user_name_email">User Name or Email</string>
     <string name="user_name">User Name</string>
-    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="low_pitch">Low Pitch</string>
     <string name="high_pitch">High Pitch</string>
     <string name="vocal_range">Vocal Range</string>
-    <string name="cancel_button">Cancel</string>
+    <string name="confirm_profile_button">Confirm Profile</string>
     <string name="detect_vocal_range_button">Detect Vocal Range</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
+
+        <!-- Unused in Profile Right Now -->
+        <string name="user_name_email">User Name or Email</string>
+        <string name="cancel_button">Cancel</string>
+        <string name="email">Email</string>
+        <string name="first_name">First Name</string>
+        <string name="last_name">Last Name</string>
 
     <!-- Detect Vocal Range Activity -->
     <string name="detect_vocal_range_activity_title_text" translatable="false">@string/detect_vocal_range_button</string>
