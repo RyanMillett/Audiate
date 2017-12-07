@@ -32,6 +32,12 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         mChordScaleList = chordScales;
     }
 
+    public LibraryListAdapter(Context context, int rId) {
+        super(context, rId);
+        mContext = context;
+        mResourceId = rId;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -42,7 +48,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         View view = inflater.inflate(mResourceId, null);
 
         LinearLayout libraryListLinearLayout
-                = view.findViewById(R.id.libraryListItemLinearLayout);
+                = view.findViewById(R.id.libraryListLinearLayout);
         TextView libraryListNameTextView
                 = view.findViewById(R.id.libraryListNameTextView);
         TextView libraryListDescription1TextView
@@ -53,8 +59,8 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         libraryListLinearLayout.setTag(selectedChordScale);
 
         libraryListNameTextView.setText(selectedChordScale.getName());
-        libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
+        // TODO: handle different ChordScale types (Interval, Chord, Scale)
 
         return view;
     }
