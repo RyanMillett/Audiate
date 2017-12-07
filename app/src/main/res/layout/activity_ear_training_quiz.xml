@@ -4,7 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="10dp">
+              android:padding="10dp"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/questionNumberTextView"
@@ -16,26 +17,28 @@
 
     <ImageView
         android:id="@+id/earTrainingImageView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="526dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
-        android:layout_weight="1"
         android:adjustViewBounds="true"
         android:clickable="true"
         android:onClick="playChordScale"
         android:background="@drawable/green_play_button"
         android:elevation="50dp"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:layout_weight=".8" />
 
     <TextView
         android:id="@+id/guessTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:text="@string/guess_interval"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/row1LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +67,7 @@
 
     <LinearLayout
         android:id="@+id/row2LinearLayout"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -95,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"

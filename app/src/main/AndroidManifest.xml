@@ -50,6 +50,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ExerciseSelectionMenuActivity"
+            android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -68,6 +69,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".AlternateLoginActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -129,6 +129,7 @@ public class ProfileActivity extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different user name.", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Error creating new account", task.getException());
                 }
             }
         });

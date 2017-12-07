@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "522651540176-d34kgu29do88qb4pq0oreelp5qbagivm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate",
+            "certificate_hash": "66d653f9553d54e822369fbc1c7150fff47d1b72"
+          }
+        },
+        {
           "client_id": "522651540176-qapra8mk9u69oa4vj1h3sqr8tbaob6vs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

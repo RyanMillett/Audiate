@@ -170,8 +170,8 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         int questionNumber = QUESTIONS_IN_QUIZ - mQuizList.size();
         mQuestionNumberTextView.setText(getString(R.string.question, questionNumber, QUESTIONS_IN_QUIZ));
 
-//        // Assigning the correct ChordScale
-//        mSoundObjectPlayer.loadSoundObject(mCorrectChordScale);
+        // Assigning the correct ChordScale
+        // mSoundObjectPlayer.loadSoundObject(mCorrectChordScale);
 
         // Check the correct answer
         // This will need to be changed later

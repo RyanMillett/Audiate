@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Table of users
     private static final String USERS_TABLE = "Users";
-    private static final String USERS_KEY_FIELD_ID = "id";
+    private static final String USERS_KEY_FIELD_ID = "_id";
     private static final String FIELD_USER_NAME = "user_name";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_LOW_PITCH = "low_pitch";
