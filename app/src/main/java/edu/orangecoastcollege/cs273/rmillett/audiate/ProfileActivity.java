@@ -115,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different email.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different user name.", Toast.LENGTH_LONG).show();
                 }
             }
         });

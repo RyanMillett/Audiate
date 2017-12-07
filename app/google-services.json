@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "595918768280",
+    "firebase_url": "https://audiate-dee50.firebaseio.com",
+    "project_id": "audiate-dee50",
+    "storage_bucket": "audiate-dee50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595918768280:android:181ca6e5f1ba4075",
+        "android_client_info": {
+          "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595918768280-7lp9cduqiivps1kgq5i8bhbnkgc3aktt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate",
+            "certificate_hash": "7f703a46e526f7ec7a8490d3103a38cf52cb993c"
+          }
+        },
+        {
+          "client_id": "595918768280-6j5u8m9vhq6tqdo4fm7kp454jlmcvsnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBFklPvElH-2aKynB0hxGIYA-BeeMmqWc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595918768280-6j5u8m9vhq6tqdo4fm7kp454jlmcvsnm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

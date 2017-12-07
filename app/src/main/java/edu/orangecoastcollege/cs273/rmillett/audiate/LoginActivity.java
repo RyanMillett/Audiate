@@ -75,26 +75,18 @@ public class LoginActivity extends AppCompatActivity {
             goToMain();
     }
 
-
     /**
-     * This runs an alpha tween animation so that the edit texts, buttons, and
-     * image view are brought in through changing the opacity.
+     * This sends the user to the main menu activity.
      */
-    private void RunAnimation()
+    private void goToMain()
     {
-        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
-        a.reset();
-        userNameLoginEditText.clearAnimation();
-        userNameLoginEditText.startAnimation(a);
-        passwordLogInEditText.clearAnimation();
-        passwordLogInEditText.startAnimation(a);
-        signInButton.clearAnimation();
-        signInButton.startAnimation(a);
-        newUserButton.clearAnimation();
-        newUserButton.startAnimation(a);
-        googleMaps.clearAnimation();
-        googleMaps.startAnimation(a);
+        finish();
+        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
+        startActivity(mainMenuIntent);
     }
+
+
+
 
     /**
      * This checks to see if the input is valid.
@@ -163,15 +155,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * This sends the user to the main menu activity.
-     */
-    private void goToMain()
-    {
-        finish();
-        Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
-        startActivity(mainMenuIntent);
-    }
 
     /**
      * Launches the GoogleMaps Activity
@@ -180,5 +163,25 @@ public class LoginActivity extends AppCompatActivity {
     public void activityGoogleMaps(View view) {
         Intent launchGoogleMaps = new Intent(this, GoogleMapsActivity.class);
         startActivity(launchGoogleMaps);
+    }
+
+    /**
+     * This runs an alpha tween animation so that the edit texts, buttons, and
+     * image view are brought in through changing the opacity.
+     */
+    private void RunAnimation()
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
+        a.reset();
+        userNameLoginEditText.clearAnimation();
+        userNameLoginEditText.startAnimation(a);
+        passwordLogInEditText.clearAnimation();
+        passwordLogInEditText.startAnimation(a);
+        signInButton.clearAnimation();
+        signInButton.startAnimation(a);
+        newUserButton.clearAnimation();
+        newUserButton.startAnimation(a);
+        googleMaps.clearAnimation();
+        googleMaps.startAnimation(a);
     }
 }
