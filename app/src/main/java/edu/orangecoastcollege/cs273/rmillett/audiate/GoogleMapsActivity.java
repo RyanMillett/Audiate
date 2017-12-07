@@ -106,7 +106,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         mMap.addMarker(new MarkerOptions()
                 .position(myCoordinate)
                 .title("Current Location")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.blue_note_marker)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.my_marker)));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(myCoordinate).zoom(15.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         mMap.moveCamera(cameraUpdate);

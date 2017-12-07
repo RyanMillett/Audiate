@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange)
+    private void createUser(final String userName, String email, String password, String lowPitch, final String highPitch, final String vocalRange)
     {
         if(!profileComplete())
             return;
