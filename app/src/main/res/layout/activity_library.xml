@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/selection_name"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="30sp"/>
 
         <TextView
             android:id="@+id/selectionDescriptionTextView"

@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -31,7 +32,7 @@ public class LibraryActivity extends AppCompatActivity {
 
     // views
     private EditText setFundamentalEditText;
-    private TextView intervalDisplayTextView;
+    private TextView displayNameTextView;
     private TextView selectionDisplayTextView;
     private ListView libraryListView;
 
@@ -78,7 +79,7 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
-        intervalDisplayTextView = findViewById(R.id.libraryListNameTextView);
+        displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
 
         selectMaterialSpinner = findViewById(R.id.materialSelectionSpinner);
@@ -110,6 +111,8 @@ public class LibraryActivity extends AppCompatActivity {
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
         // TODO: spinner listener
 
+        testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
+        playSelectionButton = findViewById(R.id.playSelectionButton);
 
         // playback settings group
         // TODO: add OnCheckedListener
@@ -126,8 +129,8 @@ public class LibraryActivity extends AppCompatActivity {
         playSelectionButton = findViewById(R.id.playSelectionButton);
 
         mChordScale = new ChordScale("Selected ChordScale");
-        mChordScale.addChordMember(new Note("Fundamental"));
-        mChordScale.addChordMember(new Note("Interval"));
+        mChordScale.addChordMemberAt(0, new Note("Fundamental"));
+        mChordScale.addChordMemberAt(1, new Note("Interval"));
 
         mSoundObjectPlayer = new SoundObjectPlayer();
 
@@ -307,7 +310,7 @@ public class LibraryActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.testFundamentalFreqButton:
                 mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-                mSoundObjectPlayer.playSoundObject(mChordScale);
+                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
                 break;
             case R.id.playSelectionButton:
                 detectPlaybackMode();
@@ -322,22 +325,37 @@ public class LibraryActivity extends AppCompatActivity {
     public void selectionDetailsHandler(View view) {
         // TODO: this method
         // use this method to build ChordScale
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
+            Log.i(TAG, selectedChordScale.getName());
+            int i = 1;
+            mChordScale = selectedChordScale;
+
+            if (selectedChordScale.getName().equalsIgnoreCase("unnamed")) {
+                displayNameTextView.setText(selectedChordScale.getChordMemberAtPos(1).getRatio());
+            }
+            else {
+//                displayNameTextView.setText(selectedChordScale.getName());
+            }
+
+        }
     }
 
     // TODO: consider adding this to an OnChangeListener if possible
     private void detectPlaybackMode() {
         // Set PlayBack mode
-        if (mode2RadioButton.isChecked()) {
+        if (mode1RadioButton.isChecked()) {
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+        }
+        else if (mode2RadioButton.isChecked()) {
             mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
             mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
-        }
-        else {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
         }
     }
 }
