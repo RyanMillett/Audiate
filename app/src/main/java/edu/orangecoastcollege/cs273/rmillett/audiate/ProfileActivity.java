@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mHighPitchTextView;
     private TextView mVocalRangeTextView;
 
+    private Button mConfirmProfileButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +54,14 @@ public class ProfileActivity extends AppCompatActivity {
         mHighPitchTextView = (TextView) findViewById(R.id.highPitchTextView);
         mVocalRangeTextView = (TextView) findViewById(R.id.vocalRangeTextView);
 
+        mConfirmProfileButton = (Button) findViewById(R.id.confirmProfileButton);
+
+        // Hooks up the Database
         mDB = new DBHelper(this);
 
         mAuth = FirebaseAuth.getInstance();
 
         mUser = mAuth.getCurrentUser();
-
     }
 
     /**
@@ -104,14 +109,28 @@ public class ProfileActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void goToLogin()
+    /**
+     * This takes the user to the LoginActivity
+     */
+    public void goToLogin(User newUser)
     {
         finish();
         Intent launchLogin = new Intent(this, LoginActivity.class);
+        launchLogin.putExtra("CurrentUser", newUser);
         startActivity(launchLogin);
     }
 
 
+    /**
+     * This creates a user with a userName, email, password, lowPitch, highPitch, and vocalRange.
+     * it checks to make sure the email and password are correct then it creates a user.
+     * @param userName
+     * @param email
+     * @param password
+     * @param lowPitch
+     * @param highPitch
+     * @param vocalRange
+     */
     private void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange)
     {
         if(!profileComplete())
@@ -124,7 +143,6 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     Toast.makeText(ProfileActivity.this, "Account created successfully. Please verify account in your email.", Toast.LENGTH_LONG).show();
                     mUser = mAuth.getCurrentUser();
-                    goToLogin();
                 }
                 else
                 {
@@ -143,9 +161,15 @@ public class ProfileActivity extends AppCompatActivity {
         mLowPitchTextView.setText("");
         mHighPitchTextView.setText("");
         mVocalRangeTextView.setText("");
+        goToLogin(newUser);
     }
 
 
+    /**
+     * The <code>handleProfileButtons</code> handles both the confirmProfileButton and the
+     * detectVocalRangeButton. If the user clicks confirmProfile it creates a user.
+     * @param v
+     */
     public void handleProfileButtons(View v)
     {
         switch(v.getId())

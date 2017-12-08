@@ -14,13 +14,14 @@
         android:layout_width="@dimen/edit_text_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="@string/user_name"
         android:inputType="textPersonName"
         android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
+    <requestFocus/>
 
     <EditText
         android:id="@+id/emailCreateEditText"
@@ -87,10 +88,10 @@
         />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/detectVocalRangeButton"
@@ -98,6 +99,9 @@
             android:layout_height="75dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:background="@drawable/low_high_note_button_bg"
+            android:fontFamily="serif"
             android:layout_gravity="center_vertical"
             android:onClick="handleProfileButtons"
             android:text="@string/detect_vocal_range_button"
@@ -105,8 +109,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <Button
@@ -114,8 +119,10 @@
             android:layout_width="500dp"
             android:layout_height="75dp"
             android:layout_gravity="center"
+            android:background="@drawable/confirm_vocal_bg"
+            android:fontFamily="serif"
             android:layout_margin="10dp"
-            android:layout_weight="1"
+            android:textStyle="bold|italic"
             android:onClick="handleProfileButtons"
             android:padding="@dimen/buttons_padding"
             android:text="@string/confirm_profile_button"

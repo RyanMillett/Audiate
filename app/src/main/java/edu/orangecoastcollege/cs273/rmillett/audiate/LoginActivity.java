@@ -46,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    private User user;
+
 
     /**
      * The <code>onCreate</code> sets up the authorization of the user from firebase.
