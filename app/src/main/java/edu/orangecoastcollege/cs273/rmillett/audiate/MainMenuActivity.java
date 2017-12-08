@@ -3,13 +3,22 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainMenuActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainMenuActivity";
+
+
+    private DBHelper db;
 
     User user;
 
@@ -25,6 +34,17 @@ public class MainMenuActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
+
+        db = new DBHelper(this);
+
+        List<User> users = new ArrayList<>(db.getAllUsers());
+        for(User u : users)
+        {
+            Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
+            + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
+            + "\nvocal_range: " + u.getVocalRange());
+        }
+
 
         // Should display a welcome message to the user at the main menu
         //welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));

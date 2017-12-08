@@ -74,9 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         // Runs the animation that brings the Views in
         RunAnimation();
 
-        // If user is already signed in go straight to main activity
-        if (mUser != null)
-            goToMain();
+
     }
 
     /**
@@ -118,6 +116,10 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void Login(String email, String password)
     {
+        // If user is already signed in go straight to main activity
+        if (mUser != null)
+            goToMain();
+
         if(!isValidInput())
             return;
         else

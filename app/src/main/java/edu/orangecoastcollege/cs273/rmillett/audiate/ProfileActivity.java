@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         mHighPitchTextView = (TextView) findViewById(R.id.highPitchTextView);
         mVocalRangeTextView = (TextView) findViewById(R.id.vocalRangeTextView);
 
+        mDB = new DBHelper(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -111,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    private void createUser(String email, String password)
+    private void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange)
     {
         if(!profileComplete())
             return;
@@ -123,7 +124,6 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     Toast.makeText(ProfileActivity.this, "Account created successfully. Please verify account in your email.", Toast.LENGTH_LONG).show();
                     mUser = mAuth.getCurrentUser();
-                    mUser.sendEmailVerification();
                     goToLogin();
                 }
                 else
@@ -135,8 +135,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // Adds the user to the database
-        // User newUser = new User(userName, email, lowPitch, highPitch, vocalRange);
-        // mDB.addUser(newUser);
+        User newUser = new User(userName, email, lowPitch, highPitch, vocalRange);
+        mDB.addUser(newUser);
         //Log.i(TAG, "Check if user name is bwegener from database = " + user.getUserName());
     }
 
@@ -146,7 +146,8 @@ public class ProfileActivity extends AppCompatActivity {
         switch(v.getId())
         {
             case R.id.confirmProfileButton:
-                createUser(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+                createUser(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(),
+                        mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(), mVocalRangeTextView.getText().toString());
                 break;
 
             case R.id.detectVocalRangeButton:
