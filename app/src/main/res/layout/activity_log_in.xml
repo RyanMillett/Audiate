@@ -6,34 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.LoginActivity"
-    android:weightSum="1">
+    android:weightSum="1"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.LoginActivity">
 
 
     <EditText
         android:id="@+id/emailLoginET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:layout_marginLeft="@dimen/buttons_text_margin"
         android:layout_marginRight="@dimen/buttons_text_margin"
-        android:imeOptions="actionDone"
-        android:selectAllOnFocus="true"
+        android:layout_marginTop="150dp"
         android:ems="10"
         android:hint="@string/email"
+        android:imeOptions="actionDone"
         android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
         android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
+
     <requestFocus/>
 
     <EditText
         android:id="@+id/passwordLoginET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="@dimen/buttons_text_margin"
         android:layout_marginRight="@dimen/buttons_text_margin"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -43,34 +44,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:orientation="horizontal"
-        android:layout_weight=".5">
+        android:layout_weight=".5"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="125dp"
-            android:layout_marginTop="80dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/custom_green_bg"
+            android:layout_marginTop="80dp"
             android:layout_weight="1"
-            android:textSize="@dimen/medium_text_size"
+            android:background="@drawable/custom_green_bg"
             android:onClick="handleLoginButtons"
-            android:text="@string/log_in_button"/>
+            android:text="@string/log_in_button"
+            android:textSize="@dimen/medium_text_size"/>
 
         <Button
             android:id="@+id/createProfileButton"
             android:layout_width="match_parent"
             android:layout_height="125dp"
-            android:background="@drawable/custom_blue_bg"
-            android:layout_marginTop="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
             android:layout_weight="1"
-            android:textSize="@dimen/medium_text_size"
+            android:background="@drawable/custom_blue_bg"
             android:onClick="handleLoginButtons"
-            android:text="@string/create_profile_button"/>
+            android:text="@string/create_profile_button"
+            android:textSize="@dimen/medium_text_size"/>
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +88,7 @@
             android:onClick="activityGoogleMaps"
             app:srcCompat="@drawable/google_maps_icon"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

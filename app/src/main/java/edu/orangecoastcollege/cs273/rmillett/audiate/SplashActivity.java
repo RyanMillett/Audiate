@@ -10,12 +10,28 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The <code>SplashActivity</code> displays the name of the app through means
+ * of an alpha animation, before sending the user to the log in activity.
+ *
+ * @author bwegener
+ * @version 1.0
+ *          <p>
+ *          Created by Brian Wegener 11/28/2017
+ */
 public class SplashActivity extends AppCompatActivity {
 
     private Animation alphaAnim;
 
     private TextView audiateTextView;
 
+    /**
+     * The <code>onCreate</code> calls the TextView and runs an animation
+     * as well as handling a timer task so that the user stays on the splash
+     * activity for a couple seconds.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +58,10 @@ public class SplashActivity extends AppCompatActivity {
         timer.schedule(task, 2500);
     }
 
-    private void RunAnimation()
-    {
+    /**
+     * This runs an alpha animation so that the text slowly animates in.
+     */
+    private void RunAnimation() {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
         a.reset();
         audiateTextView.clearAnimation();

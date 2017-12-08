@@ -14,13 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The <code>MainMenuActivity</code> allows the user to
- *
+ * The <code>MainMenuActivity</code> allows the user to choose
+ * between different activities as well as edit their profile(s) or logout.
  */
 public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MainMenuActivity";
-
 
     private DBHelper db;
 
@@ -29,6 +28,11 @@ public class MainMenuActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    /**
+     * This sets up the activity with the database and gets the current user.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +49,10 @@ public class MainMenuActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         List<User> users = new ArrayList<>(db.getAllUsers());
-        for(User u : users)
-        {
+        for (User u : users) {
             Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
-            + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
-            + "\nvocal_range: " + u.getVocalRange());
+                    + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
+                    + "\nvocal_range: " + u.getVocalRange());
         }
 
 
@@ -60,10 +63,15 @@ public class MainMenuActivity extends AppCompatActivity {
         // If I have to go with alternate LoginActivity
         // User selectedUser = getIntent().getExtras().getParcelable("SelectedUser");
         // welcomeTextView.setText(getString(R.string.welcome_message, selectedUser.getUserName()));
-
-
     }
 
+    /**
+     * This handles which activity is selected.
+     * This handles all the buttons on the main menu activity layout.
+     * it sends them to different places.
+     *
+     * @param view
+     */
     public void activitySelectionHandler(View view) {
         // create Intent
         Intent activityIntent;
@@ -73,25 +81,19 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.libraryButton:
                 activityIntent = new Intent(this, LibraryActivity.class);
                 break;
+            case R.id.editProfileButton:
+                activityIntent = new Intent(this, ProfileActivity.class);
+                break;
+            case R.id.logoutButton:
+                mAuth.signOut();
+                finish();
+                activityIntent = new Intent(this, LoginActivity.class);
+                break;
             default:
                 activityIntent = new Intent(this, ExerciseSelectionMenuActivity.class);
                 break;
         }
 
-        // Launch activity
         startActivity(activityIntent);
-    }
-
-    public void editProfile(View view) {
-        Intent launchProfile = new Intent(this, ProfileActivity.class);
-        startActivity(launchProfile);
-
-    }
-
-    public void logOut(View view) {
-        mAuth.signOut();
-        finish();
-        Intent logInIntent = new Intent(this, LoginActivity.class);
-        startActivity(logInIntent);
     }
 }
