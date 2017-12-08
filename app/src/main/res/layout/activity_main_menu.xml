@@ -143,7 +143,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/custom_green_bg"
             android:fontFamily="serif"
-            android:onClick="editProfile"
+            android:onClick="activitySelectionHandler"
             android:text="@string/edit_profile_button"
             android:textSize="@dimen/small_text_size"/>
 
@@ -154,7 +154,7 @@
             android:layout_gravity="center"
             android:background="@drawable/custom_blue_bg"
             android:fontFamily="serif"
-            android:onClick="logOut"
+            android:onClick="activitySelectionHandler"
             android:text="@string/log_out_button"
             android:textSize="@dimen/small_text_size"/>
 

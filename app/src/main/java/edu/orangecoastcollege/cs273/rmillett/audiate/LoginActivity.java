@@ -117,8 +117,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void Login(String email, String password) {
         // If user is already signed in go straight to main activity
+        // Might move this back to the onCreate
+        /*
         if (mUser != null)
             goToMain();
+            */
 
         if (!isValidInput())
             return;

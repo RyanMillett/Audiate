@@ -5,33 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.GoogleMapsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.GoogleMapsActivity">
 
     <fragment
+        android:id="@+id/googleMapsFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/googleMapsFragment"
-        android:layout_weight="2" />
+        android:layout_weight="2"/>
 
     <TextView
         android:id="@+id/logITV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
         android:layout_gravity="center_horizontal"
-        android:textSize="@dimen/small_text_size"
-        android:text=""/>
+        android:fontFamily="serif"
+        android:text=""
+        android:textSize="@dimen/small_text_size"/>
 
     <ImageView
         android:id="@+id/playLocation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clickable="true"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
+        android:layout_weight="1"
+        android:clickable="true"
         android:onClick="playLocation"
         app:srcCompat="@drawable/green_play_button"/>
 

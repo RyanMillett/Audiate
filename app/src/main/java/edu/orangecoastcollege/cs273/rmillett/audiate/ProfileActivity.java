@@ -18,6 +18,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * The <code>ProfileActivity</code> allows the user to create a profile
+ * with a: username, email, password, low pitch, high pitch, and vocal range.
+ *
+ * @author bwegener
+ * @version 1.0
+ *          <p>
+ *          Created by Brian Wegener on 11/28/2017
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
@@ -37,6 +46,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Button mConfirmProfileButton;
 
+    /**
+     * The <code>onCreate</code> connects all the views to their ids,
+     * hooks up the database, and authorizes the user with firebase.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,41 +82,38 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * This checks to make sure that the profile is complete.
      * It checks the userName, email, password, lowPitch, highPitch, and vocalRange.
+     *
      * @return
      */
-    private boolean profileComplete()
-    {
+    private boolean profileComplete() {
         boolean valid = true;
 
-        if(TextUtils.isEmpty(mUserNameEditText.getText())) {
+        if (TextUtils.isEmpty(mUserNameEditText.getText())) {
             mUserNameEditText.setError("Required.");
             valid = false;
         }
 
-        if(TextUtils.isEmpty(mEmailEditText.getText())) {
+        if (TextUtils.isEmpty(mEmailEditText.getText())) {
             mEmailEditText.setError("Required.");
             valid = false;
         }
 
-        if(TextUtils.isEmpty(mPasswordEditText.getText())) {
+        if (TextUtils.isEmpty(mPasswordEditText.getText())) {
             mPasswordEditText.setError("Required.");
             valid = false;
         }
 
-        if(TextUtils.isEmpty(mLowPitchTextView.getText()))
-        {
+        if (TextUtils.isEmpty(mLowPitchTextView.getText())) {
             mLowPitchTextView.setError("Complete Detect Vocal Range.");
             valid = false;
         }
 
-        if(TextUtils.isEmpty(mHighPitchTextView.getText()))
-        {
+        if (TextUtils.isEmpty(mHighPitchTextView.getText())) {
             mHighPitchTextView.setError("Complete Detect Vocal Range.");
             valid = false;
         }
 
-        if(TextUtils.isEmpty(mVocalRangeTextView.getText()))
-        {
+        if (TextUtils.isEmpty(mVocalRangeTextView.getText())) {
             mVocalRangeTextView.setError("Complete Detect Vocal Range.");
             valid = false;
         }
@@ -112,8 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * This takes the user to the LoginActivity
      */
-    public void goToLogin(User newUser)
-    {
+    public void goToLogin(User newUser) {
         finish();
         Intent launchLogin = new Intent(this, LoginActivity.class);
         launchLogin.putExtra("CurrentUser", newUser);
@@ -124,6 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * This creates a user with a userName, email, password, lowPitch, highPitch, and vocalRange.
      * it checks to make sure the email and password are correct then it creates a user.
+     *
      * @param userName
      * @param email
      * @param password
@@ -131,21 +143,17 @@ public class ProfileActivity extends AppCompatActivity {
      * @param highPitch
      * @param vocalRange
      */
-    private void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange)
-    {
-        if(!profileComplete())
+    private void createUser(String userName, String email, String password, String lowPitch, String highPitch, String vocalRange) {
+        if (!profileComplete())
             return;
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, "Account created successfully. Please verify account in your email.", Toast.LENGTH_LONG).show();
                     mUser = mAuth.getCurrentUser();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different user name.", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Error creating new account", task.getException());
                 }
@@ -168,12 +176,11 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      * The <code>handleProfileButtons</code> handles both the confirmProfileButton and the
      * detectVocalRangeButton. If the user clicks confirmProfile it creates a user.
+     *
      * @param v
      */
-    public void handleProfileButtons(View v)
-    {
-        switch(v.getId())
-        {
+    public void handleProfileButtons(View v) {
+        switch (v.getId()) {
             case R.id.confirmProfileButton:
                 createUser(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(),
                         mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(), mVocalRangeTextView.getText().toString());
