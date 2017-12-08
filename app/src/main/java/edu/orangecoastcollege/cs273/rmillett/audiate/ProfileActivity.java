@@ -108,7 +108,6 @@ public class ProfileActivity extends AppCompatActivity {
     {
         finish();
         Intent launchLogin = new Intent(this, LoginActivity.class);
-        launchLogin.putExtra("CurrentUser", newUser);
         startActivity(launchLogin);
     }
 
