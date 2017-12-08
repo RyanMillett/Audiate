@@ -108,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
     {
         finish();
         Intent launchLogin = new Intent(this, LoginActivity.class);
+        launchLogin.putExtra("CurrentUser", newUser);
         startActivity(launchLogin);
     }
 
@@ -137,7 +138,12 @@ public class ProfileActivity extends AppCompatActivity {
         // Adds the user to the database
         User newUser = new User(userName, email, lowPitch, highPitch, vocalRange);
         mDB.addUser(newUser);
-        //Log.i(TAG, "Check if user name is bwegener from database = " + user.getUserName());
+        mUserNameEditText.setText("");
+        mEmailEditText.setText("");
+        mPasswordEditText.setText("");
+        mLowPitchTextView.setText("");
+        mHighPitchTextView.setText("");
+        mVocalRangeTextView.setText("");
     }
 
 

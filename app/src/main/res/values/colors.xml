@@ -17,7 +17,9 @@
 
     <color name="royal_blue">#4169e1</color>
     <color name="blue_grey">#6E7B8B</color>
-    <color name="light_blue_grey">#5B6E91</color>
+    <color name="air_force_blue">#5D8AA8</color>
+    <color name="police_blue">#0bb5FF</color>
+    <color name="turquoise_blue">#00FFEF</color>
     <color name="neon_green">#39FF14</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

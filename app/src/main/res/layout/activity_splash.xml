@@ -12,13 +12,15 @@
         android:id="@+id/audiateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="234dp"
+        android:fontFamily="serif"
         android:gravity="center_vertical|center_horizontal"
+        android:text="@string/splash_screen_text"
         android:textColor="@android:color/black"
         android:textSize="@dimen/big_text_size"
         android:textStyle="italic"
-        android:text="@string/splash_screen_text"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="225dp"
-        android:layout_marginBottom="225dp"/>
+        android:typeface="normal"/>
 
 </RelativeLayout>

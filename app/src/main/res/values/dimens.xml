@@ -9,6 +9,9 @@
     <dimen name="edit_text_width">600dp</dimen>
     <dimen name="ear_training_buttons">250dp</dimen>
 
+    <dimen name="vocal_range_buttons">125dp</dimen>
+    <dimen name="vocal_range_buttons_layouts">150dp</dimen>
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 

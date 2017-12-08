@@ -30,6 +30,9 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        // Get this to work later
+        // User user = getIntent().getExtras().getParcelable("user");
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -47,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
         // Should display a welcome message to the user at the main menu
-        //welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
+        // welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
 
 
         // If I have to go with alternate LoginActivity

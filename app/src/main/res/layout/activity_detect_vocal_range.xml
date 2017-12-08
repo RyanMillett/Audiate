@@ -15,7 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="@string/detect_vocal_range_button"
-        android:textSize="25sp"/>
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:fontFamily="serif"
+        android:textSize="50sp"/>
 
     <TextView
         android:id="@+id/detectVocalRangeInstructionsTextView"
@@ -66,7 +69,8 @@
     <LinearLayout
         android:id="@+id/detectHighNoteLowNoteButtonGroupLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/vocal_range_buttons_layouts"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -75,18 +79,24 @@
             android:id="@+id/detectHighNoteButtonLinearLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="10dp"
+            android:elevation="10dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="@dimen/buttons_padding"
-            android:layout_weight="1">
+            android:padding="@dimen/buttons_padding">
 
             <Button
                 android:id="@+id/detectHighNoteButton"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/vocal_range_buttons"
+                android:background="@drawable/low_high_note_button_bg"
+                android:fontFamily="monospace"
                 android:onClick="detectPitchHandler"
                 android:padding="@dimen/buttons_padding"
-                android:text="@string/detect_high_note" />
+                android:text="@string/detect_high_note"
+                android:textSize="40dp"/>
 
         </LinearLayout>
 
@@ -96,17 +106,23 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginVertical="75dp"
-            android:orientation="vertical"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:padding="@dimen/buttons_padding">
 
             <Button
                 android:id="@+id/detectLowNoteButton"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="@dimen/vocal_range_buttons"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="10dp"
+                android:elevation="10dp"
+                android:background="@drawable/low_high_note_button_bg"
+                android:fontFamily="monospace"
                 android:onClick="detectPitchHandler"
                 android:padding="@dimen/buttons_padding"
-                android:text="@string/detect_low_note" />
+                android:text="@string/detect_low_note"
+                android:textSize="40dp"/>
 
         </LinearLayout>
 
@@ -114,18 +130,23 @@
 
     <LinearLayout
         android:id="@+id/confirmVocalRangeButtonLinearLayout"
+        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="75dp"
         android:layout_gravity="center"
         android:padding="@dimen/buttons_padding"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/confirmVocalRangeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="500dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
+            android:background="@drawable/confirm_vocal_bg"
+            android:textSize="@dimen/small_text_size"
+            android:textColor="@color/black"
+            android:fontFamily="serif"
+            android:textStyle="bold||italic"
             android:onClick="confirmVocalRange"
             android:padding="@dimen/buttons_padding"
             android:layout_marginVertical="20dp"
