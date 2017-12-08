@@ -62,26 +62,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_HIGH_PITCH = "high_pitch";
     private static final String FIELD_VOCAL_RANGE = "vocal_range";
 
-    // TODO: Relational tables
-    // Intervals:
-        // ALL intervals (full 580 list)
-        // Harmonics (up to 127th)
-        // Historical (all named intervals)
-        // Diatonic Just-Intoned
-        // Dodecaphonic Just-Intoned
-        // Diatonic-Chromatic Just and E.T.
-        // All Just-Intervals
-    // Chords:
-        // Triads -> Maj, min, Aug, dim
-        // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
-        // Just vs. E.T. triads/7ths
-    // Scales:
-        // ALL scales (full 4,000+ list)
-        // Heptatonic (diatonic) scales and modes
-            // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
-        // Olivier Messiaen's "Modes of Limited Transposition"
-
-
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
@@ -139,6 +119,8 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    // ---------- ADD ---------- //
+
     public void addInterval(ChordScale interval) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -158,8 +140,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         values.put(FIELD_CHORD_NAME, chord.getName());
         values.put(FIELD_CHORD_SIZE, chord.getSize());
-        // TODO: figure out how to add chord members
         values.put(FIELD_CHORD_DESCRIPTION, chord.getDescription());
+        values.put(FIELD_CHORD_SCL_FILE_NAME, chord.getSCLfileName());
 
         db.insert(CHORDS_TABLE, null, values);
         db.close();
@@ -202,58 +184,48 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /**
-     * This gets a list of all the users from the database.
-     * @return
-     */
-    public ArrayList<User> getAllUsers() {
-        ArrayList<User> userList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(
-                USERS_TABLE,
-                new String[]{USERS_KEY_FIELD_ID,
-                FIELD_USER_NAME, FIELD_EMAIL,
-                FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
-                FIELD_VOCAL_RANGE},
-                null,
-                null,
-                null, null, null, null);
-        if(cursor.moveToFirst()) {
-            do {
-                User user = new User(cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5));
-                userList.add(user);
-            } while (cursor.moveToNext());
-        }
-        return userList;
-    }
 
-    /**
-     * This deletes a user from the database.
-     * @param user
-     */
-    public void deleteUser(User user)
-    {
+    // ---------- UPDATE ---------- //
+
+    public void updateInterval(ChordScale interval) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        db.delete(USERS_TABLE, USERS_KEY_FIELD_ID + " = ?",
-                new String[] {String.valueOf(user.getId())});
+        values.put(FIELD_INTERVAL_NAME, interval.getName());
+        values.put(FIELD_INTERVAL_RATIO, interval.getIntervalRatio(0, 1));
+        values.put(FIELD_INTERVAL_CENTS, interval.getIntervalDistanceInCents(0,1));
+        values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
+
+        db.update(INTERVALS_TABLE, values, INTERVALS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(interval.getId())});
         db.close();
     }
 
-    /**
-     * This deletes all the users from the database.
-     */
-    public void deleteAllUsers()
-    {
+    public void updateChord(ChordScale chord) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-        db.delete(USERS_TABLE, null, null);
+        values.put(FIELD_CHORD_NAME, chord.getName());
+        values.put(FIELD_CHORD_SIZE, chord.getSize());
+        values.put(FIELD_CHORD_DESCRIPTION, chord.getDescription());
+        values.put(FIELD_CHORD_SCL_FILE_NAME, chord.getSCLfileName());
 
+        db.update(CHORDS_TABLE, values, CHORDS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(chord.getId())});
+        db.close();
+    }
+
+    public void updateScale(ChordScale scale) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_SCALE_NAME, scale.getName());
+        values.put(FIELD_SCALE_SIZE, scale.getSize());
+        values.put(FIELD_SCALE_DESCRIPTION, scale.getDescription());
+        values.put(FIELD_SCALE_SCL_FILE_NAME, scale.getSCLfileName());
+
+        db.update(SCALES_TABLE, values, SCALES_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(scale.getId())});
         db.close();
     }
 
@@ -277,6 +249,21 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    // ---------- GET ---------- //
+
+//    public ChordScale getInterval(int id) {
+//        // TODO: this method
+//    }
+//
+//    public ChordScale getChord(int id) {
+//        // TODO: this method
+//    }
+//
+//    public ChordScale getScale(int id) {
+//        // TODO: this method
+//    }
+
     /**
      * This gets one user from the database.
      * @param id
@@ -288,9 +275,9 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 USERS_TABLE,
                 new String[]{USERS_KEY_FIELD_ID,
-                FIELD_USER_NAME, FIELD_EMAIL,
-                FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
-                FIELD_VOCAL_RANGE},
+                        FIELD_USER_NAME, FIELD_EMAIL,
+                        FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
+                        FIELD_VOCAL_RANGE},
                 USERS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -307,6 +294,211 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return user;
     }
+
+
+    // ---------- DELETE ---------- //
+
+    public void deleteInterval(ChordScale interval) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(INTERVALS_TABLE, INTERVALS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(interval.getId())});
+        db.close();
+    }
+
+    public void deleteChord(ChordScale chord) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(CHORDS_TABLE, CHORDS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(chord.getId())});
+    }
+
+    public void deleteScale(ChordScale scale) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(SCALES_TABLE, SCALES_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(scale.getId())});
+        db.close();
+    }
+
+    /**
+     * This deletes a user from the database.
+     * @param user
+     */
+    public void deleteUser(User user)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(USERS_TABLE, USERS_KEY_FIELD_ID + " = ?",
+                new String[] {String.valueOf(user.getId())});
+        db.close();
+    }
+
+    // ---------- GET ALL ---------- //
+
+    public List<ChordScale> getAllIntervals() {
+        List<ChordScale> allIntervalsList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // build interval
+                ChordScale interval =
+                        new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
+                interval.addChordMember(new Note("Fundamental"));
+                interval.addChordMember(new Note(cursor.getString(1),
+                        interval.getChordMemberAtPos(0).getPitchFrequency()
+                                * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
+
+                // add to list
+                allIntervalsList.add(interval);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allIntervalsList;
+    }
+
+    // TODO: getAllChords()
+
+    // TODO: getAllScales() -> ?
+
+    /**
+     * This gets a list of all the users from the database.
+     * @return
+     */
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> userList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_USER_NAME, FIELD_EMAIL,
+                        FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
+                        FIELD_VOCAL_RANGE},
+                null,
+                null,
+                null, null, null, null);
+        if(cursor.moveToFirst()) {
+            do {
+                User user = new User(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5));
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        return userList;
+    }
+
+    // ---------- DELETE ALL ---------- //
+
+    public void deleteAllIntervals() {
+        // TODO: this method
+    }
+
+    public void deleteALLChords() {
+        // TODO: this method
+    }
+
+    public void deleteAllScales() {
+        // TODO: this method
+    }
+
+    /**
+     * This deletes all the users from the database.
+     */
+    public void deleteAllUsers()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(USERS_TABLE, null, null);
+
+        db.close();
+    }
+
+
+    // ---------- FILTERED LISTS ---------- //
+
+    // Intervals:
+        // Harmonics (up to 127th)
+    public ArrayList<ChordScale> getAllHarmonics() {
+        ArrayList<ChordScale> allHarmonicsList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // if interval is a harmonic, build and add
+                String name = cursor.getString(1).toUpperCase();
+                if (name.contains("HARMONIC") && (name.contains("1ST") || name.contains("2ND")
+                        || name.contains("3RD") || name.contains("TH"))) {
+
+                    // build interval
+                    ChordScale interval =
+                            new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
+                    interval.addChordMember(new Note("Fundamental"));
+                    interval.addChordMember(new Note(cursor.getString(1),
+                            interval.getChordMemberAtPos(0).getPitchFrequency()
+                                    * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
+
+                    // add to list
+                    allHarmonicsList.add(interval);
+                }
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allHarmonicsList;
+    }
+
+
+        // Historical (all named intervals)
+        // Diatonic Just-Intoned
+        // Dodecaphonic Just-Intoned
+        // Diatonic-Chromatic Just and E.T.
+        // All Just-Intervals
+
+
+
+    // Chords:
+        // Triads -> Maj, min, Aug, dim
+        // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
+        // Just vs. E.T. triads/7ths
+    // Scales:
+        // ALL scales (full 4,000+ list)
+        // Heptatonic (diatonic) scales and modes
+        // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
+        // Olivier Messiaen's "Modes of Limited Transposition"
+
+
+    // ---------- IMPORTS ---------- //
 
     public boolean importAllIntervalsFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
@@ -353,44 +545,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public List<ChordScale> getAllIntervals() {
-        List<ChordScale> allIntervalsList = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(
-                INTERVALS_TABLE,
-                new String[]{
-                        INTERVALS_KEY_FIELD_ID,
-                        FIELD_INTERVAL_NAME,
-                        FIELD_INTERVAL_RATIO,
-                        FIELD_INTERVAL_CENTS,
-                        FIELD_INTERVAL_DESCRIPTION
-                },
-                null,
-                null,
-                null, null, null, null);
+    // TODO: importAllChordsFromSCL()
 
-        if (cursor.moveToFirst()) {
-            do {
-                // build interval
-                ChordScale interval =
-                        new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
-                interval.addChordMember(new Note("Fundamental"));
-                interval.addChordMember(new Note(cursor.getString(1),
-                        interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
-
-                // add to list
-                allIntervalsList.add(interval);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        sqLiteDatabase.close();
-        return allIntervalsList;
-    }
-
-    // TODO: import/get all chords method(s)
-
-    // TODO: consolidate this with a "Scala handler" method in Music helper method
     public List<ChordScale> importAllScalesFromSCL() {
         // create list with at least 4k initial capacity
         List<ChordScale> allScalesList = new ArrayList<>(5000);

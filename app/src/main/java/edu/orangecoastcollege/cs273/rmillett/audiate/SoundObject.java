@@ -7,8 +7,8 @@ import android.os.Parcelable;
  * <code>Melody</code>, and <code>ChordSequence</code> objects.
  * objects.
  *
- * A <code>SoundObject</code> is used to encapsulate acoustic/musical information for categorization
- * and manipulation.
+ * A <code>SoundObject</code> is used to encapsulate acoustic/musical information for categorization,
+ * manipulation, and audio production.
  *
  * Instances of this class can be passed into <code>SoundObjectPlayer</code> objects, parameters
  * are read by the <code>SoundObjectPlayer</code> as instructions for audio playback.
@@ -132,5 +132,14 @@ public abstract class SoundObject implements Parcelable { // TODO: implement PLA
      */
     protected void setDescription(String description) {
         mDescription = description;
+    }
+
+    /**
+     * Gets the unique ID for a <code>SoundObject</code>
+     *
+     * @return long value representing the unique ID for a <code>SoundObject</code>
+     */
+    public long getId() {
+        return mId;
     }
 }

@@ -89,7 +89,7 @@ public class LibraryActivity extends AppCompatActivity {
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
         db.importAllIntervalsFromCSV("intervals.csv");
-        filteredChordScaleList = new ArrayList<>(10);
+        filteredChordScaleList = new ArrayList<>();
 
         mLibraryListAdapter = new LibraryListAdapter(this,
                 R.layout.library_list_item, filteredChordScaleList);
@@ -161,7 +161,8 @@ public class LibraryActivity extends AppCompatActivity {
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                mLibraryListAdapter.addAll(allIntervalsList = db.getAllIntervals());
+                filteredChordScaleList = db.getAllIntervals();
+                mLibraryListAdapter.addAll(filteredChordScaleList);
                 Log.i(TAG + "AllItvls", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
@@ -231,7 +232,28 @@ public class LibraryActivity extends AppCompatActivity {
         }
     };
 
-    // TODO: make String[]s dynamic——currently hard-coded for testing purposes
+    public AdapterView.OnItemSelectedListener filterMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
+            String filterMaterial = String.valueOf(spinner.getItemAtPosition(i));
+
+            // Update Library ListView
+            mLibraryListAdapter.clear();
+            switch (filterMaterial) {
+                case "Harmonics (First 127)":
+                    filteredChordScaleList = db.getAllHarmonics();
+                    mLibraryListAdapter.addAll(filteredChordScaleList);
+                    break;
+            }
+            mLibraryListAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            // UNUSED
+        }
+    };
+
     private String[] getAllMusicalMaterialTypes() {
         String[] musicalMaterials = new String[4];
 
@@ -257,7 +279,7 @@ public class LibraryActivity extends AppCompatActivity {
     private String[] getFilterCriteria() {
         String[] filters;
 
-        // TODO: add to strings arrays
+        // TODO: add to strings arrays, currently hard-coded for expedience
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
                 filters = new String[9];
@@ -349,15 +371,15 @@ public class LibraryActivity extends AppCompatActivity {
     private void detectPlaybackMode() {
         // Set PlayBack mode
         if (mode1RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_BLOCK_CHORD);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
         }
         else if (mode2RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_UP);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_ARP_DOWN);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
     }

@@ -24,21 +24,13 @@ public class Note extends SoundObject {
 
     /**
      * String constant used as a default ratio for <code>Note</code> objects. A ratio of
-     * 1/1——a unison——sets the note as the root of a <code>ChordScale</code> object.
+     * 1/1——a "perfect" unison——sets the note as the root of a <code>ChordScale</code> object
+     * or the virtual fundamental of a yet-to-be-defined <code>ChordScale</code> object.
      */
     public static final String DEFAULT_RATIO = "1/1";
 
     private double mPitchFrequency;
     private String mRatio;
-
-    private Note(Parcel parcel) {
-        mId = parcel.readLong();
-        mName = parcel.readString();
-        mDescription = parcel.readString();
-        mDurationMilliseconds = parcel.readInt();
-        mPitchFrequency = parcel.readDouble();
-        mRatio = parcel.readString();
-    }
 
     /**
      * Default constructor
@@ -85,6 +77,15 @@ public class Note extends SoundObject {
         mRatio = DEFAULT_RATIO;
     }
 
+    /**
+     * Overloaded constructor
+     *
+     * @param name String representing the <code>Note</code> name
+     * @param pitchFrequency ble value representing the <code>Note</code> pitch frequency in
+     *                       Hertz
+     * @param ratio a String value representing a <code>Note</code> object's relation to another
+     *              <code>Note</code> object expressed as a ratio
+     */
     public Note(String name, double pitchFrequency, String ratio) {
         super(name);
         mPitchFrequency = pitchFrequency;
@@ -122,15 +123,37 @@ public class Note extends SoundObject {
         mPitchFrequency = pitchFrequency;
     }
 
+    /**
+     * Gets a String value representing a <code>Note</code> object's relation to another
+     * <code>Note</code> object expressed as a ratio.
+     *
+     * @return a String value representing a <code>Note</code> object's relation to another
+     *          <code>Note</code> object expressed as a ratio.
+     */
     public String getRatio() {
         return mRatio;
     }
 
+    /**
+     * Sets the ratio of a <code>Note</code> object represented as a String value
+     *
+     * @param ratio a String value representing a <code>Note</code> object's relation to another
+     *              <code>Note</code> object expressed as a ratio.
+     */
     public void setRatio(String ratio) {
         mRatio = ratio;
     }
 
-    // ---------------------------------------------------- //
+    // -------------- Parcelable Implementation -------------- //
+
+    private Note(Parcel parcel) {
+        mId = parcel.readLong();
+        mName = parcel.readString();
+        mDescription = parcel.readString();
+        mDurationMilliseconds = parcel.readInt();
+        mPitchFrequency = parcel.readDouble();
+        mRatio = parcel.readString();
+    }
 
     @Override
     public int describeContents() {

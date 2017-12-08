@@ -59,7 +59,7 @@ public class SoundObjectPlayer {
         // Parse SoundObject and playback mode
         if (soundObject instanceof Note ||
                 (soundObject instanceof ChordScale && ((ChordScale) soundObject).getPlayBackMode()
-                        .equalsIgnoreCase(ChordScale.PLAYBACK_MODE_BLOCK_CHORD))) {
+                        .equalsIgnoreCase(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER))) {
             createWaveform(soundObject);
         }
         else {
@@ -100,15 +100,15 @@ public class SoundObjectPlayer {
 
         // Determine sequence order
         ArrayList<Note> sequence = new ArrayList<>();
-        if (chordScale.getPlayBackMode().equalsIgnoreCase(ChordScale.PLAYBACK_MODE_ARP_UP)) {
+        if (chordScale.getPlayBackMode().equalsIgnoreCase(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP)) {
             sequence = chordScale.getAllChordMembers();
         }
-        else if (chordScale.getPlayBackMode().equalsIgnoreCase(ChordScale.PLAYBACK_MODE_ARP_DOWN)) {
+        else if (chordScale.getPlayBackMode().equalsIgnoreCase(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN)) {
             sequence = chordScale.getAllChordMembers();
             Collections.reverse(sequence);
         }
         else if (chordScale.getSize() == 3 && chordScale.getPlayBackMode()
-                .equalsIgnoreCase(ChordScale.PLAYBACK_MODE_ALBERTI_BASS)) {
+                .equalsIgnoreCase(ChordScale.PLAYBACK_MODE_ALBERTI)) {
             sequence.add(chordScale.getChordMemberAtPos(0));
             sequence.add(chordScale.getChordMemberAtPos(2));
             sequence.add(chordScale.getChordMemberAtPos(1));
