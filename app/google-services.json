@@ -1,43 +1,35 @@
 {
   "project_info": {
-    "project_number": "522651540176",
-    "firebase_url": "https://audiate-bed6d.firebaseio.com",
-    "project_id": "audiate-bed6d",
-    "storage_bucket": "audiate-bed6d.appspot.com"
+    "project_number": "637222633423",
+    "firebase_url": "https://audiate-1eda2.firebaseio.com",
+    "project_id": "audiate-1eda2",
+    "storage_bucket": "audiate-1eda2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:522651540176:android:181ca6e5f1ba4075",
+        "mobilesdk_app_id": "1:637222633423:android:4315a4b310911d70",
         "android_client_info": {
-          "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate"
+          "package_name": "edu.orangecoastcollege.cs273.rmillett.audiatenew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "522651540176-d34kgu29do88qb4pq0oreelp5qbagivm.apps.googleusercontent.com",
+          "client_id": "637222633423-961vku1ko8ma9qobjtpmo5tjv4hf652h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate",
+            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiatenew",
             "certificate_hash": "66d653f9553d54e822369fbc1c7150fff47d1b72"
           }
         },
         {
-          "client_id": "522651540176-qapra8mk9u69oa4vj1h3sqr8tbaob6vs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.orangecoastcollege.cs273.rmillett.audiate",
-            "certificate_hash": "c061ac24c2432e8cd3b7825e81ce8fafbf8ecc14"
-          }
-        },
-        {
-          "client_id": "522651540176-1has76a7nf8elfeksd909s5686eb72t2.apps.googleusercontent.com",
+          "client_id": "637222633423-0ff7m4t46spcvefkd0uoc2l8v731bad9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAI5HMcfpzHD0hTeKW0AT9rQ9qGYxItiOg"
+          "current_key": "AIzaSyCQvaWMG_f9BmIwCwkma8TPngI2f3Lot_k"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "522651540176-1has76a7nf8elfeksd909s5686eb72t2.apps.googleusercontent.com",
+              "client_id": "637222633423-0ff7m4t46spcvefkd0uoc2l8v731bad9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
