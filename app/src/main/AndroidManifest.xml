@@ -33,16 +33,16 @@
         <activity
             android:name=".ProfileActivity"
             android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
-        android:screenOrientation="portrait"/>
-        <activity
-            android:name=".MainMenuActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".GoogleMapsActivity"
             android:exported="true"
-            android:parentActivityName=".MainMenuActivity"
+            android:parentActivityName=".LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".DetectVocalRangeActivity"
@@ -64,9 +64,11 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".LibraryActivity"
-            android:parentActivityName=".MainMenuActivity"
             android:exported="true"
+            android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
+
+        <!-- Unused Activity / Backup In Case Firebase Did not Work -->
         <activity
             android:name=".AlternateLoginActivity"
             android:exported="true"

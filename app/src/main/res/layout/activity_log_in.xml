@@ -25,6 +25,7 @@
         android:text=""
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
+    <requestFocus/>
 
     <EditText
         android:id="@+id/passwordLoginET"
@@ -41,19 +42,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="254dp"
+        android:layout_height="250dp"
         android:orientation="horizontal"
-        android:layout_weight="0.30">
+        android:layout_weight=".5">
 
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/confirm_vocal_bg"
+            android:layout_height="125dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/custom_green_bg"
             android:layout_weight="1"
-            android:layout_margin="25dp"
-            android:padding="@dimen/buttons_padding"
             android:textSize="@dimen/medium_text_size"
             android:onClick="handleLoginButtons"
             android:text="@string/log_in_button"/>
@@ -61,11 +62,12 @@
         <Button
             android:id="@+id/createProfileButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/low_high_note_button_bg"
+            android:layout_height="125dp"
+            android:background="@drawable/custom_blue_bg"
             android:layout_marginTop="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:padding="@dimen/buttons_padding"
             android:textSize="@dimen/medium_text_size"
             android:onClick="handleLoginButtons"
             android:text="@string/create_profile_button"/>
@@ -73,7 +75,7 @@
 
     <LinearLayout
         android:layout_width="775dp"
-        android:layout_height="200dp"
+        android:layout_height="225dp"
         android:orientation="horizontal"
         >
 

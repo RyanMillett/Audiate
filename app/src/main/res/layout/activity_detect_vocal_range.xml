@@ -18,7 +18,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:fontFamily="serif"
-        android:textSize="50sp"/>
+        android:textSize="@dimen/medium_text_size"/>
 
     <TextView
         android:id="@+id/detectVocalRangeInstructionsTextView"
@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/buttons_padding"
+            android:textSize="20sp"
             android:hint="[HIGH NOTE]"
             android:layout_marginVertical="10dp"
             android:textAlignment="center"/>
@@ -58,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textSize="20sp"
             android:padding="@dimen/buttons_padding"
             android:hint="[LOW NOTE]"
             android:layout_marginVertical="10dp"
@@ -91,7 +93,7 @@
                 android:id="@+id/detectHighNoteButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/vocal_range_buttons"
-                android:background="@drawable/low_high_note_button_bg"
+                android:background="@drawable/custom_blue_bg"
                 android:fontFamily="monospace"
                 android:onClick="detectPitchHandler"
                 android:padding="@dimen/buttons_padding"
@@ -117,7 +119,7 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="10dp"
                 android:elevation="10dp"
-                android:background="@drawable/low_high_note_button_bg"
+                android:background="@drawable/custom_blue_bg"
                 android:fontFamily="monospace"
                 android:onClick="detectPitchHandler"
                 android:padding="@dimen/buttons_padding"
@@ -142,7 +144,7 @@
             android:layout_width="500dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:background="@drawable/confirm_vocal_bg"
+            android:background="@drawable/custom_green_bg"
             android:textSize="@dimen/small_text_size"
             android:textColor="@color/black"
             android:fontFamily="serif"

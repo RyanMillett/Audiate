@@ -179,11 +179,13 @@
 
                 <Button
                     android:id="@+id/testFundamentalFreqButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:background="@drawable/custom_blue_bg"
                     android:onClick="playbackHandler"
                     android:text="@string/test_fundamental_frequency"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -256,7 +258,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorPlay"
+            android:fontFamily="serif"
+
+            android:background="@drawable/custom_green_bg"
             android:onClick="playbackHandler"
             android:text="@string/play_selection" />
 

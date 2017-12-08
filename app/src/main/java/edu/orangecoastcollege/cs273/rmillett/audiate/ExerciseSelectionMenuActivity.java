@@ -46,6 +46,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
     public void help(View view) {
         // TODO: this method
+        Intent launchHelp = new Intent(this, HelpActivity.class);
+        startActivity(launchHelp);
         // displays a toast or launches text activity with help information
     }
 }

@@ -2,26 +2,33 @@
 <resources>
     <color name="colorPrimary">#0bb5FF</color>
     <color name="colorPrimaryDark">#303F9F</color>
-
-    <color name="colorAccent">#5B6E91</color>
-
-    <color name="colorPink">#FF4081</color>
+    <color name="colorAccent">#5D8AA8</color>
 
     <!-- Quiz Presets -->
     <color name="correct_answer">#00CC00</color>
     <color name="incorrect_answer">#FF0000</color>
 
-
-    <!-- Custom Colors -->
-    <color name="colorPlay">#00aa30</color>
-
+    <!-- Custom Colors - Blue -->
     <color name="royal_blue">#4169e1</color>
     <color name="blue_grey">#6E7B8B</color>
     <color name="air_force_blue">#5D8AA8</color>
     <color name="police_blue">#0bb5FF</color>
     <color name="turquoise_blue">#00FFEF</color>
+
+    <!-- Custom Colors - Green -->
     <color name="neon_green">#39FF14</color>
+    <color name="colorPlay">#00aa30</color>
+
+    <!-- Custom Colors - Red -->
+    <color name="pink">#FF4081</color>
+    <color name="radical_red">#FF355E</color>
+    <color name="light_venetian_red">#E6735C</color>
+
+
+    <!-- Custom Colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+
 
 </resources>
