@@ -1,8 +1,10 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 /**
- * Helper class used to handle intervals expressed in either ratios/fractions or cents for the purpose
- * of frequency calculations.
+ * The <code>Music</code> class is a helper class which functions as multipurpose tool for performing
+ * acoustic-/music-related calculations and conversions such as parsing ratios, converting to and from
+ * cents, measuring intervallic distances in various formats, and pitch-detection based on multiple
+ * equal-tempered dodecaphonic and microtonal systems.
  *
  * From Wikipedia:
  *
@@ -24,13 +26,13 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
  * successive notes.
  *
  * @author Ryan Millett
- * @version 1.4
+ * @version 1.5
  */
 public class Music {
 
     private static String TAG = "Music";
 
-    // TODO: make constants compatible with 24-TET + 36-TET
+    // TODO: make constant Strings and arrays compatible with 24-TET, 48-TET, 36-TET, 53-TET systems
 
     public static final String UNKNOWN_NOTE = "";
     public static final String FLAT = "\u266D";
@@ -74,7 +76,7 @@ public class Music {
                 2959.96, 3135.96, 3322.44, 3520.00, 3729.31, 3951.07, 4186.01};
 
     /**
-     * Constant array of String values representing pitch class names.
+     * Constant array of String values representing 12-TET pitch class names.
      */
     public static final String[] NOTES =
             new String[]{A, A_SHARP, B, C, C_SHARP, D, D_SHARP, E, F, F_SHARP, G, G_SHARP};
@@ -180,6 +182,21 @@ public class Music {
         return true;
     }
 
+    /**
+     * Reads a String representing a line corresponding to interval size in a Scale (.scl) file and
+     * parses it to a decimal value.
+     *
+     * The method first determines if the line contains a "." (which indicates the interval is
+     * expressed in cents or if the line contains a "/" (which indicates the interval is expressed
+     * as a ratio) and calls either the <code>convertCentsToDecimal()</code> or the
+     * <code>convertRatioToDecimal</code> respectively.
+     *
+     *
+     * @param line a String representing a line corresponding to interval size in a Scale (.scl) file
+     * and parses it to a decimal value.
+     *
+     * @return Converted decimal (double value) representing the decimal form of an interval
+     */
     public static double parseDecimalFromScalaLine(String line) {
         double interval = 0.0;
 
@@ -206,10 +223,14 @@ public class Music {
     }
 
     /**
+     * Takes a double value representing frequency in Hertz and finds it's approximate pitch-class.
      *
+     * The method works by performing a binary recursive search on an array containing the corresponding
+     * frequencies in Hertz to a ten-octave spread of the conventional 12-TET system.
      *
-     * @param frequencyInHz
-     * @return
+     * @param frequencyInHz double value representing frequency in Hertz
+     * @return a String value representing an approximate pitch-class corresponding to the passed
+     *          frequency in Hertz
      */
     public static String parsePitchClassFromFrequency(double frequencyInHz) {
 

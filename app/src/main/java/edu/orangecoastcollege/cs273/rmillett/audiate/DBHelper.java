@@ -481,21 +481,98 @@ public class DBHelper extends SQLiteOpenHelper {
         return allHarmonicsList;
     }
 
-
         // Historical (all named intervals)
-        // Diatonic Just-Intoned
+    public ArrayList<ChordScale> getAllHistoricalIntervals() {
+        ArrayList<ChordScale> allHistoricalIntervals = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // if interval is named, build and add
+                String name = cursor.getString(1).toUpperCase();
+                if (!name.equalsIgnoreCase("unnamed")) {
+
+                    // build interval
+                    ChordScale interval =
+                            new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
+                    interval.addChordMember(new Note("Fundamental"));
+                    interval.addChordMember(new Note(cursor.getString(1),
+                            interval.getChordMemberAtPos(0).getPitchFrequency()
+                                    * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
+
+                    // add to list
+                    allHistoricalIntervals.add(interval);
+                }
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allHistoricalIntervals;
+    }
+
+        // TODO: Diatonic Just-Intoned
+    public ArrayList<ChordScale> getAllDiatonicJustIntervals() {
+        ArrayList<ChordScale> allDiatonicJustIntervals = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // if interval is named, build and add
+                String ratio = cursor.getString(2);
+                if (!ratio.equalsIgnoreCase("")) { // TODO: filter for Just-Diatonic
+
+                    // build interval
+                    ChordScale interval =
+                            new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
+                    interval.addChordMember(new Note("Fundamental"));
+                    interval.addChordMember(new Note(cursor.getString(1),
+                            interval.getChordMemberAtPos(0).getPitchFrequency()
+                                    * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
+
+                    // add to list
+                    allDiatonicJustIntervals.add(interval);
+                }
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allDiatonicJustIntervals;
+    }
+
         // Dodecaphonic Just-Intoned
         // Diatonic-Chromatic Just and E.T.
         // All Just-Intervals
-
-
-
     // Chords:
         // Triads -> Maj, min, Aug, dim
         // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
         // Just vs. E.T. triads/7ths
     // Scales:
-        // ALL scales (full 4,000+ list)
         // Heptatonic (diatonic) scales and modes
         // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
         // Olivier Messiaen's "Modes of Limited Transposition"
