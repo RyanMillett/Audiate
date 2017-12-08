@@ -257,6 +257,7 @@ public class LibraryActivity extends AppCompatActivity {
     private String[] getFilterCriteria() {
         String[] filters;
 
+        // TODO: add to strings arrays
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
                 filters = new String[9];
@@ -302,6 +303,7 @@ public class LibraryActivity extends AppCompatActivity {
      * @param view
      */
     public void playbackHandler(View view) {
+        detectPlaybackMode();
 
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
@@ -316,7 +318,6 @@ public class LibraryActivity extends AppCompatActivity {
                 mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
                 break;
             case R.id.playSelectionButton:
-                detectPlaybackMode();
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }

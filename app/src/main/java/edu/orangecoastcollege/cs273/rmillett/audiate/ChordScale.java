@@ -206,7 +206,7 @@ public class ChordScale extends SoundObject implements Parcelable {
         this.getChordMemberAtPos(0).setPitchFrequency(newFundamentalFrequency);
 
         // adjust all chord members
-        for (int i = 1; i <= this.getSize(); ++i) {
+        for (int i = 1; i <= this.mChordMembers.size(); ++i) {
             this.getChordMemberAtPos(i).setPitchFrequency(
                     Music.convertRatioToDecimal(getChordMemberAtPos(i)
                             .getRatio()) * newFundamentalFrequency);

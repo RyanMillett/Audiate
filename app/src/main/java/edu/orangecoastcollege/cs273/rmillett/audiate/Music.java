@@ -1,7 +1,5 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import java.io.BufferedReader;
-
 /**
  * Helper class used to handle intervals expressed in either ratios/fractions or cents for the purpose
  * of frequency calculations.
@@ -215,8 +213,23 @@ public class Music {
      */
     public static String parsePitchClassFromFrequency(double frequencyInHz) {
 
-        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES,
-                0, _12_TET_PITCH_FREQUENCIES.length);
+        // Binary search crashes, use iteration instead :(
+//        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES,
+//                0, _12_TET_PITCH_FREQUENCIES.length);
+
+        int i = -1;
+        for (int j = 0; j < _12_TET_PITCH_FREQUENCIES.length; ++i) {
+            // finds approx range without going over
+            if (frequencyInHz >= _12_TET_PITCH_FREQUENCIES[j]
+                    && frequencyInHz < _12_TET_PITCH_FREQUENCIES[j+1]) {
+                i = j;
+            }
+        }
+
+        // TODO: handle later
+        if (i == -1) {
+            return "No pitch detected";
+        }
 
         if (i < 12) {
             return NOTES[i];
@@ -226,23 +239,24 @@ public class Music {
         }
     }
 
-    private static int binSearch(double frequencyInHz, double[] freqsArray, int minIdx, int maxIdx) {
-        // base case
-        if (minIdx + 1 >= maxIdx) {
-            return minIdx;
-        }
-
-        // binary search
-        int pivot = (minIdx + (maxIdx - 1) / 2);
-        double midVal = freqsArray[pivot];
-        if (frequencyInHz == midVal) {
-            return pivot;
-        }
-        else if (frequencyInHz < midVal) {
-            return binSearch(frequencyInHz, freqsArray, minIdx, pivot);
-        }
-        else {
-            return binSearch(frequencyInHz, freqsArray, pivot + 1, maxIdx);
-        }
-    }
+    // broken for now :(
+//    private static int binSearch(double frequencyInHz, double[] freqsArray, int minIdx, int maxIdx) {
+//        // base case
+//        if (minIdx + 1 >= maxIdx) {
+//            return minIdx;
+//        }
+//
+//        // binary search
+//        int pivot = (minIdx + (maxIdx - 1) / 2);
+//        double midVal = freqsArray[pivot];
+//        if (frequencyInHz == midVal) {
+//            return pivot;
+//        }
+//        else if (frequencyInHz < midVal) {
+//            return binSearch(frequencyInHz, freqsArray, minIdx, pivot);
+//        }
+//        else {
+//            return binSearch(frequencyInHz, freqsArray, pivot + 1, maxIdx);
+//        }
+//    }
 }
