@@ -25,8 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
  *
  * @author bwegener
  * @version 1.0
- *
- * Created by Brian Wegener on 11/25/2017
+ *          <p>
+ *          Created by Brian Wegener on 11/25/2017
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
      * The <code>onCreate</code> sets up the authorization of the user from firebase.
      * It also instantiates the editTexts and buttons. It also launches the animation
      * that brings the views in.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -76,26 +77,23 @@ public class LoginActivity extends AppCompatActivity {
         // Runs the animation that brings the Views in
         RunAnimation();
 
-
     }
 
     /**
      * This sends the user to the main menu activity.
      */
-    private void goToMain()
-    {
+    private void goToMain() {
         finish();
         Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
         startActivity(mainMenuIntent);
     }
 
 
-
-
     /**
      * This checks to see if the input is valid.
      * If it there is nothing in the edit texts it will send a message
      * letting the user know that the information is required.
+     *
      * @return
      */
     private boolean isValidInput() {
@@ -113,48 +111,43 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * This allows the user to log in.
+     *
      * @param email
      * @param password
      */
-    private void Login(String email, String password)
-    {
+    private void Login(String email, String password) {
         // If user is already signed in go straight to main activity
         if (mUser != null)
             goToMain();
 
-        if(!isValidInput())
+        if (!isValidInput())
             return;
-        else
-        {
+        else {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         mUser = mAuth.getCurrentUser();
                         if (mUser.isEmailVerified())
                             goToMain();
                         else
                             Toast.makeText(LoginActivity.this, "Please verify your account in the email: " + mUser.getEmail(), Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }
-
     }
 
     /**
      * This handles both the createProfile button and the logIn button.
      * Through a switch statement it handles what happens when each of the buttons are pressed.
+     *
      * @param v
      */
-    public void handleLoginButtons(View v)
-    {
-        switch(v.getId())
-        {
+    public void handleLoginButtons(View v) {
+        switch (v.getId()) {
             case R.id.createProfileButton:
                 Intent launchProfile = new Intent(this, ProfileActivity.class);
                 startActivity(launchProfile);
@@ -169,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Launches the GoogleMaps Activity
+     *
      * @param view
      */
     public void activityGoogleMaps(View view) {
@@ -176,12 +170,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(launchGoogleMaps);
     }
 
+
     /**
      * This runs an alpha tween animation so that the edit texts, buttons, and
      * image view are brought in through changing the opacity.
      */
-    private void RunAnimation()
-    {
+    private void RunAnimation() {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.anim);
         a.reset();
         mEmailLoginEditText.clearAnimation();

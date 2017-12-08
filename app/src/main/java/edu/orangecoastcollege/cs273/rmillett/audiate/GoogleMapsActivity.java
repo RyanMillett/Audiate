@@ -27,18 +27,28 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * The <code>GoogleMapsActivity</code> allows the user to find their place
+ * on the map and from that place play the ratio by getting their current
+ * latitude and longitude.
+ *
+ * @author bwegener
+ * @version 1.0
+ *          <p>
+ *          Created by Brian Wegener (with help from Ryan Millett) on 11/28/2017
+ */
 public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    /**
+     * This gets the rough location from the user.
+     */
     public static final int COARSE_LOCATION_REQUEST_CODE = 100;
-
 
     private ChordScale mChordScale = new ChordScale("myLocationSound", 2);
 
     private SoundObjectPlayer mSoundObjectPlayer;
-
-
 
     private GoogleMap mMap;
 
@@ -51,6 +61,12 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
     // Location requests are made every x seconds
     private LocationRequest mLocationRequest;
 
+    /**
+     * This adds a chord member, instantiates a soundObjectPlayer, builds the GoogleAPIClient,
+     * then requests a location, as well as setting up the mapFragment in the layout.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,23 +97,40 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * This connects the user to the Google API client whenever the app is started.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
     }
 
+    /**
+     * This disconnects the user from the Google API client whenever the app is stopped.
+     */
     @Override
     protected void onStop() {
         super.onStop();
         mGoogleApiClient.disconnect();
     }
 
+    /**
+     * This gets the map ready.
+     *
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
 
+    /**
+     * This handles the new location that the user might be in, by checking for the last
+     * latitude and longitude and updating if different.
+     *
+     * @param newLocation
+     */
     private void handleNewLocation(Location newLocation) {
         mLastLocation = newLocation;
         mMap.clear();
@@ -112,7 +145,12 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         mMap.moveCamera(cameraUpdate);
     }
 
-
+    /**
+     * The <code>onConnected</code> method checks to make sure that everything is connected
+     * properly and asks to see if the permissions are done.
+     *
+     * @param bundle
+     */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
@@ -138,6 +176,16 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         handleNewLocation(mLastLocation);
     }
 
+    /**
+     * The <code>onRequestPermissionsResult</code> sends a request code to the user
+     * to see if they can have access to the user's fine / coarse location.
+     * If the user rejects the request then the latitude and longitude are both
+     * set to 0.0, or the middle of the ocean.
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -155,16 +203,33 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
+    /**
+     * This is what happens when the connection is suspended, aka nothing.
+     *
+     * @param i
+     */
     @Override
     public void onConnectionSuspended(int i) {
 
     }
 
+    /**
+     * This is what happens when the connection fails, we log an error message letting
+     * the programmer know that it was because of the connection failing that the code
+     * crashed.
+     *
+     * @param connectionResult
+     */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e("Audiate", "Connection to Location Services failed: " + connectionResult.getErrorMessage());
     }
 
+    /**
+     * This is what happens when the location changes, it handles the new location.
+     *
+     * @param location
+     */
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
@@ -174,16 +239,16 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
      * This plays the location by getting the interval from the ChordScale
      * and getting the pitch frequency by multiplying the dividend of mLastLocation.getLongitude
      * divided by mLastLocation.getLatitude.
+     *
      * @param view
      */
-    public void playLocation(View view)
-    {
+    public void playLocation(View view) {
         // Calls onLocationChanged
         onLocationChanged(mLastLocation);
 
         // creates a new Chord Scale with a new Chord Member.
 
-        if(mLastLocation.getLongitude() > mLastLocation.getLatitude())
+        if (mLastLocation.getLongitude() > mLastLocation.getLatitude())
             mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLongitude() / mLastLocation.getLatitude()));
         else
             mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLatitude() / mLastLocation.getLongitude()));

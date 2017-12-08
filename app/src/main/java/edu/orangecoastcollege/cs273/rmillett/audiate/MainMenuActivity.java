@@ -13,6 +13,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The <code>MainMenuActivity</code> allows the user to
+ *
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MainMenuActivity";
@@ -79,7 +83,9 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void editProfile(View view) {
-        // TODO: this method
+        Intent launchProfile = new Intent(this, ProfileActivity.class);
+        startActivity(launchProfile);
+
     }
 
     public void logOut(View view) {

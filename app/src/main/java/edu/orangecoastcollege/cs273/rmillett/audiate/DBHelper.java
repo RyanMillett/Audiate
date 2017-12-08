@@ -19,6 +19,9 @@ import java.util.List;
 /**
  * @author Ryan Millett
  * @version 1.2
+ *
+ * USERS_TABLE @author Brian Wegener
+ * @version 1.0
  */
 public class DBHelper extends SQLiteOpenHelper {
 

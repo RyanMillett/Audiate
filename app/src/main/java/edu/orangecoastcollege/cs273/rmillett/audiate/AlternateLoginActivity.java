@@ -10,6 +10,18 @@ import android.widget.ListView;
 
 import java.util.List;
 
+/**
+ * This <code>AlternateLoginActivity</code> was created in
+ * case Firebase did not work.
+ * This activity displays a list of users that can be clicked
+ * and then go to the main menu. There is no password or way
+ * to keep a user from choosing another user's username/vocalrange
+ *
+ * @author bwegener
+ * @version 1.0
+ *
+ * Created by Brian Wegener on 12/6/2017
+ */
 public class AlternateLoginActivity extends AppCompatActivity {
 
     private DBHelper mDB;
@@ -17,6 +29,11 @@ public class AlternateLoginActivity extends AppCompatActivity {
     private UserListAdapter usersListAdapter;
     private ListView usersListView;
 
+    /**
+     * The <code>onCreate</code> instantiates the database, the list of users,
+     * the userListAdapter, and the ListView of the users.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +47,10 @@ public class AlternateLoginActivity extends AppCompatActivity {
         usersListView.setAdapter(usersListAdapter);
     }
 
+    /**
+     * This allows the current user of the app to choose a user from the list of users.
+     * @param v
+     */
     public void chooseUser(View v)
     {
         if(v instanceof LinearLayout) {
@@ -42,6 +63,10 @@ public class AlternateLoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This clearsAllUsers from the list and database.
+     * @param v
+     */
     public void clearAllUsers(View v)
     {
         usersList.clear();
@@ -49,7 +74,11 @@ public class AlternateLoginActivity extends AppCompatActivity {
         usersListAdapter.notifyDataSetChanged();
     }
 
-    // Launches the profile where the user creates a profile
+    /**
+     * This launches the profileActivity so that the user can create
+     * a profile
+     * @param v
+     */
     public void createProfile(View v)
     {
         finish();
