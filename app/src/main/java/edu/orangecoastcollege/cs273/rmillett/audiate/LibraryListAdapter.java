@@ -83,7 +83,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
             default: // Chords and Scales
                 libraryListNameTextView.setText(selectedChordScale.getName());
                 libraryListDescription1TextView.setText(R.string.chordScale_size);
-                libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize()));
+                libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize()-1));
                 libraryListDescription2TextView.setText(selectedChordScale.getDescription());
                 break;
         }
