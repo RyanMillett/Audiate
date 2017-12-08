@@ -247,7 +247,6 @@ public class Music {
             }
         }
 
-        // TODO: handle later
         if (i == -1) {
             return "No pitch detected";
         }
