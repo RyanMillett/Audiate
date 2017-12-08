@@ -14,20 +14,17 @@ import java.util.Collections;
  * <code>SoundObjectPlayer</code> objects can perform single tones, chords, melodies, chord sequences,
  * or any other combination of <cocde>SoundObject</cocde> instances.
  *
- * To successfully perform an audio playback of a <code>SoundObject</code>, must first be loaded into
- * the <code>SoundObjectPlayer</code> using the <code>.loadSoundObject</code> member method.
+ * To successfully perform an audio playback of a <code>SoundObject</code>, simply pass an initialized
+ * <code>SoundObject</code> into the .playSoundObject() method.
  *
  * Example:
  *          <code>
- *              // Load <code>SoundObject</code>
- *              soundObjectPlayer.loadSoundObject(soundObject);
- *              // Play sound
- *              soundObjectPlayer.play();
+ *              // Play sound object
+ *              soundObjectPlayer.playSoundObject(soundObject);
  *          </code>
  *
- *
  * @author Ryan Millett
- * @version 2.1
+ * @version 2.2
  */
 public class SoundObjectPlayer {
 
@@ -41,7 +38,7 @@ public class SoundObjectPlayer {
 
     private static AudioTrack mAudioTrack;
 
-    // TODO: constructors(?)
+    // TODO: create parametrized constructors for special circumstances
 
     public void playSoundObject(SoundObject soundObject) {
         loadSoundObject(soundObject);
@@ -182,9 +179,6 @@ public class SoundObjectPlayer {
         mAudioTrack.write(generatedSound, 0, generatedSound.length);
     }
 
-    /**
-     * Plays an audio interpretation of a loaded <code>SoundObject</code>
-     */
     private void play() {
         // TODO: thread this
         mAudioTrack.play();
