@@ -8,22 +8,27 @@ import android.widget.TextView;
 
 public class DetectVocalRangeActivity extends AppCompatActivity {
 
+    PitchDetector pitchDetector;
+
     private double mHighNoteFreqHz;
     private double mLowNoteFreqHz;
 
     private double[] mNoteFreqs; // collect held note variance to calculate average
     private double mFreqAvg; // average frequency based on values in mNoteFreqs array
 
+    TextView lowNoteTextView;
+    TextView highNoteTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detect_vocal_range);
 
-        PitchDetector pitchDetector = new PitchDetector(this, this);
+        pitchDetector = new PitchDetector(this, this);
 
         ImageView pitchDetectImageView = findViewById(R.id.vocalRangeResultsImageView);
-        TextView highNoteTextView = findViewById(R.id.highNoteResultTextView);
-        TextView lowNoteTextView = findViewById(R.id.lowNoteResultTextView);
+        highNoteTextView = findViewById(R.id.highNoteResultTextView);
+        lowNoteTextView = findViewById(R.id.lowNoteResultTextView);
 
         pitchDetector.activatePitchDetection();
 
@@ -42,6 +47,7 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
             // LONGPRESS: show text view, change button
                 // save and display results
             // RELEASE: revert button
+        highNoteTextView.setText(pitchDetector.parsePitchFromFreqAvg());
     }
 
     /**

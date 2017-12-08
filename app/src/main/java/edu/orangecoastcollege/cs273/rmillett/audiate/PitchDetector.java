@@ -34,7 +34,11 @@ public class PitchDetector {
     private Activity mActivity;
 
     private double mFrequency;
+    private double mFreqAvg;
     private String mPitchClass;
+
+    private int mCollectionLimit;
+    private int mCollectionCounter;
 
     private Thread mAudioThread;
 
@@ -49,6 +53,9 @@ public class PitchDetector {
         mActivity = activity;
         mFrequency = 0.0;
         mPitchClass = "";
+        mCollectionLimit = SoundObjectPlayer.SAMPLE_RATE;
+        mCollectionCounter = 0;
+        mFreqAvg = 0;
         getAudioPermissions(context, activity);
     }
 
@@ -87,7 +94,7 @@ public class PitchDetector {
                     mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            getPitchClass(frequencyInHz);
+                            collectFrequencies(frequencyInHz);
                         }
                     });
                 }
@@ -109,8 +116,18 @@ public class PitchDetector {
         mAudioThread.stop();
     }
 
-    private void getPitchClass(float frequencyInHz) {
-        mPitchClass = Music.parsePitchClassFromFrequency(frequencyInHz);
+    private void collectFrequencies(float frequencyInHz) {
+        while (mCollectionCounter++ < mCollectionLimit && frequencyInHz > 0) {
+            mFreqAvg += frequencyInHz;
+        }
+    }
+
+    public String parsePitchFromFreqAvg() {
+        if (mFreqAvg > 0) {
+            mFreqAvg /= mCollectionLimit;
+            return Music.parsePitchClassFromFrequency(mFreqAvg);
+        }
+        return "No Pitch Detected";
     }
 
     private void getAudioPermissions(Context context, Activity activity) {
