@@ -51,8 +51,13 @@
     <string name="start_exercise_button">Start Exercise</string>
     <string name="exercise_help_button">Help</string>
 
-    <string name="historical">HISTORICAL</string>
-    <string name="harmonic">HARMONIC</string>
+    <!-- Exercise List Item -->
+    <string name="difficulty_1">Beginner</string>
+    <string name="difficulty_2">Intermediate</string>
+    <string name="difficulty_3">Proficient</string>
+    <string name="difficulty_4">Advanced</string>
+    <string name="difficulty_5">Expert</string>
+    <string name="difficulty_6">Master</string>
 
     <!-- Ear Training Exercises Selection Menu -->
     <string name="ear_training_exercise_selection">Ear Training Exercises</string>

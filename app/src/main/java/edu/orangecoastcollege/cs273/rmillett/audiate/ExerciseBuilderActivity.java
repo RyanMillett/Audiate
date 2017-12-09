@@ -60,11 +60,15 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // ListsDB
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
+        db.importAllExercisesFromCSV("exercises.csv");
 
         // DB
         mAllListeningExercises = new ArrayList<>(db.getAllListeningExercises());
         mAllSingingExercises = new ArrayList<>(db.getAllSingingExercises());
         mFilteredExerciseList = new ArrayList<>(db.getAllExercises());
+        Log.i(TAG, "allListening->" + mAllListeningExercises.size());
+        Log.i(TAG, "allSinging->" + mAllSingingExercises.size());
+        Log.i(TAG, "allExercises->" + mFilteredExerciseList.size());
 
         // ImageViews
         mEarsImageView = findViewById(R.id.earsImageView);
@@ -147,7 +151,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
     public void exerciseSelectionHandler(View view) {
         if (view instanceof Button) updateButtonColors(view);
 
-        mExerciseActivity.reset();
+        //mExerciseActivity.reset();
 
         switch (view.getId()) {
             case R.id.earsImageView: // ear training exercises

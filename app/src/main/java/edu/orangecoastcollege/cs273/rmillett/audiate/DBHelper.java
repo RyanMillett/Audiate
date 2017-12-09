@@ -794,25 +794,27 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_EXERCISE_MATERIAL,
                         FIELD_EXERCISE_DIFFICULTY,
                         FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_DIFFICULTY + "=?",
+                FIELD_EXERCISE_MODE + "=?",
                 new String[]{String.valueOf(exerciseMode)},
                 null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
-                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_INTERVALS)) {
-                    Exercise exercise = new Exercise(cursor.getLong(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getString(3),
-                            cursor.getInt(4),
-                            cursor.getString(5));
+                Exercise exercise = new Exercise(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5));
+
+                if (exercise.getExerciseMaterial().equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_INTERVALS)) {
                     allExercisesList.add(exercise);
                 }
             } while (cursor.moveToNext());
         }
         cursor.close();
         database.close();
+        Log.i(TAG, "allIntervalsByMode: " + exerciseMode + "-->" + allExercisesList.size());
         return allExercisesList;
     }
 
@@ -827,7 +829,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_EXERCISE_MATERIAL,
                         FIELD_EXERCISE_DIFFICULTY,
                         FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_DIFFICULTY + "=?",
+                FIELD_EXERCISE_MODE + "=?",
                 new String[]{String.valueOf(exerciseMode)},
                 null, null, null, null);
 
@@ -860,7 +862,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_EXERCISE_MATERIAL,
                         FIELD_EXERCISE_DIFFICULTY,
                         FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_DIFFICULTY + "=?",
+                FIELD_EXERCISE_MODE + "=?",
                 new String[]{String.valueOf(exerciseMode)},
                 null, null, null, null);
 
@@ -982,7 +984,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length !=4) {
+                if (fields.length !=6) {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
@@ -991,17 +993,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 String exerciseName = fields[1].trim();
                 String exerciseMode = fields[2].trim();
                 String exerciseMaterial = fields[3].trim();
-                int exerciseDifficulty = Integer.parseInt(fields[4]);
+                int exerciseDifficulty = Integer.parseInt(fields[4].trim());
                 String exerciseDescriptionTextFileName = fields[5];
 
                 Exercise exercise = new Exercise(
-                                    id,
+                                    ++id,
                                     exerciseName,
                                     exerciseMode,
                                     exerciseMaterial,
                                     exerciseDifficulty,
                                     exerciseDescriptionTextFileName
                 );
+
+                Log.i(TAG, "exercise-->" + exercise.getExerciseName());
 
                 // add to DB
                 addExercise(exercise);

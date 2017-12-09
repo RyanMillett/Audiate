@@ -35,8 +35,8 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Exercise selectedExerciseActivityType = mExerciseActivityList.get(position);
-        Log.i(TAG, "selectedExerciseActivityType->" + selectedExerciseActivityType.getExerciseName());
+        final Exercise selectedExerciseActivity = mExerciseActivityList.get(position);
+        Log.i(TAG, "selectedExerciseActivity->" + selectedExerciseActivity.getExerciseName());
 
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -51,12 +51,32 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
         TextView exerciseDetailsListDescription2TextView
                 = view.findViewById(R.id.exerciseListDescription2TextView);
 
-        exerciseDetailsListLinearLayout.setTag(selectedExerciseActivityType);
+        exerciseDetailsListLinearLayout.setTag(selectedExerciseActivity);
 
-        exerciseDetailsListNameTextView.setText(selectedExerciseActivityType.getExerciseName());
-        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivityType.getExerciseMode());
-        exerciseDetailsListDescription2TextView.setText(selectedExerciseActivityType.getExerciseDifficulty());
+        exerciseDetailsListNameTextView.setText(selectedExerciseActivity.getExerciseName());
+        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivity.getExerciseMode());
 
+
+        switch (selectedExerciseActivity.getExerciseDifficulty()) {
+            case Exercise.EXERCISE_DIFFICULTY_BEGINNER:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_1);
+                break;
+            case Exercise.EXERCISE_DIFFICULTY_INTERMEDIATE:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_2);
+                break;
+            case Exercise.EXERCISE_DIFFICULTY_PROFICIENT:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_3);
+                break;
+            case Exercise.EXERCISE_DIFFICULTY_ADVANCED:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_4);
+                break;
+            case Exercise.EXERCISE_DIFFICULTY_EXPERT:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_5);
+                break;
+            case Exercise.EXERCISE_DIFFICULTY_MASTER:
+                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_6);
+                break;
+        }
         return view;
     }
 }

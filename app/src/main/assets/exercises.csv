@@ -1,33 +1,26 @@
-NAME,MODE,MATERIAL,DIFFICULTY,DESCRIPTION .TXT
-Simple Pitch-Matching,Singing,Intervals,Beginner,exercise_descriptions.txt
-Basic Triads and 7ths,Listening,Intervals,Beginner,exercise_descriptions.txt
-Basic Triads and 7ths,Singing,Intervals,Intermediate,exercise_descriptions.txt
-Simple Pentatonic Intervals,Listening,Intervals,Beginner,exercise_descriptions.txt
-Simple Pentatonic Intervals,Singing,Intervals,Beginner,exercise_descriptions.txt
-Heptadiatonic Intervals,Listening,Intervals,Intermediate,exercise_descriptions.txt
-Heptadiatonic Intervals,Singing,Intervals,Intermediate,exercise_descriptions.txt
-12-Tone Equal-Tempered Intervals,Listening,Intervals,Proficient,exercise_descriptions.txt
-12-Tone Equal-Tempered Intervals,Singing,Intervals,Advanced,exercise_descriptions.txt
-24-Tone Equal-Tempered Intervals,Listening,Intervals,Proficient,exercise_descriptions.txt
-24-Tone Equal-Tempered Intervals,Singing,Intervals,Advanced,exercise_descriptions.txt
-36-Tone Equal-Tempered Intervals,Listening,Intervals,Advanced,exercise_descriptions.txt
-36-Tone Equal-Tempered Intervals,Singing,Intervals,Expert,exercise_descriptions.txt
-48-Tone Equal-Tempered Intervals,Listening,Intervals,Expert,exercise_descriptions.txt
-48-Tone Equal-Tempered Intervals,Listening,Intervals,Master,exercise_descriptions.txt
-72-Tone Equal-Tempered Intervals,Listening,Intervals,Expert,exercise_descriptions.txt
-96-Tone Equal-Tempered Intervals,Listening,Intervals,Master,exercise_descriptions.txt
-Pythagorean Intervals,Listening,Intervals,Advanced,exercise_descriptions.txt
-Ptolemaic Intervals,Listening,Intervals,Advanced,exercise_descriptions.txt
-Commas,Listening,Intervals,Master,exercise_descriptions.txt
-Sub-Semicomma Intervals,Listening,Intervals,Master,exercise_descriptions.txt
-Chord-Qualities (Heptadiatonic Triads),Listening,Chords,Beginner,exercise_descriptions.txt
-Chord-Qualities (Heptadiatonic 7ths),Listening,Chords,Intermediate,exercise_descriptions.txt
-Chord-Qualities (Suspensions),Listening,Chords,Intermediate,exercise_descriptions.txt
-Chord-Qualities (Equal- vs Just-Triads),Listening,Chords,Advanced,exercise_descriptions.txt
-Chord-Qualities (Equal- vs Just-7ths),Listening,Chords,Advanced,exercise_descriptions.txt
-Basic Major and Minor Scales,Listening,Scales,Beginner,exercise_descriptions.txt
-Heptadiatonic Modes,Listening,Scales,Intermediate,exercise_descriptions.txt
-Synthetic Scales (Heptatonic),Listening,Scales,Proficient,exercise_descriptions.txt
-Synthetic Scales (Dodecaphonic),Listening,Scales,Advanced,exercise_descriptions.txt
-Olivier Messiaen's ?Modes of Limited Transposition?,Listening,Scales,Expert,exercise_descriptions.txt
-Non-Octavating Scales,Listening,Scales,Master,exercise_descriptions.txt
+0,Simple Pitch-Matching,Singing,Intervals,1,exercise_descriptions.txt
+1,Basic Triads and 7ths,Listening,Intervals,1,exercise_descriptions.txt
+2,Basic Triads and 7ths,Singing,Intervals,2,exercise_descriptions.txt
+3,Simple Pentatonic Intervals,Listening,Intervals,1,exercise_descriptions.txt
+4,Simple Pentatonic Intervals,Singing,Intervals,1,exercise_descriptions.txt
+5,Heptadiatonic Intervals,Listening,Intervals,2,exercise_descriptions.txt
+6,Heptadiatonic Intervals,Singing,Intervals,2,exercise_descriptions.txt
+7,12-Tone Equal-Tempered Intervals,Listening,Intervals,3,exercise_descriptions.txt
+8,12-Tone Equal-Tempered Intervals,Singing,Intervals,4,exercise_descriptions.txt
+9,24-Tone Equal-Tempered Intervals,Listening,Intervals,4,exercise_descriptions.txt
+10,24-Tone Equal-Tempered Intervals,Singing,Intervals,5,exercise_descriptions.txt
+11,36-Tone Equal-Tempered Intervals,Listening,Intervals,4,exercise_descriptions.txt
+12,36-Tone Equal-Tempered Intervals,Singing,Intervals,5,exercise_descriptions.txt
+13,Commas,Listening,Intervals,6,exercise_descriptions.txt
+14,Sub-Semicomma Intervals,Listening,Intervals,6,exercise_descriptions.txt
+15,Chord-Qualities (Heptadiatonic Triads),Listening,Chords,1,exercise_descriptions.txt
+16,Chord-Qualities (Heptadiatonic 7ths),Listening,Chords,2,exercise_descriptions.txt
+17,Chord-Qualities (Suspensions),Listening,Chords,2,exercise_descriptions.txt
+18,Chord-Qualities (Equal- vs Just-Triads),Listening,Chords,4,exercise_descriptions.txt
+19,Chord-Qualities (Equal- vs Just-7ths),Listening,Chords,4,exercise_descriptions.txt
+20,Basic Major and Minor Scales,Listening,Scales,1,exercise_descriptions.txt
+21,Heptadiatonic Modes,Listening,Scales,2,exercise_descriptions.txt
+22,Synthetic Scales (Heptatonic),Listening,Scales,3,exercise_descriptions.txt
+23,Synthetic Scales (Dodecaphonic),Listening,Scales,4,exercise_descriptions.txt
+24,Olivier Messiaen's ?Modes of Limited Transposition?,Listening,Scales,5,exercise_descriptions.txt
+25,Non-Octavating Scales,Listening,Scales,6,exercise_descriptions.txt
