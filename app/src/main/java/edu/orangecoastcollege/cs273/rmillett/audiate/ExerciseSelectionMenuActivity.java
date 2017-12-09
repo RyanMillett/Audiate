@@ -23,8 +23,9 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     private List<ExerciseActivityType> mAllExerciseList;
     private List<ExerciseActivityType> mFilteredExerciseList;
 
-    private ImageView mEarsButton;
-    private ImageView mSingingButton;
+    private ImageView mEarsImageView;
+    private ImageView mSingingImageView;
+    private ImageView[] mTypeImageViews;
 
     private Button mIntervalsButton;
     private Button mChordsButton;
@@ -67,8 +68,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         mExerciseSelectionListAdapter = new ExerciseSelectionListAdapter(this,
                 R.layout.library_list_item, mFilteredExerciseList);
 
-        mEarsButton = findViewById(R.id.earsImageView);
-        mSingingButton = findViewById(R.id.singingImageView);
+        mEarsImageView = findViewById(R.id.earsImageView);
+        mSingingImageView = findViewById(R.id.singingImageView);
 
         mIntervalsButton = findViewById(R.id.exercise1Button);
         mIntervalsButton.setEnabled(false);
@@ -77,6 +78,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         mScalesButton = findViewById(R.id.exercise3Button);
         mScalesButton.setEnabled(false);
 
+        mTypeImageViews = new ImageView[]{mEarsImageView, mSingingImageView};
         mExerciseButtons = new Button[]{mIntervalsButton, mChordsButton, mScalesButton};
 
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
@@ -99,12 +101,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 mExerciseType = ExerciseActivityType.SIGHT_SINGING_EXERCISE;
                 setExerciseButtons(true, view);
                 break;
-            case R.id.exercise1Button: // update listview
-            case R.id.exercise2Button:
-            case R.id.exercise3Button:
-                setExerciseSelectionListAdapter(view);
-                break;
         }
+        updateExerciseListView(view);
     }
 
     public void startActivity(View view) {
@@ -132,9 +130,13 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     }
 
     private void setExerciseButtons(boolean enabled, View view) {
+        setImageViewColors(view);
+        setButtonColors(view);
+
         for (Button button : mExerciseButtons) {
             button.setEnabled(enabled);
         }
+
         if (enabled) {
             switch (view.getId()){
                 case R.id.earsImageView:
@@ -154,36 +156,50 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 button.setText("");
             }
         }
+        updateExerciseListView(view);
     }
 
-    private void setExerciseSelectionListAdapter(View view) {
+    private void updateExerciseListView(View view) {
         // handle button colors
         setButtonColors(view);
 
-        // handle lists and list view
+        // handle lists, update list view
+        mFilteredExerciseList.clear();
         switch (view.getId()) {
             case R.id.exercise1Button:
-                // update listview
-                mFilteredExerciseList = allEarIntervalExercises;
+                mFilteredExerciseList = new ArrayList<>(allEarIntervalExercises);
+                mExerciseDescriptionTextView.setText("Interval identification exercises..."
+                        + "\nDescription text..." + "\nDescription text..." + "\nDescription text...");
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllIntervalEarExercises()
 //                        : mFilteredExerciseList = db.getAllIntervalSingingExercises;
                 break;
             case R.id.exercise2Button:
-                // update listview
-                mFilteredExerciseList = allEarChordExercises;
+                mFilteredExerciseList = new ArrayList<>(allEarChordExercises);
+                mExerciseDescriptionTextView.setText("Chord quality exercises..."
+                                + "\nDescription text..." + "\nDescription text..." + "\nDescription text...");
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllChordEarExercises()
 //                        : mFilteredExerciseList = db.getAllChordSingingExercises;
                 break;
             case R.id.exercise3Button:
-                // update listview
-                mFilteredExerciseList = allEarScaleExercises;
+                mFilteredExerciseList = new ArrayList<>(allEarScaleExercises);
+                mExerciseDescriptionTextView.setText("Scales and modes exercises..."
+                                + "\nDescription text..." + "\nDescription text..." + "\nDescription text...");
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllScaleEarExercises()
 //                        : mFilteredExerciseList = db.getAllScaleSingingExercises;
                 break;
+            case R.id.earsImageView: // ear training exercises
+                mExerciseDescriptionTextView.setText("Ear training exercises..."
+                        + "\nDescription text..." + "\nDescription text..." + "\nDescription text...");
+                break;
+            case R.id.singingImageView: // singing exercises
+                mExerciseDescriptionTextView.setText("Singing exercises..."
+                        + "\nDescription text..." + "\nDescription text..." + "\nDescription text...");
+                break;
         }
+
         Log.i(TAG, "mFilteredExerciseList.size()->" + mFilteredExerciseList.size());
         mExerciseSelectionListAdapter.clear();
         mExerciseSelectionListAdapter.addAll(mFilteredExerciseList);
@@ -191,8 +207,20 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         Log.i(TAG, "mExerciseSelectionListAdapter.getCount()->" + mExerciseSelectionListAdapter.getCount());
     }
 
+    private void setImageViewColors(View view) {
+        // handle type buttons
+        for (ImageView imageView : mTypeImageViews) {
+            if (imageView.getId() == view.getId()) {
+                imageView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            else {
+                imageView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+        }
+    }
+
     private void setButtonColors(View view) {
-        // handle buttons
+        // handle exercise buttons
         for (Button button : mExerciseButtons) {
             if (button.getId() == view.getId()) {
                 button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

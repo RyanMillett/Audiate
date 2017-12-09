@@ -68,7 +68,8 @@
             android:id="@+id/exerciseButtonsLinearLayout"
             android:paddingVertical="@dimen/buttons_padding"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_gravity="top"
             android:layout_height="wrap_content">
 
@@ -110,14 +111,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:textSize="@dimen/small_text_size"
+                android:textSize="15sp"
                 android:hint="Selection description..."/>
 
         </LinearLayout>
 
         <ListView
             android:id="@+id/exercisesCategoriesListView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content">
         </ListView>
 
