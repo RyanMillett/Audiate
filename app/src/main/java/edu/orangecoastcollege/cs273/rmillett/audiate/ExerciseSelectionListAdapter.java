@@ -17,15 +17,15 @@ import java.util.List;
  * @author Ryan Millett
  * @version 1.0
  */
-public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityType> {
+public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
 
     private static final String TAG = "ExerciseListAdapter";
 
     private Context mContext;
-    private List<ExerciseActivityType> mExerciseActivityList = new ArrayList<>();
+    private List<Exercise> mExerciseActivityList = new ArrayList<>();
     private int mResourceId;
 
-    public ExerciseSelectionListAdapter(Context context, int rId, List<ExerciseActivityType> exerciseActivityTypeList) {
+    public ExerciseSelectionListAdapter(Context context, int rId, List<Exercise> exerciseActivityTypeList) {
         super(context, rId, exerciseActivityTypeList);
         mContext = context;
         mResourceId = rId;
@@ -35,7 +35,7 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityT
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ExerciseActivityType selectedExerciseActivityType = mExerciseActivityList.get(position);
+        final Exercise selectedExerciseActivityType = mExerciseActivityList.get(position);
         Log.i(TAG, "selectedExerciseActivityType->" + selectedExerciseActivityType.getExerciseName());
 
         LayoutInflater inflater =
@@ -54,8 +54,8 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityT
         exerciseDetailsListLinearLayout.setTag(selectedExerciseActivityType);
 
         exerciseDetailsListNameTextView.setText(selectedExerciseActivityType.getExerciseName());
-        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivityType.getExerciseType());
-        exerciseDetailsListDescription2TextView.setText(selectedExerciseActivityType.getDifficulty());
+        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivityType.getExerciseMode());
+        exerciseDetailsListDescription2TextView.setText(selectedExerciseActivityType.getExerciseDifficulty());
 
         return view;
     }

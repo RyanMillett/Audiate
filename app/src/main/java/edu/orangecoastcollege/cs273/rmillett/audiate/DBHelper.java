@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @author Ryan Millett
- * @version 1.2
+ * @version 2.0
  *
  * USERS_TABLE @author Brian Wegener
  * @version 1.0
@@ -55,6 +55,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_SCALE_SIZE = "scale_size";
     private static final String FIELD_SCALE_DESCRIPTION = "scale_description";
     private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
+
+    // Table of Exercises
+    private static final String EXERCISE_TABLE = "Exercises";
+    private static final String EXERCISE_KEY_FIELD_ID = "_id";
+    private static final String FIELD_EXERCISE_NAME = "exercise_name";
+    private static final String FIELD_EXERCISE_MODE = "exercise_mode";
+    private static final String FIELD_EXERCISE_MATERIAL = "exercise_material";
+    private static final String FIELD_EXERCISE_DIFFICULTY = "exercise_difficulty";
+    private static final String FIELD_EXERCISE_DESCRIPTION = "exercise_description";
 
     // Table of users
     private static final String USERS_TABLE = "Users";
@@ -100,6 +109,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 + FIELD_SCALE_SCL_FILE_NAME + " TEXT" + ")";
         sqLiteDatabase.execSQL(createQuery);
 
+        // Create Exercises table
+        createQuery = "CREATE TABLE " + EXERCISE_TABLE + "("
+                + EXERCISE_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
+                + FIELD_EXERCISE_NAME + " TEXT, "
+                + FIELD_EXERCISE_MODE + " TEXT, "
+                + FIELD_EXERCISE_MATERIAL + " TEXT, "
+                + FIELD_EXERCISE_DIFFICULTY + " INTEGER, "
+                + FIELD_EXERCISE_DESCRIPTION + " TEXT" + ")";
+        sqLiteDatabase.execSQL(createQuery);
+
         // Create Users table
         createQuery = "CREATE TABLE " + USERS_TABLE + "("
                 + USERS_KEY_FIELD_ID + " INTEGER PRIMARY KEY, "
@@ -116,7 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + INTERVALS_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CHORDS_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SCALES_TABLE);
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + EXERCISE_TABLE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
 
         onCreate(sqLiteDatabase);
@@ -160,6 +179,20 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_SCALE_SCL_FILE_NAME, scale.getSCLfileName());
 
         db.insert(SCALES_TABLE, null, values);
+        db.close();
+    }
+
+    public void addExercise(Exercise exercise) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_EXERCISE_NAME, exercise.getExerciseName());
+        values.put(FIELD_EXERCISE_MODE, exercise.getExerciseMode());
+        values.put(FIELD_EXERCISE_MATERIAL, exercise.getExerciseMaterial());
+        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficulty());
+        values.put(FIELD_EXERCISE_DESCRIPTION, exercise.getExerciseDescription());
+
+        db.insert(EXERCISE_TABLE, null, values);
         db.close();
     }
 
@@ -232,6 +265,21 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateExercise(Exercise exercise) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_EXERCISE_NAME, exercise.getExerciseName());
+        values.put(FIELD_EXERCISE_MODE, exercise.getExerciseMode());
+        values.put(FIELD_EXERCISE_MATERIAL, exercise.getExerciseMaterial());
+        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficulty());
+        values.put(FIELD_EXERCISE_DESCRIPTION, exercise.getExerciseDescription());
+
+        db.update(EXERCISE_TABLE, values, EXERCISE_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(exercise.getId())});
+        db.close();
+    }
+
     /**
      * This updates the information from one user in the database.
      * @param user
@@ -266,6 +314,34 @@ public class DBHelper extends SQLiteOpenHelper {
 //    public ChordScale getScale(int id) {
 //        // TODO: this method
 //    }
+
+    public Exercise getExercise(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                EXERCISE_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null) cursor.moveToFirst();
+
+        Exercise exercise = new Exercise(cursor.getLong(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getInt(4),
+                    cursor.getString(5));
+
+        cursor.close();
+        db.close();
+        return exercise;
+    }
 
     /**
      * This gets one user from the database.
@@ -324,6 +400,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteExercise(Exercise exercise) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(EXERCISE_TABLE, EXERCISE_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(exercise.getId())});
+        db.close();
+    }
+
     /**
      * This deletes a user from the database.
      * @param user
@@ -339,6 +423,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- GET ALL ---------- //
 
+    // TODO: revise this to construct and return a Note
     public List<ChordScale> getAllIntervals() {
         List<ChordScale> allIntervalsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -377,6 +462,38 @@ public class DBHelper extends SQLiteOpenHelper {
     // TODO: getAllChords()
 
     // TODO: getAllScales() -> ?
+
+    public List<Exercise> getAllExercises() {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5));
+
+                allExercisesList.add(exercise);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
 
     /**
      * This gets a list of all the users from the database.
@@ -420,6 +537,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteAllScales() {
         // TODO: this method
+    }
+
+    public void deleteAllExercies() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(EXERCISE_TABLE, null, null);
+        database.close();
     }
 
     /**
