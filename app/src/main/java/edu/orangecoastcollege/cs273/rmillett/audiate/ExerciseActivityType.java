@@ -23,6 +23,14 @@ public class ExerciseActivityType implements Parcelable {
     private String mDifficulty;
     private String mExerciseDescription;
 
+
+    public ExerciseActivityType() {
+        mExerciseName = "";
+        mExerciseType = "";
+        mDifficulty = "";
+        mExerciseDescription = "";
+    }
+
     public ExerciseActivityType(String exerciseName, String exerciseType, String difficulty, String exerciseDescription) {
         mExerciseName = exerciseName;
         mExerciseType = exerciseType;
@@ -61,6 +69,8 @@ public class ExerciseActivityType implements Parcelable {
     public void setExerciseDescription(String exerciseDescription) {
         mExerciseDescription = exerciseDescription;
     }
+
+    // PARCELABLE IMPLEMENTATION //
 
     private ExerciseActivityType(Parcel parcel) {
         mExerciseName = parcel.readString();

@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:onClick="selectionDetailsHandler"
+              android:onClick="exerciseSelectionHandler"
               android:clickable="true"
-              android:id="@+id/exerciseListItemLinearLayout">
+              android:id="@+id/exerciseListLinearLayout">
 
     <LinearLayout
         android:id="@+id/exerciseListItemTextViewLinearLayout"

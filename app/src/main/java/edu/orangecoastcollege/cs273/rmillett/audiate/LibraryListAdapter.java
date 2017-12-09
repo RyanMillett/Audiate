@@ -34,12 +34,6 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         mChordScaleList = chordScales;
     }
 
-    public LibraryListAdapter(Context context, int rId) {
-        super(context, rId);
-        mContext = context;
-        mResourceId = rId;
-    }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

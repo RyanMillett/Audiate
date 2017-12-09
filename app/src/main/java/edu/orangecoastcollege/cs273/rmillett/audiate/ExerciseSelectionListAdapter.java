@@ -2,8 +2,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,8 @@ import java.util.List;
  */
 public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityType> {
 
+    private static final String TAG = "ExerciseListAdapter";
+
     private Context mContext;
     private List<ExerciseActivityType> mExerciseActivityList = new ArrayList<>();
     private int mResourceId;
@@ -31,18 +32,17 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityT
         mExerciseActivityList = exerciseActivityTypeList;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         final ExerciseActivityType selectedExerciseActivityType = mExerciseActivityList.get(position);
+        Log.i(TAG, "selectedExerciseActivityType->" + selectedExerciseActivityType.getExerciseName());
 
-        // TODO: get exercise modes and descriptions
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(mResourceId, null);
 
         LinearLayout exerciseDetailsListLinearLayout
-                = view.findViewById(R.id.exerciseListItemTextViewLinearLayout);
+                = (LinearLayout) view.findViewById(R.id.exerciseListLinearLayout);
         TextView exerciseDetailsListNameTextView
                 = view.findViewById(R.id.exerciseListNameTextView);
         TextView exerciseDetailsListDescription1TextView

@@ -52,6 +52,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_selection_menu);
 
+        mExerciseActivityType = new ExerciseActivityType();
+
         // Lists and DB
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
@@ -116,6 +118,9 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 mExerciseType = ExerciseActivityType.SIGHT_SINGING_EXERCISE;
                 setExerciseButtons(true, view);
                 break;
+            case R.id.exerciseListLinearLayout:
+                updateDescriptionTextView(view);
+                break;
         }
         updateListView(view);
     }
@@ -144,6 +149,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         // displays a toast or launches text activity with help information
     }
 
+    // PRIVATE HELPER METHODS //
+
     private void setExerciseButtons(boolean enabled, View view) {
         updateImageViewColors(view);
         updateButtonColors(view);
@@ -164,9 +171,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                     mChordsButton.setText(getString(R.string.chord_arpeggio_exercises_button));
                     mScalesButton.setText(getString(R.string.melody_singing_exercises_button));
                     break;
-                case R.id.exerciseListItemTextViewLinearLayout:
-                    updateDescriptionTextView(view);
-                    break;
             }
         }
         else {
@@ -174,12 +178,12 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 button.setText("");
             }
         }
-        if (!(view instanceof LinearLayout)) {
-            updateListView(view);
-        }
+        updateListView(view);
     }
 
     private void updateListView(View view) {
+        //if (view instanceof LinearLayout) return;
+
         // handle button colors
         updateButtonColors(view);
 
@@ -217,7 +221,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     }
 
     private void updateDescriptionTextView(View view) {
-
         // list view items
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
@@ -225,7 +228,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
             mExerciseActivityType = selectedExerciseActivity;
             mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseDescription());
-
         }
         // exercise buttons
         else if (view instanceof Button) {
