@@ -32,6 +32,7 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityT
         mExerciseActivityList = exerciseActivityTypeList;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ExerciseActivityType selectedExerciseActivityType = mExerciseActivityList.get(position);

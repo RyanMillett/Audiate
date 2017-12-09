@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     private Button mChordsButton;
     private Button mScalesButton;
 
+    private LinearLayout mListItem;
 
     private Button[] mExerciseButtons;
     private ListView mExercisesListView;
@@ -61,18 +63,19 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
         // TEST LISTS //
         allEarIntervalExercises = new ArrayList<>();
-        allEarIntervalExercises.add(new ExerciseActivityType("Harmonic" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
-        allEarIntervalExercises.add(new ExerciseActivityType("Historical" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Intermediate", "Desc."));
+        allEarIntervalExercises.add(new ExerciseActivityType("Harmonic" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc: \nListen to intervals. This one is easy."));
+        allEarIntervalExercises.add(new ExerciseActivityType("Historical" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Intermediate", "Desc: \nListen to intervals. This one is a little harder."));
         allEarChordExercises = new ArrayList<>();
-        allEarChordExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_CHORDS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarChordExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_CHORDS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc: simple chord quality exercise"));
         allEarScaleExercises = new ArrayList<>();
-        allEarScaleExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_SCALES,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarScaleExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_SCALES,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc: easy scale identification"));
 
         List<ExerciseActivityType> allSingingIntervalExercises = new ArrayList<>();
         List<ExerciseActivityType> allSingingChordExercises = new ArrayList<>();
         List<ExerciseActivityType> allSingingScaleExercises = new ArrayList<>();
         // --------- //
 
+        mListItem = findViewById(R.id.exerciseListLinearLayout);
 
         // ImageViews
         mEarsImageView = findViewById(R.id.earsImageView);
@@ -94,11 +97,18 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
         // ListAdapter
         mExerciseSelectionListAdapter = new ExerciseSelectionListAdapter(this,
-                R.layout.library_list_item, mFilteredExerciseList);
+                R.layout.exercise_list_item, mFilteredExerciseList);
 
         // ListView
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
         mExercisesListView.setAdapter(mExerciseSelectionListAdapter);
+        mExercisesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ExerciseActivityType selectedItem = (ExerciseActivityType) parent.getItemAtPosition(position);
+                mExerciseDescriptionTextView.setText(selectedItem.getExerciseDescription());
+            }
+        });
 
         // Info TextView
         mExerciseDescriptionTextView = findViewById(R.id.exerciseDescriptionTextView);
@@ -120,7 +130,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 break;
             case R.id.exerciseListLinearLayout:
                 updateDescriptionTextView(view);
-                break;
+                return;
         }
         updateListView(view);
     }
@@ -148,6 +158,9 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         startActivity(launchHelp);
         // displays a toast or launches text activity with help information
     }
+
+
+
 
     // PRIVATE HELPER METHODS //
 
@@ -182,8 +195,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     }
 
     private void updateListView(View view) {
-        //if (view instanceof LinearLayout) return;
-
         // handle button colors
         updateButtonColors(view);
 
