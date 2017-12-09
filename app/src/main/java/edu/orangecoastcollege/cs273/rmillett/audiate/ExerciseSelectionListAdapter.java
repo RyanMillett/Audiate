@@ -42,13 +42,13 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<ExerciseActivityT
         View view = inflater.inflate(mResourceId, null);
 
         LinearLayout exerciseDetailsListLinearLayout
-                = view.findViewById(R.id.libraryListItemLinearLayout);
+                = view.findViewById(R.id.exerciseListItemTextViewLinearLayout);
         TextView exerciseDetailsListNameTextView
-                = view.findViewById(R.id.libraryListNameTextView);
+                = view.findViewById(R.id.exerciseListNameTextView);
         TextView exerciseDetailsListDescription1TextView
-                = view.findViewById(R.id.libraryListDescription1TextView);
+                = view.findViewById(R.id.exerciseListDescription1TextView);
         TextView exerciseDetailsListDescription2TextView
-                = view.findViewById(R.id.libraryListDescription2TextView);
+                = view.findViewById(R.id.exerciseListDescription2TextView);
 
         exerciseDetailsListLinearLayout.setTag(selectedExerciseActivityType);
 

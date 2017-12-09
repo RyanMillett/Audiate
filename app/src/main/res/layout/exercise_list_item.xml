@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-              android:onClick="exerciseSelectionHandler"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:onClick="selectionDetailsHandler"
               android:clickable="true"
-    android:id="@+id/libraryListItemLinearLayout">
+              android:id="@+id/exerciseListItemLinearLayout">
 
     <LinearLayout
-        android:id="@+id/libraryListItemTextViewLinearLayout"
+        android:id="@+id/exerciseListItemTextViewLinearLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,19 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:id="@+id/libraryListNameTextView" />
+            android:id="@+id/exerciseListNameTextView" />
 
         <TextView
             android:text=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/libraryListDescription1TextView" />
+            android:id="@+id/exerciseListDescription1TextView" />
 
         <TextView
             android:text=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/libraryListDescription2TextView" />
+            android:id="@+id/exerciseListDescription2TextView" />
 
     </LinearLayout>
 
