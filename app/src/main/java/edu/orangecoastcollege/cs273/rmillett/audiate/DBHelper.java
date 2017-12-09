@@ -701,6 +701,203 @@ public class DBHelper extends SQLiteOpenHelper {
         // Olivier Messiaen's "Modes of Limited Transposition"
 
 
+    public List<Exercise> getAllExercisesByMode(String exerciseMode) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_MODE + "=?",
+                new String[]{String.valueOf(exerciseMode)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5));
+
+                allExercisesList.add(exercise);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+    public List<Exercise> getAllExercisesByMaterial(String exerciseMaterial) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_MATERIAL + "=?",
+                new String[]{String.valueOf(exerciseMaterial)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5));
+
+                allExercisesList.add(exercise);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+    public List<Exercise> getAllExercisesByDifficulty(int exerciseDifficulty) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_DIFFICULTY + "=?",
+                new String[]{String.valueOf(exerciseDifficulty)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise(cursor.getLong(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getString(5));
+
+                allExercisesList.add(exercise);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+    public List<Exercise> getAllIntervalExercisesByMode(String exerciseMode) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_DIFFICULTY + "=?",
+                new String[]{String.valueOf(exerciseMode)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_INTERVALS)) {
+                    Exercise exercise = new Exercise(cursor.getLong(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getInt(4),
+                            cursor.getString(5));
+                    allExercisesList.add(exercise);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+    public List<Exercise> getAllChordExercisesByMode(String exerciseMode) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_DIFFICULTY + "=?",
+                new String[]{String.valueOf(exerciseMode)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_CHORDS)) {
+                    Exercise exercise = new Exercise(cursor.getLong(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getInt(4),
+                            cursor.getString(5));
+                    allExercisesList.add(exercise);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+    public List<Exercise> getAllScaleExercisesByMode(String exerciseMode) {
+        ArrayList<Exercise> allExercisesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                EXERCISE_TABLE,
+                new String[]{EXERCISE_KEY_FIELD_ID,
+                        FIELD_EXERCISE_NAME,
+                        FIELD_EXERCISE_MODE,
+                        FIELD_EXERCISE_MATERIAL,
+                        FIELD_EXERCISE_DIFFICULTY,
+                        FIELD_EXERCISE_DESCRIPTION},
+                FIELD_EXERCISE_DIFFICULTY + "=?",
+                new String[]{String.valueOf(exerciseMode)},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_SCALES)) {
+                    Exercise exercise = new Exercise(cursor.getLong(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getInt(4),
+                            cursor.getString(5));
+                    allExercisesList.add(exercise);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allExercisesList;
+    }
+
+
+
     // ---------- IMPORTS ---------- //
 
     public boolean importAllIntervalsFromCSV(String csvFileName) {
@@ -882,6 +1079,4 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return allScalesList;
     }
-
-
 }

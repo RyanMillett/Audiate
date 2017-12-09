@@ -9,8 +9,8 @@ import android.os.Parcelable;
  */
 public class Exercise implements Parcelable {
 
-    public static final String EAR_TRAINING_EXERCISE_MODE = "Ear Training Exercise";
-    public static final String SIGHT_SINGING_EXERCISE_MODE = "Sight Singing Exercise";
+    public static final String EAR_TRAINING_EXERCISE_MODE = "Ear Training";
+    public static final String SIGHT_SINGING_EXERCISE_MODE = "Sight Singing";
 
     public static final String EXERCISE_MATERIAL_INTERVALS = "Intervals";
     public static final String EXERCISE_MATERIAL_CHORDS = "Chords";
