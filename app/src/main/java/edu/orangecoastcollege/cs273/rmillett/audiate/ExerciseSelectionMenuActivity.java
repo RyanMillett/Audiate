@@ -14,6 +14,7 @@ import java.util.List;
 
 public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
+    private String mExerciseType;
 
     private ExerciseSelectionListAdapter mExerciseSelectionListAdapter;
     private List<ExerciseActivityType> mAllExerciseList;
@@ -29,10 +30,31 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     private ListView mExercisesListView;
     private TextView mExerciseDescriptionTextView;
 
+
+    List<ExerciseActivityType> allEarIntervalExercises;
+    List<ExerciseActivityType> allEarChordExercises;
+    List<ExerciseActivityType> allEarScaleExercises;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_selection_menu);
+
+        // TEST LISTS //
+
+        allEarIntervalExercises = new ArrayList<>();
+        allEarIntervalExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarChordExercises = new ArrayList<>();
+        allEarChordExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_CHORDS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarScaleExercises = new ArrayList<>();
+        allEarScaleExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_SCALES,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+
+        List<ExerciseActivityType> allSingingIntervalExercises = new ArrayList<>();
+        List<ExerciseActivityType> allSingingChordExercises = new ArrayList<>();
+        List<ExerciseActivityType> allSingingScaleExercises = new ArrayList<>();
+
+
+        // --------- //
 
         mAllExerciseList = new ArrayList<>();
         mFilteredExerciseList = new ArrayList<>(mAllExerciseList);
@@ -63,13 +85,19 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     public void exerciseSelectionHandler(View view) {
         switch (view.getId()) {
             case R.id.earsImageView: // ear training exercises
-                setButtons(true, view);
+                mExerciseType = ExerciseActivityType.EAR_TRAINING_EXERCISE;
+                setExerciseButtons(true, view);
                 break;
             case R.id.singingImageView: // singing exercises
-                setButtons(true, view);
+                mExerciseType = ExerciseActivityType.SIGHT_SINGING_EXERCISE;
+                setExerciseButtons(true, view);
+                break;
+            case R.id.exercise1Button: // update listview
+            case R.id.exercise2Button:
+            case R.id.exercise3Button:
+                setExerciseSelectionListAdapter(view);
                 break;
         }
-
     }
 
     public void startActivity(View view) {
@@ -96,7 +124,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         // displays a toast or launches text activity with help information
     }
 
-    private void setButtons(boolean enabled, View view) {
+    private void setExerciseButtons(boolean enabled, View view) {
         mIntervalsButton.setEnabled(enabled);
         mChordsButton.setEnabled(enabled);
         mScalesButton.setEnabled(enabled);
@@ -119,5 +147,37 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
             mChordsButton.setText("");
             mScalesButton.setText("");
         }
+    }
+
+    private void setExerciseSelectionListAdapter(View view) {
+        mExerciseSelectionListAdapter.clear();
+        switch (view.getId()) {
+            case R.id.exercise1Button:
+                // update listview
+                mFilteredExerciseList.clear();
+                mFilteredExerciseList = allEarIntervalExercises;
+//                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
+//                        ? mFilteredExerciseList = db.getAllIntervalEarExercises()
+//                        : mFilteredExerciseList = db.getAllIntervalSingingExercises;
+                break;
+            case R.id.exercise2Button:
+                // update listview
+                mFilteredExerciseList.clear();
+                mFilteredExerciseList = allEarChordExercises;
+//                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
+//                        ? mFilteredExerciseList = db.getAllChordEarExercises()
+//                        : mFilteredExerciseList = db.getAllChordSingingExercises;
+                break;
+            case R.id.exercise3Button:
+                // update listview
+                mFilteredExerciseList.clear();
+                mFilteredExerciseList = allEarScaleExercises;
+//                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
+//                        ? mFilteredExerciseList = db.getAllScaleEarExercises()
+//                        : mFilteredExerciseList = db.getAllScaleSingingExercises;
+                break;
+        }
+        mExerciseSelectionListAdapter.addAll(mFilteredExerciseList);
+        mExerciseSelectionListAdapter.notifyDataSetChanged();
     }
 }
