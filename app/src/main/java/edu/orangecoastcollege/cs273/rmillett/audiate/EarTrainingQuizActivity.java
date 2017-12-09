@@ -85,11 +85,11 @@ public class EarTrainingQuizActivity extends AppCompatActivity {
         //
         deleteDatabase(DBHelper.DATABASE_NAME);
         mDBHelper = new DBHelper(this);
-        mDBHelper.importAllIntervalsFromCSV("intervals.csv");
+        mDBHelper.importAllIntervalsFromCSV("OctaveAnatomy.csv");
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords
-        // mAllScalesList = mDBHelper.importAllScalesFromSCL();
+        // mAllScalesList = mDBHelper.getAllScalesFromSCL();
         //
         // Delete after learning how to make parcelable classes
         //

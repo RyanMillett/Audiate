@@ -29,10 +29,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
 
-    static final String DATABASE_NAME = "ChordScaleLibrary";
+    static final String DATABASE_NAME = "AudiateDatabase";
     private static final int DATABASE_VERSION = 1;
 
-    // Table of intervals (a <code>ChordScale</code> with only two chord members)
+    // Table of intervals
     private static final String INTERVALS_TABLE = "Intervals";
     private static final String INTERVALS_KEY_FIELD_ID = "_id";
     private static final String FIELD_INTERVAL_NAME = "interval_name";
@@ -61,8 +61,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String USERS_KEY_FIELD_ID = "_id";
     private static final String FIELD_USER_NAME = "user_name";
     private static final String FIELD_EMAIL = "email";
-    private static final String FIELD_LOW_PITCH = "low_pitch";
-    private static final String FIELD_HIGH_PITCH = "high_pitch";
+    private static final String FIELD_LOW_PITCH = "lowest_pitch";
+    private static final String FIELD_HIGH_PITCH = "highest_pitch";
     private static final String FIELD_VOCAL_RANGE = "vocal_range";
 
     public DBHelper(Context context) {
@@ -124,13 +124,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- ADD ---------- //
 
-    public void addInterval(ChordScale interval) {
+    public void addInterval(Note interval) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(FIELD_INTERVAL_NAME, interval.getName());
-        values.put(FIELD_INTERVAL_RATIO, interval.getIntervalRatio(0, 1));
-        values.put(FIELD_INTERVAL_CENTS, interval.getIntervalDistanceInCents(0,1));
+        values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
+        values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.insert(INTERVALS_TABLE, null, values);
@@ -600,19 +600,14 @@ public class DBHelper extends SQLiteOpenHelper {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
-                //Log.e(TAG, "Line Num->" + lineNum++ + ", " + line + "\n");
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
                 String name = fields[1].trim();
                 String ratio = fields[2].trim();
                 double cents = Double.parseDouble(fields[3].trim());
+                String description = "";
 
-                ChordScale interval = new ChordScale(name, 2);
-                interval.addChordMemberAt(0, new Note("Fundamental"));
-                interval.addChordMemberAt(1, new Note(name,
-                        interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * Music.convertRatioToDecimal(ratio), ratio));
-                interval.setDescription("Size in cents: " + cents);
+                Note interval = new Note(name, ratio, cents, description);
 
                 // add to DB
                 addInterval(interval);
@@ -625,9 +620,50 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean importAllScalesFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inputStream;
+        try {
+            inputStream = manager.open(csvFileName);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line; int lineNum = 1;
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length !=4) {
+                    Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
+                    continue;
+                }
+
+                //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
+                String name = fields[1].trim();
+                int size = Integer.parseInt(fields[2].trim());
+                String description = fields[3].trim();
+                String sclFileName = fields[4].trim();
+
+                ChordScale interval = new ChordScale(name, size, description, sclFileName);
+
+                // add to DB
+                addScale(interval);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     // TODO: importAllChordsFromSCL()
 
-    public List<ChordScale> importAllScalesFromSCL() {
+    // obsolete (for now)
+    public List<ChordScale> getAllScalesFromSCL() {
         // create list with at least 4k initial capacity
         List<ChordScale> allScalesList = new ArrayList<>(5000);
 
@@ -723,4 +759,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return allScalesList;
     }
+
+
 }

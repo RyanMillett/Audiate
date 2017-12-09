@@ -50,7 +50,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         View view = inflater.inflate(mResourceId, null);
 
         LinearLayout libraryListLinearLayout
-                = view.findViewById(R.id.libraryListLinearLayout);
+                = view.findViewById(R.id.libraryListItemLinearLayout);
         TextView libraryListNameTextView
                 = view.findViewById(R.id.libraryListNameTextView);
         TextView libraryListDescription1TextView

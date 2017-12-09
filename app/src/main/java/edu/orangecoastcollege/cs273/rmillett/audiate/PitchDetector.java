@@ -141,7 +141,7 @@ public class PitchDetector {
         if (mFrequencyAverage > 0) {
             mFrequencyAverage /= mCollectionLimit;
             Log.i(TAG, "Frequency to parse->" + mFrequencyAverage);
-            return Music.parsePitchClassFromFrequency(mFrequencyAverage);
+            return Music.parsePitchClassFromFrequency(mFrequencyAverage, Music._12_TET_PITCH_FREQUENCIES);
         }
         return "No Pitch Detected";
     }

@@ -88,7 +88,7 @@ public class LibraryActivity extends AppCompatActivity {
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
-        db.importAllIntervalsFromCSV("intervals.csv");
+        db.importAllIntervalsFromCSV("OctaveAnatomy.csv");
         filteredChordScaleList = new ArrayList<>();
 
         mLibraryListAdapter = new LibraryListAdapter(this,
@@ -200,7 +200,7 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
-                allScalesList = db.importAllScalesFromSCL();
+                allScalesList = db.getAllScalesFromSCL();
                 mLibraryListAdapter.addAll(allScalesList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options

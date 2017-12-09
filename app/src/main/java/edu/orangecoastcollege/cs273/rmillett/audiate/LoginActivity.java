@@ -1,10 +1,12 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * The <code>LoginActivity</code> allows the user to either log in
@@ -48,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private User user;
 
-
     /**
      * The <code>onCreate</code> sets up the authorization of the user from firebase.
      * It also instantiates the editTexts and buttons. It also launches the animation
@@ -76,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Runs the animation that brings the Views in
         RunAnimation();
-
     }
 
     /**

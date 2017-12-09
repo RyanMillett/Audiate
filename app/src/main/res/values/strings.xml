@@ -59,6 +59,13 @@
     <string name="modeScale_exercises_button">Scales and Modes</string>
     <string name="ear_training_menu_button">Ear Training Menu</string>
 
+    <!-- Sight Singing Exercises Selection Menu -->
+    <string name="singing_exercise_selection">Singing Exercises</string>
+    <string name="interval_singing_exercises_button">Interval Reproduction</string>
+    <string name="chord_arpeggio_exercises_button">Chord Arpeggios</string>
+    <string name="melody_singing_exercises_button">Melody Sight Singing</string>
+    <string name="singing_exercise_menu_button">Singing Exercises Menu</string>
+
     <!-- Ear Training Quiz -->
     <string name="question">Question %1$d of %2$d</string>
     <string name="guess">Guess the %1$s</string>

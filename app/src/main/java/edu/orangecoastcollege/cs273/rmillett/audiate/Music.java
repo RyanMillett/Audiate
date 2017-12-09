@@ -117,6 +117,7 @@ public class Music {
      */
     public static double convertRatioToDecimal(String ratio) {
         if (ratio.contains("/")) {
+            // TODO: make split either "/" or ":"
             String[] rat = ratio.split("/");
             return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
         }
@@ -232,17 +233,17 @@ public class Music {
      * @return a String value representing an approximate pitch-class corresponding to the passed
      *          frequency in Hertz
      */
-    public static String parsePitchClassFromFrequency(double frequencyInHz) {
+    public static String parsePitchClassFromFrequency(double frequencyInHz, double[] freqArray) {
 
         // Binary search crashes, use iteration instead :(
 //        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES,
 //                0, _12_TET_PITCH_FREQUENCIES.length);
 
         int i = -1;
-        for (int j = 0; j < _12_TET_PITCH_FREQUENCIES.length; ++i) {
+        for (int j = 0; j < freqArray.length; ++i) {
             // finds approx range without going over
-            if (frequencyInHz >= _12_TET_PITCH_FREQUENCIES[j]
-                    && frequencyInHz < _12_TET_PITCH_FREQUENCIES[j+1]) {
+            if (frequencyInHz >= freqArray[j]
+                    && frequencyInHz < freqArray[j+1]) {
                 i = j;
             }
         }

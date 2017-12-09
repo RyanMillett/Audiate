@@ -29,8 +29,16 @@ public class Note extends SoundObject {
      */
     public static final String DEFAULT_RATIO = "1/1";
 
+    /**
+     * double constant used as a default size in cents for <code>Note</code> objects. A size of 0——
+     * a "perfect" unison——sets the note as the root of a <code>ChordScale</code> object or the
+     * virtual fundamental of a yet-to-be-defined <code>ChordScale</code> object.
+     */
+    public static final double DEFAULT_SIZE_IN_CENTS = 0.0;
+
     private double mPitchFrequency;
     private String mRatio;
+    private double mSizeInCents;
 
     /**
      * Default constructor
@@ -39,6 +47,7 @@ public class Note extends SoundObject {
         super();
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
+        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
     }
 
     /**
@@ -50,6 +59,7 @@ public class Note extends SoundObject {
         super(name);
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
+        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
     }
 
     /**
@@ -62,6 +72,7 @@ public class Note extends SoundObject {
         super();
         mPitchFrequency = pitchFrequency;
         mRatio = DEFAULT_RATIO;
+        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
     }
 
     /**
@@ -75,6 +86,7 @@ public class Note extends SoundObject {
         super(name);
         mPitchFrequency = pitchFrequency;
         mRatio = DEFAULT_RATIO;
+        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
     }
 
     /**
@@ -90,6 +102,7 @@ public class Note extends SoundObject {
         super(name);
         mPitchFrequency = pitchFrequency;
         mRatio = ratio;
+        mSizeInCents = Music.convertRatioToCents(ratio);
     }
 
     /**
@@ -102,6 +115,23 @@ public class Note extends SoundObject {
     public Note(String name, int durationInMilliseconds) {
         super(name, durationInMilliseconds);
         mPitchFrequency = DEFAULT_FREQUENCY;
+        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+    }
+
+    /**
+     * Overloaded constructor
+     *
+     * @param name String representing the <code>Note</code> name
+     * @param ratio a String value representing a <code>Note</code> object's relation to another
+     *              <code>Note</code> object expressed as a ratio
+     * @param cents a double value representing the size/distance in cents of an interval
+     * @param description String containing a description of a <code>SoundObject</code>
+     */
+    public Note(String name, String ratio, double cents, String description) {
+        super(name);
+        mRatio = ratio;
+        mSizeInCents = cents;
+        mDescription = description;
     }
 
     /**
@@ -144,6 +174,25 @@ public class Note extends SoundObject {
         mRatio = ratio;
     }
 
+    /**
+     * Gets the size in cents of an interval
+     *
+     * @return a double value representing the size/distance in cents of an interval
+     */
+    public double getSizeInCents() {
+        return mSizeInCents;
+    }
+
+    /**
+     * Takes a double value representing the size/distance in cents of an interval
+     *
+     * @param sizeInCents a String representing the size in cents of an interval
+     */
+    public void setSizeInCents(double sizeInCents) {
+        mSizeInCents = sizeInCents;
+    }
+
+
     // -------------- Parcelable Implementation -------------- //
 
     private Note(Parcel parcel) {
@@ -153,6 +202,7 @@ public class Note extends SoundObject {
         mDurationMilliseconds = parcel.readInt();
         mPitchFrequency = parcel.readDouble();
         mRatio = parcel.readString();
+        mSizeInCents = parcel.readDouble();
     }
 
     @Override
@@ -168,6 +218,7 @@ public class Note extends SoundObject {
         parcel.writeInt(mDurationMilliseconds);
         parcel.writeDouble(mPitchFrequency);
         parcel.writeString(mRatio);
+        parcel.writeDouble(mSizeInCents);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>() {

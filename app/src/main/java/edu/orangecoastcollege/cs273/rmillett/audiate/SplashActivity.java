@@ -1,12 +1,16 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import java.io.FileOutputStream;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +24,8 @@ import java.util.TimerTask;
  *          Created by Brian Wegener 11/28/2017
  */
 public class SplashActivity extends AppCompatActivity {
+
+    private static final String TAG = "SpashActivity";
 
     private Animation alphaAnim;
 
