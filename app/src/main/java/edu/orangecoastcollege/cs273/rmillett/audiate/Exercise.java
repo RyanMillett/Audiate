@@ -105,6 +105,15 @@ public class Exercise implements Parcelable {
         mExerciseDescription = exerciseDescription;
     }
 
+    public void reset() {
+        mId = -1;
+        mExerciseName = "";
+        mExerciseMode = "";
+        mExerciseMaterial = "";
+        mExerciseDifficulty = EXERCISE_DIFFICULTY_1_BEGINNER;
+        mExerciseDescription = DEFAULT_DESCRIPTION;
+    }
+
     // PARCELABLE IMPLEMENTATION //
 
     private Exercise(Parcel parcel) {
@@ -142,6 +151,5 @@ public class Exercise implements Parcelable {
             return new Exercise[size];
         }
     };
-
 
 }

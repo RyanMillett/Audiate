@@ -58,7 +58,7 @@
             android:parentActivityName=".ExerciseSelectionMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".EarTrainingQuizActivity"
+            android:name=".EarTrainingExerciseActivity"
             android:exported="true"
             android:parentActivityName=".ExerciseSelectionMenuActivity"
             android:screenOrientation="portrait"/>
@@ -73,6 +73,8 @@
             android:name=".AlternateLoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
+        <activity android:name=".SingingExerciseActivity">
+        </activity>
     </application>
 
 </manifest>

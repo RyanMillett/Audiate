@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EarTrainingQuizActivity extends AppCompatActivity {
+public class EarTrainingExerciseActivity extends AppCompatActivity {
 
     private static final String TAG = "Ear Training Quiz";
 

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
     private DBHelper db;
 
-    private Exercise mExerciseActivityType;
+    private Exercise mExerciseActivity;
 
     private String mExerciseMode;
 
@@ -47,12 +48,14 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
     private TextView mExerciseDescriptionTextView;
 
+    private Button mStartButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_selection_menu);
 
-        mExerciseActivityType = new Exercise();
+        mExerciseActivity = new Exercise();
 
         // Lists and DB
         deleteDatabase(DBHelper.DATABASE_NAME);
@@ -78,6 +81,9 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         mChordsButton.setEnabled(false);
         mScalesButton = findViewById(R.id.exercise3Button);
         mScalesButton.setEnabled(false);
+        mStartButton = findViewById(R.id.startExerciseButton);
+        mStartButton.setEnabled(false);
+
 
         // Buttons array
         mExerciseButtons = new Button[]{mIntervalsButton, mChordsButton, mScalesButton};
@@ -106,43 +112,59 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     }
 
     public void startActivity(View view) {
-        // TODO: this method
-        // starts an exercise activity based on selection
-        // button is enabled only if a quiz type and option is selected
 
-        // If (Button Clicked ??? && List Type clicked ???) send x String
-        // Unpack string in EarTrainingQuizActivity
+        if (!mExerciseActivity.getExerciseName().equals("")) {
 
+            // Declare intent
+            Intent exerciseIntent;
 
-        // This will be changed later
-        Intent launchEarTrainingQuiz = new Intent(this, EarTrainingQuizActivity.class);
+            // Determine Exercise Mode
+            switch (mExerciseActivity.getExerciseMode()) {
+                case Exercise.EAR_TRAINING_EXERCISE_MODE:
+                    exerciseIntent = new Intent(this, EarTrainingExerciseActivity.class);
+                    break;
+                case Exercise.SIGHT_SINGING_EXERCISE_MODE:
+                    exerciseIntent = new Intent(this, SingingExerciseActivity.class);
+                    break;
+                default:
+                    exerciseIntent = new Intent();
+            }
 
-        // Will putExtra which contains a string
+            // Parcel Exercise information
+            exerciseIntent.putExtra("SelectedExercise",mExerciseActivity);
 
-        startActivity(launchEarTrainingQuiz);
+            // Launch
+            startActivity(exerciseIntent);
+        }
+        else {
+            Toast.makeText(this, "Select an exercise.", Toast.LENGTH_LONG);
+        }
     }
 
     public void exerciseSelectionHandler(View view) {
+        if (view instanceof Button) updateButtonColors(view);
+
+        mExerciseActivity.reset();
+
         switch (view.getId()) {
             case R.id.earsImageView: // ear training exercises
-                mExerciseMode = Exercise.EAR_TRAINING_EXERCISE_MODE;
+                mExerciseActivity.setExerciseMode(Exercise.EAR_TRAINING_EXERCISE_MODE);
                 setExerciseButtons(true, view);
                 break;
             case R.id.singingImageView: // singing exercises
-                mExerciseMode = Exercise.SIGHT_SINGING_EXERCISE_MODE;
+                mExerciseActivity.setExerciseMode(Exercise.SIGHT_SINGING_EXERCISE_MODE);
                 setExerciseButtons(true, view);
                 break;
             case R.id.exerciseListLinearLayout:
                 updateDescriptionTextView(view);
                 return;
         }
+
+        // update search bar
         mSearchEditText.setHint(getString(R.string.search_exercises).toLowerCase()
-                + " " + mExerciseMode.toLowerCase()
+                + " " + mExerciseActivity.getExerciseMode().toLowerCase()
                 + " " + getString(R.string.exercises).toLowerCase());
 
-        if (view instanceof Button) {
-            updateButtonColors(view);
-        }
         updateListView(view);
     }
 
@@ -151,7 +173,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
     private void setExerciseButtons(boolean enabled, View view) {
         updateImageViewColors(view);
-        //updateButtonColors(view);
         resetButtonColors();
 
         for (Button button : mExerciseButtons) {
@@ -214,7 +235,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
             LinearLayout selectedLayout = (LinearLayout) view;
             Exercise selectedExerciseActivity = (Exercise) selectedLayout.getTag();
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
-            mExerciseActivityType = selectedExerciseActivity;
+            mExerciseActivity = selectedExerciseActivity;
             mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseDescription());
         }
         // exercise buttons
