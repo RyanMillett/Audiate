@@ -49,18 +49,18 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ExerciseSelectionMenuActivity"
+            android:name=".ExerciseBuilderActivity"
             android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".HelpActivity"
-            android:parentActivityName=".ExerciseSelectionMenuActivity"
+            android:parentActivityName=".ExerciseBuilderActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".EarTrainingExerciseActivity"
             android:exported="true"
-            android:parentActivityName=".ExerciseSelectionMenuActivity"
+            android:parentActivityName=".ExerciseBuilderActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".LibraryActivity"

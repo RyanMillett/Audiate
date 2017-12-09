@@ -9,8 +9,8 @@ import android.os.Parcelable;
  */
 public class Exercise implements Parcelable {
 
-    public static final String EAR_TRAINING_EXERCISE_MODE = "Ear Training";
-    public static final String SIGHT_SINGING_EXERCISE_MODE = "Sight Singing";
+    public static final String EXERCISE_MODE_LISTENING = "Listening";
+    public static final String EXERCISE_MODE_SINGING = "Singing";
 
     public static final String EXERCISE_MATERIAL_INTERVALS = "Intervals";
     public static final String EXERCISE_MATERIAL_CHORDS = "Chords";
@@ -23,15 +23,16 @@ public class Exercise implements Parcelable {
     public static final int EXERCISE_DIFFICULTY_3_PROFICIENT = 3;
     public static final int EXERCISE_DIFFICULTY_4_ADVANCED = 4;
     public static final int EXERCISE_DIFFICULTY_5_EXPERT = 5;
+    public static final int EXERCISE_DIFFICULTY_6_MASTER = 6;
 
-    public static final String DEFAULT_DESCRIPTION = "No description.";
+    public static final String DEFAULT_DESCRIPTION_TEXT_FILE_NAME = "No file found.";
 
     private long mId;
     private String mExerciseName;
     private String mExerciseMode;
     private String mExerciseMaterial;
     private int mExerciseDifficulty;
-    private String mExerciseDescription;
+    private String mExerciseDescriptionTextFileName;
 
 
     public Exercise() {
@@ -40,25 +41,25 @@ public class Exercise implements Parcelable {
         mExerciseMode = "";
         mExerciseMaterial = "";
         mExerciseDifficulty = EXERCISE_DIFFICULTY_1_BEGINNER;
-        mExerciseDescription = DEFAULT_DESCRIPTION;
+        mExerciseDescriptionTextFileName = DEFAULT_DESCRIPTION_TEXT_FILE_NAME;
     }
 
-    public Exercise(String exerciseName, String exerciseMode, String exerciseMaterial, int difficulty, String exerciseDescription) {
+    public Exercise(String exerciseName, String exerciseMode, String exerciseMaterial, int difficulty, String exerciseDescriptionTextFileName) {
         mId = -1;
         mExerciseName = exerciseName;
         mExerciseMode = exerciseMode;
         mExerciseMaterial = exerciseMaterial;
         mExerciseDifficulty = difficulty;
-        mExerciseDescription = exerciseDescription;
+        mExerciseDescriptionTextFileName = exerciseDescriptionTextFileName;
     }
 
-    public Exercise(long Id, String exerciseName, String exerciseMode, String exerciseMaterial, int exerciseDifficulty, String exerciseDescription) {
+    public Exercise(long Id, String exerciseName, String exerciseMode, String exerciseMaterial, int exerciseDifficulty, String exerciseDescriptionTextFileName) {
         mId = Id;
         mExerciseName = exerciseName;
         mExerciseMode = exerciseMode;
         mExerciseMaterial = exerciseMaterial;
         mExerciseDifficulty = exerciseDifficulty;
-        mExerciseDescription = exerciseDescription;
+        mExerciseDescriptionTextFileName = exerciseDescriptionTextFileName;
     }
 
     public long getId() {
@@ -97,12 +98,16 @@ public class Exercise implements Parcelable {
         mExerciseDifficulty = exerciseDifficulty;
     }
 
-    public String getExerciseDescription() {
-        return mExerciseDescription;
+    public String getExerciseDescriptionTextFileName() {
+        return mExerciseDescriptionTextFileName;
     }
 
-    public void setExerciseDescription(String exerciseDescription) {
-        mExerciseDescription = exerciseDescription;
+    public void setExerciseDescriptionTextFileName(String exerciseDescriptionTextFileName) {
+        mExerciseDescriptionTextFileName = exerciseDescriptionTextFileName;
+    }
+
+    public String getDescriptionText() {
+        return null;
     }
 
     public void reset() {
@@ -111,7 +116,7 @@ public class Exercise implements Parcelable {
         mExerciseMode = "";
         mExerciseMaterial = "";
         mExerciseDifficulty = EXERCISE_DIFFICULTY_1_BEGINNER;
-        mExerciseDescription = DEFAULT_DESCRIPTION;
+        mExerciseDescriptionTextFileName = DEFAULT_DESCRIPTION_TEXT_FILE_NAME;
     }
 
     // PARCELABLE IMPLEMENTATION //
@@ -122,7 +127,7 @@ public class Exercise implements Parcelable {
         mExerciseMode = parcel.readString();
         mExerciseMaterial = parcel.readString();
         mExerciseDifficulty = parcel.readInt();
-        mExerciseDescription = parcel.readString();
+        mExerciseDescriptionTextFileName = parcel.readString();
     }
 
     @Override
@@ -137,7 +142,7 @@ public class Exercise implements Parcelable {
         parcel.writeString(mExerciseMode);
         parcel.writeString(mExerciseMaterial);
         parcel.writeInt(mExerciseDifficulty);
-        parcel.writeString(mExerciseDescription);
+        parcel.writeString(mExerciseDescriptionTextFileName);
     }
 
     public static final Parcelable.Creator<Exercise> CREATOR = new Creator<Exercise>() {
@@ -151,5 +156,4 @@ public class Exercise implements Parcelable {
             return new Exercise[size];
         }
     };
-
 }

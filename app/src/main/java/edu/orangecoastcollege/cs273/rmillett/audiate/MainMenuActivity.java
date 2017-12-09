@@ -1,6 +1,5 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +90,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 activityIntent = new Intent(this, LoginActivity.class);
                 break;
             default:
-                activityIntent = new Intent(this, ExerciseSelectionMenuActivity.class);
+                activityIntent = new Intent(this, ExerciseBuilderActivity.class);
                 break;
         }
 
