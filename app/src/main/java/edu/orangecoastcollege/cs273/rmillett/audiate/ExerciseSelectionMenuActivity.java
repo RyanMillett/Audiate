@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseSelectionMenuActivity extends AppCompatActivity {
+
+    private static final String TAG = "ExerciseSelection";
 
     private String mExerciseType;
 
@@ -26,6 +29,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     private Button mIntervalsButton;
     private Button mChordsButton;
     private Button mScalesButton;
+    private Button[] mExerciseButtons;
+
 
     private ListView mExercisesListView;
     private TextView mExerciseDescriptionTextView;
@@ -43,7 +48,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         // TEST LISTS //
 
         allEarIntervalExercises = new ArrayList<>();
-        allEarIntervalExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarIntervalExercises.add(new ExerciseActivityType("Harmonic" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
+        allEarIntervalExercises.add(new ExerciseActivityType("Historical" + ExerciseActivityType.EXERCISE_TYPE_INTERVALS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Intermediate", "Desc."));
         allEarChordExercises = new ArrayList<>();
         allEarChordExercises.add(new ExerciseActivityType(ExerciseActivityType.EXERCISE_TYPE_CHORDS,ExerciseActivityType.EAR_TRAINING_EXERCISE,"Easy", "Desc."));
         allEarScaleExercises = new ArrayList<>();
@@ -56,8 +62,7 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
 
         // --------- //
 
-        mAllExerciseList = new ArrayList<>();
-        mFilteredExerciseList = new ArrayList<>(mAllExerciseList);
+        mFilteredExerciseList = new ArrayList<>();
 
         mExerciseSelectionListAdapter = new ExerciseSelectionListAdapter(this,
                 R.layout.library_list_item, mFilteredExerciseList);
@@ -71,6 +76,8 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
         mChordsButton.setEnabled(false);
         mScalesButton = findViewById(R.id.exercise3Button);
         mScalesButton.setEnabled(false);
+
+        mExerciseButtons = new Button[]{mIntervalsButton, mChordsButton, mScalesButton};
 
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
         mExercisesListView.setAdapter(mExerciseSelectionListAdapter);
@@ -125,9 +132,9 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
     }
 
     private void setExerciseButtons(boolean enabled, View view) {
-        mIntervalsButton.setEnabled(enabled);
-        mChordsButton.setEnabled(enabled);
-        mScalesButton.setEnabled(enabled);
+        for (Button button : mExerciseButtons) {
+            button.setEnabled(enabled);
+        }
         if (enabled) {
             switch (view.getId()){
                 case R.id.earsImageView:
@@ -143,18 +150,20 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
             }
         }
         else {
-            mIntervalsButton.setText("");
-            mChordsButton.setText("");
-            mScalesButton.setText("");
+            for (Button button : mExerciseButtons) {
+                button.setText("");
+            }
         }
     }
 
     private void setExerciseSelectionListAdapter(View view) {
-        mExerciseSelectionListAdapter.clear();
+        // handle button colors
+        setButtonColors(view);
+
+        // handle lists and list view
         switch (view.getId()) {
             case R.id.exercise1Button:
                 // update listview
-                mFilteredExerciseList.clear();
                 mFilteredExerciseList = allEarIntervalExercises;
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllIntervalEarExercises()
@@ -162,7 +171,6 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 break;
             case R.id.exercise2Button:
                 // update listview
-                mFilteredExerciseList.clear();
                 mFilteredExerciseList = allEarChordExercises;
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllChordEarExercises()
@@ -170,14 +178,28 @@ public class ExerciseSelectionMenuActivity extends AppCompatActivity {
                 break;
             case R.id.exercise3Button:
                 // update listview
-                mFilteredExerciseList.clear();
                 mFilteredExerciseList = allEarScaleExercises;
 //                mExerciseType.equalsIgnoreCase(ExerciseActivityType.EAR_TRAINING_EXERCISE)
 //                        ? mFilteredExerciseList = db.getAllScaleEarExercises()
 //                        : mFilteredExerciseList = db.getAllScaleSingingExercises;
                 break;
         }
+        Log.i(TAG, "mFilteredExerciseList.size()->" + mFilteredExerciseList.size());
+        mExerciseSelectionListAdapter.clear();
         mExerciseSelectionListAdapter.addAll(mFilteredExerciseList);
         mExerciseSelectionListAdapter.notifyDataSetChanged();
+        Log.i(TAG, "mExerciseSelectionListAdapter.getCount()->" + mExerciseSelectionListAdapter.getCount());
+    }
+
+    private void setButtonColors(View view) {
+        // handle buttons
+        for (Button button : mExerciseButtons) {
+            if (button.getId() == view.getId()) {
+                button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            else {
+                button.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+        }
     }
 }
