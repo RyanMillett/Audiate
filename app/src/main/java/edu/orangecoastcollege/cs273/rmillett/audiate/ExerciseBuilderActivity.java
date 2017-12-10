@@ -63,9 +63,9 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         db.importAllExercisesFromCSV("exercises.csv");
 
         // DB
-        mAllListeningExercises = new ArrayList<>(db.getAllListeningExercises());
-        mAllSingingExercises = new ArrayList<>(db.getAllSingingExercises());
-        mFilteredExerciseList = new ArrayList<>(db.getAllExercises());
+        mAllListeningExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_LISTENING));
+        mAllSingingExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_SINGING));
+        mFilteredExerciseList = new ArrayList<>();
         Log.i(TAG, "allListening->" + mAllListeningExercises.size());
         Log.i(TAG, "allSinging->" + mAllSingingExercises.size());
         Log.i(TAG, "allExercises->" + mFilteredExerciseList.size());
@@ -214,23 +214,21 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.exercise1Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllIntervalExercisesByMode(mExerciseActivity.getExerciseMode()));
+                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                                mExerciseActivity.getExerciseMode(),
+                                Exercise.EXERCISE_MATERIAL_INTERVALS));
                 break;
             case R.id.exercise2Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllChordExercisesByMode(mExerciseActivity.getExerciseMode()));
+                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                                mExerciseActivity.getExerciseMode(),
+                                Exercise.EXERCISE_MATERIAL_CHORDS));
                 break;
             case R.id.exercise3Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllScaleExercisesByMode(mExerciseActivity.getExerciseMode()));
-                break;
-            case R.id.earsImageView:
-                mFilteredExerciseList =
-                        new ArrayList<>(db.getAllListeningExercises());
-                break;
-            case R.id.singingImageView:
-                mFilteredExerciseList =
-                        new ArrayList<>(db.getAllSingingExercises());
+                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                                mExerciseActivity.getExerciseMode(),
+                                Exercise.EXERCISE_MATERIAL_SCALES));
                 break;
         }
 
@@ -251,35 +249,24 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             Exercise selectedExerciseActivity = (Exercise) selectedLayout.getTag();
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
             mExerciseActivity = selectedExerciseActivity;
-            mExerciseDescriptionTextView.setText(selectedExerciseActivity.getDescriptionText());
+            mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseName());
+            mExerciseDescriptionTextView.append("\n" + getString(R.string.exercise_difficulty)
+                    + selectedExerciseActivity.getExerciseDifficultyString());
+            mExerciseDescriptionTextView.append("\n" + selectedExerciseActivity.getDescriptionText());
         }
         // exercise buttons
         else if (view instanceof Button) {
             // TODO: clean up conditions
+            mExerciseDescriptionTextView.setText(mExerciseActivity.getExerciseMode());
             switch (view.getId()) {
                 case R.id.exercise1Button:
-                    if (mExerciseActivity.getExerciseMode().equalsIgnoreCase(Exercise.EXERCISE_MODE_LISTENING)) {
-                        mExerciseDescriptionTextView.setText("Ear Intervals...");
-                    }
-                    else {
-                        mExerciseDescriptionTextView.setText("Singing Intervals...");
-                    }
+                    mExerciseDescriptionTextView.append(getString(R.string.intervals_desc_text));
                     break;
                 case R.id.exercise2Button:
-                    if (mExerciseActivity.getExerciseMode().equalsIgnoreCase(Exercise.EXERCISE_MODE_LISTENING)) {
-                        mExerciseDescriptionTextView.setText("Ear Chords...");
-                    }
-                    else {
-                        mExerciseDescriptionTextView.setText("Singing Chords...");
-                    }
+                    mExerciseDescriptionTextView.append(getString(R.string.chords_desc_text));
                     break;
                 case R.id.exercise3Button:
-                    if (mExerciseActivity.getExerciseMode().equalsIgnoreCase(Exercise.EXERCISE_MODE_LISTENING)) {
-                        mExerciseDescriptionTextView.setText("Ear Scales...");
-                    }
-                    else {
-                        mExerciseDescriptionTextView.setText("Singing Scales...");
-                    }
+                    mExerciseDescriptionTextView.append(getString(R.string.scales_desc_text));
                     break;
             }
         }
@@ -287,10 +274,10 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         else if (view instanceof ImageView) {
             switch (view.getId()) {
                 case R.id.earsImageView: // ear training exercises
-                    mExerciseDescriptionTextView.setText("Ear Training...");
+                    mExerciseDescriptionTextView.setText(getString(R.string.listening_exercises_description_text));
                     break;
                 case R.id.singingImageView: // singing exercises
-                    mExerciseDescriptionTextView.setText("Singing Exercises...");
+                    mExerciseDescriptionTextView.setText(getString(R.string.singing_exercises_description_text));
                     break;
             }
         }

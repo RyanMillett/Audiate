@@ -54,29 +54,10 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
         exerciseDetailsListLinearLayout.setTag(selectedExerciseActivity);
 
         exerciseDetailsListNameTextView.setText(selectedExerciseActivity.getExerciseName());
-        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivity.getExerciseMode());
+        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivity.getExerciseDifficultyString());
+        exerciseDetailsListDescription2TextView.setText(selectedExerciseActivity.getExerciseMode());
+        exerciseDetailsListDescription2TextView.append(" / " + selectedExerciseActivity.getExerciseMaterial());
 
-
-        switch (selectedExerciseActivity.getExerciseDifficulty()) {
-            case Exercise.EXERCISE_DIFFICULTY_BEGINNER:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_1);
-                break;
-            case Exercise.EXERCISE_DIFFICULTY_INTERMEDIATE:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_2);
-                break;
-            case Exercise.EXERCISE_DIFFICULTY_PROFICIENT:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_3);
-                break;
-            case Exercise.EXERCISE_DIFFICULTY_ADVANCED:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_4);
-                break;
-            case Exercise.EXERCISE_DIFFICULTY_EXPERT:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_5);
-                break;
-            case Exercise.EXERCISE_DIFFICULTY_MASTER:
-                exerciseDetailsListDescription2TextView.setText(R.string.difficulty_6);
-                break;
-        }
         return view;
     }
 }

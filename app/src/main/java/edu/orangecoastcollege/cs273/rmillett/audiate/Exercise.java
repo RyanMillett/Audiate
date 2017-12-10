@@ -103,6 +103,23 @@ public class Exercise implements Parcelable {
         mExerciseDifficulty = exerciseDifficulty;
     }
 
+    public String getExerciseDifficultyString() {
+        switch (this.getExerciseDifficulty()) {
+            case EXERCISE_DIFFICULTY_INTERMEDIATE:
+            return EXERCISE_DIFFICULTY_2;
+            case EXERCISE_DIFFICULTY_PROFICIENT:
+            return EXERCISE_DIFFICULTY_3;
+            case EXERCISE_DIFFICULTY_ADVANCED:
+            return EXERCISE_DIFFICULTY_4;
+            case EXERCISE_DIFFICULTY_EXPERT:
+            return EXERCISE_DIFFICULTY_5;
+            case EXERCISE_DIFFICULTY_MASTER:
+            return EXERCISE_DIFFICULTY_6;
+            default:
+                return EXERCISE_DIFFICULTY_1;
+        }
+    }
+
     public String getExerciseDescriptionTextFileName() {
         return mExerciseDescriptionTextFileName;
     }

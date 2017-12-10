@@ -623,70 +623,6 @@ public class DBHelper extends SQLiteOpenHelper {
     // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
 
 
-    public List<Exercise> getAllListeningExercises() {
-        ArrayList<Exercise> allExercisesList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(
-                EXERCISE_TABLE,
-                new String[]{EXERCISE_KEY_FIELD_ID,
-                        FIELD_EXERCISE_NAME,
-                        FIELD_EXERCISE_MODE,
-                        FIELD_EXERCISE_MATERIAL,
-                        FIELD_EXERCISE_DIFFICULTY,
-                        FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_MODE + "=?",
-                new String[]{String.valueOf(Exercise.EXERCISE_MODE_LISTENING)},
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Exercise exercise = new Exercise(cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getString(5));
-
-                allExercisesList.add(exercise);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        database.close();
-        return allExercisesList;
-    }
-
-    public List<Exercise> getAllSingingExercises() {
-        ArrayList<Exercise> allExercisesList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(
-                EXERCISE_TABLE,
-                new String[]{EXERCISE_KEY_FIELD_ID,
-                        FIELD_EXERCISE_NAME,
-                        FIELD_EXERCISE_MODE,
-                        FIELD_EXERCISE_MATERIAL,
-                        FIELD_EXERCISE_DIFFICULTY,
-                        FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_MODE + "=?",
-                new String[]{String.valueOf(Exercise.EXERCISE_MODE_SINGING)},
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Exercise exercise = new Exercise(cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getString(5));
-
-                allExercisesList.add(exercise);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        database.close();
-        return allExercisesList;
-    }
-
     public List<Exercise> getAllExercisesByMode(String exerciseMode) {
         ArrayList<Exercise> allExercisesList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
@@ -783,7 +719,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return allExercisesList;
     }
 
-    public List<Exercise> getAllIntervalExercisesByMode(String exerciseMode) {
+    public List<Exercise> getAllIntervalExercisesByModeAndMaterial(String exerciseMode, String exerciseMaterial) {
         ArrayList<Exercise> allExercisesList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(
@@ -800,42 +736,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                Exercise exercise = new Exercise(cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getString(5));
-
-                if (exercise.getExerciseMaterial().equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_INTERVALS)) {
-                    allExercisesList.add(exercise);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        database.close();
-        Log.i(TAG, "allIntervalsByMode: " + exerciseMode + "-->" + allExercisesList.size());
-        return allExercisesList;
-    }
-
-    public List<Exercise> getAllChordExercisesByMode(String exerciseMode) {
-        ArrayList<Exercise> allExercisesList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(
-                EXERCISE_TABLE,
-                new String[]{EXERCISE_KEY_FIELD_ID,
-                        FIELD_EXERCISE_NAME,
-                        FIELD_EXERCISE_MODE,
-                        FIELD_EXERCISE_MATERIAL,
-                        FIELD_EXERCISE_DIFFICULTY,
-                        FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_MODE + "=?",
-                new String[]{String.valueOf(exerciseMode)},
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_CHORDS)) {
+                if (cursor.getString(3).equalsIgnoreCase(exerciseMaterial)) {
                     Exercise exercise = new Exercise(cursor.getLong(0),
                             cursor.getString(1),
                             cursor.getString(2),
@@ -848,41 +749,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         database.close();
+        Log.i(TAG, "allIntervalsBy " + exerciseMode + " and " + exerciseMaterial + "-->" + allExercisesList.size());
         return allExercisesList;
     }
 
-    public List<Exercise> getAllScaleExercisesByMode(String exerciseMode) {
-        ArrayList<Exercise> allExercisesList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.query(
-                EXERCISE_TABLE,
-                new String[]{EXERCISE_KEY_FIELD_ID,
-                        FIELD_EXERCISE_NAME,
-                        FIELD_EXERCISE_MODE,
-                        FIELD_EXERCISE_MATERIAL,
-                        FIELD_EXERCISE_DIFFICULTY,
-                        FIELD_EXERCISE_DESCRIPTION},
-                FIELD_EXERCISE_MODE + "=?",
-                new String[]{String.valueOf(exerciseMode)},
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                if (cursor.getString(3).equalsIgnoreCase(Exercise.EXERCISE_MATERIAL_SCALES)) {
-                    Exercise exercise = new Exercise(cursor.getLong(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getString(3),
-                            cursor.getInt(4),
-                            cursor.getString(5));
-                    allExercisesList.add(exercise);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        database.close();
-        return allExercisesList;
-    }
 
     // ---------- IMPORTS ---------- //
 

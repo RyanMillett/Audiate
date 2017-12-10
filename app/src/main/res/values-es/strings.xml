@@ -12,7 +12,7 @@
     <string name="detect_vocal_range_activity_info_text">TODO: agregue instrucciones de actividad aquí</string>
     <string name="detect_vocal_range_button">Detectar Rango Vocal</string>
     <string name="ear_training_button">Entrenamiento de Oído</string>
-    <string name="ear_training_exercise_selection">Ejercicios de Entrenamiento del Oído</string>
+    <string name="listening_exercise_selection">Ejercicios de Entrenamiento del Oído</string>
     <string name="ear_training_menu_button">Menú de Entrenamiento de Oído</string>
     <string name="edit_profile_button">Editar Perfil</string>
     <string name="email">Correo Electrónico</string>

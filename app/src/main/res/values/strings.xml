@@ -51,7 +51,12 @@
     <string name="start_exercise_button">Start Exercise</string>
     <string name="exercise_help_button">Help</string>
 
+    <string name="intervals_desc_text">\s exercises focused on musical intervals\-\-the distance between two unique pitches.</string>
+    <string name="chords_desc_text">\s exercises based on chord-quality.</string>
+    <string name="scales_desc_text">\s exercises drawn from a vast library of musical scales, modes, and melodic patterns.</string>
+
     <!-- Exercise List Item -->
+    <string name="exercise_difficulty">Difficulty: \s</string>
     <string name="difficulty_1">Beginner</string>
     <string name="difficulty_2">Intermediate</string>
     <string name="difficulty_3">Proficient</string>
@@ -60,7 +65,9 @@
     <string name="difficulty_6">Master</string>
 
     <!-- Ear Training Exercises Selection Menu -->
-    <string name="ear_training_exercise_selection">Ear Training Exercises</string>
+    <string name="listening_exercise_selection">Listening Exercises</string>
+    <string name="listening_exercises_description_text">Ear-training exercises designed to hone
+        one\'s ability to identify musical material presented in various forms.</string>
     <string name="interval_identification_exercises_button">Interval Identification</string>
     <string name="chord_quality_exercises_button">Chord Quality</string>
     <string name="modeScale_exercises_button">Scales and Modes</string>
@@ -68,7 +75,9 @@
 
     <!-- Sight Singing Exercises Selection Menu -->
     <string name="singing_exercise_selection">Singing Exercises</string>
-    <string name="interval_singing_exercises_button">Pitch Matching</string>
+    <string name="singing_exercises_description_text">Singing exercises designed to hone
+        one\'s ability to accurately perform musical material in various forms.</string>
+    <string name="interval_singing_exercises_button">Interval Exercises</string>
     <string name="chord_arpeggio_exercises_button">Arpeggios</string>
     <string name="melody_singing_exercises_button">Sight Singing</string>
     <string name="singing_exercise_menu_button">Singing Exercises</string>

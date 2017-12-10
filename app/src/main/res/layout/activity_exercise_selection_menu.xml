@@ -143,6 +143,7 @@
             android:id="@+id/exercisesCategoriesListView"
             android:layout_width="0dp"
             android:layout_weight="3"
+            android:clickable="true"
             android:listSelector="@color/colorPrimary"
             android:layout_height="wrap_content">
         </ListView>
