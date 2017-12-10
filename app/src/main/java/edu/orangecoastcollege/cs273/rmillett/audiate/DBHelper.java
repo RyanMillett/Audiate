@@ -424,8 +424,8 @@ public class DBHelper extends SQLiteOpenHelper {
     // ---------- GET ALL ---------- //
 
     // TODO: revise this to construct and return a Note
-    public List<ChordScale> getAllIntervals() {
-        List<ChordScale> allIntervalsList = new ArrayList<>();
+    public List<Note> getAllIntervals() {
+        List<Note> allIntervalsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(
                 INTERVALS_TABLE,
@@ -443,12 +443,11 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // build interval
-                ChordScale interval =
-                        new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
-                interval.addChordMember(new Note("Fundamental"));
-                interval.addChordMember(new Note(cursor.getString(1),
-                        interval.getChordMemberAtPos(0).getPitchFrequency()
-                                * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
+                Note interval = new Note(
+                        cursor.getString(1),
+                        cursor.getDouble(2),
+                        cursor.getString(3)
+                );
 
                 // add to list
                 allIntervalsList.add(interval);
@@ -461,7 +460,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // TODO: getAllChords()
 
-    // TODO: getAllScales() -> ?
+    public List<ChordScale> getAllScales() {
+        return null;
+    }
+
+    public List<ChordScale> getAllScalaArchiveScales() {
+        return null;
+    }
 
     public List<Exercise> getAllExercises() {
         ArrayList<Exercise> allExercisesList = new ArrayList<>();
@@ -756,7 +761,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- IMPORTS ---------- //
 
-    public boolean importAllIntervalsFromCSV(String csvFileName) {
+    public boolean importKyleGannOctaveAnatomyFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
         try {
@@ -798,7 +803,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // TODO: importAllChordsFromSCL()
 
-    public boolean importAllScalesFromCSV(String csvFileName) {
+    public boolean importScalaArchiveFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
         try {

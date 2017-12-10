@@ -84,6 +84,7 @@
         android:id="@+id/selectionHandlerLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:padding="@dimen/buttons_padding"
         android:orientation="horizontal"
         android:layout_weight="5">
 

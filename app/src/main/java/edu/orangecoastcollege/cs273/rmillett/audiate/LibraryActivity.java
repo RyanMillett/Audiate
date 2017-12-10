@@ -23,12 +23,18 @@ public class LibraryActivity extends AppCompatActivity {
 
     private static final String TAG = "LibraryActivity";
 
-    // DB and lists
+    // DB
     private DBHelper db;
-    private List<ChordScale> allIntervalsList;
-    private List<ChordScale> allChordsList; // TODO: construct from scratch
-    private List<ChordScale> allScalesList;
-    private List<ChordScale> filteredChordScaleList;
+
+    // SoundOject Lists
+    private List<Note> mKyleGannOctaveAnatomy;
+    private List<ChordScale> mAllChordsList;
+    private List<ChordScale> mAllScalesList;
+
+    // Scala scale archive
+    private List<ChordScale> mScalaArchive;
+
+    private List<SoundObject> filteredSoundObjectList;
 
     // views
     private EditText setFundamentalEditText;
@@ -60,7 +66,7 @@ public class LibraryActivity extends AppCompatActivity {
     private LibraryListAdapter mLibraryListAdapter;
 
     // SoundObject
-    private ChordScale mChordScale;
+    private SoundObject mSoundObject;
 
     // SoundObjectPlayer
     private SoundObjectPlayer mSoundObjectPlayer;
@@ -75,10 +81,20 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
+        // DB
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
 
-        setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
+        // Import materials
+        db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
+        // TODO: db.importMusicalIntervalsFromCSV("musical_intervals.csv");
+        // TODO: import chords
+        db.importScalaArchiveFromCSV("ScalaArchive.csv");
+
+        // Lists
+        filteredSoundObjectList = new ArrayList<>();
+
+
         displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
 
@@ -88,11 +104,8 @@ public class LibraryActivity extends AppCompatActivity {
 
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
-        db.importAllIntervalsFromCSV("OctaveAnatomy.csv");
-        filteredChordScaleList = new ArrayList<>();
-
         mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.library_list_item, filteredChordScaleList);
+                R.layout.library_list_item, filteredSoundObjectList);
         libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
@@ -111,8 +124,6 @@ public class LibraryActivity extends AppCompatActivity {
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
         // TODO: spinner listener
 
-        testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
-        playSelectionButton = findViewById(R.id.playSelectionButton);
 
         // playback settings group
         // TODO: add OnCheckedListener
@@ -125,13 +136,18 @@ public class LibraryActivity extends AppCompatActivity {
         aux1CheckBox = findViewById(R.id.aux1CheckBox);
         aux2CheckBox = findViewById(R.id.aux2CheckBox);
 
+        // Set fundamental
+        setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
+
+        // Playback Buttons
         testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
         playSelectionButton = findViewById(R.id.playSelectionButton);
+        playSelectionButton.setEnabled(false);
 
-        mChordScale = new ChordScale("Selected ChordScale");
-        mChordScale.addChordMemberAt(0, new Note("Fundamental"));
-        mChordScale.addChordMemberAt(1, new Note("Interval"));
+        // Sound Object
+        mSoundObject = new ChordScale("Selected SoundObject");
 
+        // Sound Object Player
         mSoundObjectPlayer = new SoundObjectPlayer();
 
     }
@@ -161,9 +177,9 @@ public class LibraryActivity extends AppCompatActivity {
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                filteredChordScaleList = db.getAllIntervals();
-                mLibraryListAdapter.addAll(filteredChordScaleList);
-                Log.i(TAG + "AllItvls", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
+                //filteredSoundObjectList;
+                mLibraryListAdapter.addAll(filteredSoundObjectList);
+                //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
                 mode1RadioButton.setChecked(true);
@@ -200,8 +216,8 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
-                allScalesList = db.getAllScalesFromSCL();
-                mLibraryListAdapter.addAll(allScalesList);
+                //filteredSoundObjectList;
+                mLibraryListAdapter.addAll(filteredSoundObjectList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
@@ -235,17 +251,8 @@ public class LibraryActivity extends AppCompatActivity {
     public AdapterView.OnItemSelectedListener filterMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
-            String filterMaterial = String.valueOf(spinner.getItemAtPosition(i));
 
-            // Update Library ListView
-            mLibraryListAdapter.clear();
-            switch (filterMaterial) {
-                case "Harmonics (First 127)":
-                    filteredChordScaleList = db.getAllHarmonics();
-                    mLibraryListAdapter.addAll(filteredChordScaleList);
-                    break;
-            }
-            mLibraryListAdapter.notifyDataSetChanged();
+
         }
 
         @Override
@@ -330,17 +337,17 @@ public class LibraryActivity extends AppCompatActivity {
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
         if (!TextUtils.isEmpty(setFundamentalEditText.getText())) {
-            mChordScale.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
+            mSoundObject.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
         }
 
         // Determine button ID
         switch (view.getId()) {
             case R.id.testFundamentalFreqButton:
-                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
+                mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+                mSoundObjectPlayer.playSoundObject(mSoundObject.getChordMemberAtPos(0));
                 break;
             case R.id.playSelectionButton:
-                mSoundObjectPlayer.playSoundObject(mChordScale);
+                mSoundObjectPlayer.playSoundObject(mSoundObject);
                 break;
         }
 
@@ -349,21 +356,17 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     public void selectionDetailsHandler(View view) {
-        // TODO: this method
-        // use this method to build ChordScale
+        // Build SoundObject
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
-            ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
-            Log.i(TAG, selectedChordScale.getName());
-            mChordScale = selectedChordScale;
+            SoundObject selectedSoundObject = (SoundObject) selectedLayout.getTag();
+            Log.i(TAG, selectedSoundObject.getName());
 
-            if (selectedChordScale.getName().equalsIgnoreCase("unnamed")) {
-                displayNameTextView.setText(selectedChordScale.getChordMemberAtPos(1).getRatio());
-            }
-            else {
-                displayNameTextView.setText(selectedChordScale.getName());
-            }
 
+
+
+            // Enable playback
+            playSelectionButton.setEnabled(true);
         }
     }
 
@@ -371,16 +374,16 @@ public class LibraryActivity extends AppCompatActivity {
     private void detectPlaybackMode() {
         // Set PlayBack mode
         if (mode1RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
+            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 2);
         }
         else if (mode2RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
+            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
+            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
     }
 }

@@ -85,7 +85,7 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         //
         deleteDatabase(DBHelper.DATABASE_NAME);
         mDBHelper = new DBHelper(this);
-        mDBHelper.importAllIntervalsFromCSV("OctaveAnatomy.csv");
+        mDBHelper.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
 
         mAllIntervalsList = mDBHelper.getAllIntervals();
         mAllChordsList = new ArrayList<>(4); // TODO: get all chords

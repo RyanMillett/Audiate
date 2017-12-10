@@ -18,26 +18,26 @@ import java.util.List;
  * @author Ryan Millett
  * @version 1.0
  */
-public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
+public class LibraryListAdapter extends ArrayAdapter<SoundObject> {
 
     private static final String TAG = "LibraryListAdapter";
 
     private Context mContext;
-    private List<ChordScale> mChordScaleList = new ArrayList<>();
+    private List<SoundObject> mSoundObjectList = new ArrayList<>();
     private int mResourceId;
 
 
-    public LibraryListAdapter(Context context, int rId, List<ChordScale> chordScales) {
-        super(context, rId, chordScales);
+    public LibraryListAdapter(Context context, int rId, List<SoundObject> soundObjects) {
+        super(context, rId, soundObjects);
         mContext = context;
         mResourceId = rId;
-        mChordScaleList = chordScales;
+        mSoundObjectList = soundObjects;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final ChordScale selectedChordScale = mChordScaleList.get(position);
+        final SoundObject selectedSoundObject = mSoundObjectList.get(position);
 
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -52,34 +52,19 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         TextView libraryListDescription2TextView
                 = view.findViewById(R.id.libraryListDescription2TextView);
 
-        libraryListLinearLayout.setTag(selectedChordScale);
+        libraryListLinearLayout.setTag(selectedSoundObject);
+
+        // Name TextView
+        libraryListNameTextView.setText(selectedSoundObject.getName());
 
         // TODO: handle different ChordScale types (Interval, Chord, Scale)
-        switch (selectedChordScale.getSize()) {
-            case 2: // Intervals
-                if (selectedChordScale.getName().equalsIgnoreCase("unnamed")) {
-                    libraryListNameTextView.setText(selectedChordScale.getChordMemberAtPos(1).getRatio());
-                    libraryListDescription1TextView.setText(R.string.interval_cents);
-                    libraryListDescription1TextView.append(
-                            String.valueOf(selectedChordScale.getIntervalDistanceInCents(1,0)));
-                    libraryListDescription2TextView.setText("");
-                }
-                else {
-                    libraryListNameTextView.setText(selectedChordScale.getName());
-                    libraryListDescription1TextView.setText(R.string.interval_ratio);
-                    libraryListDescription1TextView.append(
-                            selectedChordScale.getChordMemberAtPos(1).getRatio());
-                    libraryListDescription2TextView.setText(R.string.interval_cents);
-                    libraryListDescription2TextView.append(
-                            String.valueOf(selectedChordScale.getIntervalDistanceInCents(1,0)));
-                }
-                break;
-            default: // Chords and Scales
-                libraryListNameTextView.setText(selectedChordScale.getName());
-                libraryListDescription1TextView.setText(R.string.chordScale_size);
-                libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize()-1));
-                libraryListDescription2TextView.setText(selectedChordScale.getDescription());
-                break;
+        // For intervals
+        if (selectedSoundObject instanceof Note) {
+
+        }
+        // For chords and scales
+        else {
+
         }
 
         return view;

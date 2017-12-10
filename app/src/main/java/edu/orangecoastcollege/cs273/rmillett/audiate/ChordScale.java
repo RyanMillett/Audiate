@@ -62,6 +62,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     public ChordScale() {
         super();
         mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
+        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -76,6 +77,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     public ChordScale(String name) {
         super(name);
         mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
+        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -85,6 +87,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     public ChordScale(String name, int initialSize) {
         super(name);
         mChordMembers = new ArrayList<>(initialSize);
+        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -94,6 +97,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     public ChordScale(String name, int initialSize, String description, String sclFileName) {
         super(name);
         mChordMembers = new ArrayList<>(initialSize);
+        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
@@ -109,6 +113,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     public ChordScale(long id, String name, int initialSize) {
         super(id, name);
         mChordMembers = new ArrayList<>(initialSize);
+        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -291,7 +296,7 @@ public class ChordScale extends SoundObject implements Parcelable {
     }
 
     // -------------- Parcelable Implementation -------------- //
-
+    // TODO: still broken
     private ChordScale(Parcel parcel) {
         mId = parcel.readLong();
         mName = parcel.readString();
