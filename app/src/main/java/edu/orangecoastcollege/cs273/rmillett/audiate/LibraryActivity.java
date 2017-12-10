@@ -27,14 +27,13 @@ public class LibraryActivity extends AppCompatActivity {
     private DBHelper db;
 
     // SoundOject Lists
-    private List<Note> mKyleGannOctaveAnatomy;
+    private List<ChordScale> mListOfPitchIntervals;
+    private List<ChordScale> mKyleGannOctaveAnatomy;
     private List<ChordScale> mAllChordsList;
-    private List<ChordScale> mAllScalesList;
-
-    // Scala scale archive
     private List<ChordScale> mScalaArchive;
 
-    private List<SoundObject> filteredSoundObjectList;
+    // Filtered List
+    private List<ChordScale> filteredChordScalesList;
 
     // views
     private EditText setFundamentalEditText;
@@ -65,8 +64,8 @@ public class LibraryActivity extends AppCompatActivity {
     // List adapter
     private LibraryListAdapter mLibraryListAdapter;
 
-    // SoundObject
-    private SoundObject mSoundObject;
+    // ChordScale
+    private SoundObject mChordScale;
 
     // SoundObjectPlayer
     private SoundObjectPlayer mSoundObjectPlayer;
@@ -86,13 +85,13 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
+        // TODO: db.importMusicalIntervalsFromCSV("pitch_intervals.csv");
         db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
-        // TODO: db.importMusicalIntervalsFromCSV("musical_intervals.csv");
         // TODO: import chords
         db.importScalaArchiveFromCSV("ScalaArchive.csv");
 
         // Lists
-        filteredSoundObjectList = new ArrayList<>();
+        filteredChordScalesList = new ArrayList<>();
 
 
         displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
@@ -105,7 +104,7 @@ public class LibraryActivity extends AppCompatActivity {
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
         mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.library_list_item, filteredSoundObjectList);
+                R.layout.library_list_item, filteredChordScalesList);
         libraryListView.setAdapter(mLibraryListAdapter);
 
         // spinner adapters
@@ -145,13 +144,14 @@ public class LibraryActivity extends AppCompatActivity {
         playSelectionButton.setEnabled(false);
 
         // Sound Object
-        mSoundObject = new ChordScale("Selected SoundObject");
+        mChordScale = new ChordScale("Selected SoundObject");
 
         // Sound Object Player
         mSoundObjectPlayer = new SoundObjectPlayer();
 
     }
 
+    // SPINNER LISTENERS //
     public AdapterView.OnItemSelectedListener selectMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
@@ -177,8 +177,8 @@ public class LibraryActivity extends AppCompatActivity {
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                //filteredSoundObjectList;
-                mLibraryListAdapter.addAll(filteredSoundObjectList);
+                //filteredChordScalesList;
+                mLibraryListAdapter.addAll(filteredChordScalesList);
                 //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
@@ -216,8 +216,8 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
-                //filteredSoundObjectList;
-                mLibraryListAdapter.addAll(filteredSoundObjectList);
+                //filteredChordScalesList;
+                mLibraryListAdapter.addAll(filteredChordScalesList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 mode1RadioButton.setEnabled(true);
@@ -261,6 +261,7 @@ public class LibraryActivity extends AppCompatActivity {
         }
     };
 
+    // SPINNER STRINGS //
     private String[] getAllMusicalMaterialTypes() {
         String[] musicalMaterials = new String[4];
 
@@ -271,7 +272,6 @@ public class LibraryActivity extends AppCompatActivity {
 
         return musicalMaterials;
     }
-
     private String[] getAllSortCriteria() {
         String[] sortByCriteria = new String[4];
 
@@ -282,40 +282,39 @@ public class LibraryActivity extends AppCompatActivity {
 
         return sortByCriteria;
     }
-
     private String[] getFilterCriteria() {
         String[] filters;
 
-        // TODO: add to strings arrays, currently hard-coded for expedience
+        // TODO: implement in arrays.xml, currently hard-coded for expedience
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
-                filters = new String[9];
-                filters[0] = "Heptatonic/Diatonic";
-                filters[1] = "Dodecaphonic";
-                filters[2] = "Equal-Tempered (by approximation)";
-                filters[3] = "Harmonics (First 127)";
-                filters[4] = "Historical";
-                filters[5] = "Pythagorean";
-                filters[6] = "Commas";
-                filters[7] = "Misc./Unnamed";
-                filters[8] = "All " + getString(R.string.select_intervals);
+                filters = new String[10];
+                filters[0] = "List of Pitch Intervals";
+                filters[1] = "Equal-Tempered (by approximation)";
+                filters[2] = "Limit Intervals";
+                filters[3] = "Meantone";
+                filters[4] = "Superparticular ratios";
+                filters[5] = "Harmonics (First 127)";
+                filters[6] = "Ptolemy's intense diatonic scale";
+                filters[7] = "Pythagorean";
+                filters[8] = "Commas";
+                filters[9] = "\"Anatomy of an Octave\" by Kyle Gann";
                 break;
             case 2: // "Chords" selected
-                filters = new String[5];
-                filters[0] = "All " + getString(R.string.select_chords);
-                filters[1] = "Major";
-                filters[2] = "Minor";
-                filters[3] = "Augmented";
-                filters[4] = "Diminished";
+                filters = new String[3];
+                filters[0] = "All Chords";
+                filters[1] = "Triads";
+                filters[2] = "7th-Chords";
                 break;
             case 3: // "Scales" selected
-                filters = new String[6];
-                filters[0] = "Octavating";
+                filters = new String[7];
+                filters[0] = "Heptadiatonic";
                 filters[1] = "Pentatonic";
-                filters[2] = "Heptatonic";
-                filters[3] = "Dodecaphonic";
+                filters[2] = "Equal-Tempered (by approximation)";
+                filters[3] = "Octavating";
                 filters[4] = "Non-Octavating";
-                filters[5] = "All " + getString(R.string.select_scales);
+                filters[5] = "Olivier Messiaen's \"Modes of Limited Transposition\"";
+                filters[6] = "Full Scale Scale Archive";
                 break;
             default: // nothing selected
                 filters = new String[1];
@@ -337,17 +336,17 @@ public class LibraryActivity extends AppCompatActivity {
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
         if (!TextUtils.isEmpty(setFundamentalEditText.getText())) {
-            mSoundObject.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
+            mChordScale.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
         }
 
         // Determine button ID
         switch (view.getId()) {
             case R.id.testFundamentalFreqButton:
-                mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-                mSoundObjectPlayer.playSoundObject(mSoundObject.getChordMemberAtPos(0));
+                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
                 break;
             case R.id.playSelectionButton:
-                mSoundObjectPlayer.playSoundObject(mSoundObject);
+                mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
 
@@ -362,6 +361,7 @@ public class LibraryActivity extends AppCompatActivity {
             SoundObject selectedSoundObject = (SoundObject) selectedLayout.getTag();
             Log.i(TAG, selectedSoundObject.getName());
 
+            displayNameTextView.setText(selectedSoundObject.getName());
 
 
 
@@ -374,16 +374,16 @@ public class LibraryActivity extends AppCompatActivity {
     private void detectPlaybackMode() {
         // Set PlayBack mode
         if (mode1RadioButton.isChecked()) {
-            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
-            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 2);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 2);
         }
         else if (mode2RadioButton.isChecked()) {
-            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
-            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
         else if (mode3RadioButton.isChecked()) {
-            mSoundObject.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
-            mSoundObject.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
     }
 }

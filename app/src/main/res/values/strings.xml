@@ -153,6 +153,10 @@
     <string name="restarting_quiz">Quiz will restart with your new settings</string>
     <string name="reset_quiz">Reset Quiz</string>
     <string name="default_quiz_type">Interval</string>
+    
+    
+    <!-- SoundObject Strings -->
+    <string name="scale_period">Period: \s</string>
 
 
 </resources>

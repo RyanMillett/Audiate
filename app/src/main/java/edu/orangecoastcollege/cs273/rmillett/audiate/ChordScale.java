@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @author Ryan Millett
  * @version 2.0
  */
-public class ChordScale extends SoundObject implements Parcelable {
+public class ChordScale extends SoundObject {
 
     /**
      * String constant used to indicate that all chord members contained in a <code>ChordScale</code>
@@ -297,47 +297,47 @@ public class ChordScale extends SoundObject implements Parcelable {
 
     // -------------- Parcelable Implementation -------------- //
     // TODO: still broken
-    private ChordScale(Parcel parcel) {
-        mId = parcel.readLong();
-        mName = parcel.readString();
-        mDescription = parcel.readString();
-        mDurationMilliseconds = parcel.readInt();
-        // NEW WAY: Read as an array of Notes, then add them to the ArrayList member variable
-        Note[] tempArray = (Note[]) parcel.readArray(Note.class.getClassLoader());
-        mChordMembers = new ArrayList<>(tempArray.length);
-        for (Note note : tempArray)
-            mChordMembers.add(note);
-        // OLD WAY: (BELOW)
-//        mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
-        mPlayBackMode = parcel.readString();
-        mSCLfileName = parcel.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mId);
-        parcel.writeString(mName);
-        parcel.writeString(mDescription);
-        parcel.writeInt(mDurationMilliseconds);
-        parcel.writeArray(mChordMembers.toArray());
-        parcel.writeString(mPlayBackMode);
-        parcel.writeString(mSCLfileName);
-    }
-
-    public static final Parcelable.Creator<ChordScale> CREATOR = new Creator<ChordScale>() {
-        @Override
-        public ChordScale createFromParcel(Parcel parcel) {
-            return new ChordScale(parcel);
-        }
-
-        @Override
-        public ChordScale[] newArray(int size) {
-            return new ChordScale[size];
-        }
-    };
+//    private ChordScale(Parcel parcel) {
+//        mId = parcel.readLong();
+//        mName = parcel.readString();
+//        mDescription = parcel.readString();
+//        mDurationMilliseconds = parcel.readInt();
+//        // NEW WAY: Read as an array of Notes, then add them to the ArrayList member variable
+//        Note[] tempArray = (Note[]) parcel.readArray(Note.class.getClassLoader());
+//        mChordMembers = new ArrayList<>(tempArray.length);
+//        for (Note note : tempArray)
+//            mChordMembers.add(note);
+//        // OLD WAY: (BELOW)
+////        mChordMembers = parcel.createTypedArrayList(Note.CREATOR);
+//        mPlayBackMode = parcel.readString();
+//        mSCLfileName = parcel.readString();
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeLong(mId);
+//        parcel.writeString(mName);
+//        parcel.writeString(mDescription);
+//        parcel.writeInt(mDurationMilliseconds);
+//        parcel.writeArray(mChordMembers.toArray());
+//        parcel.writeString(mPlayBackMode);
+//        parcel.writeString(mSCLfileName);
+//    }
+//
+//    public static final Parcelable.Creator<ChordScale> CREATOR = new Creator<ChordScale>() {
+//        @Override
+//        public ChordScale createFromParcel(Parcel parcel) {
+//            return new ChordScale(parcel);
+//        }
+//
+//        @Override
+//        public ChordScale[] newArray(int size) {
+//            return new ChordScale[size];
+//        }
+//    };
 }

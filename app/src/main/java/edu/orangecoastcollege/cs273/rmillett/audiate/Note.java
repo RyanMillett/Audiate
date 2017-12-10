@@ -39,6 +39,9 @@ public class Note extends SoundObject {
     private double mPitchFrequency;
     private String mRatio;
     private double mSizeInCents;
+    private int mLimit;
+    private boolean mMeantone;
+    private boolean mSuperparticular;
 
     /**
      * Default constructor
@@ -48,6 +51,9 @@ public class Note extends SoundObject {
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -60,6 +66,9 @@ public class Note extends SoundObject {
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -73,6 +82,9 @@ public class Note extends SoundObject {
         mPitchFrequency = pitchFrequency;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -87,6 +99,9 @@ public class Note extends SoundObject {
         mPitchFrequency = pitchFrequency;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -103,6 +118,9 @@ public class Note extends SoundObject {
         mPitchFrequency = pitchFrequency;
         mRatio = ratio;
         mSizeInCents = Music.convertRatioToCents(ratio);
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -116,6 +134,9 @@ public class Note extends SoundObject {
         super(name, durationInMilliseconds);
         mPitchFrequency = DEFAULT_FREQUENCY;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -132,6 +153,20 @@ public class Note extends SoundObject {
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
+        mLimit = 0;
+        mMeantone = false;
+        mSuperparticular = false;
+    }
+
+    public Note(String name, String ratio, double sizeInCents, String description, int limit,
+                boolean meantone, boolean superparticular) {
+        super(name);
+        mRatio = ratio;
+        mSizeInCents = sizeInCents;
+        mDescription = description;
+        mLimit = limit;
+        mMeantone = meantone;
+        mSuperparticular = superparticular;
     }
 
     /**
@@ -192,44 +227,67 @@ public class Note extends SoundObject {
         mSizeInCents = sizeInCents;
     }
 
+    public int getLimit() {
+        return mLimit;
+    }
+
+    public void setLimit(int limit) {
+        mLimit = limit;
+    }
+
+    public boolean isMeantone() {
+        return mMeantone;
+    }
+
+    public void setMeantone(boolean meantone) {
+        mMeantone = meantone;
+    }
+
+    public boolean isSuperparticular() {
+        return mSuperparticular;
+    }
+
+    public void setSuperparticular(boolean superparticular) {
+        mSuperparticular = superparticular;
+    }
 
     // -------------- Parcelable Implementation -------------- //
 
-    private Note(Parcel parcel) {
-        mId = parcel.readLong();
-        mName = parcel.readString();
-        mDescription = parcel.readString();
-        mDurationMilliseconds = parcel.readInt();
-        mPitchFrequency = parcel.readDouble();
-        mRatio = parcel.readString();
-        mSizeInCents = parcel.readDouble();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mId);
-        parcel.writeString(mName);
-        parcel.writeString(mDescription);
-        parcel.writeInt(mDurationMilliseconds);
-        parcel.writeDouble(mPitchFrequency);
-        parcel.writeString(mRatio);
-        parcel.writeDouble(mSizeInCents);
-    }
-
-    public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>() {
-        @Override
-        public Note createFromParcel(Parcel parcel) {
-            return new Note(parcel);
-        }
-
-        @Override
-        public Note[] newArray(int size) {
-            return new Note[size];
-        }
-    };
+//    private Note(Parcel parcel) {
+//        mId = parcel.readLong();
+//        mName = parcel.readString();
+//        mDescription = parcel.readString();
+//        mDurationMilliseconds = parcel.readInt();
+//        mPitchFrequency = parcel.readDouble();
+//        mRatio = parcel.readString();
+//        mSizeInCents = parcel.readDouble();
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeLong(mId);
+//        parcel.writeString(mName);
+//        parcel.writeString(mDescription);
+//        parcel.writeInt(mDurationMilliseconds);
+//        parcel.writeDouble(mPitchFrequency);
+//        parcel.writeString(mRatio);
+//        parcel.writeDouble(mSizeInCents);
+//    }
+//
+//    public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>() {
+//        @Override
+//        public Note createFromParcel(Parcel parcel) {
+//            return new Note(parcel);
+//        }
+//
+//        @Override
+//        public Note[] newArray(int size) {
+//            return new Note[size];
+//        }
+//    };
 }
