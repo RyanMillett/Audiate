@@ -36,7 +36,7 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Exercise selectedExerciseActivity = mExerciseActivityList.get(position);
-        Log.i(TAG, "selectedExerciseActivity->" + selectedExerciseActivity.getExerciseName());
+        //Log.i(TAG, "selectedExerciseActivity->" + selectedExerciseActivity.getExerciseName());
 
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

@@ -57,6 +57,7 @@
     <string name="scales_desc_text">\s exercises drawn from a vast library of musical scales, modes, and melodic patterns.</string>
 
     <!-- Exercise List Item -->
+    <string name="exercise_name">[Exercise Name]</string>
     <string name="exercise_difficulty">Difficulty: \s</string>
     <string name="difficulty_1">Beginner</string>
     <string name="difficulty_2">Intermediate</string>

@@ -5,8 +5,8 @@
     <color name="colorAccent">#5D8AA8</color>
 
     <!-- Quiz Presets -->
-    <color name="correct_answer">#00CC00</color>
-    <color name="incorrect_answer">#FF0000</color>
+    <color name="correct_answer">#00a300</color>
+    <color name="incorrect_answer">#7b0000</color>
 
     <!-- Custom Colors - Blue -->
     <color name="royal_blue">#4169e1</color>

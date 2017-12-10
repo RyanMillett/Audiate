@@ -85,8 +85,9 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         mIntervalsButton = findViewById(R.id.exercise1Button); mIntervalsButton.setEnabled(false);
         mChordsButton = findViewById(R.id.exercise2Button); mChordsButton.setEnabled(false);
         mScalesButton = findViewById(R.id.exercise3Button); mScalesButton.setEnabled(false);
-        mStartButton = findViewById(R.id.startExerciseButton); mStartButton.setEnabled(false);
-        mStartButton.setBackgroundColor(getResources().getColor(R.color.colorPlayInactive));
+        // Start button
+        mStartButton = findViewById(R.id.startExerciseButton);
+        mStartButton.setVisibility(View.INVISIBLE);
 
         // Buttons array
         mExerciseButtons = new Button[]{mIntervalsButton, mChordsButton, mScalesButton};
@@ -98,7 +99,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // ListView
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
         mExercisesListView.setAdapter(mExerciseSelectionListAdapter);
-        mExercisesListView.setOnItemClickListener(ListViewSelectItemListener);
+        mExercisesListView.setOnItemSelectedListener(listViewListener);
 
         // List items
         mListItem = findViewById(R.id.exerciseListLinearLayout);
@@ -110,6 +111,20 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
+    // LISTENERS //
+    public AdapterView.OnItemSelectedListener listViewListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.i(TAG, "onItemSelected!");
+            mStartButton.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            mStartButton.setVisibility(View.INVISIBLE);
+        }
+    };
 
     // BUTTON HANDLERS //
 
@@ -169,16 +184,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
         updateListView(view);
     }
-
-    // LISTENERS //
-
-    public AdapterView.OnItemClickListener ListViewSelectItemListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            mStartButton.setBackgroundColor(getResources().getColor(R.color.colorPlayActive));
-            mStartButton.setEnabled(true);
-        }
-    };
 
 
     // PRIVATE HELPER METHODS //
@@ -257,8 +262,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
             mExerciseActivity = selectedExerciseActivity;
             mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseName());
-            mExerciseDescriptionTextView.append("\n" + getString(R.string.exercise_difficulty)
-                    + selectedExerciseActivity.getExerciseDifficultyString());
             mExerciseDescriptionTextView.append("\n" + selectedExerciseActivity.getDescriptionText());
         }
         // exercise buttons
