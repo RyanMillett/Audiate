@@ -363,14 +363,9 @@ public class LibraryActivity extends AppCompatActivity {
 
             mChordScale = selectedChordScale;
 
-            Toast.makeText(this, mChordScale.getSize()
-                    +"\n"+mChordScale.getName()
-                    +"\n"+mChordScale.getChordMemberAtPos(1).getPitchFrequency(), Toast.LENGTH_LONG*2).show();
-
             displayNameTextView.setText(selectedChordScale.getName());
 
-
-            // Enable playback
+            // Enable playback // TODO: add to listener
             playSelectionButton.setEnabled(true);
         }
     }
