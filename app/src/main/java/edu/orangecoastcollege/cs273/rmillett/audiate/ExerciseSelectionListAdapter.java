@@ -51,12 +51,19 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
         TextView exerciseDetailsListDescription2TextView
                 = view.findViewById(R.id.exerciseListDescription2TextView);
 
+        // set tag
         exerciseDetailsListLinearLayout.setTag(selectedExerciseActivity);
 
+        // Name
         exerciseDetailsListNameTextView.setText(selectedExerciseActivity.getExerciseName());
-        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivity.getExerciseDifficultyString());
-        exerciseDetailsListDescription2TextView.setText(selectedExerciseActivity.getExerciseMode());
-        exerciseDetailsListDescription2TextView.append(" / " + selectedExerciseActivity.getExerciseMaterial());
+
+        // Mode / Materials
+        exerciseDetailsListDescription1TextView.setText(selectedExerciseActivity.getExerciseMode());
+        exerciseDetailsListDescription1TextView.append(" / " + selectedExerciseActivity.getExerciseMaterial());
+
+        // Difficulty
+        exerciseDetailsListDescription2TextView.setText(R.string.exercise_difficulty);
+        exerciseDetailsListDescription2TextView.append(selectedExerciseActivity.getExerciseDifficultyString());
 
         return view;
     }

@@ -17,7 +17,9 @@
 
     <!-- Custom Colors - Green -->
     <color name="neon_green">#39FF14</color>
-    <color name="colorPlay">#00aa30</color>
+    <color name="colorPlay">#008e28</color>
+    <color name="colorPlayActive">#008e28</color>
+    <color name="colorPlayInactive">#d1083500</color>
 
     <!-- Custom Colors - Red -->
     <color name="pink">#FF4081</color>

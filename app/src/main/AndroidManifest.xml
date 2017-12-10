@@ -50,6 +50,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ExerciseBuilderActivity"
+            android:windowSoftInputMode="stateHidden"
             android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
@@ -64,6 +65,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".LibraryActivity"
+            android:windowSoftInputMode="stateHidden"
             android:exported="true"
             android:parentActivityName=".MainMenuActivity"
             android:screenOrientation="portrait"/>
