@@ -37,7 +37,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final ChordScale chordScale = mChordScales.get(position);
+        final ChordScale selectedChordScale = mChordScales.get(position);
 
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +52,10 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         TextView libraryListDescription2TextView
                 = view.findViewById(R.id.libraryListDescription2TextView);
 
-        libraryListLinearLayout.setTag(chordScale);
+        libraryListLinearLayout.setTag(selectedChordScale);
+
+        libraryListNameTextView.setText(selectedChordScale.getName());
+        libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
 
 

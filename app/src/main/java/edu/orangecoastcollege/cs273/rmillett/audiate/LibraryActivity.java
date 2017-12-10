@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,6 @@ public class LibraryActivity extends AppCompatActivity {
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
-
 
         displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
@@ -331,7 +331,6 @@ public class LibraryActivity extends AppCompatActivity {
      * @param view
      */
     public void playbackHandler(View view) {
-        detectPlaybackMode();
 
         // TODO: consider adding this to an OnChangeListener if possible
         // Get fundamental frequency
@@ -346,6 +345,7 @@ public class LibraryActivity extends AppCompatActivity {
                 mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
                 break;
             case R.id.playSelectionButton:
+                detectPlaybackMode();
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
@@ -358,11 +358,16 @@ public class LibraryActivity extends AppCompatActivity {
         // Build SoundObject
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
-            SoundObject selectedSoundObject = (SoundObject) selectedLayout.getTag();
-            Log.i(TAG, selectedSoundObject.getName());
+            ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
+            Log.i(TAG, selectedChordScale.getName());
 
-            displayNameTextView.setText(selectedSoundObject.getName());
+            mChordScale = selectedChordScale;
 
+            Toast.makeText(this, mChordScale.getSize()
+                    +"\n"+mChordScale.getName()
+                    +"\n"+mChordScale.getChordMemberAtPos(1).getPitchFrequency(), Toast.LENGTH_LONG*2).show();
+
+            displayNameTextView.setText(selectedChordScale.getName());
 
 
             // Enable playback

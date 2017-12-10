@@ -442,9 +442,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                // build interval
-                ChordScale interval = new ChordScale(cursor.getString(1));
-                interval.addChordMemberAt(0, new Note("Fundamental"));
+                // Create ChordScale
+                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(4));
+
+                // Add interval
                 interval.addChordMemberAt(1, new Note(
                         cursor.getString(1),
                         cursor.getString(2),
@@ -570,65 +571,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Intervals:
         // Harmonics (up to 127th)
-    public ArrayList<ChordScale> getAllHarmonics() {
-        ArrayList<ChordScale> allHarmonicsList = new ArrayList<>();
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(
-                INTERVALS_TABLE,
-                new String[]{
-                        INTERVALS_KEY_FIELD_ID,
-                        FIELD_INTERVAL_NAME,
-                        FIELD_INTERVAL_RATIO,
-                        FIELD_INTERVAL_CENTS,
-                        FIELD_INTERVAL_DESCRIPTION
-                },
-                null,
-                null,
-                null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                // if interval is a harmonic, build and add
-                String name = cursor.getString(1).toUpperCase();
-                if (name.contains("HARMONIC") && (name.contains("1ST") || name.contains("2ND")
-                        || name.contains("3RD") || name.contains("TH"))) {
-
-                    // build interval
-                    ChordScale interval =
-                            new ChordScale(cursor.getInt(0), cursor.getString(1), 2);
-                    interval.addChordMember(new Note("Fundamental"));
-                    interval.addChordMember(new Note(cursor.getString(1),
-                            interval.getChordMemberAtPos(0).getPitchFrequency()
-                                    * Music.convertRatioToDecimal(cursor.getString(2)), cursor.getString(2)));
-
-                    // add to list
-                    allHarmonicsList.add(interval);
-                }
-
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        sqLiteDatabase.close();
-        return allHarmonicsList;
-    }
-
         // Historical (all named intervals)
-
         // Diatonic Just-Intoned
-
-        // Olivier Messiaen's "Modes of Limited Transposition"
-
-
-    // Dodecaphonic Just-Intoned
-    // Diatonic-Chromatic Just and E.T.
-    // All Just-Intervals
+        // Dodecaphonic Just-Intoned
+        // Diatonic-Chromatic Just and E.T.
+        // All Just-Intervals
     // Chords:
-    // Triads -> Maj, min, Aug, dim
-    // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
-    // Just vs. E.T. triads/7ths
+        // Triads -> Maj, min, Aug, dim
+        // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
+        // Just vs. E.T. triads/7ths
     // Scales:
-    // Heptatonic (diatonic) scales and modes
-    // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
+        // Heptatonic (diatonic) scales and modes
+        // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
+        // Olivier Messiaen's "Modes of Limited Transposition"
 
 
     public List<Exercise> getAllExercisesByMode(String exerciseMode) {
@@ -764,6 +719,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- IMPORTS ---------- //
 
+    public boolean importPitchIntervalsFromCSV(String csvFileName) {
+        return false;
+    }
+
     public boolean importKyleGannOctaveAnatomyFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
@@ -791,12 +750,14 @@ public class DBHelper extends SQLiteOpenHelper {
                                 ? fields[2].trim() : fields[1].trim();
                 String ratio = fields[2].trim();
                 double cents = Double.parseDouble(fields[3].trim());
-                String description = name.equalsIgnoreCase(ratio) ?
-                        "Size in cents: " + cents : "Ratio: " + ratio + "\nSize in cents: " + cents;
+                String description =
+                        name.equalsIgnoreCase(ratio)
+                                ? "Size in cents: " + cents
+                                : "Ratio: " + ratio + "\nSize in cents: " + cents;
 
                 Note interval = new Note(name, ratio, cents, description);
 
-                // add to DB
+                // add interval to DB
                 addInterval(interval);
             }
         }

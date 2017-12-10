@@ -94,6 +94,17 @@ public class ChordScale extends SoundObject {
         mSCLfileName = "No associated .scl file";
     }
 
+    public ChordScale(String name, String description) {
+        super(name);
+        mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
+        mChordMembers.add(0,new Note("Fundamental"));
+        mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
+        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
+        mDescription = description;
+        mSCLfileName = "No associated .scl file";
+    }
+
+
     public ChordScale(String name, int initialSize, String description, String sclFileName) {
         super(name);
         mChordMembers = new ArrayList<>(initialSize);

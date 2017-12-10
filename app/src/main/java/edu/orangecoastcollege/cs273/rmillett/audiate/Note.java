@@ -89,21 +89,21 @@ public class Note extends SoundObject {
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
     }
 
-    /**
-     * Overloaded constructor
-     *
-     * @param name String representing the <code>Note</code> name
-     * @param pitchFrequency ble value representing the <code>Note</code> pitch frequency in
-     *                       Hertz
-     * @param ratio a String value representing a <code>Note</code> object's relation to another
-     *              <code>Note</code> object expressed as a ratio
-     */
-    public Note(String name, double pitchFrequency, String ratio) {
-        super(name);
-        mPitchFrequency = pitchFrequency;
-        mRatio = ratio;
-        mSizeInCents = Music.convertRatioToCents(ratio);
-    }
+//    /**
+//     * Overloaded constructor
+//     *
+//     * @param name String representing the <code>Note</code> name
+//     * @param pitchFrequency ble value representing the <code>Note</code> pitch frequency in
+//     *                       Hertz
+//     * @param ratio a String value representing a <code>Note</code> object's relation to another
+//     *              <code>Note</code> object expressed as a ratio
+//     */
+//    public Note(String name, double pitchFrequency, String ratio) {
+//        super(name);
+//        mPitchFrequency = pitchFrequency;
+//        mRatio = ratio;
+//        mSizeInCents = Music.convertRatioToCents(ratio);
+//    }
 
     /**
      * Overloaded constructor
@@ -129,7 +129,7 @@ public class Note extends SoundObject {
      */
     public Note(String name, String ratio, double cents, String description) {
         super(name);
-        mPitchFrequency = DEFAULT_FREQUENCY;
+        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
