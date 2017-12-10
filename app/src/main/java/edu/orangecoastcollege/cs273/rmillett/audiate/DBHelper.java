@@ -38,6 +38,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_INTERVAL_NAME = "interval_name";
     private static final String FIELD_INTERVAL_RATIO = "interval_ratio";
     private static final String FIELD_INTERVAL_CENTS = "interval_cents";
+    private static final String FIELD_INTERVAL_LIMIT = "interval_limit";
+    private static final String FIELD_INTERVAL_MEANTONE = "interval_meantone";
+    private static final String FIELD_INTERVAL_SUPERPARTICULAR = "interval_superparticular";
     private static final String FIELD_INTERVAL_DESCRIPTION = "interval_description";
 
     // Table of chords
@@ -150,6 +153,9 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_NAME, interval.getName());
         values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
+        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
+        values.put(FIELD_INTERVAL_MEANTONE, interval.isMeantone());
+        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular());
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.insert(INTERVALS_TABLE, null, values);
@@ -223,13 +229,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- UPDATE ---------- //
 
-    public void updateInterval(ChordScale interval) {
+    public void updateInterval(Note interval) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(FIELD_INTERVAL_NAME, interval.getName());
-        values.put(FIELD_INTERVAL_RATIO, interval.getIntervalRatio(0, 1));
-        values.put(FIELD_INTERVAL_CENTS, interval.getIntervalDistanceInCents(0,1));
+        values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
+        values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
+        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
+        values.put(FIELD_INTERVAL_MEANTONE, interval.isMeantone());
+        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular());
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.update(INTERVALS_TABLE, values, INTERVALS_KEY_FIELD_ID + " = ?",
@@ -303,7 +312,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- GET ---------- //
 
-//    public ChordScale getInterval(int id) {
+//    public Note getInterval(int id) {
 //        // TODO: this method
 //    }
 //
@@ -377,7 +386,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- DELETE ---------- //
 
-    public void deleteInterval(ChordScale interval) {
+    public void deleteInterval(Note interval) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(INTERVALS_TABLE, INTERVALS_KEY_FIELD_ID + " = ?",
@@ -424,8 +433,8 @@ public class DBHelper extends SQLiteOpenHelper {
     // ---------- GET ALL ---------- //
 
     // TODO: revise this to construct and return a Note
-    public List<Note> getAllIntervals() {
-        List<Note> allIntervalsList = new ArrayList<>();
+    public List<ChordScale> getAllIntervals() {
+        List<ChordScale> allIntervalsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(
                 INTERVALS_TABLE,
@@ -434,6 +443,9 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_INTERVAL_NAME,
                         FIELD_INTERVAL_RATIO,
                         FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
                         FIELD_INTERVAL_DESCRIPTION
                 },
                 null,
@@ -443,11 +455,16 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // build interval
-                Note interval = new Note(
+                ChordScale interval = new ChordScale(cursor.getString(1));
+                interval.addChordMemberAt(0, new Note("Fundamental"));
+                interval.addChordMemberAt(1, new Note(
                         cursor.getString(1),
-                        cursor.getDouble(2),
-                        cursor.getString(3)
-                );
+                        cursor.getString(2),
+                        cursor.getDouble(3),
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6),
+                        cursor.getInt(7)));
 
                 // add to list
                 allIntervalsList.add(interval);

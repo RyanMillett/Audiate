@@ -65,7 +65,7 @@ public class LibraryActivity extends AppCompatActivity {
     private LibraryListAdapter mLibraryListAdapter;
 
     // ChordScale
-    private SoundObject mChordScale;
+    private ChordScale mChordScale;
 
     // SoundObjectPlayer
     private SoundObjectPlayer mSoundObjectPlayer;

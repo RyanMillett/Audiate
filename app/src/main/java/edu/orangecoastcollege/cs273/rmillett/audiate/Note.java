@@ -150,6 +150,7 @@ public class Note extends SoundObject {
      */
     public Note(String name, String ratio, double cents, String description) {
         super(name);
+        mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
@@ -161,6 +162,7 @@ public class Note extends SoundObject {
     public Note(String name, String ratio, double sizeInCents, String description, int limit,
                 boolean meantone, boolean superparticular) {
         super(name);
+        mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = ratio;
         mSizeInCents = sizeInCents;
         mDescription = description;
