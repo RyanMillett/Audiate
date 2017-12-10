@@ -54,24 +54,6 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
 
         libraryListLinearLayout.setTag(chordScale);
 
-        switch (chordScale.getSize()) {
-            case ChordScale.CHORDSCALE_DEFAULT_INITIAL_SIZE: // intervals
-                libraryListNameTextView.setText(chordScale.getName());
-                libraryListDescription1TextView.setText("Ratio: ");
-                libraryListDescription1TextView.append(chordScale.getChordMemberAtPos(1).getRatio() + " ");
-                libraryListDescription1TextView.append("Size in cents: ");
-                libraryListDescription1TextView.append(String.valueOf(chordScale.getChordMemberAtPos(1).getSizeInCents()));
-
-                libraryListDescription2TextView.setText(chordScale.getDescription());
-
-                break;
-            default: // chords/scales
-                libraryListNameTextView.setText(chordScale.getName());
-                libraryListDescription1TextView.setText(chordScale.getDescription());
-
-                libraryListDescription2TextView.setText(R.string.chordScale_size + chordScale.getSize());
-        }
-
 
 
 

@@ -12,7 +12,8 @@
         android:id="@+id/exerciseListItemTextViewLinearLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/selector">
 
         <TextView
             android:hint="@string/exercise_name"

@@ -38,9 +38,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_INTERVAL_NAME = "interval_name";
     private static final String FIELD_INTERVAL_RATIO = "interval_ratio";
     private static final String FIELD_INTERVAL_CENTS = "interval_cents";
-    private static final String FIELD_INTERVAL_LIMIT = "interval_limit";
-    private static final String FIELD_INTERVAL_MEANTONE = "interval_meantone";
-    private static final String FIELD_INTERVAL_SUPERPARTICULAR = "interval_superparticular";
     private static final String FIELD_INTERVAL_DESCRIPTION = "interval_description";
 
     // Table of chords
@@ -153,9 +150,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_NAME, interval.getName());
         values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
-        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
-        values.put(FIELD_INTERVAL_MEANTONE, interval.isMeantone());
-        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular());
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.insert(INTERVALS_TABLE, null, values);
@@ -236,9 +230,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_NAME, interval.getName());
         values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
-        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
-        values.put(FIELD_INTERVAL_MEANTONE, interval.isMeantone());
-        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular());
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.update(INTERVALS_TABLE, values, INTERVALS_KEY_FIELD_ID + " = ?",
@@ -443,9 +434,6 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_INTERVAL_NAME,
                         FIELD_INTERVAL_RATIO,
                         FIELD_INTERVAL_CENTS,
-                        FIELD_INTERVAL_LIMIT,
-                        FIELD_INTERVAL_MEANTONE,
-                        FIELD_INTERVAL_SUPERPARTICULAR,
                         FIELD_INTERVAL_DESCRIPTION
                 },
                 null,
@@ -461,10 +449,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getDouble(3),
-                        cursor.getString(4),
-                        cursor.getInt(5),
-                        cursor.getInt(6),
-                        cursor.getInt(7)));
+                        cursor.getString(4)
+                ));
 
                 // add to list
                 allIntervalsList.add(interval);
@@ -800,10 +786,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 }
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-                String name = fields[1].trim();
+                String name =
+                        fields[1].trim().equalsIgnoreCase("UNNAMED")
+                                ? fields[2].trim() : fields[1].trim();
                 String ratio = fields[2].trim();
                 double cents = Double.parseDouble(fields[3].trim());
-                String description = "";
+                String description = name.equalsIgnoreCase(ratio) ?
+                        "Size in cents: " + cents : "Ratio: " + ratio + "\nSize in cents: " + cents;
 
                 Note interval = new Note(name, ratio, cents, description);
 

@@ -177,7 +177,7 @@ public class LibraryActivity extends AppCompatActivity {
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                //filteredChordScalesList;
+                filteredChordScalesList = new ArrayList<>(db.getAllIntervals());
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
