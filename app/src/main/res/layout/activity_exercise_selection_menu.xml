@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_gravity="top"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/exercise1Button"
@@ -137,6 +137,17 @@
                 android:textSize="15sp"
                 android:hint="Selection description..."/>
 
+            <Button
+                android:id="@+id/startExerciseButton"
+                android:background="@color/colorPlayActive"
+                android:text="@string/start_exercise_button"
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/buttons_padding"
+                android:layout_gravity="bottom"
+                android:onClick="startActivity"/>
+
         </LinearLayout>
 
         <ListView
@@ -144,6 +155,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:choiceMode="singleChoice"
+            android:background="@drawable/selector"
             android:listSelector="@color/colorPrimary"
             android:layout_height="wrap_content">
         </ListView>
@@ -151,16 +163,6 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/startExerciseButton"
-        android:background="@color/colorPlayActive"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/start_exercise_button"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/buttons_padding"
-        android:layout_gravity="center_horizontal"
-        android:onClick="startActivity"/>
+
 
 </LinearLayout>

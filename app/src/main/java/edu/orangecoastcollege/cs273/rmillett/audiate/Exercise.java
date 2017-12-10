@@ -20,16 +20,22 @@ public class Exercise implements Parcelable {
 
     public static final int EXERCISE_DIFFICULTY_BEGINNER = 1;
     public static final String EXERCISE_DIFFICULTY_1 = "Beginner";
+
     public static final int EXERCISE_DIFFICULTY_INTERMEDIATE = 2;
     public static final String EXERCISE_DIFFICULTY_2 = "Intermediate";
+
     public static final int EXERCISE_DIFFICULTY_PROFICIENT = 3;
     public static final String EXERCISE_DIFFICULTY_3 = "Proficient";
+
     public static final int EXERCISE_DIFFICULTY_ADVANCED = 4;
     public static final String EXERCISE_DIFFICULTY_4 = "Advanced";
+
     public static final int EXERCISE_DIFFICULTY_EXPERT = 5;
     public static final String EXERCISE_DIFFICULTY_5 = "Expert";
+
     public static final int EXERCISE_DIFFICULTY_MASTER = 6;
     public static final String EXERCISE_DIFFICULTY_6 = "Master";
+
     public static final String DEFAULT_DESCRIPTION_TEXT_FILE_NAME = "No file found.";
 
     private long mId;

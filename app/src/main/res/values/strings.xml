@@ -49,7 +49,7 @@
     <string name="search_exercises">Search </string>
     <string name="exercises"> Exercises</string>
     <string name="select_exercise_button">Select An Exercise</string>
-    <string name="start_exercise_button">Start Exercise</string>
+    <string name="start_exercise_button">Launch this Exercise!</string>
     <string name="exercise_help_button">Help</string>
 
     <string name="intervals_desc_text">\s exercises focused on musical intervals\-\-the distance between two unique pitches.</string>

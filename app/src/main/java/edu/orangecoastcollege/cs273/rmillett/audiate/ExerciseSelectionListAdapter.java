@@ -53,6 +53,7 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
 
         // set tag
         exerciseDetailsListLinearLayout.setTag(selectedExerciseActivity);
+        exerciseDetailsListLinearLayout.setSelected(true);
 
         // Name
         exerciseDetailsListNameTextView.setText(selectedExerciseActivity.getExerciseName());

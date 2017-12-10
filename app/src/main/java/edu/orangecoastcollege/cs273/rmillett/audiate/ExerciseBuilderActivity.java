@@ -118,11 +118,13 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             Log.i(TAG, "onItemSelected!");
             mStartButton.setVisibility(View.VISIBLE);
+            view.setSelected(true);
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             mStartButton.setVisibility(View.INVISIBLE);
+
         }
     };
 
@@ -159,7 +161,10 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
     }
 
     public void exerciseSelectionHandler(View view) {
-        if (view instanceof Button) updateButtonColors(view);
+        if (view instanceof Button) {
+            updateButtonColors(view);
+            mStartButton.setVisibility(View.INVISIBLE);
+        }
 
         //mExerciseActivity.reset();
 
@@ -173,6 +178,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                 setExerciseButtons(true, view);
                 break;
             case R.id.exerciseListLinearLayout:
+                mStartButton.setVisibility(View.VISIBLE);
                 updateDescriptionTextView(view);
                 return;
         }
@@ -190,6 +196,8 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
     private void setExerciseButtons(boolean enabled, View view) {
         updateImageViewColors(view);
+
+        mStartButton.setVisibility(View.INVISIBLE);
 
         if (enabled) {
             switch (view.getId()){

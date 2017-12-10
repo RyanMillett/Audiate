@@ -3,8 +3,10 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:onClick="exerciseSelectionHandler"
+              android:background="@drawable/selector"
               android:clickable="true"
-              android:id="@+id/exerciseListLinearLayout">
+              android:id="@+id/exerciseListLinearLayout"
+              android:focusable="true">
 
     <LinearLayout
         android:id="@+id/exerciseListItemTextViewLinearLayout"
