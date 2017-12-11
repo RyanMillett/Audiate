@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -112,6 +113,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
         // Info TextView
         mExerciseDescriptionTextView = findViewById(R.id.exerciseDescriptionTextView);
+        mExerciseDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
 
         // This should create the return button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -213,6 +215,8 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line = bufferedReader.readLine();
 
+            StringBuilder stringBuilder = new StringBuilder();
+
             while (line != null) {
                 if (line.contains(exercise.getExerciseName())) {
                     line = bufferedReader.readLine();
@@ -222,9 +226,12 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                             line = bufferedReader.readLine();
                         }
                         while (!line.equals("//")) {
-                            Log.i(TAG, line);
+                            stringBuilder.append(line);
+                            stringBuilder.append("\n");
+                            stringBuilder.append("\n");
                             line = bufferedReader.readLine();
                         }
+                        return stringBuilder.toString();
                     }
                 }
                 else {
@@ -316,8 +323,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             Exercise selectedExerciseActivity = (Exercise) selectedLayout.getTag();
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
             mExerciseActivity = selectedExerciseActivity;
-            mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseName());
-            mExerciseDescriptionTextView.append(getDescriptionFromTxt(mExerciseActivity, "exercise_descriptions.txt"));
+            mExerciseDescriptionTextView.setText(getDescriptionFromTxt(mExerciseActivity, "exercise_descriptions.txt"));
         }
         // exercise buttons
         else if (view instanceof Button) {

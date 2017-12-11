@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ImageView
@@ -90,71 +90,71 @@
 
         <LinearLayout
             android:id="@+id/exerciseButtonsLinearLayout"
-            android:paddingVertical="@dimen/buttons_padding"
-            android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_height="match_parent">
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/buttons_padding">
 
             <Button
                 android:id="@+id/exercise1Button"
-                android:textSize="20sp"
-                android:background="@drawable/custom_blue_bg"
-                android:fontFamily="serif"
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="exerciseSelectionHandler"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/custom_blue_bg"
+                android:fontFamily="serif"
+                android:onClick="exerciseSelectionHandler"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/exercise2Button"
-                android:textSize="20sp"
-                android:background="@drawable/custom_blue_bg"
-                android:fontFamily="serif"
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="exerciseSelectionHandler"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/custom_blue_bg"
+                android:fontFamily="serif"
+                android:onClick="exerciseSelectionHandler"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/exercise3Button"
-                android:textSize="20sp"
-                android:background="@drawable/custom_blue_bg"
-                android:fontFamily="serif"
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="exerciseSelectionHandler"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/custom_blue_bg"
+                android:fontFamily="serif"
+                android:onClick="exerciseSelectionHandler"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/exerciseDescriptionTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:textSize="15sp"
-                android:hint="Selection description..."/>
+                android:layout_height="250dp"
+                android:hint="Selection description..."
+                android:scrollbars="vertical"
+                android:textSize="15sp"/>
 
             <Button
                 android:id="@+id/startExerciseButton"
-                android:background="@color/colorPlayActive"
-                android:text="@string/start_exercise_button"
-                android:textSize="15sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/buttons_padding"
+                android:layout_height="match_parent"
                 android:layout_gravity="bottom"
-                android:onClick="startActivity"/>
+                android:background="@color/colorPlayActive"
+                android:onClick="startActivity"
+                android:text="@string/start_exercise_button"
+                android:textSize="15sp"/>
 
         </LinearLayout>
 
         <ListView
             android:id="@+id/exercisesCategoriesListView"
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:choiceMode="singleChoice"
             android:background="@drawable/selector"
             android:listSelector="@color/colorPrimary"
