@@ -759,7 +759,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 1;
+        String line; int lineNum = 0;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -786,7 +786,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 // change to 1/1 for now
                 ratio = "1/1";
 
+                Log.i(TAG, "line number->" + lineNum++);
+                Log.i(TAG, "cents->" + cents);
+                Log.i(TAG, "ratio->" + ratio + "(1/1 is expected for now)");
                 Log.i(TAG, "Interval name->" + name);
+                Log.i(TAG, "tet->" + tet);
+                Log.i(TAG, "limit->" + limit);
+                Log.i(TAG, "meantone->" + meantone);
+                Log.i(TAG, "superparticular->" + superparticular);
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
                         + "\n" + (limit>0? "Limit: " + limit : "")
