@@ -39,10 +39,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_INTERVAL_NAME = "interval_name";
     private static final String FIELD_INTERVAL_RATIO = "interval_ratio";
     private static final String FIELD_INTERVAL_CENTS = "interval_cents";
-    private static final String FIELD_INTERVAL_TET = "";
-    private static final String FIELD_INTERVAL_LIMIT = "";
-    private static final String FIELD_INTERVAL_MEANTONE = "";
-    private static final String FIELD_INTERVAL_SUPERPARTICULAR = "";
+    private static final String FIELD_INTERVAL_TET = "interval_tet";
+    private static final String FIELD_INTERVAL_LIMIT = "interval_limit";
+    private static final String FIELD_INTERVAL_MEANTONE = "interval_meantone";
+    private static final String FIELD_INTERVAL_SUPERPARTICULAR = "interval_superparticular";
     private static final String FIELD_INTERVAL_DESCRIPTION = "interval_description";
 
     // Table of chords
@@ -93,7 +93,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 + FIELD_INTERVAL_NAME + " TEXT, "
                 + FIELD_INTERVAL_RATIO + " TEXT, "
                 + FIELD_INTERVAL_CENTS + " REAL, "
-                + FIELD_INTERVAL_DESCRIPTION + ")";
+                + FIELD_INTERVAL_TET + " TEXT, "
+                + FIELD_INTERVAL_LIMIT + " INTEGER, "
+                + FIELD_INTERVAL_MEANTONE + " TEXT, "
+                + FIELD_INTERVAL_SUPERPARTICULAR + " TEXT, "
+                + FIELD_INTERVAL_DESCRIPTION + " TEXT" + ")";
         sqLiteDatabase.execSQL(createQuery);
 
         // Create Chords table
@@ -448,6 +452,10 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_INTERVAL_NAME,
                         FIELD_INTERVAL_RATIO,
                         FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
                         FIELD_INTERVAL_DESCRIPTION
                 },
                 null,
@@ -457,14 +465,21 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // Create ChordScale
-                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(4));
+                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
+                boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                 // Add interval
                 interval.addChordMemberAt(1, new Note(
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getDouble(3),
-                        cursor.getString(4)
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        meantone,
+                        superparticular,
+                        cursor.getString(7)
                 ));
 
                 // add to list
@@ -733,8 +748,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- IMPORTS ---------- //
 
-    public List<ChordScale> importPitchIntervalsFromCSV(String csvFileName) {
-        List<ChordScale> pitchIntervalsList = new ArrayList<>();
+    public boolean importPitchIntervalsFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
         try {
@@ -742,7 +756,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -757,34 +771,45 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
                 String name = fields[3].trim();
+
                 String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
+
                 double cents = Double.parseDouble(fields[1].trim());
+
                 String tet = (!fields[4].trim().equals(""))?  fields[4].trim() : "";
+
                 int limit = (Music.isInteger(fields[5])) ? Integer.parseInt(fields[5].trim()) : -1;
+
                 boolean meantone = fields[6].trim().toUpperCase().contains("MEANTONE");
+
                 boolean superparticular = fields[7].trim().toUpperCase().contains("SUPERPARTICULAR");
+
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
                         + "\n" + (limit>0? "Limit: " + limit : "")
                             + (meantone ? "(Meantone)": (superparticular ? "(Superparticular)":""));
 
 
-                ChordScale interval = new ChordScale(name, description);
-                ratio = ratio.replaceAll(" ", "");
                 if (!Music.isRatio(ratio) || Music.isInteger(ratio)) ratio = "1/2";
-                interval.addChordMemberAt(1,new Note(name, ratio, cents, tet, limit, meantone, superparticular, description));
 
-
+                Note interval = new Note(
+                        name,
+                        ratio,
+                        cents,
+                        tet,
+                        limit,
+                        meantone,
+                        superparticular,
+                        description);
 
                 // add interval to DB
-                //addInterval(interval);
-                pitchIntervalsList.add(interval);
+                addInterval(interval);
             }
         }
         catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
-        return pitchIntervalsList;
+        return true;
     }
 
     public boolean importKyleGannOctaveAnatomyFromCSV(String csvFileName) {
@@ -799,7 +824,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 1;
+        String line;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -846,7 +871,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 1;
+        String line;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -861,10 +886,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 String description = fields[3].trim();
                 String sclFileName = fields[4].trim();
 
-                ChordScale interval = new ChordScale(name, size, description, sclFileName);
+                ChordScale scale = new ChordScale(name, size, description, sclFileName);
 
                 // add to DB
-                addScale(interval);
+                addScale(scale);
             }
         }
         catch (IOException e) {
@@ -886,7 +911,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 1;
+        String line;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");

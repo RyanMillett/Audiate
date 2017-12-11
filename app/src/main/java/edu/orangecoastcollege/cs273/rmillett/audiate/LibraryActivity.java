@@ -27,7 +27,7 @@ public class LibraryActivity extends AppCompatActivity {
     // DB
     private DBHelper db;
 
-    // SoundOject Lists
+    // ChordScale Lists
     private List<ChordScale> mListOfPitchIntervals;
     private List<ChordScale> mKyleGannOctaveAnatomy;
     private List<ChordScale> mAllChordsList;
@@ -53,10 +53,12 @@ public class LibraryActivity extends AppCompatActivity {
     private RadioButton mode2RadioButton;
     private RadioButton mode3RadioButton;
     private RadioButton mode4RadioButton;
+    private RadioButton[] radioButtonArray;
 
     // playback mode CheckBox group
     private CheckBox aux1CheckBox;
     private CheckBox aux2CheckBox;
+    private CheckBox[] checkBoxArray;
 
     // playback buttons
     private Button testFundamentalButton;
@@ -86,10 +88,10 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
-        // TODO: db.importMusicalIntervalsFromCSV("pitch_intervals.csv");
+        db.importPitchIntervalsFromCSV("pitch_intervals.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
-        //db.importScalaArchiveFromCSV("ScalaArchive.csv");
+        db.importScalaArchiveFromCSV("ScalaArchive.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
@@ -131,9 +133,17 @@ public class LibraryActivity extends AppCompatActivity {
         mode2RadioButton = findViewById(R.id.mode2RadioButton);
         mode3RadioButton = findViewById(R.id.mode3RadioButton);
         mode4RadioButton = findViewById(R.id.mode4RadioButton);
+        radioButtonArray = new RadioButton[]{
+                mode1RadioButton,
+                mode2RadioButton,
+                mode3RadioButton,
+                mode4RadioButton
+        };
 
+        // CheckBoxes
         aux1CheckBox = findViewById(R.id.aux1CheckBox);
         aux2CheckBox = findViewById(R.id.aux2CheckBox);
+        checkBoxArray = new CheckBox[]{aux1CheckBox,aux2CheckBox};
 
         // Set fundamental
         setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
@@ -162,77 +172,45 @@ public class LibraryActivity extends AppCompatActivity {
             if (materialType.equals(getString(R.string.select_materials))) {
                 // Do nothing
 //                mLibraryListAdapter.clear();
-                mode1RadioButton.setEnabled(false);
-                mode1RadioButton.setText("");
-                mode2RadioButton.setEnabled(false);
-                mode2RadioButton.setText("");
-                mode3RadioButton.setEnabled(false);
-                mode3RadioButton.setText("");
-                mode4RadioButton.setEnabled(false);
-                mode4RadioButton.setText("");
-                aux1CheckBox.setEnabled(false);
-                aux1CheckBox.setText("");
-                aux2CheckBox.setEnabled(false);
-                aux2CheckBox.setText("");
+                disablePlaybackSettings();
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                filteredChordScalesList = new ArrayList<>(db.importPitchIntervalsFromCSV("pitch_intervals.csv"));
+                // TODO: add intervals
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
-                mode1RadioButton.setEnabled(true);
-                mode1RadioButton.setChecked(true);
+                enablePlaybackSettings();
                 mode1RadioButton.setText(getString(R.string.block_chord));
-                mode2RadioButton.setEnabled(true);
+                    mode1RadioButton.setChecked(true);
                 mode2RadioButton.setText(getString(R.string.arp_up));
-                mode3RadioButton.setEnabled(true);
                 mode3RadioButton.setText(getString(R.string.arp_down));
-                mode4RadioButton.setEnabled(false);
-                mode4RadioButton.setText("");
-                aux1CheckBox.setEnabled(true);
                 aux1CheckBox.setText(getString(R.string.aux_interval_invert));
-                aux2CheckBox.setEnabled(false);
-                aux2CheckBox.setText("");
+
             }
             else if (materialType.equals(getString(R.string.select_chords))) {
                 // All Chords
                 // TODO: add chords
                 // Update playback options
-                mode1RadioButton.setEnabled(true);
-                mode1RadioButton.setChecked(true);
+                enablePlaybackSettings();
                 mode1RadioButton.setText(getString(R.string.block_chord));
-                mode2RadioButton.setEnabled(true);
+                    mode1RadioButton.setChecked(true);
                 mode2RadioButton.setText(getString(R.string.arp_up));
-                mode3RadioButton.setEnabled(true);
                 mode3RadioButton.setText(getString(R.string.arp_down));
-                mode4RadioButton.setEnabled(false);
-                mode4RadioButton.setText("");
-                aux1CheckBox.setEnabled(true);
                 aux1CheckBox.setText(getString(R.string.aux_chord_invert));
-                aux2CheckBox.setEnabled(false);
-                aux2CheckBox.setText("");
             }
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
-                filteredChordScalesList = new ArrayList<>(db.getAllScalesFromSCL());
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
-                mode1RadioButton.setEnabled(true);
+                enablePlaybackSettings();
                 mode1RadioButton.setText(getString(R.string.cluster_chord));
-                mode2RadioButton.setChecked(true);
-                mode2RadioButton.setEnabled(true);
                 mode2RadioButton.setText(getString(R.string.scale_up));
-                mode3RadioButton.setEnabled(true);
+                    mode2RadioButton.setChecked(true);
                 mode3RadioButton.setText(getString(R.string.scale_down));
-                mode4RadioButton.setEnabled(false);
-                mode4RadioButton.setText("");
-                aux1CheckBox.setEnabled(true);
                 aux1CheckBox.setText(getString(R.string.aux_scale_invert));
-                aux2CheckBox.setEnabled(false);
-                aux2CheckBox.setText("");
             }
             mLibraryListAdapter.notifyDataSetChanged();
 
@@ -308,13 +286,13 @@ public class LibraryActivity extends AppCompatActivity {
                 break;
             case 3: // "Scales" selected
                 filters = new String[7];
-                filters[0] = "Heptadiatonic";
+                filters[0] = "Heptadiatonic Modes";
                 filters[1] = "Pentatonic";
                 filters[2] = "Equal-Tempered (by approximation)";
                 filters[3] = "Octavating";
                 filters[4] = "Non-Octavating";
                 filters[5] = "Olivier Messiaen's \"Modes of Limited Transposition\"";
-                filters[6] = "Full Scale Scale Archive";
+                filters[6] = "Full Scala Archive";
                 break;
             default: // nothing selected
                 filters = new String[1];
@@ -385,5 +363,33 @@ public class LibraryActivity extends AppCompatActivity {
             mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
             mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
         }
+    }
+
+    private void disablePlaybackSettings() {
+        for (RadioButton radioButton : radioButtonArray) {
+            radioButton.setEnabled(false);
+            radioButton.setText("");
+        }
+
+        for (CheckBox checkBox : checkBoxArray) {
+            checkBox.setEnabled(false);
+            checkBox.setText("");
+        }
+    }
+
+    private void enablePlaybackSettings() {
+        for (RadioButton radioButton : radioButtonArray) {
+            radioButton.setEnabled(true);
+        }
+
+        // just for now
+        mode4RadioButton.setEnabled(false);
+
+        for (CheckBox checkBox : checkBoxArray) {
+            checkBox.setEnabled(true);
+        }
+
+        // just for now
+        aux2CheckBox.setEnabled(false);
     }
 }
