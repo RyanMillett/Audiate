@@ -1,6 +1,6 @@
-1,0.0,1/ 1,"Unison, monophony, perfect prime, tonic, or fundamental","1, 12",3,Meantone,
-2,0.4,4375/ 4374,"Ragisma","",7,,Superparticular
-3,0.72,2401/ 2400,"Breedsma","",7,,Superparticular
+1,0.0,1/1,"Unison, monophony, perfect prime, tonic, or fundamental","1, 12",3,Meantone,
+2,0.4,4375/4374,"Ragisma","",7,,Superparticular
+3,0.72,2401/2400,"Breedsma","",7,,Superparticular
 4,1.0,2 to the power of 1/1200,"Cent","1200",0,,
 5,1.2,2 to the power of 1/1000,"Millioctave","1000",0,,
 6,1.95,32805/ 32768,"Schisma","",5,,
@@ -19,7 +19,7 @@
 19,18.13,96/ 95,"Difference between 19:16 & 6:5","",19,,Superparticular
 20,19.55,2048/ 2025,"Diaschisma, minor comma","",5,,
 21,21.51,81/ 80,"Syntonic comma, major comma, komma, chromatic diesis, or comma of Didymus","",5,,Superparticular
-22,22.64,2 to the power of 1/53," Holdrian comma, Holder's comma, 1 step in 53 equal temperament","53",0,,
+22,22.64,2 to the power of 1/53,"Holdrian comma, Holder's comma, 1 step in 53 equal temperament","53",0,,
 23,23.46,531441/ 524288," Pythagorean comma,[3][5][6][9][10] ditonic comma[3][6]","",3,,
 24,25.0,2 to the power of 1/48,"Eighth tone","48",0,,
 25,26.84,65/64,"Sixty-fifth harmonic,[5] 13th-partial chroma[3]","",13,,Superparticular

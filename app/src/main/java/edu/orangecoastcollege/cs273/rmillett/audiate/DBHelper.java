@@ -759,7 +759,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 0;
+        String line; int lineNum = 1; // Change lineNum back to 0 after fixing error in pitch_intervals.csv
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -768,14 +768,17 @@ public class DBHelper extends SQLiteOpenHelper {
                     continue;
                 }
 
-                //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-                String name = fields[3].trim();
+                lineNum++;
 
-                String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
+                //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
+
+                // String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
 
                 double cents = Double.parseDouble(fields[1].trim());
 
-                String tet = (!fields[4].trim().equals(""))?  fields[4].trim() : "";
+                String name = fields[3].trim().replaceAll(",", " * ");
+
+                String tet = (!fields[4].trim().contains("na"))?  fields[4].trim() : "";
 
                 int limit = (Music.isInteger(fields[5])) ? Integer.parseInt(fields[5].trim()) : -1;
 
@@ -784,9 +787,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 boolean superparticular = fields[7].trim().toUpperCase().contains("SUPERPARTICULAR");
 
                 // change to 1/1 for now
-                ratio = "1/1";
+                String ratio = "1/1";
 
-                Log.i(TAG, "line number->" + lineNum++);
+                Log.i(TAG, "line number->" + lineNum);
                 Log.i(TAG, "cents->" + cents);
                 Log.i(TAG, "ratio->" + ratio + "(1/1 is expected for now)");
                 Log.i(TAG, "Interval name->" + name);
@@ -794,6 +797,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Log.i(TAG, "limit->" + limit);
                 Log.i(TAG, "meantone->" + meantone);
                 Log.i(TAG, "superparticular->" + superparticular);
+                Log.i(TAG, "BREAK:");
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
                         + "\n" + (limit>0? "Limit: " + limit : "")

@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,10 +87,10 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
-        db.importPitchIntervalsFromCSV("pitch_intervals.csv");
+        db.importPitchIntervalsFromCSV("pitch_intervals2.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
-        db.importScalaArchiveFromCSV("ScalaArchive.csv");
+        // db.importScalaArchiveFromCSV("ScalaArchive.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
