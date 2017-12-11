@@ -165,11 +165,15 @@ public class ChordScale extends SoundObject {
      */
     public void addChordMember(Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
+        note.setPitchFrequency(mChordMembers.get(0).getPitchFrequency()
+                * Music.convertRatioToDecimal(note.getRatio()));
         mChordMembers.add(note);
     }
 
     public void addChordMemberAt(int pos, Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
+        note.setPitchFrequency(mChordMembers.get(0).getPitchFrequency()
+                * Music.convertRatioToDecimal(note.getRatio()));
         mChordMembers.add(pos, note);
     }
 

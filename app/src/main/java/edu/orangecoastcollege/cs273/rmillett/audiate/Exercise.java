@@ -1,7 +1,12 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Ryan Millett
@@ -134,10 +139,6 @@ public class Exercise implements Parcelable {
         mExerciseDescriptionTextFileName = exerciseDescriptionTextFileName;
     }
 
-    public String getDescriptionText() {
-        return null;
-    }
-
     public void reset() {
         mId = -1;
         mExerciseName = "";
@@ -184,4 +185,8 @@ public class Exercise implements Parcelable {
             return new Exercise[size];
         }
     };
+
+    public void setDescription() {
+
+    }
 }

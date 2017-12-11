@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_INTERVAL_NAME = "interval_name";
     private static final String FIELD_INTERVAL_RATIO = "interval_ratio";
     private static final String FIELD_INTERVAL_CENTS = "interval_cents";
+    private static final String FIELD_INTERVAL_TET = "";
+    private static final String FIELD_INTERVAL_LIMIT = "";
+    private static final String FIELD_INTERVAL_MEANTONE = "";
+    private static final String FIELD_INTERVAL_SUPERPARTICULAR = "";
     private static final String FIELD_INTERVAL_DESCRIPTION = "interval_description";
 
     // Table of chords
@@ -150,6 +155,10 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_NAME, interval.getName());
         values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
+        values.put(FIELD_INTERVAL_TET, Arrays.toString(interval.getTET()));
+        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
+        values.put(FIELD_INTERVAL_MEANTONE,interval.isMeantone() ? "Meantone":"");
+        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular() ? "Superparticular":"");
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
         db.insert(INTERVALS_TABLE, null, values);
@@ -230,7 +239,12 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_NAME, interval.getName());
         values.put(FIELD_INTERVAL_RATIO, interval.getRatio());
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
+        values.put(FIELD_INTERVAL_TET, Arrays.toString(interval.getTET()));
+        values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
+        values.put(FIELD_INTERVAL_MEANTONE,interval.isMeantone() ? "Meantone":"");
+        values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular() ? "Superparticular":"");
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
+
 
         db.update(INTERVALS_TABLE, values, INTERVALS_KEY_FIELD_ID + " = ?",
                 new String[]{String.valueOf(interval.getId())});
@@ -719,8 +733,58 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- IMPORTS ---------- //
 
-    public boolean importPitchIntervalsFromCSV(String csvFileName) {
-        return false;
+    public List<ChordScale> importPitchIntervalsFromCSV(String csvFileName) {
+        List<ChordScale> pitchIntervalsList = new ArrayList<>();
+        AssetManager manager = mContext.getAssets();
+        InputStream inputStream;
+        try {
+            inputStream = manager.open(csvFileName);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line; int lineNum = 1;
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length !=8) {
+                    Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
+                    continue;
+                }
+
+                //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
+                String name = fields[3].trim();
+                String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
+                double cents = Double.parseDouble(fields[1].trim());
+                String tet = (!fields[4].trim().equals(""))?  fields[4].trim() : "";
+                int limit = (Music.isInteger(fields[5])) ? Integer.parseInt(fields[5].trim()) : -1;
+                boolean meantone = fields[6].trim().toUpperCase().contains("MEANTONE");
+                boolean superparticular = fields[7].trim().toUpperCase().contains("SUPERPARTICULAR");
+                String description = "Ratio: " + ratio + " | Size in cents: " + cents
+                        + "\n" + (limit>0? "Limit: " + limit : "")
+                            + (meantone ? "(Meantone)": (superparticular ? "(Superparticular)":""));
+
+
+                ChordScale interval = new ChordScale(name, description);
+                ratio = ratio.replaceAll(" ", "");
+                if (!Music.isRatio(ratio) || Music.isInteger(ratio)) ratio = "1/2";
+                interval.addChordMemberAt(1,new Note(name, ratio, cents, tet, limit, meantone, superparticular, description));
+
+
+
+                // add interval to DB
+                //addInterval(interval);
+                pitchIntervalsList.add(interval);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return pitchIntervalsList;
     }
 
     public boolean importKyleGannOctaveAnatomyFromCSV(String csvFileName) {
@@ -933,9 +997,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     else {
                         try {
                             interval = Music.parseDecimalFromScalaLine(line);
-                            scale.addChordMember(new Note(
-                                    scale.getChordMemberAtPos(0).getPitchFrequency()
-                                            * interval));
+                            scale.addChordMember(new Note(interval));
 
                             // get next line
                             line = br.readLine();

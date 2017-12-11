@@ -125,6 +125,16 @@ public class Music {
             return Double.parseDouble(ratio);
     }
 
+    public static boolean isRatio(String ratio) {
+        if (ratio.contains("/")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
     /**
      * Takes a String representing an interval expressed as a whole-number ratio and returns the
      * interval size expressed in cents.
@@ -181,6 +191,20 @@ public class Music {
             }
         }
         return true;
+    }
+
+    public static int[] parseTET(String tet) {
+        if (tet.contains(",")) {
+            String[]tets = tet.split(",");
+            int[] tetArray = new int[tets.length];
+            for (int i = 0; i < tetArray.length; ++i) {
+                tetArray[i] = Integer.parseInt(tets[i]);
+            }
+
+            return tetArray;
+        }
+
+        return new int[]{Integer.parseInt(tet)};
     }
 
     /**

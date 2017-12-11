@@ -39,6 +39,11 @@ public class Note extends SoundObject {
     private double mPitchFrequency;
     private String mRatio;
     private double mSizeInCents;
+    // special parameters
+    private int[] mTET;
+    private int mLimit;
+    private boolean mMeantone;
+    private boolean mSuperparticular;
 
     /**
      * Default constructor
@@ -48,6 +53,11 @@ public class Note extends SoundObject {
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+
+        mTET = new int[]{1};
+        mLimit = -1;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
     /**
@@ -60,63 +70,55 @@ public class Note extends SoundObject {
         mPitchFrequency = DEFAULT_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+
+        mTET = new int[]{1};
+        mLimit = -1;
+        mMeantone = false;
+        mSuperparticular = false;
     }
 
-    /**
-     * Overloaded constructor
-     *
-     * @param pitchFrequency double value representing the <code>Note</code> pitch frequency in
-     *                       Hertz
-     */
-    public Note(double pitchFrequency) {
-        super();
-        mPitchFrequency = pitchFrequency;
-        mRatio = DEFAULT_RATIO;
-        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
-    }
-
-    /**
-     * Overloaded constructor
-     *
-     * @param name String representing the <code>Note</code> name
-     * @param pitchFrequency double value representing the <code>Note</code> pitch frequency in
-     *                       Hertz
-     */
-    public Note(String name, double pitchFrequency) {
+    public Note(String name, String ratio) {
         super(name);
-        mPitchFrequency = pitchFrequency;
-        mRatio = DEFAULT_RATIO;
-        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mRatio = ratio;
+        mSizeInCents = Music.convertRatioToCents(ratio);
+
+        mTET = new int[]{1};
+        mLimit = -1;
+        mMeantone = false;
+        mSuperparticular = false;
     }
+
+    public Note(double decimalInterval) {
+        super();
+        mPitchFrequency = DEFAULT_FREQUENCY * decimalInterval;
+        mRatio = Music.convertDecimalToRatio(decimalInterval);
+        mSizeInCents = Music.convertRatioToCents(mRatio);
+
+        mTET = new int[]{1};
+        mLimit = -1;
+        mMeantone = false;
+        mSuperparticular = false;
+    }
+
 
 //    /**
 //     * Overloaded constructor
 //     *
-//     * @param name String representing the <code>Note</code> name
-//     * @param pitchFrequency ble value representing the <code>Note</code> pitch frequency in
+//     * @param pitchFrequency double value representing the <code>Note</code> pitch frequency in
 //     *                       Hertz
-//     * @param ratio a String value representing a <code>Note</code> object's relation to another
-//     *              <code>Note</code> object expressed as a ratio
 //     */
-//    public Note(String name, double pitchFrequency, String ratio) {
-//        super(name);
+//    public Note(double pitchFrequency) {
+//        super();
 //        mPitchFrequency = pitchFrequency;
-//        mRatio = ratio;
-//        mSizeInCents = Music.convertRatioToCents(ratio);
+//        mRatio = DEFAULT_RATIO;
+//        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
+//
+//        mTET = new int[]{1};
+//        mLimit = -1;
+//        mMeantone = false;
+//        mSuperparticular = false;
 //    }
-
-    /**
-     * Overloaded constructor
-     *
-     * @param name String representing the <code>Note</code> name
-     * @param durationInMilliseconds int value representing the <code>Note</code> duration in milli-
-     *                               seconds
-     */
-    public Note(String name, int durationInMilliseconds) {
-        super(name, durationInMilliseconds);
-        mPitchFrequency = DEFAULT_FREQUENCY;
-        mSizeInCents = DEFAULT_SIZE_IN_CENTS;
-    }
 
     /**
      * Overloaded constructor
@@ -133,6 +135,25 @@ public class Note extends SoundObject {
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
+
+        mTET = new int[]{1};
+        mLimit = -1;
+        mMeantone = false;
+        mSuperparticular = false;
+    }
+
+    public Note(String name, String ratio, double cents,
+                String tet, int limit, boolean meantone, boolean superparticular, String description) {
+        super(name);
+        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mRatio = ratio;
+        mSizeInCents = cents;
+        mDescription = description;
+
+        mTET = (tet.equals("") || tet.contains("\"\"")) ? new int[]{0} : Music.parseTET(tet);
+        mLimit = limit;
+        mMeantone = meantone;
+        mSuperparticular = superparticular;
     }
 
     /**
@@ -191,6 +212,38 @@ public class Note extends SoundObject {
      */
     public void setSizeInCents(double sizeInCents) {
         mSizeInCents = sizeInCents;
+    }
+
+    public int[] getTET() {
+        return mTET;
+    }
+
+    public void setTET(int[] TET) {
+        mTET = TET;
+    }
+
+    public int getLimit() {
+        return mLimit;
+    }
+
+    public void setLimit(int limit) {
+        mLimit = limit;
+    }
+
+    public boolean isMeantone() {
+        return mMeantone;
+    }
+
+    public void setMeantone(boolean meantone) {
+        mMeantone = meantone;
+    }
+
+    public boolean isSuperparticular() {
+        return mSuperparticular;
+    }
+
+    public void setSuperparticular(boolean superparticular) {
+        mSuperparticular = superparticular;
     }
 
     // -------------- Parcelable Implementation -------------- //

@@ -87,9 +87,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         // Import materials
         // TODO: db.importMusicalIntervalsFromCSV("pitch_intervals.csv");
-        db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
+        // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
-        db.importScalaArchiveFromCSV("ScalaArchive.csv");
+        //db.importScalaArchiveFromCSV("ScalaArchive.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
@@ -177,7 +177,7 @@ public class LibraryActivity extends AppCompatActivity {
             }
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
-                filteredChordScalesList = new ArrayList<>(db.getAllIntervals());
+                filteredChordScalesList = new ArrayList<>(db.importPitchIntervalsFromCSV("pitch_intervals.csv"));
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
@@ -216,7 +216,7 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
-                //filteredChordScalesList;
+                filteredChordScalesList = new ArrayList<>(db.getAllScalesFromSCL());
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options

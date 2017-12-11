@@ -1,6 +1,7 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,8 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ExerciseBuilderActivity extends AppCompatActivity {
 
@@ -191,6 +197,47 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         updateListView(view);
     }
 
+    private String getDescriptionFromTxt(Exercise exercise, String fileName) {
+        String description = "Description Not Found.";
+        AssetManager manager = this.getAssets();
+        InputStream inputStream;
+        try {
+            inputStream = manager.open(fileName);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return description;
+        }
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                if (line.contains(exercise.getExerciseName())) {
+                    line = bufferedReader.readLine();
+                    if (line.contains(exercise.getExerciseMode())) {
+                        while (!line.contains("Description")) {
+                            // eat non-description lines
+                            line = bufferedReader.readLine();
+                        }
+                        while (!line.equals("//")) {
+                            Log.i(TAG, line);
+                            line = bufferedReader.readLine();
+                        }
+                    }
+                }
+                else {
+                    line = bufferedReader.readLine();
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return description;
+    }
+
 
     // PRIVATE HELPER METHODS //
 
@@ -270,7 +317,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             Log.i(TAG, selectedExerciseActivity.getExerciseName());
             mExerciseActivity = selectedExerciseActivity;
             mExerciseDescriptionTextView.setText(selectedExerciseActivity.getExerciseName());
-            mExerciseDescriptionTextView.append("\n" + selectedExerciseActivity.getDescriptionText());
+            mExerciseDescriptionTextView.append(getDescriptionFromTxt(mExerciseActivity, "exercise_descriptions.txt"));
         }
         // exercise buttons
         else if (view instanceof Button) {
