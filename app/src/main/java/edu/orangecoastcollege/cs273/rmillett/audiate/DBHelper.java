@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -783,6 +782,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 boolean meantone = fields[6].trim().toUpperCase().contains("MEANTONE");
 
                 boolean superparticular = fields[7].trim().toUpperCase().contains("SUPERPARTICULAR");
+
+                // change to 1/1 for now
+                ratio = "1/1";
+
+                Log.i(TAG, "Interval name->" + name);
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
                         + "\n" + (limit>0? "Limit: " + limit : "")
