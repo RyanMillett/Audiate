@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +36,14 @@ public class PitchDetector {
     private static final int GRANTED = PackageManager.PERMISSION_GRANTED;
     private static final int DENIED = PackageManager.PERMISSION_DENIED;
 
-    private static final int DEFAULT_COLLECTION_LIMIT = 50;
+    public static final int DEFAULT_COLLECTION_LIMIT = 3 * SoundObjectPlayer.DEFAULT_SAMPLE_RATE;
 
     private int mHasAudioPerm;
 
     private Context mContext;
     private Activity mActivity;
 
-    private double mFrequencyAverage;
+    private double mFrequencySum;
 
     private int mCollectionLimit;
     private int mCollectionCounter;
@@ -64,7 +63,7 @@ public class PitchDetector {
         mActivity = activity;
         mCollectionLimit = DEFAULT_COLLECTION_LIMIT;
         mCollectionCounter = 0;
-        mFrequencyAverage = 0;
+        mFrequencySum = 0.0;
         getAudioPermissions(context, activity);
     }
 
@@ -123,9 +122,24 @@ public class PitchDetector {
 
     private void collectFrequencies(float frequencyInHz) {
         while (frequencyInHz > 0 && mCollectionCounter++ < mCollectionLimit) {
-            mFrequencyAverage += frequencyInHz;
+            mFrequencySum += frequencyInHz;
+            //Log.i(TAG, "collections size-> " + mCollectionCounter);
         }
-        Log.i(TAG, "Collections bin is full!");
+        //Log.i(TAG, "Collections bin is full!");
+        //resetCollections();
+    }
+
+    public double getFrequencyAverage() {
+        return mFrequencySum /= mCollectionCounter;
+    }
+
+    public int getCollectionCounter() {
+        return mCollectionCounter;
+    }
+
+    public void resetCollections() {
+        mCollectionCounter = 0;
+        mFrequencySum = 0.0;
     }
 
     /**
@@ -137,11 +151,9 @@ public class PitchDetector {
      *
      * @return a String representing the approximate pitch-class of the received frequency in Hertz
      */
-    public String parsePitchFromFreqAvg() {
-        if (mFrequencyAverage > 0) {
-            mFrequencyAverage /= mCollectionLimit;
-            Log.i(TAG, "Frequency to parse->" + mFrequencyAverage);
-            return Music.parsePitchClassFromFrequency(mFrequencyAverage, Music._12_TET_PITCH_FREQUENCIES);
+    public String parsePitchFromFreqAvg(double freq) {
+        if (freq > 0) {
+            return Music.parsePitchClassFromFrequency(freq, Music._12_TET_PITCH_FREQUENCIES);
         }
         return "No Pitch Detected";
     }

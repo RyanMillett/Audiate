@@ -1,10 +1,14 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetectVocalRangeActivity extends AppCompatActivity {
 
@@ -19,6 +23,11 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
     TextView lowNoteTextView;
     TextView highNoteTextView;
 
+    private Button detectHighButton;
+    private Button detectLowButton;
+
+    private Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +39,15 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         highNoteTextView = findViewById(R.id.highNoteResultTextView);
         lowNoteTextView = findViewById(R.id.lowNoteResultTextView);
 
+        detectHighButton = findViewById(R.id.detectHighNoteButton);
+        detectLowButton = findViewById(R.id.detectLowNoteButton);
+
         pitchDetector.activatePitchDetection();
 
         highNoteTextView.setText("");
         lowNoteTextView.setText("");
+
+        handler = new Handler();
     }
 
     /**
@@ -42,12 +56,29 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      * @param view
      */
     public void detectPitchHandler(View view) {
-        // TODO: this method
+
+
+        Toast.makeText(this, "Sing your " + "" + "note", Toast.LENGTH_LONG).show();
+
+        // reset collections
+        pitchDetector.resetCollections();
+
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                double freqAvg = pitchDetector.getFrequencyAverage();
+                Log.i("PD", "Frequency to parse->" + freqAvg);
+                highNoteTextView.setText(pitchDetector.parsePitchFromFreqAvg(freqAvg));
+            }
+        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE);
+
+
+
+
+        // save and display results
+        // RELEASE: revert button
         // determine which button is selected (high/low)
-            // LONGPRESS: show text view, change button
-                // save and display results
-            // RELEASE: revert button
-        highNoteTextView.setText(pitchDetector.parsePitchFromFreqAvg());
     }
 
     /**

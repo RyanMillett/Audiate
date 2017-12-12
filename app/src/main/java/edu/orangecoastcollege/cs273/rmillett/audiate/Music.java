@@ -263,7 +263,7 @@ public class Music {
 //                0, _12_TET_PITCH_FREQUENCIES.length);
 
         int i = -1;
-        for (int j = 0; j < freqArray.length; ++i) {
+        for (int j = 0; j < freqArray.length; ++j) {
             // finds approx range without going over
             if (frequencyInHz >= freqArray[j]
                     && frequencyInHz < freqArray[j+1]) {
