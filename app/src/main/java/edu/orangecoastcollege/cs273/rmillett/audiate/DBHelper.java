@@ -757,37 +757,51 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
             return false;
         }
+        String tempStr = "NOTHING";
 
+        int i = 4;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line; int lineNum = 1; // Change lineNum back to 0 after fixing error in pitch_intervals.csv
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length !=8) {
+                if (fields.length < 8) {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
+                }
+                else {
+                    if (fields[3].startsWith("\"")) {
+                        // get name fields
+                        tempStr = fields[3];
+                        while (!fields[i].endsWith("\"")) {
+                            tempStr += fields[i++].replace(" ", ", ");
+                        }
+                        tempStr += fields[i];
+
+                    }
                 }
 
                 lineNum++;
 
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
 
-                // String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
+                String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
 
                 double cents = Double.parseDouble(fields[1].trim());
 
-                String name = fields[3].trim().replaceAll(",", " * ");
+                //String name = fields[3].trim().replaceAll(",", " * ");
+                String name = tempStr;
 
-                String tet = (!fields[4].trim().contains("na"))?  fields[4].trim() : "";
+                String tet = (!fields[++i].trim().contains("na"))?  fields[++i].trim() : "";
 
-                int limit = (Music.isInteger(fields[5])) ? Integer.parseInt(fields[5].trim()) : -1;
+                int limit = (Music.isInteger(fields[i])) ? Integer.parseInt(fields[i].trim()) : -1;
 
-                boolean meantone = fields[6].trim().toUpperCase().contains("MEANTONE");
+                boolean meantone = fields[i++].trim().contains("Meantone");
 
-                boolean superparticular = fields[7].trim().toUpperCase().contains("SUPERPARTICULAR");
+                boolean superparticular = fields[i++].trim().contains("Superparticular");
 
                 // change to 1/1 for now
-                String ratio = "1/1";
+                //String ratio = "1/1";
 
                 Log.i(TAG, "line number->" + lineNum);
                 Log.i(TAG, "cents->" + cents);
