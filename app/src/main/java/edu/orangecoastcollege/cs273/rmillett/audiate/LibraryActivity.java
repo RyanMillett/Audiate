@@ -90,7 +90,7 @@ public class LibraryActivity extends AppCompatActivity {
         db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
-        // db.importScalaArchiveFromCSV("ScalaArchive.csv");
+        db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();

@@ -831,7 +831,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
                         + "\n" + (limit >0 ? "Limit: " + limit : "")
-                            + (meantone ? " | (Meantone)": (superparticular ? " | (Superparticular)":""));
+                        + (!tet.equals("0") ? "| " + tet + "-TET":"")
+                        + "\n" + (meantone ? " | (Meantone)": (superparticular ? " | (Superparticular)":""));
                 Log.i(TAG, "description->" + description);
 
                 Log.i(TAG, "//--------------//");
@@ -924,26 +925,44 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
+        String line; int scaleNo = 1; int totalScales = 0;
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length !=4) {
+                if (fields.length < 4) {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
 
+                Log.i(TAG, "scaleNo-> " + scaleNo++);
+
                 //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-                String name = fields[1].trim();
-                int size = Integer.parseInt(fields[2].trim());
-                String description = fields[3].trim();
-                String sclFileName = fields[4].trim();
+                String sclFileName = fields[1].trim();
+                Log.i(TAG, "fileName-> " + sclFileName);
+
+                String name = fields[2].trim();
+                Log.i(TAG, "name-> " + name);
+
+                int size = Integer.parseInt(fields[3].trim());
+                Log.i(TAG, "size-> " + size);
+
+                String description = "";
+
+                for (int j = 4; j < fields.length; ++j) {
+                    description += fields[j];
+                }
+
+                Log.i(TAG, "description-> " + description);
+                Log.i(TAG, "//----------//----------//");
 
                 ChordScale scale = new ChordScale(name, size, description, sclFileName);
 
                 // add to DB
                 addScale(scale);
+                totalScales++;
             }
+            Log.i(TAG, totalScales + " TOTAL SCALES IMPORTED! (Whew)");
+            Log.i(TAG, "//----------//----------//");
         }
         catch (IOException e) {
             e.printStackTrace();
