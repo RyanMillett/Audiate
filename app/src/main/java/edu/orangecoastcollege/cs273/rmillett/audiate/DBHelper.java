@@ -328,7 +328,8 @@ public class DBHelper extends SQLiteOpenHelper {
 //        // TODO: this method
 //    }
 //
-    public ChordScale createScaleFromSCL(ChordScale chordScale, String sclFileName) {
+    public double[] createScaleFromSCL(ChordScale chordScale, String sclFileName) {
+        double[] decimalIntervals = new double[chordScale.getSize()];
         AssetManager manager = mContext.getAssets();
         String line = "";
         try {
@@ -344,11 +345,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     + ", archive size->" + line);
             Log.i(TAG, chordScale.getName());
 
-            double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
+            //double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
 
             line = br.readLine();
-            double interval; // decimal used for multiplication
-            int i = 1;
+            //double interval; // decimal used for multiplication
+            int i = 0;
             while (i < chordScale.getSize() && line != null) {
                 // skip any scl comments
                 if (line.startsWith("!")) {
@@ -356,9 +357,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 }
                 else {
                     try {
-                        chordScale.getChordMemberAtPos(i).setPitchFrequency(fundamentalFrequency
-                                * Music.parseDecimalFromScalaLine(line));
-
+//                        chordScale.getChordMemberAtPos(i).setPitchFrequency(fundamentalFrequency
+//                                * Music.parseDecimalFromScalaLine(line));
+                        decimalIntervals[i++] = Music.parseDecimalFromScalaLine(line);
                         // get next line
                         line = br.readLine();
                     }
@@ -369,15 +370,15 @@ public class DBHelper extends SQLiteOpenHelper {
                         Log.e(TAG,"IOException: " + sclFileName + ", line->" + line + "\n");
                     }
                 }
-                i++;
             }
         }
         catch (IOException e) {
             Log.e(TAG, "Unable to locate " + sclFileName);
         }
 
-        chordScale.resetFundamentalFrequency(chordScale.getChordMemberAtPos(0).getPitchFrequency());
-        return chordScale;
+//        chordScale.resetFundamentalFrequency();
+        for (double dub : decimalIntervals) Log.i(TAG, dub + " ");
+        return decimalIntervals;
     }
 
     public Exercise getExercise(int id) {

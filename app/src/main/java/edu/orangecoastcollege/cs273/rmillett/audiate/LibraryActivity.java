@@ -87,7 +87,7 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
-        db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
+        //db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
         db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
@@ -348,9 +348,14 @@ public class LibraryActivity extends AppCompatActivity {
                     selectedChordScale.getSize(),
                     selectedChordScale.getDescription(),
                     selectedChordScale.getSCLfileName());
-            mChordScale = db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName());
+            mChordScale.buildChordScaleFromSCL(db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName()));
 
             Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
+
+            int i = 0;
+            for (Note note : mChordScale.getAllChordMembers()) {
+                Log.i(TAG, "" + i++ + " " + note.getPitchFrequency());
+            }
 
             displayNameTextView.setText(selectedChordScale.getName());
 

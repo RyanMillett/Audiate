@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,6 +121,15 @@ public class ChordScale extends SoundObject {
             mChordMembers.add(i, new Note());
         }
         resetFundamentalFrequency(Note.DEFAULT_FREQUENCY);
+    }
+
+    public void buildChordScaleFromSCL(double[] decimalIntervals) {
+        //Log.i("BuilderMethod", "inArrSize->" + decimalIntervals.length + "scaleSize->" + this.getSize());
+        double fundamental = mChordMembers.get(0).getPitchFrequency();
+
+        for (int i = 1; i < mChordMembers.size(); ++i) {
+            mChordMembers.get(i).setPitchFrequency(fundamental * decimalIntervals[i]);
+        }
     }
 
     /**
