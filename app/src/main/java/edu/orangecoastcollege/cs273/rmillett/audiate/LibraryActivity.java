@@ -87,13 +87,14 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
-        db.importPitchIntervalsFromCSV("pitch_intervals2.csv");
+        db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
         // db.importScalaArchiveFromCSV("ScalaArchive.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
+        mListOfPitchIntervals = db.getAllIntervals();
 
         displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
         selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
@@ -176,8 +177,8 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_intervals))) {
                 // All Intervals
                 // TODO: add intervals
+                filteredChordScalesList.addAll(mListOfPitchIntervals);
                 mLibraryListAdapter.addAll(filteredChordScalesList);
-                //Log.i(TAG, "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
                 enablePlaybackSettings();
                 mode1RadioButton.setText(getString(R.string.block_chord));
@@ -190,6 +191,7 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_chords))) {
                 // All Chords
                 // TODO: add chords
+                mLibraryListAdapter.addAll(filteredChordScalesList);
                 // Update playback options
                 enablePlaybackSettings();
                 mode1RadioButton.setText(getString(R.string.block_chord));

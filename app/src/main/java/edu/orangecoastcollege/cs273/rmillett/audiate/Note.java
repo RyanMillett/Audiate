@@ -150,7 +150,7 @@ public class Note extends SoundObject {
         mSizeInCents = cents;
         mDescription = description;
 
-        mTET = (tet.equals("") || tet.contains("\"\"")) ? new int[]{0} : Music.parseTET(tet);
+        mTET = (tet.equals("0")) ? new int[]{0} : Music.parseTET(tet);
         mLimit = limit;
         mMeantone = meantone;
         mSuperparticular = superparticular;

@@ -757,11 +757,10 @@ public class DBHelper extends SQLiteOpenHelper {
             e.printStackTrace();
             return false;
         }
-        String tempStr = "NOTHING";
 
-        int i = 4;
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line; int lineNum = 1; // Change lineNum back to 0 after fixing error in pitch_intervals.csv
+        int i = 6; String line; int num = 1;
+        String tempStr = "temp";
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -769,56 +768,80 @@ public class DBHelper extends SQLiteOpenHelper {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
-                else {
-                    if (fields[3].startsWith("\"")) {
-                        // get name fields
-                        tempStr = fields[3];
-                        while (!fields[i].endsWith("\"")) {
-                            tempStr += fields[i++].replace(" ", ", ");
-                        }
-                        tempStr += fields[i];
 
-                    }
-                }
 
-                lineNum++;
-
-                //int id = Integer.parseInt(fields[0].trim()); // TODO: fix this
-
-                String ratio = !(fields[2].trim().contains("power")) ? fields[2].trim().replaceAll(" ", "") : "1/2";
+                //int id = Integer.parseInt(fields[0].trim());
+                Log.i(TAG, "No.->" + num++);
 
                 double cents = Double.parseDouble(fields[1].trim());
-
-                //String name = fields[3].trim().replaceAll(",", " * ");
-                String name = tempStr;
-
-                String tet = (!fields[++i].trim().contains("na"))?  fields[++i].trim() : "";
-
-                int limit = (Music.isInteger(fields[i])) ? Integer.parseInt(fields[i].trim()) : -1;
-
-                boolean meantone = fields[i++].trim().contains("Meantone");
-
-                boolean superparticular = fields[i++].trim().contains("Superparticular");
-
-                // change to 1/1 for now
-                //String ratio = "1/1";
-
-                Log.i(TAG, "line number->" + lineNum);
                 Log.i(TAG, "cents->" + cents);
-                Log.i(TAG, "ratio->" + ratio + "(1/1 is expected for now)");
-                Log.i(TAG, "Interval name->" + name);
-                Log.i(TAG, "tet->" + tet);
+
+                String ratio = !(fields[2].trim().contains("power"))
+                        ? fields[2].trim().replace(":", "/") : fields[2].trim();
+                Log.i(TAG, "ratio->" + ratio);
+
+                int limit = (Music.isInteger(fields[3])) ? Integer.parseInt(fields[3].trim()) : -1;
                 Log.i(TAG, "limit->" + limit);
+
+                boolean meantone = fields[4].trim().contains("Meantone");
                 Log.i(TAG, "meantone->" + meantone);
+
+                boolean superparticular = fields[5].trim().contains("Superparticular");
                 Log.i(TAG, "superparticular->" + superparticular);
-                Log.i(TAG, "BREAK:");
+
+                String tet = "";
+;
+                if (fields[6].startsWith("\"")) {
+                    tempStr = "";
+                    while (!fields[i].endsWith("\"")) {
+                        tempStr += (fields[i] + ",");
+                        i++;
+                    }
+                    tet = tempStr + fields[i];
+                    tet = tet.replaceAll("\"", "");
+                }
+                else if (fields[6].isEmpty()) {
+                    tet = "0";
+                }
+                else {
+                    tet = fields[6].trim();
+                }
+
+                Log.i(TAG, "tet->" + tet);
+
+                i++;
+                String name = "";
+                tempStr = "";
+                if (fields[i].startsWith("\"")) {
+                    while (i < fields.length - 1) {
+                        tempStr += (fields[i] + ", ");
+                        i++;
+                    }
+                    name = tempStr + fields[i];
+                }
+                else {
+                    name = fields[i].trim();
+                }
+
+                name = name.replaceAll("\"", "");
+
+                name = name.replaceAll("\\[\\d+\\]", "");
+
+                Log.i(TAG, "Interval name->" + name);
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
-                        + "\n" + (limit>0? "Limit: " + limit : "")
-                            + (meantone ? "(Meantone)": (superparticular ? "(Superparticular)":""));
+                        + "\n" + (limit >0 ? "Limit: " + limit : "")
+                            + (meantone ? " | (Meantone)": (superparticular ? " | (Superparticular)":""));
+                Log.i(TAG, "description->" + description);
 
+                Log.i(TAG, "//--------------//");
 
-                if (!Music.isRatio(ratio) || Music.isInteger(ratio)) ratio = "1/2";
+                // reformat ratio
+                ratio = ratio.replaceAll("\\s","");
+                ratio = ratio.replaceAll("\\[\\d+\\]", "");
+
+                if (tet.contains(".")) tet =
+                        String.valueOf((int) Math.round(Double.parseDouble(tet)));
 
                 Note interval = new Note(
                         name,
@@ -832,6 +855,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 // add interval to DB
                 addInterval(interval);
+                i = 6;
             }
         }
         catch (IOException e) {

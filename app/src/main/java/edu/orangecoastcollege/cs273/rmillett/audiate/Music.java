@@ -1,5 +1,7 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.util.Log;
+
 /**
  * The <code>Music</code> class is a helper class which functions as multipurpose tool for performing
  * acoustic-/music-related calculations and conversions such as parsing ratios, converting to and from
@@ -116,23 +118,19 @@ public class Music {
      * @return Converted decimal (double value) representing the decimal form of a whole-number ratio
      */
     public static double convertRatioToDecimal(String ratio) {
-        if (ratio.contains("/")) {
-            // TODO: make split either "/" or ":"
-            String[] rat = ratio.split("/");
-            return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+        try {
+            if (ratio.contains("/")) {
+                // TODO: make split either "/" or ":"
+                String[] rat = ratio.split("/");
+                return Double.parseDouble(rat[0]) / Double.parseDouble(rat[1]);
+            }
+            else
+                return Double.parseDouble(ratio);
         }
-        else
-            return Double.parseDouble(ratio);
-    }
-
-    public static boolean isRatio(String ratio) {
-        if (ratio.contains("/")) {
-            return true;
+        catch (NumberFormatException e) {
+            Log.e(TAG,"Unable to parse ratio--> " + ratio);
+            return 1;
         }
-        else {
-            return false;
-        }
-
     }
 
     /**
@@ -195,16 +193,17 @@ public class Music {
 
     public static int[] parseTET(String tet) {
         if (tet.contains(",")) {
+            tet = tet.replaceAll("\\[", "").replaceAll("\\]","");
             String[]tets = tet.split(",");
             int[] tetArray = new int[tets.length];
             for (int i = 0; i < tetArray.length; ++i) {
-                tetArray[i] = Integer.parseInt(tets[i]);
+                tetArray[i] = Integer.parseInt(tets[i].trim());
             }
 
             return tetArray;
         }
 
-        return new int[]{Integer.parseInt(tet)};
+        return new int[]{Integer.parseInt(tet.replaceAll("\\[", "").replaceAll("\\]",""))};
     }
 
     /**
