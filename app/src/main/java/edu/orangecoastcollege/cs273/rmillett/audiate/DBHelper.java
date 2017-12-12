@@ -341,9 +341,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 line = br.readLine();
             }
 
-            Log.i(TAG, "chordScale object size->" + chordScale.getSize()
-                    + ", archive size->" + line);
-            Log.i(TAG, chordScale.getName());
+//            Log.i(TAG, "chordScale object size->" + chordScale.getSize()
+//                    + ", archive size->" + line);
+//            Log.i(TAG, chordScale.getName());
 
             //double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
 
