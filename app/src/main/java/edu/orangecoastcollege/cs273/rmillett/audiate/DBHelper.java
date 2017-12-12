@@ -344,7 +344,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     + ", archive size->" + line);
             Log.i(TAG, chordScale.getName());
 
-            chordScale.addChordMemberAt(0, new Note("Tonic/Fundamental"));
+            double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
 
             line = br.readLine();
             double interval; // decimal used for multiplication
@@ -356,8 +356,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 }
                 else {
                     try {
-                        chordScale.addChordMemberAt(i,
-                                new Note(Music.parseDecimalFromScalaLine(line)));
+                        chordScale.getChordMemberAtPos(i).setPitchFrequency(fundamentalFrequency
+                                * Music.parseDecimalFromScalaLine(line));
 
                         // get next line
                         line = br.readLine();
@@ -562,7 +562,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // Build scale
-                ChordScale chordScale= new ChordScale(
+                ChordScale chordScale = new ChordScale(
                         cursor.getString(1),
                         cursor.getInt(2),
                         cursor.getString(3),
@@ -912,7 +912,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         + "\n" + (meantone ? " | (Meantone)": (superparticular ? " | (Superparticular)":""));
                 Log.i(TAG, "description->" + description);
 
-                Log.i(TAG, "//--------------//");
+
 
                 // reformat ratio
                 ratio = ratio.replaceAll("\\s","");
@@ -930,6 +930,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         meantone,
                         superparticular,
                         description);
+
+                Log.i(TAG, "//--------------//");
 
                 // add interval to DB
                 addInterval(interval);
@@ -1030,10 +1032,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 }
 
                 Log.i(TAG, "description-> " + description);
-                Log.i(TAG, "//----------//----------//");
 
                 ChordScale scale = new ChordScale(name, size, description, sclFileName);
 
+                Log.i(TAG, "Confirm size-> " + scale.getSize());
+                Log.i(TAG, "//----------//----------//");
                 // add to DB
                 addScale(scale);
                 totalScales++;

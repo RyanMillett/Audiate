@@ -110,6 +110,8 @@ public class ChordScale extends SoundObject {
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
         mSCLfileName = sclFileName;
+
+        initializeChordScale(initialSize);
     }
 
     private void initializeChordScale(int initialSize) {

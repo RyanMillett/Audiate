@@ -343,12 +343,12 @@ public class LibraryActivity extends AppCompatActivity {
 
 
 
-//            mChordScale = new ChordScale(
-//                    selectedChordScale.getName(),
-//                    selectedChordScale.getSize(),
-//                    selectedChordScale.getDescription(),
-//                    selectedChordScale.getSCLfileName());
-            mChordScale = db.createScaleFromSCL(selectedChordScale, selectedChordScale.getSCLfileName());
+            mChordScale = new ChordScale(
+                    selectedChordScale.getName(),
+                    selectedChordScale.getSize(),
+                    selectedChordScale.getDescription(),
+                    selectedChordScale.getSCLfileName());
+            mChordScale = db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName());
 
             Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
 
