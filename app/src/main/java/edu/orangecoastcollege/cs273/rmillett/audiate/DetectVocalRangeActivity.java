@@ -43,7 +43,9 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      *
      * @param view
      */
-    public void detectPitchHandler(View view) {
+    public void detectPitchHandler(final View view) {
+
+        Button selectedButton = (Button) view;
 
         disableDetectionButtons();
 
@@ -62,6 +64,8 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
         // start listening by resetting collections
         pitchDetector.resetCollections();
+        selectedButton.setText("Listening...");
+
 
         handler.postDelayed(new Runnable() {
             @Override

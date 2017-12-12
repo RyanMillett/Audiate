@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class PitchDetector {
     private static final int GRANTED = PackageManager.PERMISSION_GRANTED;
     private static final int DENIED = PackageManager.PERMISSION_DENIED;
 
-    public static final int DEFAULT_COLLECTION_LIMIT = 3 * SoundObjectPlayer.DEFAULT_SAMPLE_RATE;
+    public static final int DEFAULT_COLLECTION_LIMIT = 2 * SoundObjectPlayer.DEFAULT_SAMPLE_RATE;
 
     private int mHasAudioPerm;
 
@@ -123,7 +124,7 @@ public class PitchDetector {
     private void collectFrequencies(float frequencyInHz) {
         while (frequencyInHz > 0 && mCollectionCounter++ < mCollectionLimit) {
             mFrequencySum += frequencyInHz;
-            //Log.i(TAG, "collections size-> " + mCollectionCounter);
+            Log.i(TAG, "collections size-> " + mCollectionCounter + "/" + mCollectionLimit);
         }
         //Log.i(TAG, "Collections bin is full!");
         //resetCollections();
