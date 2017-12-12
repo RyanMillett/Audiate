@@ -328,9 +328,57 @@ public class DBHelper extends SQLiteOpenHelper {
 //        // TODO: this method
 //    }
 //
-//    public ChordScale getScale(int id) {
-//        // TODO: this method
-//    }
+    public ChordScale createScaleFromSCL(ChordScale chordScale, String sclFileName) {
+        AssetManager manager = mContext.getAssets();
+        String line = "";
+        try {
+            InputStream inputStream = manager.open("scl/" + sclFileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+
+            while (!Music.isInteger(line)) {
+                line = br.readLine();
+            }
+
+            Log.i(TAG, "chordScale object size->" + chordScale.getSize()
+                    + ", archive size->" + line);
+            Log.i(TAG, chordScale.getName());
+
+            chordScale.addChordMemberAt(0, new Note("Tonic/Fundamental"));
+
+            line = br.readLine();
+            double interval; // decimal used for multiplication
+            int i = 1;
+            while (i < chordScale.getSize() && line != null) {
+                // skip any scl comments
+                if (line.startsWith("!")) {
+                    line = br.readLine();
+                }
+                else {
+                    try {
+                        chordScale.addChordMemberAt(i,
+                                new Note(Music.parseDecimalFromScalaLine(line)));
+
+                        // get next line
+                        line = br.readLine();
+                    }
+                    catch (NumberFormatException e) {
+                        Log.e(TAG,"NumberFormatException: " + sclFileName + ", line->" + line + "\n");
+                    }
+                    catch (IOException e) {
+                        Log.e(TAG,"IOException: " + sclFileName + ", line->" + line + "\n");
+                    }
+                }
+                i++;
+            }
+        }
+        catch (IOException e) {
+            Log.e(TAG, "Unable to locate " + sclFileName);
+        }
+
+        chordScale.resetFundamentalFrequency(chordScale.getChordMemberAtPos(0).getPitchFrequency());
+        return chordScale;
+    }
 
     public Exercise getExercise(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -465,12 +513,13 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 // Create ChordScale
                 ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
+                interval.addChordMemberAt(0,new Note("Tonic/Fundamental"));
 
                 boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
                 boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                 // Add interval
-                interval.addChordMemberAt(1, new Note(
+                interval.addChordMember(new Note(
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getDouble(3),
@@ -497,7 +546,35 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public List<ChordScale> getAllScalaArchiveScales() {
-        return null;
+        ArrayList<ChordScale> fullScalaArchive = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                SCALES_TABLE,
+                new String[]{SCALES_KEY_FIELD_ID,
+                        FIELD_SCALE_NAME,
+                        FIELD_SCALE_SIZE,
+                        FIELD_SCALE_DESCRIPTION,
+                        FIELD_SCALE_SCL_FILE_NAME},
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Build scale
+                ChordScale chordScale= new ChordScale(
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+
+                // add scale
+                fullScalaArchive.add(chordScale);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return fullScalaArchive;
     }
 
     public List<Exercise> getAllExercises() {

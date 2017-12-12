@@ -154,7 +154,7 @@ public class LibraryActivity extends AppCompatActivity {
         playSelectionButton.setEnabled(false);
 
         // Sound Object
-        mChordScale = new ChordScale("Selected SoundObject");
+        //mChordScale = new ChordScale("Selected SoundObject");
 
         // Sound Object Player
         mSoundObjectPlayer = new SoundObjectPlayer();
@@ -203,6 +203,7 @@ public class LibraryActivity extends AppCompatActivity {
             else if (materialType.equals(getString(R.string.select_scales))) {
                 // All Scales
                 // TODO: add scales
+                filteredChordScalesList.addAll(mScalaArchive = new ArrayList<>(db.getAllScalaArchiveScales()));
                 mLibraryListAdapter.addAll(filteredChordScalesList);
                 Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
                 // Update playback options
@@ -338,9 +339,18 @@ public class LibraryActivity extends AppCompatActivity {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
-            Log.i(TAG, selectedChordScale.getName());
+            Log.i(TAG, selectedChordScale.getName() + ", size: " + selectedChordScale.getSize());
 
-            mChordScale = selectedChordScale;
+
+
+//            mChordScale = new ChordScale(
+//                    selectedChordScale.getName(),
+//                    selectedChordScale.getSize(),
+//                    selectedChordScale.getDescription(),
+//                    selectedChordScale.getSCLfileName());
+            mChordScale = db.createScaleFromSCL(selectedChordScale, selectedChordScale.getSCLfileName());
+
+            Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
 
             displayNameTextView.setText(selectedChordScale.getName());
 

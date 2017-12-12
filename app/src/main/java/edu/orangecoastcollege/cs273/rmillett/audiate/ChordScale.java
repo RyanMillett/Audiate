@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Subclass of <code>SoundObject</code> used to instantiate a <code>ChordScale</code> object.
@@ -77,7 +78,6 @@ public class ChordScale extends SoundObject {
     public ChordScale(String name) {
         super(name);
         mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
-        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -87,7 +87,6 @@ public class ChordScale extends SoundObject {
     public ChordScale(String name, int initialSize) {
         super(name);
         mChordMembers = new ArrayList<>(initialSize);
-        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -97,7 +96,6 @@ public class ChordScale extends SoundObject {
     public ChordScale(String name, String description) {
         super(name);
         mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
-        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
@@ -108,11 +106,18 @@ public class ChordScale extends SoundObject {
     public ChordScale(String name, int initialSize, String description, String sclFileName) {
         super(name);
         mChordMembers = new ArrayList<>(initialSize);
-        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
         mSCLfileName = sclFileName;
+    }
+
+    private void initializeChordScale(int initialSize) {
+        mChordMembers.add(0, new Note("Tonic/Fundamental"));
+        for (int i = 1; i < initialSize; ++i) {
+            mChordMembers.add(i, new Note());
+        }
+        resetFundamentalFrequency(Note.DEFAULT_FREQUENCY);
     }
 
     /**
@@ -124,7 +129,6 @@ public class ChordScale extends SoundObject {
     public ChordScale(long id, String name, int initialSize) {
         super(id, name);
         mChordMembers = new ArrayList<>(initialSize);
-        mChordMembers.add(0,new Note("Fundamental"));
         mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
@@ -165,16 +169,16 @@ public class ChordScale extends SoundObject {
      */
     public void addChordMember(Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
+        mChordMembers.add(note);
         note.setPitchFrequency(mChordMembers.get(0).getPitchFrequency()
                 * Music.convertRatioToDecimal(note.getRatio()));
-        mChordMembers.add(note);
     }
 
     public void addChordMemberAt(int pos, Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
+        mChordMembers.add(pos, note);
         note.setPitchFrequency(mChordMembers.get(0).getPitchFrequency()
                 * Music.convertRatioToDecimal(note.getRatio()));
-        mChordMembers.add(pos, note);
     }
 
     /**
@@ -207,8 +211,8 @@ public class ChordScale extends SoundObject {
         // adjust all chord members
         for (int i = 1; i < this.mChordMembers.size(); ++i) {
             this.getChordMemberAtPos(i).setPitchFrequency(
-                    Music.convertRatioToDecimal(getChordMemberAtPos(i)
-                            .getRatio()) * newFundamentalFrequency);
+                    Music.convertRatioToDecimal(getChordMemberAtPos(i).getRatio())
+                            * newFundamentalFrequency);
         }
     }
 
