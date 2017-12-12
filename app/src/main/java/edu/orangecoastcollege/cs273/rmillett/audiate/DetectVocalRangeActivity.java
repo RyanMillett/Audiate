@@ -7,24 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class DetectVocalRangeActivity extends AppCompatActivity {
 
     PitchDetector pitchDetector;
 
-    private double mHighNoteFreqHz;
-    private double mLowNoteFreqHz;
-
-    private double[] mNoteFreqs; // collect held note variance to calculate average
-    private double mFreqAvg; // average frequency based on values in mNoteFreqs array
-
-    TextView lowNoteTextView;
-    TextView highNoteTextView;
-
     private Button detectHighButton;
     private Button detectLowButton;
+
+    private String toastText = "";
+    private String detectedPitch = "";
 
     private Handler handler;
 
@@ -36,18 +29,13 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         pitchDetector = new PitchDetector(this, this);
 
         ImageView pitchDetectImageView = findViewById(R.id.vocalRangeResultsImageView);
-        highNoteTextView = findViewById(R.id.highNoteResultTextView);
-        lowNoteTextView = findViewById(R.id.lowNoteResultTextView);
 
         detectHighButton = findViewById(R.id.detectHighNoteButton);
         detectLowButton = findViewById(R.id.detectLowNoteButton);
 
-        pitchDetector.activatePitchDetection();
-
-        highNoteTextView.setText("");
-        lowNoteTextView.setText("");
-
         handler = new Handler();
+
+        pitchDetector.activatePitchDetection();
     }
 
     /**
@@ -57,28 +45,52 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      */
     public void detectPitchHandler(View view) {
 
+        disableDetectionButtons();
 
-        Toast.makeText(this, "Sing your " + "" + "note", Toast.LENGTH_LONG).show();
+        switch (view.getId()) {
+            case R.id.detectHighNoteButton:
+                toastText = "highest";
+                break;
+            case R.id.detectLowNoteButton:
+                toastText = "lowest";
+                break;
+        }
 
-        // reset collections
+        Toast.makeText(this, "Sing your " + toastText + " note!", Toast.LENGTH_LONG).show();
+
+        // TODO: change view to "listening mode"
+
+        // start listening by resetting collections
         pitchDetector.resetCollections();
-
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 double freqAvg = pitchDetector.getFrequencyAverage();
                 Log.i("PD", "Frequency to parse->" + freqAvg);
-                highNoteTextView.setText(pitchDetector.parsePitchFromFreqAvg(freqAvg));
+                detectedPitch = pitchDetector.parsePitchFromFreqAvg(freqAvg);
+                Toast.makeText(DetectVocalRangeActivity.this, "Your " + toastText + " note is "
+                        + detectedPitch, Toast.LENGTH_LONG).show();
+
+                // TODO: change view back to resting mode
             }
         }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE);
 
+        // save value into user profile
+        switch (toastText) {
+            case "highest":
+                detectHighButton.setText("Your " + toastText + " note: ");
+                detectHighButton.append(detectedPitch);
+                // TODO: set user highest note
+                break;
+            case "lowest":
+                detectLowButton.setText("Your " + toastText + " note: ");
+                detectLowButton.append(detectedPitch);
+                // TODO: set user lowest note
+                break;
+        }
 
-
-
-        // save and display results
-        // RELEASE: revert button
-        // determine which button is selected (high/low)
+        enableDetectionButtons();
     }
 
     /**
@@ -87,10 +99,17 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      * @param view
      */
     public void confirmVocalRange(View view) {
-        // TODO: this method
-        // button disabled unless both high/low fields are not null
-        // take results, update current user profile
-        // Are you sure? Y/N pop-up or something
-        // launch View Profile activity to confirm results
+        view.setEnabled(false);
+        // TODO: once both high- and low-notes have been detected, save to user profile and leave the activity
+    }
+
+    private void disableDetectionButtons() {
+        detectHighButton.setEnabled(false);
+        detectLowButton.setEnabled(false);
+    }
+
+    private void enableDetectionButtons() {
+        detectHighButton.setEnabled(true);
+        detectLowButton.setEnabled(true);
     }
 }
