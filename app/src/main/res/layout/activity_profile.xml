@@ -20,7 +20,7 @@
         android:inputType="textPersonName"
         android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="40sp"/>
 
     <requestFocus/>
 
@@ -35,7 +35,7 @@
         android:inputType="textEmailAddress"
         android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="40sp"/>
 
     <EditText
         android:id="@+id/passwordCreateEditText"
@@ -48,7 +48,7 @@
         android:inputType="textPassword"
         android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="40sp"/>
 
     <TextView
         android:id="@+id/lowPitchTextView"
@@ -58,9 +58,9 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/low_pitch"
-        android:text="Low Pitch: C1"
+        android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="40sp"/>
 
     <TextView
         android:id="@+id/highPitchTextView"
@@ -70,9 +70,9 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/high_pitch"
-        android:text="High Pitch: C4"
+        android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="40sp"/>
 
     <TextView
         android:id="@+id/vocalRangeTextView"
@@ -83,9 +83,9 @@
         android:layout_marginTop="@dimen/buttons_text_margin"
         android:ems="10"
         android:hint="@string/vocal_range"
-        android:text="Vocal Range: C1 - C4"
+        android:text=""
         android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"
+        android:textSize="40sp"
         />
 
     <LinearLayout
