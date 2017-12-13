@@ -23,22 +23,19 @@ public class LibraryActivity extends AppCompatActivity {
 
     private static final String TAG = "LibraryActivity";
 
-    // DB
-    private DBHelper db;
+    // Databases
+    private DBMusicalMaterials mDBMusicalMaterials;
+    private DBMusicalMaterials mDBScalaArchive;
 
-    // ChordScale Lists
-    private List<ChordScale> mListOfPitchIntervals;
-    private List<ChordScale> mKyleGannOctaveAnatomy;
+    // Materials Lists
+    private List<Note> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
-    private List<ChordScale> mScalaArchive;
+    private List<ChordScale> mAllScalesList;
+        // Scala Archive
+        private List<ChordScale> mScalaArchiveList;
 
     // Filtered List
-    private List<ChordScale> filteredChordScalesList;
-
-    // views
-    private EditText setFundamentalEditText;
-    private TextView displayNameTextView;
-    private TextView selectionDisplayTextView;
+    private List<SoundObject> filteredMaterialsList;
 
     // ListView
     private ListView libraryListView;
@@ -48,6 +45,11 @@ public class LibraryActivity extends AppCompatActivity {
     private Spinner sortBySpinner;
     private Spinner filterBySpinner;
     ArrayAdapter<String> filterMaterialSpinnerAdapter;
+
+    // Info Views
+    private EditText setFundamentalEditText;
+    private TextView displayNameTextView;
+    private TextView displayDescriptionTextView;
 
     // playback mode Radio Group
     private RadioButton mode1RadioButton;
@@ -84,23 +86,45 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        // DB
-        deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
-        db.deleteAllIntervals();
+        // ---------- DELETE ONCE, THEN COMMENT OUT ---------- //
 
-        // Import materials
-        //db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
-        // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
-        // TODO: import chords
-        //db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
+            deleteDatabase(mDBMusicalMaterials.getDataBaseName());
+            deleteDatabase(mDBScalaArchive.getDataBaseName());
+
+        // ---------- ---------- ---------- ---------- ---------- //
+
+
+        // Databases
+        mDBMusicalMaterials = new DBMusicalMaterials("MusicalMaterials", this);
+        mDBScalaArchive = new DBMusicalMaterials("ScalaArchive", this);
+
+
+        // ---------- DO IMPORTS ONCE, THEN COMMENT OUT ---------- //
+
+            // Import materials
+            mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
+            // TODO: import chords
+            // TODO: import scales
+
+            // Import Scala Archive
+            mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
+
+        // ---------- ---------- ---------- ---------- ---------- //
+
 
         // Lists
-        filteredChordScalesList = new ArrayList<>();
-        mListOfPitchIntervals = db.getAllIntervals();
+        mAllIntervalsList = mDBMusicalMaterials.getAllIntervals();
+        // TODO: chords list
+        mAllScalesList = mDBMusicalMaterials.getAllScales();
+
+        // Scala Archive
+        mScalaArchiveList = mDBScalaArchive.getAllScales();
+
+        filteredMaterialsList = new ArrayList<>();
+
 
         displayNameTextView = findViewById(R.id.selectionNameDisplayTextView);
-        selectionDisplayTextView = findViewById(R.id.selectionDescriptionTextView);
+        displayDescriptionTextView = findViewById(R.id.selectionDescriptionTextView);
 
         selectMaterialSpinner = findViewById(R.id.materialSelectionSpinner);
         sortBySpinner = findViewById(R.id.sortMaterialSpinner);
@@ -109,7 +133,7 @@ public class LibraryActivity extends AppCompatActivity {
         libraryListView = (ListView) findViewById(R.id.libraryListView);
 
         mLibraryListAdapter = new LibraryListAdapter(this,
-                R.layout.library_list_item, filteredChordScalesList);
+                R.layout.library_list_item, filteredMaterialsList);
         libraryListView.setAdapter(mLibraryListAdapter);
         libraryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -117,7 +141,6 @@ public class LibraryActivity extends AppCompatActivity {
                 selectionDetailsHandler(view);
             }
         });
-
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =
@@ -175,56 +198,41 @@ public class LibraryActivity extends AppCompatActivity {
     public AdapterView.OnItemSelectedListener selectMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
-            String materialType = String.valueOf(spinner.getItemAtPosition(i));
+
+            // Update playback group text
+            setPlaybackSettingsText(i);
 
             // Update Library ListView
             mLibraryListAdapter.clear();
-            filteredChordScalesList.clear();
-            if (materialType.equals(getString(R.string.select_materials))) {
-                // Do nothing
-//                mLibraryListAdapter.clear();
-                disablePlaybackSettings();
-            }
-            else if (materialType.equals(getString(R.string.select_intervals))) {
-                // All Intervals
-                // TODO: add intervals
-                filteredChordScalesList.addAll(mListOfPitchIntervals);
-                mLibraryListAdapter.addAll(filteredChordScalesList);
-                // Update playback options
-                enablePlaybackSettings();
-                mode1RadioButton.setText(getString(R.string.block_chord));
-                    mode1RadioButton.setChecked(true);
-                mode2RadioButton.setText(getString(R.string.arp_up));
-                mode3RadioButton.setText(getString(R.string.arp_down));
-                aux1CheckBox.setText(getString(R.string.aux_interval_invert));
+            filteredMaterialsList.clear();
 
+            // Determine selected material
+            switch (i) {
+                case 1:
+                    // TODO: add intervals
+
+                    // Update playback options
+                    enablePlaybackSettings();
+                    break;
+                case 2:
+                    // TODO: add chords
+
+                    // Update playback options
+                    enablePlaybackSettings();
+                    break;
+                case 3:
+                    // TODO: add scales
+
+                    // Update playback options
+                    enablePlaybackSettings();
+                    break;
+                default:
+                    // Do nothing
+                    disablePlaybackSettings();
+                    break;
             }
-            else if (materialType.equals(getString(R.string.select_chords))) {
-                // All Chords
-                // TODO: add chords
-                mLibraryListAdapter.addAll(filteredChordScalesList);
-                // Update playback options
-                enablePlaybackSettings();
-                mode1RadioButton.setText(getString(R.string.block_chord));
-                    mode1RadioButton.setChecked(true);
-                mode2RadioButton.setText(getString(R.string.arp_up));
-                mode3RadioButton.setText(getString(R.string.arp_down));
-                aux1CheckBox.setText(getString(R.string.aux_chord_invert));
-            }
-            else if (materialType.equals(getString(R.string.select_scales))) {
-                // All Scales
-                // TODO: add scales
-                filteredChordScalesList.addAll(mScalaArchive = new ArrayList<>(db.getAllScalaArchiveScales()));
-                mLibraryListAdapter.addAll(filteredChordScalesList);
-                Log.i(TAG + "Scl", "mLibraryListAdapter count->" + mLibraryListAdapter.getCount());
-                // Update playback options
-                enablePlaybackSettings();
-                mode1RadioButton.setText(getString(R.string.cluster_chord));
-                mode2RadioButton.setText(getString(R.string.scale_up));
-                    mode2RadioButton.setChecked(true);
-                mode3RadioButton.setText(getString(R.string.scale_down));
-                aux1CheckBox.setText(getString(R.string.aux_scale_invert));
-            }
+
+            // Notify list adapter
             mLibraryListAdapter.notifyDataSetChanged();
 
             // Update "Filter" spinner adapter
@@ -263,6 +271,7 @@ public class LibraryActivity extends AppCompatActivity {
 
         return musicalMaterials;
     }
+
     private String[] getAllSortCriteria() {
         String[] sortByCriteria = new String[4];
 
@@ -273,43 +282,23 @@ public class LibraryActivity extends AppCompatActivity {
 
         return sortByCriteria;
     }
+
     private String[] getFilterCriteria() {
+
         String[] filters;
 
-        // TODO: implement in arrays.xml, currently hard-coded for expedience
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
-                filters = new String[10];
-                filters[0] = "List of Pitch Intervals";
-                filters[1] = "Equal-Tempered (by approximation)";
-                filters[2] = "Limit Intervals";
-                filters[3] = "Meantone";
-                filters[4] = "Superparticular ratios";
-                filters[5] = "Harmonics (First 127)";
-                filters[6] = "Ptolemy's intense diatonic scale";
-                filters[7] = "Pythagorean";
-                filters[8] = "Commas";
-                filters[9] = "\"Anatomy of an Octave\" by Kyle Gann";
+                filters = getResources().getStringArray(R.array.IntervalsArray);
                 break;
             case 2: // "Chords" selected
-                filters = new String[3];
-                filters[0] = "All Chords";
-                filters[1] = "Triads";
-                filters[2] = "7th-Chords";
+                filters = getResources().getStringArray(R.array.ChordsArray);
                 break;
             case 3: // "Scales" selected
-                filters = new String[7];
-                filters[0] = "Heptadiatonic Modes";
-                filters[1] = "Pentatonic";
-                filters[2] = "Equal-Tempered (by approximation)";
-                filters[3] = "Octavating";
-                filters[4] = "Non-Octavating";
-                filters[5] = "Olivier Messiaen's \"Modes of Limited Transposition\"";
-                filters[6] = "Full Scala Archive";
+                filters = getResources().getStringArray(R.array.ScalesArray);
                 break;
             default: // nothing selected
-                filters = new String[1];
-                filters[0] = "";
+                filters = new String[]{""};
                 break;
         }
 
@@ -368,6 +357,7 @@ public class LibraryActivity extends AppCompatActivity {
 //            }
 
             displayNameTextView.setText(selectedChordScale.getName());
+            displayDescriptionTextView.setText(selectedChordScale.getDescription());
 
 
             // Enable playback // TODO: add to listener
@@ -418,5 +408,35 @@ public class LibraryActivity extends AppCompatActivity {
 
         // just for now
         aux2CheckBox.setEnabled(false);
+    }
+
+    private void setPlaybackSettingsText(int materials) {
+
+        switch (materials) {
+            case 1:
+                mode1RadioButton.setText(getString(R.string.block_chord));
+                mode1RadioButton.setChecked(true);
+                mode2RadioButton.setText(getString(R.string.arp_up));
+                mode3RadioButton.setText(getString(R.string.arp_down));
+                aux1CheckBox.setText(getString(R.string.aux_interval_invert));
+                break;
+            case 2:
+                mode1RadioButton.setText(getString(R.string.block_chord));
+                mode1RadioButton.setChecked(true);
+                mode2RadioButton.setText(getString(R.string.arp_up));
+                mode3RadioButton.setText(getString(R.string.arp_down));
+                aux1CheckBox.setText(getString(R.string.aux_chord_invert));
+                break;
+            case 3:
+                mode1RadioButton.setText(getString(R.string.cluster_chord));
+                mode2RadioButton.setText(getString(R.string.scale_up));
+                mode2RadioButton.setChecked(true);
+                mode3RadioButton.setText(getString(R.string.scale_down));
+                aux1CheckBox.setText(getString(R.string.aux_scale_invert));
+                break;
+            default:
+                disablePlaybackSettings();
+                break;
+        }
     }
 }

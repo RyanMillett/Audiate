@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by RyanMillett on 12/13/17.
+ * Created by Ryan Millett on 12/13/17.
  */
 public class DBMusicalMaterials extends SQLiteOpenHelper {
 
@@ -25,7 +25,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
     private static final String TAG = "DBMusicalMaterials";
 
-    static final String MUSICAL_MATERIALS_DATABASE = "MusicalMaterialsDatabase";
+    private String mMusicalMaterialsDatabaseName;
     private static final int DATABASE_VERSION = 2;
 
     // Table of intervals
@@ -57,9 +57,13 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
     private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
 
 
-    public DBMusicalMaterials(Context context) {
-        super(context, MUSICAL_MATERIALS_DATABASE, null, DATABASE_VERSION);
+    public DBMusicalMaterials(String musicalMaterialsDatabaseName, Context context) {
+        super(context, musicalMaterialsDatabaseName, null, DATABASE_VERSION);
         mContext = context;
+    }
+
+    public String getDataBaseName() {
+        return mMusicalMaterialsDatabaseName;
     }
 
     @Override
@@ -367,9 +371,229 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
     // ---------- FILTERED LISTS:
 
+        // Intervals:
+
+    public List<ChordScale> getAllEqualTemperedIntervals() {
+        ArrayList<ChordScale> allEqualTemperedIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("equal")
+                        || Music.parseTET(cursor.getString(4))[0] != 0
+                        || Music.parseTET(cursor.getString(4)).length > 1) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allEqualTemperedIntervalsList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allEqualTemperedIntervalsList;
+    }
+
+    public List<ChordScale> getAllJustIntervals() {
+        ArrayList<ChordScale> allAllJustIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("just")) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allAllJustIntervalsList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allAllJustIntervalsList;
+    }
+
+    public List<ChordScale> getAllMeantoneIntervals() {
+        ArrayList<ChordScale> allMeantoneIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                FIELD_INTERVAL_MEANTONE + "=?",
+                new String[]{String.valueOf("Meantone")},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Create ChordScale
+                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
+                boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                // Add interval
+                interval.addChordMember(new Note(
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getDouble(3),
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        meantone,
+                        superparticular,
+                        cursor.getString(7)
+                ));
+
+                // add to list
+                allMeantoneIntervalsList.add(interval);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allMeantoneIntervalsList;
+    }
+
+    public List<ChordScale> getAllHarmonics() {
+        ArrayList<ChordScale> allHarmonicssList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("harmonic")) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allHarmonicssList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allHarmonicssList;
+    }
 
 
-    // ---------- SPECIAL HELPER METHODS:
+    // ---------- Scala HELPER METHODS:
 
     public void buildChordScaleFromSCL(ChordScale chordScale, String pathName, String sclFileName) {
 

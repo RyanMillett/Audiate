@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="IntervalsArray">
+        <item>List of Pitch Intervals</item>
+        <item>Harmonics (First 127)</item>
+        <item>Limit Intervals</item>
+        <item>Meantone Intervals</item>
+        <item>Superparticular Intervals</item>
+        <item>Equal-Tempered (by approximation)</item>
+        <item>Pythagorean Ratios</item>
+        <item>Commas</item>
+        <item>"Anatomy of an Octave" by Kyle Gann</item>
+    </string-array>
+
+    <string-array name="ChordsArray">
+        <item>All Chords</item>
+        <item>Triads</item>
+        <item>7th-Chords</item>
+    </string-array>
+
+    <string-array name="ScalesArray">
+        <item>Heptadiatonic Modes</item>
+        <item>Pentatonic</item>
+        <item>Equal-Tempered (by approximation)</item>
+        <item>Octavating</item>
+        <item>Non-Octavating</item>
+        <item>Olivier Messiaen's "Modes of Limited Transposition"</item>
+        <item>Full Scala Archive</item>
+    </string-array>
+
+</resources>
