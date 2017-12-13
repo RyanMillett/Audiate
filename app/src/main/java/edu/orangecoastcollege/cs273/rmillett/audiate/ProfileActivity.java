@@ -58,9 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // This should allow the users to return to the LoginActivity
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Intent intentFromDetectVocalRange = getIntent();
 
         String lowPitch = intentFromDetectVocalRange.getStringExtra("LowPitch");
@@ -186,21 +183,16 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     /**
-     * The <code>handleProfileButtons</code> handles both the confirmProfileButton and the
+     * The <code>confirmProfile</code> handles both the confirmProfileButton and the
      * detectVocalRangeButton. If the user clicks confirmProfile it creates a user.
      *
      * @param v
      */
-    public void handleProfileButtons(View v) {
+    public void confirmProfile(View v) {
         switch (v.getId()) {
             case R.id.confirmProfileButton:
                 createUser(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(), mPasswordEditText.getText().toString(),
                         mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(), mVocalRangeTextView.getText().toString());
-                break;
-
-            case R.id.detectVocalRangeButton:
-                Intent launchDetectVocalRange = new Intent(this, DetectVocalRangeActivity.class);
-                startActivity(launchDetectVocalRange);
                 break;
         }
     }

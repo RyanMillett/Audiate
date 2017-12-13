@@ -151,8 +151,8 @@ LoginActivity extends AppCompatActivity {
     public void handleLoginButtons(View v) {
         switch (v.getId()) {
             case R.id.createProfileButton:
-                Intent launchProfile = new Intent(this, ProfileActivity.class);
-                startActivity(launchProfile);
+                Intent launchDetectVocalRange = new Intent(this, DetectVocalRangeActivity.class);
+                startActivity(launchDetectVocalRange);
                 break;
             case R.id.loginButton:
                 Login(mEmailLoginEditText.getText().toString(), mPasswordLoginEditText.getText().toString());

@@ -88,43 +88,22 @@
         android:textSize="40sp"
         />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/detectVocalRangeButton"
-            android:layout_width="500dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/custom_blue_bg"
-            android:fontFamily="serif"
-            android:onClick="handleProfileButtons"
-            android:padding="10dp"
-            android:text="@string/detect_vocal_range_button"
-            android:textSize="@dimen/small_text_size"/>
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="500dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/confirmProfileButton"
             android:layout_width="500dp"
-            android:layout_height="75dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/custom_green_bg"
             android:fontFamily="serif"
-            android:onClick="handleProfileButtons"
-            android:padding="@dimen/buttons_padding"
+            android:onClick="confirmProfile"
             android:text="@string/confirm_profile_button"
             android:textSize="@dimen/small_text_size"
             android:textStyle="bold|italic"/>
