@@ -156,7 +156,6 @@
             android:layout_weight="4"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:choiceMode="singleChoice"
-            android:background="@drawable/selector"
             android:listSelector="@color/colorPrimary"
             android:layout_height="wrap_content">
         </ListView>

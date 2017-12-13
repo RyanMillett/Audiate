@@ -34,7 +34,7 @@ public class SoundObjectPlayer {
      *
      * Do not set this lower than 8k
      */
-    public static final int SAMPLE_RATE = 8000; // TODO: link this to general settings
+    public static final int DEFAULT_SAMPLE_RATE = 8000; // TODO: link this to general settings
 
     private static AudioTrack mAudioTrack;
 
@@ -77,13 +77,13 @@ public class SoundObjectPlayer {
         }
 
         // Create waveform
-        int numSamples = (soundObject.getDurationMilliseconds() / 1000) * SAMPLE_RATE;
+        int numSamples = (soundObject.getDurationMilliseconds() / 1000) * DEFAULT_SAMPLE_RATE;
         double[] sample = new double[numSamples];
         for (int i = 0; i < numSamples; ++i) {
             double valueSum = 0;
 
             for (int j = 0; j < frequencies.length; ++j) {
-                valueSum += Math.sin(2 * Math.PI * i / (SAMPLE_RATE / frequencies[j]));
+                valueSum += Math.sin(2 * Math.PI * i / (DEFAULT_SAMPLE_RATE / frequencies[j]));
             }
 
             sample[i] = valueSum / frequencies.length;
@@ -116,11 +116,11 @@ public class SoundObjectPlayer {
         ArrayList<double[]> samples = new ArrayList<>();
         int numSamples = 0;
         for (final Note note : sequence) {
-            int num = note.getDurationMilliseconds() * SAMPLE_RATE / 1000;
+            int num = note.getDurationMilliseconds() * DEFAULT_SAMPLE_RATE / 1000;
             double[] sample = new double[num];
 
             for (int i = 0; i < num; ++i) {
-                sample[i] = Math.sin(2 * Math.PI * i * note.getPitchFrequency() / SAMPLE_RATE);
+                sample[i] = Math.sin(2 * Math.PI * i * note.getPitchFrequency() / DEFAULT_SAMPLE_RATE);
             }
             samples.add(sample);
             numSamples += num;
@@ -161,7 +161,7 @@ public class SoundObjectPlayer {
 
     private void writeAudioTrack(byte[] generatedSnd, int numSamples) {
         mAudioTrack = new AudioTrack(AudioManager
-                .STREAM_MUSIC, SAMPLE_RATE,
+                .STREAM_MUSIC, DEFAULT_SAMPLE_RATE,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, numSamples,
                 AudioTrack.MODE_STATIC);
@@ -171,7 +171,7 @@ public class SoundObjectPlayer {
 
     private void writeAudioTrack(byte[] generatedSound) {
         mAudioTrack = new AudioTrack(AudioManager
-                .STREAM_MUSIC, SAMPLE_RATE,
+                .STREAM_MUSIC, DEFAULT_SAMPLE_RATE,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSound.length,
                 AudioTrack.MODE_STATIC);

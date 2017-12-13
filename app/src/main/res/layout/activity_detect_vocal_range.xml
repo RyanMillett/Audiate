@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.DetectVocalRangeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="edu.orangecoastcollege.cs273.rmillett.audiate.DetectVocalRangeActivity">
 
 
     <TextView
@@ -14,26 +13,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="serif"
         android:hint="@string/detect_vocal_range_button"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:fontFamily="serif"
-        android:textSize="@dimen/medium_text_size"/>
+        android:textSize="@dimen/medium_text_size" />
 
     <TextView
         android:id="@+id/detectVocalRangeInstructionsTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:hint="@string/detect_vocal_range_activity_info_text"/>
+        android:hint="@string/detect_vocal_range_activity_info_text" />
 
     <LinearLayout
         android:id="@+id/detectVocalRangeResultsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginVertical="75dp"
         android:orientation="vertical"
-        android:layout_gravity="center"
         android:padding="@dimen/buttons_padding">
 
         <ImageView
@@ -41,29 +40,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="50dp"/>
-
-        <TextView
-            android:id="@+id/highNoteResultTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/buttons_padding"
-            android:textSize="20sp"
-            android:hint="[HIGH NOTE]"
-            android:layout_marginVertical="10dp"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/lowNoteResultTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:padding="@dimen/buttons_padding"
-            android:hint="[LOW NOTE]"
-            android:layout_marginVertical="10dp"
-            android:textAlignment="center"/>
+            android:layout_marginVertical="50dp" />
 
     </LinearLayout>
 
@@ -71,88 +48,60 @@
     <LinearLayout
         android:id="@+id/detectHighNoteLowNoteButtonGroupLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/vocal_range_buttons_layouts"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="2">
 
-
-        <LinearLayout
-            android:id="@+id/detectHighNoteButtonLinearLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="10dp"
-            android:elevation="10dp"
+        <Button
+            android:id="@+id/detectHighNoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="@dimen/buttons_padding">
+            android:background="@drawable/custom_blue_bg"
+            android:onClick="detectPitchHandler"
+            android:padding="@dimen/buttons_padding"
+            android:text="@string/detect_high_note"
+            android:textSize="40dp" />
 
-            <Button
-                android:id="@+id/detectHighNoteButton"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vocal_range_buttons"
-                android:background="@drawable/custom_blue_bg"
-                android:fontFamily="monospace"
-                android:onClick="detectPitchHandler"
-                android:padding="@dimen/buttons_padding"
-                android:text="@string/detect_high_note"
-                android:textSize="40dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/detectLowNoteButtonLinearLayout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <Button
+            android:id="@+id/detectLowNoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="75dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="@dimen/buttons_padding">
-
-            <Button
-                android:id="@+id/detectLowNoteButton"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/vocal_range_buttons"
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="10dp"
-                android:elevation="10dp"
-                android:background="@drawable/custom_blue_bg"
-                android:fontFamily="monospace"
-                android:onClick="detectPitchHandler"
-                android:padding="@dimen/buttons_padding"
-                android:text="@string/detect_low_note"
-                android:textSize="40dp"/>
-
-        </LinearLayout>
+            android:background="@drawable/custom_blue_bg"
+            android:onClick="detectPitchHandler"
+            android:padding="@dimen/buttons_padding"
+            android:text="@string/detect_low_note"
+            android:textSize="40dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/confirmVocalRangeButtonLinearLayout"
-        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="@dimen/buttons_padding"
-        android:orientation="vertical">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:padding="@dimen/buttons_padding">
 
         <Button
             android:id="@+id/confirmVocalRangeButton"
             android:layout_width="500dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/custom_green_bg"
-            android:textSize="@dimen/small_text_size"
-            android:textColor="@color/black"
             android:fontFamily="serif"
-            android:textStyle="bold|italic"
             android:onClick="confirmVocalRange"
             android:padding="@dimen/buttons_padding"
-            android:layout_marginVertical="20dp"
-            android:text="@string/confirm_vocal_range"/>
+            android:text="@string/confirm_vocal_range"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_text_size"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 

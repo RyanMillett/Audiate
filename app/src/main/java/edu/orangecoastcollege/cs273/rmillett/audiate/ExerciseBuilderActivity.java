@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ExerciseBuilderActivity extends AppCompatActivity {
 
@@ -106,7 +105,14 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // ListView
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
         mExercisesListView.setAdapter(mExerciseSelectionListAdapter);
-        mExercisesListView.setOnItemSelectedListener(listViewListener);
+        mExercisesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                exerciseSelectionHandler(view);
+            }
+
+
+        });
 
         // List items
         mListItem = findViewById(R.id.exerciseListLinearLayout);
@@ -119,22 +125,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-
-    // LISTENERS // TODO: not working
-    public AdapterView.OnItemSelectedListener listViewListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Log.i(TAG, "onItemSelected!");
-            mStartButton.setVisibility(View.VISIBLE);
-            view.setSelected(true);
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-            mStartButton.setVisibility(View.INVISIBLE);
-
-        }
-    };
 
     // BUTTON HANDLERS //
 

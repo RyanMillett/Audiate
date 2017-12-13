@@ -35,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private User user;
 
     private EditText mUserNameEditText;
     private EditText mEmailEditText;
@@ -77,6 +78,8 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mUser = mAuth.getCurrentUser();
+        user = mDB.getUser(mUser.getEmail());
+
     }
 
     /**
@@ -151,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, "Account created successfully. Please verify account in your email.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, "Account created successfully.", Toast.LENGTH_LONG).show();
                     mUser = mAuth.getCurrentUser();
                 } else {
                     Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different user name.", Toast.LENGTH_LONG).show();
