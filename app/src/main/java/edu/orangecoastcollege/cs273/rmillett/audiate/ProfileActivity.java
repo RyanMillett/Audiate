@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DBHelper mDB;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
+    private FirebaseUser mFirebaseUser;
     private User user;
 
     private EditText mUserNameEditText;
@@ -77,8 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        mUser = mAuth.getCurrentUser();
-        user = mDB.getUser(mUser.getEmail());
+        mFirebaseUser = mAuth.getCurrentUser();
 
     }
 
@@ -155,7 +154,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(ProfileActivity.this, "Account created successfully.", Toast.LENGTH_LONG).show();
-                    mUser = mAuth.getCurrentUser();
+                    mFirebaseUser = mAuth.getCurrentUser();
                 } else {
                     Toast.makeText(ProfileActivity.this, "Account already exists. Please sign in, or use different user name.", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Error creating new account", task.getException());

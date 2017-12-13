@@ -37,6 +37,7 @@
     <string name="main_menu">Main Menu</string>
     <string name="ear_training_button">Ear Training</string>
     <string name="sight_singing_button">Sight Singing</string>
+    <string name="exercises_button">Exercises</string>
     <string name="sound_library_button">Sound Library</string>
     <string name="edit_profile_button">Edit Profile</string>
     <string name="log_out_button">Log Out</string>

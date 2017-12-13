@@ -28,7 +28,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
 
-    private TextView welcomeTextView;
+    // Will not be used
+    // private TextView welcomeTextView;
 
     /**
      * This sets up the activity with the database and gets the current user.
@@ -56,24 +57,15 @@ public class MainMenuActivity extends AppCompatActivity {
                     + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
                     + "\nvocal_range: " + u.getVocalRange());
         }
-        user = db.getUser(email);
+
+        // CRASHES CODE IF RETURNING FROM ANY PREVIOUS WINDOW
+        // user = db.getUser(email);
 
 
-        welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
-
-
-
-
-
-
+        // welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
 
         // Should display a welcome message to the user at the main menu
-        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
-
-
-        // If I have to go with alternate LoginActivity
-        // User selectedUser = getIntent().getExtras().getParcelable("SelectedUser");
-        // welcomeTextView.setText(getString(R.string.welcome_message, selectedUser.getUserName()));
+        // welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
     }
 
     /**

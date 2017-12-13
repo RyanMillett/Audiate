@@ -154,7 +154,6 @@ LoginActivity extends AppCompatActivity {
                 Intent launchProfile = new Intent(this, ProfileActivity.class);
                 startActivity(launchProfile);
                 break;
-
             case R.id.loginButton:
                 Login(mEmailLoginEditText.getText().toString(), mPasswordLoginEditText.getText().toString());
                 break;

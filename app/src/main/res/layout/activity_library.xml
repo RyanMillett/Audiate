@@ -184,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/buttons_padding"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/custom_blue_bg"
                     android:onClick="playbackHandler"
                     android:text="@string/test_fundamental_frequency"
                     android:textSize="10sp"/>
@@ -261,7 +261,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="@dimen/buttons_padding"
-            android:background="@color/colorPlay"
+            android:background="@drawable/custom_green_bg"
             android:onClick="playbackHandler"
             android:text="@string/play_selection" />
 
