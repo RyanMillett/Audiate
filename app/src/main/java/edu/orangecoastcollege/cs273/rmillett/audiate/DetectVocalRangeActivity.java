@@ -23,15 +23,14 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
     private Button detectHighButton;
     private Button detectLowButton;
 
+    private Button confirmButton;
+
     private String toastText = "";
     private String detectedPitch = "";
 
 
     private String highPitch = "";
     private String lowPitch = "";
-    private String vocalRange = "";
-
-
 
     private Handler handler;
 
@@ -46,6 +45,9 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
         detectHighButton = findViewById(R.id.detectHighNoteButton);
         detectLowButton = findViewById(R.id.detectLowNoteButton);
+
+        confirmButton = findViewById(R.id.confirmVocalRangeButton);
+        confirmButton.setVisibility(View.INVISIBLE);
 
         handler = new Handler();
 
@@ -74,11 +76,6 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         }
 
         // instructional toast
-//        Toast instructionToast = new Toast(this);
-//        instructionToast.makeText(this, "Sing your " + toastText + " note!", Toast.LENGTH_LONG).setGravity(0,0,0);
-//        instructionToast.setView();
-//        instructionToast.show();
-
         makeText(this, "Sing your " + toastText + " note!", Toast.LENGTH_LONG).show();
 
         // TODO: change view to "listening mode"
@@ -95,13 +92,6 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
                 Log.i(TAG, "Frequency to parse->" + freqAvg);
                 detectedPitch = pitchDetector.parsePitchFromFreqAvg(freqAvg);
 
-                // display toast
-//                Toast resultToast = new Toast(DetectVocalRangeActivity.this);
-//                resultToast.makeText(DetectVocalRangeActivity.this, "Your " + toastText + " note is "
-//                        + detectedPitch, Toast.LENGTH_LONG).setGravity(0,0,0);
-//                resultToast.setView();
-//                resultToast.show();
-
                 Toast resultToast = Toast.makeText(DetectVocalRangeActivity.this, "Your " + toastText + " note is "
                         + detectedPitch, Toast.LENGTH_LONG);
                 resultToast.setGravity(Gravity.CENTER, 0, 0);
@@ -115,17 +105,17 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         // save value into user profile
         switch (toastText) {
             case "highest":
-                //detectHighButton.setText("Your " + toastText + " note: ");
-                //detectHighButton.append(detectedPitch);
-                // TODO: set user highest note
+                // set user highest note
                 highPitch = detectedPitch;
                 break;
             case "lowest":
-               // detectLowButton.setText("Your " + toastText + " note: ");
-                //detectLowButton.append(detectedPitch);
-                // TODO: set user lowest note
+                // set user lowest note
                 lowPitch = detectedPitch;
                 break;
+        }
+
+        if (!lowPitch.isEmpty() && !highPitch.isEmpty()) {
+            confirmButton.setVisibility(View.VISIBLE);
         }
 
         enableDetectionButtons();
@@ -137,21 +127,14 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      * @param view
      */
     public void confirmVocalRange(View view) {
-        // TODO: once both high- and low-notes have been detected, save to user profile and leave the activity
-        if(TextUtils.isEmpty(highPitch) || TextUtils.isEmpty(lowPitch))
-            view.setEnabled(false);
-        else
-        {
-            Intent launchProfile = new Intent(this, ProfileActivity.class);
-            launchProfile.putExtra("HighPitch", highPitch);
-            launchProfile.putExtra("LowPitch", lowPitch);
-            vocalRange = lowPitch + " - " + highPitch;
-            launchProfile.putExtra("VocalRange", vocalRange);
+        // once both high- and low-notes have been detected, save to user profile and leave the activity
+                                        // TODO: go to confirm screen, not profile
+        Intent launchProfile = new Intent(this, ProfileActivity.class);
+        launchProfile.putExtra("HighPitch", highPitch);
+        launchProfile.putExtra("LowPitch", lowPitch);
+        launchProfile.putExtra("VocalRange", lowPitch + " - " + highPitch);
 
-            startActivity(launchProfile);
-        }
-
-
+        startActivity(launchProfile);
     }
 
     private void disableDetectionButtons() {
