@@ -178,6 +178,7 @@ public class LibraryActivity extends AppCompatActivity {
 
             // Update Library ListView
             mLibraryListAdapter.clear();
+            filteredChordScalesList.clear();
             if (materialType.equals(getString(R.string.select_materials))) {
                 // Do nothing
 //                mLibraryListAdapter.clear();
