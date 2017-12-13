@@ -3,11 +3,15 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The <code>MainMenuActivity</code> allows the user to choose
@@ -23,6 +27,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+
+    private TextView welcomeTextView;
 
     /**
      * This sets up the activity with the database and gets the current user.
@@ -40,22 +46,29 @@ public class MainMenuActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        db = new DBHelper(this);
 
-        TextView welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
-
-
-        /*
+        String email = mUser.getEmail();
+        String displayName = mUser.getDisplayName();
         List<User> users = new ArrayList<>(db.getAllUsers());
         for (User u : users) {
             Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
                     + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
                     + "\nvocal_range: " + u.getVocalRange());
         }
-        */
+        user = db.getUser(email);
+
+
+        welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
+
+
+
+
+
 
 
         // Should display a welcome message to the user at the main menu
-        // welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
+        welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
 
 
         // If I have to go with alternate LoginActivity

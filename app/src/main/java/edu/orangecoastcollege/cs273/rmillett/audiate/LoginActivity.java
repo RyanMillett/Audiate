@@ -28,7 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
  *          <p>
  *          Created by Brian Wegener on 11/25/2017
  */
-public class LoginActivity extends AppCompatActivity {
+public class
+LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
@@ -77,7 +78,9 @@ public class LoginActivity extends AppCompatActivity {
         RunAnimation();
 
         // ASK MICHAEL
-        // user = getIntent().getExtras().getParcelable("CurrentUser");
+        Bundle profileBundle = getIntent().getExtras();
+        if (profileBundle != null)
+            user = profileBundle.getParcelable("CurrentUser");
 
         // Log.i(TAG, "This is the current user name: " + user.getUserName());
     }
@@ -88,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     private void goToMain() {
         finish();
         Intent mainMenuIntent = new Intent(this, MainMenuActivity.class);
+        mainMenuIntent.putExtra("CurrentUser", user);
         startActivity(mainMenuIntent);
     }
 
@@ -134,10 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         mUser = mAuth.getCurrentUser();
-                        if (mUser.isEmailVerified())
-                            goToMain();
-                        else
-                            Toast.makeText(LoginActivity.this, "Please verify your account in the email: " + mUser.getEmail(), Toast.LENGTH_LONG).show();
+                        goToMain();
                     } else {
                         Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
                     }
