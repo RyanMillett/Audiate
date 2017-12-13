@@ -17,7 +17,7 @@ import java.util.List;
  * @author Ryan Millett
  * @version 1.0
  */
-public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
+public class ExerciseBuilderListAdapter extends ArrayAdapter<Exercise> {
 
     private static final String TAG = "ExerciseListAdapter";
 
@@ -25,7 +25,7 @@ public class ExerciseSelectionListAdapter extends ArrayAdapter<Exercise> {
     private List<Exercise> mExerciseActivityList = new ArrayList<>();
     private int mResourceId;
 
-    public ExerciseSelectionListAdapter(Context context, int rId, List<Exercise> exerciseActivityTypeList) {
+    public ExerciseBuilderListAdapter(Context context, int rId, List<Exercise> exerciseActivityTypeList) {
         super(context, rId, exerciseActivityTypeList);
         mContext = context;
         mResourceId = rId;

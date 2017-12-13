@@ -39,6 +39,8 @@ public class LibraryActivity extends AppCompatActivity {
     private EditText setFundamentalEditText;
     private TextView displayNameTextView;
     private TextView selectionDisplayTextView;
+
+    // ListView
     private ListView libraryListView;
 
     // spinners and adapters
@@ -108,6 +110,13 @@ public class LibraryActivity extends AppCompatActivity {
         mLibraryListAdapter = new LibraryListAdapter(this,
                 R.layout.library_list_item, filteredChordScalesList);
         libraryListView.setAdapter(mLibraryListAdapter);
+        libraryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectionDetailsHandler(view);
+            }
+        });
+
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
     private List<Exercise> mAllSingingExercises;
     private List<Exercise> mFilteredExerciseList;
 
-    private ExerciseSelectionListAdapter mExerciseSelectionListAdapter;
+    private ExerciseBuilderListAdapter mExerciseBuilderListAdapter;
 
     private ImageView mEarsImageView;
     private ImageView mSingingImageView;
@@ -63,18 +62,17 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // Exercise to build
         mExerciseActivity = new Exercise();
 
-        // ListsDB
+        // DB
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
         db.importAllExercisesFromCSV("exercises.csv");
 
-        // DB
+        // Lists
         mAllListeningExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_LISTENING));
         mAllSingingExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_SINGING));
+
+        // Filtered List
         mFilteredExerciseList = new ArrayList<>();
-        Log.i(TAG, "allListening->" + mAllListeningExercises.size());
-        Log.i(TAG, "allSinging->" + mAllSingingExercises.size());
-        Log.i(TAG, "allExercises->" + mFilteredExerciseList.size());
 
         // ImageViews
         mEarsImageView = findViewById(R.id.earsImageView);
@@ -86,11 +84,11 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // Search EditText
         mSearchEditText = findViewById(R.id.searchExercisesEditText);
 
-
-        // Buttons
+        // Category Buttons
         mIntervalsButton = findViewById(R.id.exercise1Button); mIntervalsButton.setEnabled(false);
         mChordsButton = findViewById(R.id.exercise2Button); mChordsButton.setEnabled(false);
         mScalesButton = findViewById(R.id.exercise3Button); mScalesButton.setEnabled(false);
+
         // Start button
         mStartButton = findViewById(R.id.startExerciseButton);
         mStartButton.setVisibility(View.INVISIBLE);
@@ -99,19 +97,18 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         mExerciseButtons = new Button[]{mIntervalsButton, mChordsButton, mScalesButton};
 
         // ListAdapter
-        mExerciseSelectionListAdapter = new ExerciseSelectionListAdapter(this,
+        mExerciseBuilderListAdapter = new ExerciseBuilderListAdapter(this,
                 R.layout.exercise_list_item, mFilteredExerciseList);
 
         // ListView
         mExercisesListView = findViewById(R.id.exercisesCategoriesListView);
-        mExercisesListView.setAdapter(mExerciseSelectionListAdapter);
+        mExercisesListView.setAdapter(mExerciseBuilderListAdapter);
         mExercisesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mExercisesListView.setSelector(R.color.colorPrimary);
                 exerciseSelectionHandler(view);
             }
-
-
         });
 
         // List items
@@ -126,42 +123,14 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
     }
 
-    // BUTTON HANDLERS //
 
-    public void startActivity(View view) {
-
-        if (!mExerciseActivity.getExerciseName().equals("")) {
-
-            // Declare intent
-            Intent exerciseIntent;
-
-            // Determine Exercise Mode
-            switch (mExerciseActivity.getExerciseMode()) {
-                case Exercise.EXERCISE_MODE_LISTENING:
-                    exerciseIntent = new Intent(this, EarTrainingExerciseActivity.class);
-                    break;
-                case Exercise.EXERCISE_MODE_SINGING:
-                    exerciseIntent = new Intent(this, SingingExerciseActivity.class);
-                    break;
-                default:
-                    exerciseIntent = new Intent();
-            }
-
-            // Parcel Exercise information
-            exerciseIntent.putExtra("SelectedExercise",mExerciseActivity);
-
-            // Launch
-            startActivity(exerciseIntent);
-        }
-        else {
-            Toast.makeText(this, "Select an exercise.", Toast.LENGTH_LONG);
-        }
-    }
+    // SELECTION HANDLERS //
 
     public void exerciseSelectionHandler(View view) {
         if (view instanceof Button) {
             updateButtonColors(view);
             mStartButton.setVisibility(View.INVISIBLE);
+            mExercisesListView.setSelector(R.color.white);
         }
 
         //mExerciseActivity.reset();
@@ -188,6 +157,32 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
         updateListView(view);
     }
+
+    public void startActivity(View view) {
+        // Declare intent
+        Intent exerciseIntent;
+
+        // Determine Exercise Mode
+        switch (mExerciseActivity.getExerciseMode()) {
+            case Exercise.EXERCISE_MODE_LISTENING:
+                exerciseIntent = new Intent(this, EarTrainingExerciseActivity.class);
+                break;
+            case Exercise.EXERCISE_MODE_SINGING:
+                exerciseIntent = new Intent(this, SingingExerciseActivity.class);
+                break;
+            default:
+                exerciseIntent = new Intent();
+        }
+
+        // Parcel Exercise information
+        exerciseIntent.putExtra("SelectedExercise",mExerciseActivity);
+
+        // Launch Exercise
+        startActivity(exerciseIntent);
+    }
+
+
+    // PRIVATE HELPER METHODS //
 
     private String getDescriptionFromTxt(Exercise exercise, String fileName) {
         String description = "Description Not Found.";
@@ -235,9 +230,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         return description;
     }
 
-
-    // PRIVATE HELPER METHODS //
-
     private void setExerciseButtons(boolean enabled, View view) {
         updateImageViewColors(view);
 
@@ -254,13 +246,13 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                     break;
                 case R.id.singingImageView:
                     mIntervalsButton.setText(getString(R.string.interval_singing_exercises_button));
-                    mIntervalsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                        mIntervalsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     mChordsButton.setText(getString(R.string.chord_arpeggio_exercises_button));
-                    mChordsButton.setEnabled(false);
-                    mChordsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                        mChordsButton.setEnabled(false);
+                        mChordsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     mScalesButton.setText(getString(R.string.melody_singing_exercises_button));
-                    mScalesButton.setEnabled(false);
-                    mScalesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                        mScalesButton.setEnabled(false);
+                        mScalesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                     break;
             }
         }
@@ -300,13 +292,15 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         updateDescriptionTextView(view);
 
         Log.i(TAG, "mFilteredExerciseList.size()->" + mFilteredExerciseList.size());
-        mExerciseSelectionListAdapter.clear();
-        mExerciseSelectionListAdapter.addAll(mFilteredExerciseList);
-        mExerciseSelectionListAdapter.notifyDataSetChanged();
-        Log.i(TAG, "mExerciseSelectionListAdapter.getCount()->" + mExerciseSelectionListAdapter.getCount());
+        mExerciseBuilderListAdapter.clear();
+        mExerciseBuilderListAdapter.addAll(mFilteredExerciseList);
+        mExerciseBuilderListAdapter.notifyDataSetChanged();
+        Log.i(TAG, "mExerciseBuilderListAdapter.getCount()->" + mExerciseBuilderListAdapter.getCount());
     }
 
     private void updateDescriptionTextView(View view) {
+        mExercisesListView.scrollTo(0,0);
+
         // list view items
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
