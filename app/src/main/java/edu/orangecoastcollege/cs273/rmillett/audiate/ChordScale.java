@@ -83,6 +83,8 @@ public class ChordScale extends SoundObject {
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
+
+        initializeChordScale(CHORDSCALE_DEFAULT_INITIAL_SIZE);
     }
 
     public ChordScale(String name, int initialSize) {
@@ -92,6 +94,8 @@ public class ChordScale extends SoundObject {
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = "No information";
         mSCLfileName = "No associated .scl file";
+
+        initializeChordScale(initialSize);
     }
 
     public ChordScale(String name, String description) {
@@ -101,6 +105,8 @@ public class ChordScale extends SoundObject {
         mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
         mDescription = description;
         mSCLfileName = "No associated .scl file";
+
+        initializeChordScale(CHORDSCALE_DEFAULT_INITIAL_SIZE);
     }
 
 

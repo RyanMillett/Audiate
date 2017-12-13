@@ -697,6 +697,63 @@ public class DBHelper extends SQLiteOpenHelper {
         // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
         // Olivier Messiaen's "Modes of Limited Transposition"
 
+    public List<ChordScale> getAllEqualTemperedIntervals() {
+        ArrayList<ChordScale> allEqualTemperedIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("equal")
+                        || Music.parseTET(cursor.getString(4))[0] != 0
+                        || Music.parseTET(cursor.getString(4)).length > 1) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allEqualTemperedIntervalsList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allEqualTemperedIntervalsList;
+    }
 
     public List<Exercise> getAllExercisesByMode(String exerciseMode) {
         ArrayList<Exercise> allExercisesList = new ArrayList<>();
@@ -1103,7 +1160,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    // ----------------- Obsolete Method Waste Land -------------------------------- //
+    // ----------------- OBSOLETE METHOD WASTE LAND -------------------------------- //
+    // ------------- ABANDON ALL HOPE YE WHO ENTER HERE ---------------------------- //
+
 
     // obsolete (for now)
     public List<ChordScale> getAllScalesFromSCL() {
