@@ -55,8 +55,10 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         libraryListLinearLayout.setTag(selectedChordScale);
 
         libraryListNameTextView.setText(selectedChordScale.getName());
+        libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
         // Determine Interval or ChordScale
+
 
 
         return view;

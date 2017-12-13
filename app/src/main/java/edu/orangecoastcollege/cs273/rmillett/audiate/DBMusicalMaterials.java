@@ -897,7 +897,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                 String sclFileName = fields[1].trim();
                 Log.i(TAG, "fileName-> " + sclFileName);
 
-                String name = fields[2].replaceAll("\"", "").trim();
+                String name = fields[2].trim();
                 Log.i(TAG, "name-> " + name);
 
                 int size = Integer.parseInt(fields[3].trim());
@@ -908,6 +908,8 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                 for (int j = 4; j < fields.length; ++j) {
                     description += fields[j];
                 }
+
+                description = description.replaceAll("\"", "");
 
                 Log.i(TAG, "description-> " + description);
 

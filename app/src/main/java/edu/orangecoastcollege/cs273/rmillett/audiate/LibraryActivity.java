@@ -88,8 +88,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         // ---------- DELETE IF EXISTS, OTHERWISE COMMENT OUT ---------- //
 
-            deleteDatabase(mDBMusicalMaterials.getDataBaseName());
-            deleteDatabase(mDBScalaArchive.getDataBaseName());
+//            deleteDatabase(mDBMusicalMaterials.getDataBaseName());
+//            deleteDatabase(mDBScalaArchive.getDataBaseName());
+        deleteDatabase(DBHelper.DATABASE_NAME);
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -111,7 +112,7 @@ public class LibraryActivity extends AppCompatActivity {
             // TODO: import scales
 
             // Import Scala Archive
-            mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
+            //mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -214,7 +215,7 @@ public class LibraryActivity extends AppCompatActivity {
             switch (i) {
                 case 1:
                     // TODO: add intervals
-
+                    filteredMaterialsList.addAll(mAllIntervalsList);
                     // Update playback options
                     enablePlaybackSettings();
                     break;
