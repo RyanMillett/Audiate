@@ -28,7 +28,6 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
     private String toastText = "";
     private String detectedPitch = "";
 
-
     private String highPitch = "";
     private String lowPitch = "";
 
@@ -92,8 +91,8 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
                 Log.i(TAG, "Frequency to parse->" + freqAvg);
                 detectedPitch = pitchDetector.parsePitchFromFreqAvg(freqAvg);
 
-                Toast resultToast = Toast.makeText(DetectVocalRangeActivity.this, "Your " + toastText + " note is "
-                        + detectedPitch, Toast.LENGTH_LONG);
+                Toast resultToast = Toast.makeText(DetectVocalRangeActivity.this,
+                        "Your " + toastText + " note is " + detectedPitch, Toast.LENGTH_LONG);
                 resultToast.setGravity(Gravity.CENTER, 0, 0);
                 resultToast.show();
 

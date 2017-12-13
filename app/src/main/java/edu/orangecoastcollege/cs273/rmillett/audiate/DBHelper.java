@@ -520,13 +520,12 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 // Create ChordScale
                 ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
-                interval.addChordMemberAt(0,new Note("Tonic/Fundamental"));
 
                 boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
                 boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                 // Add interval
-                interval.addChordMember(new Note(
+                interval.addChordMemberAt(1, new Note(
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getDouble(3),
@@ -681,17 +680,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // ---------- FILTERED LISTS ---------- //
 
-    // Intervals:
-        // Harmonics (up to 127th)
-        // Historical (all named intervals)
-        // Diatonic Just-Intoned
-        // Dodecaphonic Just-Intoned
-        // Diatonic-Chromatic Just and E.T.
-        // All Just-Intervals
+
     // Chords:
         // Triads -> Maj, min, Aug, dim
         // 7ths -> Maj-maj7th, Maj-min7th (Dom.7th), min-maj7th, min-min7th, half-dimished 7th, fully-dimished 7th
         // Just vs. E.T. triads/7ths
+
     // Scales:
         // Heptatonic (diatonic) scales and modes
         // Modes -> Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian)
@@ -754,6 +748,169 @@ public class DBHelper extends SQLiteOpenHelper {
         database.close();
         return allEqualTemperedIntervalsList;
     }
+
+    public List<ChordScale> getAllJustIntervals() {
+        ArrayList<ChordScale> allAllJustIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("just")) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allAllJustIntervalsList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allAllJustIntervalsList;
+    }
+
+    public List<ChordScale> getAllMeantoneIntervals() {
+        ArrayList<ChordScale> allMeantoneIntervalsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                FIELD_INTERVAL_MEANTONE + "=?",
+                new String[]{String.valueOf("Meantone")},
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Create ChordScale
+                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
+                boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                // Add interval
+                interval.addChordMember(new Note(
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getDouble(3),
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        meantone,
+                        superparticular,
+                        cursor.getString(7)
+                ));
+
+                // add to list
+                allMeantoneIntervalsList.add(interval);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allMeantoneIntervalsList;
+    }
+
+    public List<ChordScale> getAllHarmonics() {
+        ArrayList<ChordScale> allHarmonicssList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                if (cursor.getString(1).toUpperCase().contains("harmonic")) {
+
+                    // Create ChordScale
+                    ChordScale interval =
+                            new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                    boolean meantone =
+                            cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                    boolean superparticular =
+                            cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                    // Add interval
+                    interval.addChordMember(new Note(
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            meantone,
+                            superparticular,
+                            cursor.getString(7)
+                    ));
+
+                    allHarmonicssList.add(interval);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allHarmonicssList;
+    }
+
+                                    // ----------- //
 
     public List<Exercise> getAllExercisesByMode(String exerciseMode) {
         ArrayList<Exercise> allExercisesList = new ArrayList<>();
