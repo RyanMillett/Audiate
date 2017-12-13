@@ -87,10 +87,10 @@ public class LibraryActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         // Import materials
-        //db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
+        db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
-        db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
+        //db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
 
         // Lists
         filteredChordScalesList = new ArrayList<>();
@@ -341,8 +341,6 @@ public class LibraryActivity extends AppCompatActivity {
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
             Log.i(TAG, selectedChordScale.getName() + ", size: " + selectedChordScale.getSize());
 
-
-
             mChordScale = new ChordScale(
                     selectedChordScale.getName(),
                     selectedChordScale.getSize(),
@@ -351,6 +349,7 @@ public class LibraryActivity extends AppCompatActivity {
             mChordScale.buildChordScaleFromSCL(db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName()));
 
             Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
+            Log.i(TAG, "Description->" + mChordScale.getDescription());
 
 //            int i = 0;
 //            for (Note note : mChordScale.getAllChordMembers()) {
@@ -358,6 +357,7 @@ public class LibraryActivity extends AppCompatActivity {
 //            }
 
             displayNameTextView.setText(selectedChordScale.getName());
+
 
             // Enable playback // TODO: add to listener
             playSelectionButton.setEnabled(true);

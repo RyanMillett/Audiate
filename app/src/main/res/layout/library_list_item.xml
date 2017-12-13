@@ -3,9 +3,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:onClick="selectionDetailsHandler"
-              android:clickable="true"
-              android:id="@+id/libraryListItemLinearLayout"
-              android:focusable="true">
+              android:clickable="false"
+              android:id="@+id/libraryListItemLinearLayout">
 
     <LinearLayout
         android:id="@+id/libraryListItemTextViewLinearLayout"
@@ -27,10 +26,10 @@
             android:id="@+id/libraryListDescription1TextView" />
 
         <TextView
-            android:text=""
+            android:id="@+id/libraryListDescription2TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/libraryListDescription2TextView" />
+            android:text="" />
 
     </LinearLayout>
 
