@@ -415,7 +415,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * This gets one user from the database.
-     * @param id
+     * @param
      * @return
      */
     public User getUser(String email)
