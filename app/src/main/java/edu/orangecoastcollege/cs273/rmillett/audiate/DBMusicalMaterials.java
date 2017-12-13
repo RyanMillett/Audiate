@@ -369,6 +369,50 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
 
 
+    // ---------- SPECIAL HELPER METHODS:
+
+    public void buildChordScaleFromSCL(ChordScale chordScale, String pathName, String sclFileName) {
+
+        AssetManager manager = mContext.getAssets();
+        String line = "";
+        try {
+            InputStream inputStream = manager.open(pathName + sclFileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+            // skip all header text/info
+            while (!Music.isInteger(line)) {
+                line = br.readLine();
+            }
+
+            // ChordScale size
+            line = br.readLine();
+
+            Log.i(TAG, "chordScale size->" + chordScale.getSize() + " | archive size->" + line);
+
+            double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
+
+            // read each interval line
+            for (int i = 1; i < chordScale.getSize() && line != null; ++i) {
+
+                // skip any scl comments
+                if (line.startsWith("!")) {
+                    line = br.readLine();
+                }
+                else {
+                    chordScale.getChordMemberAtPos(i)
+                            .buildFromSCL(Music.parseDecimalFromScalaLine(line), fundamentalFrequency);
+
+                    Log.i(TAG, "[Confirm freq: " + chordScale.getChordMemberAtPos(i).getPitchFrequency()
+                            + " | scala line: " + line + "]");
+                }
+            }
+        }
+        catch (IOException e) {
+            Log.e(TAG, "Unable to locate " + sclFileName + " in " + pathName);
+        }
+    }
+
+
     // ---------- IMPORTS:
 
     public boolean importIntervalsFromCSV(String csvFileName) {

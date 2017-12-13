@@ -157,6 +157,13 @@ public class Note extends SoundObject {
         mSuperparticular = superparticular;
     }
 
+    public void buildFromSCL(double scalaDecimal, double fundamentalFrequency) {
+        mRatio = Music.convertDecimalToRatio(scalaDecimal);
+        mSizeInCents = Music.convertRatioToCents(mRatio);
+
+        setPitchFrequency(fundamentalFrequency * Music.convertRatioToDecimal(mRatio));
+    }
+
     /**
      * Gets the <code>Note</code> pitch frequency in Hertz
      *
