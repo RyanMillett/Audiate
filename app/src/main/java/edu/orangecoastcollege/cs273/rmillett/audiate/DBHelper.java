@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.R.attr.id;
+
 /**
  * @author Ryan Millett
  * @version 2.0
@@ -409,12 +411,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return exercise;
     }
 
+
+
     /**
      * This gets one user from the database.
      * @param id
      * @return
      */
-    public User getUser(int id)
+    public User getUser(String email)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
@@ -423,9 +427,10 @@ public class DBHelper extends SQLiteOpenHelper {
                         FIELD_USER_NAME, FIELD_EMAIL,
                         FIELD_LOW_PITCH, FIELD_HIGH_PITCH,
                         FIELD_VOCAL_RANGE},
-                USERS_KEY_FIELD_ID + "=?",
-                new String[]{String.valueOf(id)},
+                FIELD_EMAIL + "=?",
+                new String[]{email},
                 null, null, null, null);
+
         if(cursor != null)
             cursor.moveToFirst();
 
@@ -436,6 +441,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(4),
                 cursor.getString(5));
 
+        cursor.close();
         db.close();
         return user;
     }
