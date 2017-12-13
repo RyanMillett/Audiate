@@ -651,7 +651,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO: this method
     }
 
-    public void deleteALLChords() {
+    public void deleteAllChords() {
         // TODO: this method
     }
 
