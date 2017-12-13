@@ -146,7 +146,8 @@ public class Note extends SoundObject {
                 String tet, int limit, boolean meantone, boolean superparticular, String description) {
         super(name);
         mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
-        mRatio = ratio;
+        mRatio = ratio.contains("power") || ratio.contains("root") || ratio.contains("PI")  || ratio.contains("(")
+                ? Music.convertDecimalToRatio(Music.convertCentsToDecimal(cents)) : ratio;
         mSizeInCents = cents;
         mDescription = description;
 

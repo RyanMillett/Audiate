@@ -914,16 +914,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 Log.i(TAG, "Interval name->" + name);
 
                 String description = "Ratio: " + ratio + " | Size in cents: " + cents
-                        + "\n" + (limit >0 ? "Limit: " + limit : "")
-                        + (!tet.equals("0") ? "| " + tet + "-TET":"")
-                        + "\n" + (meantone ? " | (Meantone)": (superparticular ? " | (Superparticular)":""));
+                        + (limit > 0 ? " | Limit: " + limit : "")
+                        + (!tet.equals("0") ? " | " + tet + "-TET" : "");
                 Log.i(TAG, "description->" + description);
 
-
-
-                // reformat ratio
-                ratio = ratio.replaceAll("\\s","");
-                ratio = ratio.replaceAll("\\[\\d+\\]", "");
 
                 if (tet.contains(".")) tet =
                         String.valueOf((int) Math.round(Double.parseDouble(tet)));

@@ -59,6 +59,23 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
 
 
 
+        // Determine interval or chord/scale
+//        switch (selectedChordScale.getSize()) {
+//            case 2: // interval
+//                libraryListDescription1TextView.setText(R.string.interval_ratio);
+//                libraryListDescription1TextView.append(" | " + selectedChordScale.getChordMemberAtPos(1).getRatio());
+//                libraryListDescription1TextView.append(" | " + selectedChordScale.getChordMemberAtPos(1).getSizeInCents());
+//
+//                if (selectedChordScale.getChordMemberAtPos(1).getTET()[0] == 0) {
+//
+//                }
+//
+//
+//                break;
+//            default: // chord/scales
+//                break;
+//        }
+
 
 
         return view;
