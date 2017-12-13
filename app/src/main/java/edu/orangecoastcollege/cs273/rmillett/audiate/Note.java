@@ -1,8 +1,5 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Subclass of <code>SoundObject</code> used to instantiate a <code>Note</code> object.
  *
@@ -20,7 +17,7 @@ public class Note extends SoundObject {
     /**
      * int constant used as a default frequency in Hertz for <code>Note</code> objects.
      */
-    public static final int DEFAULT_FREQUENCY = 440;
+    public static final int DEFAULT_INITIAL_PITCH_FREQUENCY = 0;
 
     /**
      * String constant used as a default ratio for <code>Note</code> objects. A ratio of
@@ -50,7 +47,7 @@ public class Note extends SoundObject {
      */
     public Note() {
         super();
-        mPitchFrequency = DEFAULT_FREQUENCY;
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
 
@@ -67,7 +64,7 @@ public class Note extends SoundObject {
      */
     public Note(String name) {
         super(name);
-        mPitchFrequency = DEFAULT_FREQUENCY;
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
 
@@ -79,7 +76,7 @@ public class Note extends SoundObject {
 
     public Note(String name, String ratio) {
         super(name);
-        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio;
         mSizeInCents = Music.convertRatioToCents(ratio);
 
@@ -91,7 +88,7 @@ public class Note extends SoundObject {
 
     public Note(double decimalInterval) {
         super();
-        mPitchFrequency = DEFAULT_FREQUENCY * decimalInterval;
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * decimalInterval;
         mRatio = Music.convertDecimalToRatio(decimalInterval);
         mSizeInCents = Music.convertRatioToCents(mRatio);
 
@@ -131,7 +128,7 @@ public class Note extends SoundObject {
      */
     public Note(String name, String ratio, double cents, String description) {
         super(name);
-        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
@@ -145,7 +142,7 @@ public class Note extends SoundObject {
     public Note(String name, String ratio, double cents,
                 String tet, int limit, boolean meantone, boolean superparticular, String description) {
         super(name);
-        mPitchFrequency = DEFAULT_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio.contains("power") || ratio.contains("root") || ratio.contains("PI")  || ratio.contains("(")
                 ? Music.convertDecimalToRatio(Music.convertCentsToDecimal(cents)) : ratio;
         mSizeInCents = cents;

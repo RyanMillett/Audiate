@@ -28,14 +28,14 @@ public class LibraryActivity extends AppCompatActivity {
     private DBMusicalMaterials mDBScalaArchive;
 
     // Materials Lists
-    private List<Note> mAllIntervalsList;
+    private List<ChordScale> mAllIntervalsList;
     private List<ChordScale> mAllChordsList;
     private List<ChordScale> mAllScalesList;
         // Scala Archive
         private List<ChordScale> mScalaArchiveList;
 
-    // Filtered List
-    private List<SoundObject> filteredMaterialsList;
+    // Filtered Materials List
+    private List<ChordScale> filteredMaterialsList;
 
     // ListView
     private ListView libraryListView;
@@ -101,6 +101,10 @@ public class LibraryActivity extends AppCompatActivity {
 
         // ---------- DO IMPORTS ONCE, THEN COMMENT OUT ---------- //
 
+            mDBMusicalMaterials.deleteAllIntervals();
+            mDBMusicalMaterials.deleteAllScales();
+            mDBScalaArchive.deleteAllScales();
+
             // Import materials
             mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
             // TODO: import chords
@@ -113,7 +117,7 @@ public class LibraryActivity extends AppCompatActivity {
 
 
         // Lists
-        mAllIntervalsList = mDBMusicalMaterials.getAllIntervals();
+        mAllIntervalsList = mDBMusicalMaterials.getAllIntervalsAsChordScale();
         // TODO: chords list
         mAllScalesList = mDBMusicalMaterials.getAllScales();
 

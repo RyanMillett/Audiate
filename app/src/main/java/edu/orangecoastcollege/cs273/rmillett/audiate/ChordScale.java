@@ -1,11 +1,6 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Subclass of <code>SoundObject</code> used to instantiate a <code>ChordScale</code> object.
@@ -23,6 +18,11 @@ import java.util.Collections;
  * @version 2.0
  */
 public class ChordScale extends SoundObject {
+
+    /**
+     * int constant used as a default frequency in Hertz for <code>ChordScale</code> objects.
+     */
+    public static final int DEFAULT_FUNDAMENTAL_FREQUENCY = 440;
 
     /**
      * String constant used to indicate that all chord members contained in a <code>ChordScale</code>
@@ -126,7 +126,7 @@ public class ChordScale extends SoundObject {
         for (int i = 1; i < initialSize; ++i) {
             mChordMembers.add(i, new Note());
         }
-        resetFundamentalFrequency(Note.DEFAULT_FREQUENCY);
+        resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
     }
 
     public void buildChordScaleFromSCL(double[] decimalIntervals) {

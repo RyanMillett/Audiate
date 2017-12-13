@@ -238,7 +238,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
         // GET ALL:
 
-    public List<Note> getAllIntervals() {
+    public List<Note> getAllIntervalsAsNote() {
         List<Note> allIntervalsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(
@@ -274,6 +274,59 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                         superparticular,
                         cursor.getString(7)
                 );
+
+                // add to list
+                allIntervalsList.add(interval);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allIntervalsList;
+    }
+
+    public List<ChordScale> getAllIntervalsAsChordScale() {
+        List<ChordScale> allIntervalsList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                INTERVALS_TABLE,
+                new String[]{
+                        INTERVALS_KEY_FIELD_ID,
+                        FIELD_INTERVAL_NAME,
+                        FIELD_INTERVAL_RATIO,
+                        FIELD_INTERVAL_CENTS,
+                        FIELD_INTERVAL_TET,
+                        FIELD_INTERVAL_LIMIT,
+                        FIELD_INTERVAL_MEANTONE,
+                        FIELD_INTERVAL_SUPERPARTICULAR,
+                        FIELD_INTERVAL_DESCRIPTION
+                },
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // Create ChordScale
+                ChordScale interval =
+                        new ChordScale(cursor.getString(1), cursor.getString(7));
+
+                boolean meantone =
+                        cursor.getString(5).equalsIgnoreCase("Meantone");
+
+                boolean superparticular =
+                        cursor.getString(6).equalsIgnoreCase("Superparticular");
+
+                // Configure interval
+                interval.getChordMemberAtPos(1).setName(cursor.getString(1));
+                interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
+                interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
+                interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
+                interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
+                interval.getChordMemberAtPos(1).setMeantone(meantone);
+                interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
+                interval.getChordMemberAtPos(1).setDescription(cursor.getString(7));
+
+                interval.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
 
                 // add to list
                 allIntervalsList.add(interval);
@@ -651,7 +704,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        int i = 6; String line; int num = 1;
+        int i = 6; String line; int num = 1; int totalIntervals = 0;
         String tempStr = "temp";
         try {
             while ((line = bufferedReader.readLine()) != null) {
@@ -744,8 +797,11 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
                 // add interval to DB
                 addInterval(interval);
+                totalIntervals++;
                 i = 6;
             }
+            Log.i(TAG, totalIntervals + " TOTAL INTERVALS IMPORTED! (Whew)");
+            Log.i(TAG, "//----------//----------//");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -859,6 +915,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
                 Log.i(TAG, "[Confirm size-> " + scale.getSize() + "]");
                 Log.i(TAG, "//----------//----------//");
+
                 // add to DB
                 addScale(scale);
                 totalScales++;

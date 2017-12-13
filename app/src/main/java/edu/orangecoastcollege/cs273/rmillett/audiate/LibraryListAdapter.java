@@ -18,26 +18,26 @@ import java.util.List;
  * @author Ryan Millett
  * @version 1.0
  */
-public class LibraryListAdapter extends ArrayAdapter<SoundObject> {
+public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
 
     private static final String TAG = "LibraryListAdapter";
 
     private Context mContext;
-    private List<SoundObject> mSoundObjects = new ArrayList<>();
+    private List<ChordScale> mChordScales = new ArrayList<>();
     private int mResourceId;
 
 
-    public LibraryListAdapter(Context context, int rId, List<SoundObject> soundObjects) {
-        super(context, rId, soundObjects);
+    public LibraryListAdapter(Context context, int rId, List<ChordScale> chordScales) {
+        super(context, rId, chordScales);
         mContext = context;
         mResourceId = rId;
-        mSoundObjects = soundObjects;
+        mChordScales = chordScales;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final SoundObject selectedSoundObject = mSoundObjects.get(position);
+        final ChordScale selectedChordScale = mChordScales.get(position);
 
         LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -52,17 +52,12 @@ public class LibraryListAdapter extends ArrayAdapter<SoundObject> {
         TextView libraryListDescription2TextView
                 = view.findViewById(R.id.libraryListDescription2TextView);
 
-        libraryListLinearLayout.setTag(selectedSoundObject);
+        libraryListLinearLayout.setTag(selectedChordScale);
 
-        libraryListNameTextView.setText(selectedSoundObject.getName());
+        libraryListNameTextView.setText(selectedChordScale.getName());
 
-        // Determine Note or ChordScale
-        if (selectedSoundObject instanceof Note) {
+        // Determine Interval or ChordScale
 
-        }
-        else if (selectedSoundObject instanceof ChordScale) {
-
-        }
 
         return view;
     }
