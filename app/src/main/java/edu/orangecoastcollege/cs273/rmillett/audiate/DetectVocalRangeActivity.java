@@ -106,13 +106,9 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         // save value into user profile
         switch (toastText) {
             case "highest":
-                //detectHighButton.setText("Your " + toastText + " note: ");
-                //detectHighButton.append(detectedPitch);
                 // TODO: set user highest note
                 break;
             case "lowest":
-               // detectLowButton.setText("Your " + toastText + " note: ");
-                //detectLowButton.append(detectedPitch);
                 // TODO: set user lowest note
                 break;
         }
