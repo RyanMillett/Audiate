@@ -110,6 +110,8 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 exerciseSelectionHandler(view);
             }
+
+
         });
 
         // List items
