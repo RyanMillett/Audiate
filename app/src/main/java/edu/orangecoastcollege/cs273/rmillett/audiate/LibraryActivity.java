@@ -86,7 +86,7 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        // ---------- DELETE ONCE, THEN COMMENT OUT ---------- //
+        // ---------- DELETE IF EXISTS, OTHERWISE COMMENT OUT ---------- //
 
             deleteDatabase(mDBMusicalMaterials.getDataBaseName());
             deleteDatabase(mDBScalaArchive.getDataBaseName());

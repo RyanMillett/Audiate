@@ -841,7 +841,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                 String sclFileName = fields[1].trim();
                 Log.i(TAG, "fileName-> " + sclFileName);
 
-                String name = fields[2].trim();
+                String name = fields[2].replaceAll("\"", "").trim();
                 Log.i(TAG, "name-> " + name);
 
                 int size = Integer.parseInt(fields[3].trim());
