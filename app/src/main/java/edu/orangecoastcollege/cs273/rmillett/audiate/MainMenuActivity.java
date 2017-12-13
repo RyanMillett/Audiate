@@ -26,7 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
     User user;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
+    private FirebaseUser mFirebaseUser;
 
     private TextView welcomeTextView;
 
@@ -45,11 +45,11 @@ public class MainMenuActivity extends AppCompatActivity {
         // User user = getIntent().getExtras().getParcelable("user");
 
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        mFirebaseUser = mAuth.getCurrentUser();
         db = new DBHelper(this);
 
-        String email = mUser.getEmail();
-        String displayName = mUser.getDisplayName();
+        String email = mFirebaseUser.getEmail();
+        String displayName = mFirebaseUser.getDisplayName();
         List<User> users = new ArrayList<>(db.getAllUsers());
         for (User u : users) {
             Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
@@ -91,9 +91,6 @@ public class MainMenuActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.libraryButton:
                 activityIntent = new Intent(this, LibraryActivity.class);
-                break;
-            case R.id.editProfileButton:
-                activityIntent = new Intent(this, ProfileActivity.class);
                 break;
             case R.id.logoutButton:
                 mAuth.signOut();

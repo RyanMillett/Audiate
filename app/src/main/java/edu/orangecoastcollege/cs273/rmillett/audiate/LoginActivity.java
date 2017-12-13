@@ -45,7 +45,7 @@ LoginActivity extends AppCompatActivity {
 
     // Connects Firebase to the app
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
+    private FirebaseUser mFirebaseUser;
 
     private User user;
 
@@ -72,17 +72,18 @@ LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Gets the current user
-        mUser = mAuth.getCurrentUser();
+        mFirebaseUser = mAuth.getCurrentUser();
 
         // Runs the animation that brings the Views in
         RunAnimation();
 
-        // ASK MICHAEL
+        /*
         Bundle profileBundle = getIntent().getExtras();
         if (profileBundle != null)
             user = profileBundle.getParcelable("CurrentUser");
+             */
 
-        // Log.i(TAG, "This is the current user name: " + user.getUserName());
+
     }
 
     /**
@@ -123,12 +124,6 @@ LoginActivity extends AppCompatActivity {
      * @param password
      */
     private void Login(String email, String password) {
-        // If user is already signed in go straight to main activity
-        // Might move this back to the onCreate
-        /*
-        if (mUser != null)
-            goToMain();
-            */
 
         if (!isValidInput())
             return;
@@ -137,7 +132,7 @@ LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mUser = mAuth.getCurrentUser();
+                        mFirebaseUser = mAuth.getCurrentUser();
                         goToMain();
                     } else {
                         Toast.makeText(LoginActivity.this, "Sign in failed. Please try again.", Toast.LENGTH_LONG).show();
