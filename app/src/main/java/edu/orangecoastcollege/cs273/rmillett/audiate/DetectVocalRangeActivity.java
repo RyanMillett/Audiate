@@ -1,8 +1,10 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +25,13 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
     private String toastText = "";
     private String detectedPitch = "";
+
+
+    private String highPitch = "";
+    private String lowPitch = "";
+    private String vocalRange = "";
+
+
 
     private Handler handler;
 
@@ -106,14 +115,20 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         // save value into user profile
         switch (toastText) {
             case "highest":
+                //detectHighButton.setText("Your " + toastText + " note: ");
+                //detectHighButton.append(detectedPitch);
                 // TODO: set user highest note
+                highPitch = detectedPitch;
                 break;
             case "lowest":
+               // detectLowButton.setText("Your " + toastText + " note: ");
+                //detectLowButton.append(detectedPitch);
                 // TODO: set user lowest note
+                lowPitch = detectedPitch;
                 break;
         }
 
-        //enableDetectionButtons();
+        enableDetectionButtons();
     }
 
     /**
@@ -122,8 +137,21 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      * @param view
      */
     public void confirmVocalRange(View view) {
-        view.setEnabled(false);
         // TODO: once both high- and low-notes have been detected, save to user profile and leave the activity
+        if(TextUtils.isEmpty(highPitch) || TextUtils.isEmpty(lowPitch))
+            view.setEnabled(false);
+        else
+        {
+            Intent launchProfile = new Intent(this, ProfileActivity.class);
+            launchProfile.putExtra("HighPitch", highPitch);
+            launchProfile.putExtra("LowPitch", lowPitch);
+            vocalRange = lowPitch + " - " + highPitch;
+            launchProfile.putExtra("VocalRange", vocalRange);
+
+            startActivity(launchProfile);
+        }
+
+
     }
 
     private void disableDetectionButtons() {

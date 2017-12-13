@@ -61,6 +61,12 @@ public class ProfileActivity extends AppCompatActivity {
         // This should allow the users to return to the LoginActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intentFromDetectVocalRange = getIntent();
+
+        String lowPitch = intentFromDetectVocalRange.getStringExtra("LowPitch");
+        String highPitch = intentFromDetectVocalRange.getStringExtra("HighPitch");
+        String vocalRange = intentFromDetectVocalRange.getStringExtra("VocalRange");
+
         // Sets up the views
         mUserNameEditText = (EditText) findViewById(R.id.userNameCreateEditText);
         mEmailEditText = (EditText) findViewById(R.id.emailCreateEditText);
@@ -69,6 +75,10 @@ public class ProfileActivity extends AppCompatActivity {
         mLowPitchTextView = (TextView) findViewById(R.id.lowPitchTextView);
         mHighPitchTextView = (TextView) findViewById(R.id.highPitchTextView);
         mVocalRangeTextView = (TextView) findViewById(R.id.vocalRangeTextView);
+
+        mLowPitchTextView.setText(lowPitch);
+        mHighPitchTextView.setText(highPitch);
+        mVocalRangeTextView.setText(vocalRange);
 
         mConfirmProfileButton = (Button) findViewById(R.id.confirmProfileButton);
 
