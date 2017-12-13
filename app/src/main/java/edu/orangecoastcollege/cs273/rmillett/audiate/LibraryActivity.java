@@ -87,9 +87,10 @@ public class LibraryActivity extends AppCompatActivity {
         // DB
         deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
+        db.deleteAllIntervals();
 
         // Import materials
-        db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
+        //db.importPitchIntervalsFromCSV("pitch_intervals_redux.csv");
         // db.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
         // TODO: import chords
         //db.importScalaArchiveFromCSV("ScalaArchiveRedux.csv");
@@ -356,9 +357,9 @@ public class LibraryActivity extends AppCompatActivity {
                     selectedChordScale.getSize(),
                     selectedChordScale.getDescription(),
                     selectedChordScale.getSCLfileName());
-            mChordScale.buildChordScaleFromSCL(db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName()));
-
-            Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
+//            mChordScale.buildChordScaleFromSCL(db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName()));
+//
+//            Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
             Log.i(TAG, "Description->" + mChordScale.getDescription());
 
 //            int i = 0;
