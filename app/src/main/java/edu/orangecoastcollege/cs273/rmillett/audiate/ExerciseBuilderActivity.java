@@ -28,7 +28,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
     private Exercise mExerciseActivity;
 
-    private DBHelper db;
+    private DBExercises mDBExercises;
 
     private List<Exercise> mAllListeningExercises;
     private List<Exercise> mAllSingingExercises;
@@ -64,12 +64,15 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
 
         // DB
         deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
-        db.importAllExercisesFromCSV("exercises.csv");
+        mDBExercises = new DBExercises(this);
+
+        mDBExercises.deleteAllExercies();
+
+        mDBExercises.importAllExercisesFromCSV("exercises.csv");
 
         // Lists
-        mAllListeningExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_LISTENING));
-        mAllSingingExercises = new ArrayList<>(db.getAllExercisesByMode(Exercise.EXERCISE_MODE_SINGING));
+        mAllListeningExercises = new ArrayList<>(mDBExercises.getAllExercisesByMode(Exercise.EXERCISE_MODE_LISTENING));
+        mAllSingingExercises = new ArrayList<>(mDBExercises.getAllExercisesByMode(Exercise.EXERCISE_MODE_SINGING));
 
         // Filtered List
         mFilteredExerciseList = new ArrayList<>();
@@ -270,19 +273,19 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.exercise1Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                        new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
                                 Exercise.EXERCISE_MATERIAL_INTERVALS));
                 break;
             case R.id.exercise2Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                        new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
                                 Exercise.EXERCISE_MATERIAL_CHORDS));
                 break;
             case R.id.exercise3Button:
                 mFilteredExerciseList =
-                        new ArrayList<>(db.getAllIntervalExercisesByModeAndMaterial(
+                        new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
                                 Exercise.EXERCISE_MATERIAL_SCALES));
                 break;

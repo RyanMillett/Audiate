@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +20,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MainMenuActivity";
 
-    private DBHelper db;
+    private DBUser mDBUser;
 
     User user;
 
@@ -47,11 +46,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
-        db = new DBHelper(this);
+        mDBUser = new DBUser(this);
 
         String email = mFirebaseUser.getEmail();
         String displayName = mFirebaseUser.getDisplayName();
-        List<User> users = new ArrayList<>(db.getAllUsers());
+        List<User> users = new ArrayList<>(mDBUser.getAllUsers());
         for (User u : users) {
             Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
                     + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
@@ -59,7 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
 
         // CRASHES CODE IF RETURNING FROM ANY PREVIOUS WINDOW
-        // user = db.getUser(email);
+        // user = mDBUser.getUser(email);
 
 
         // welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);

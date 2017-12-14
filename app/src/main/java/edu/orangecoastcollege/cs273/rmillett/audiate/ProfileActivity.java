@@ -31,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
 
-    private DBHelper mDB;
+    private DBUser mDBUser;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
@@ -80,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         mConfirmProfileButton = (Button) findViewById(R.id.confirmProfileButton);
 
         // Hooks up the Database
-        mDB = new DBHelper(this);
+        mDBUser = new DBUser(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -171,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Adds the user to the database
         User newUser = new User(userName, email, lowPitch, highPitch, vocalRange);
-        mDB.addUser(newUser);
+        mDBUser.addUser(newUser);
         mUserNameEditText.setText("");
         mEmailEditText.setText("");
         mPasswordEditText.setText("");
@@ -237,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity {
             User newUser = new User(mUserNameEditText.getText().toString(), mEmailEditText.getText().toString(),
                     mLowPitchTextView.getText().toString(), mHighPitchTextView.getText().toString(),
                     mVocalRangeTextView.getText().toString()));
-            mDB.addUser(newUser);
+            mDBUser.addUser(newUser);
             usersListAdapter.add(newUser);
             mUserNameEditText.setText("");
             mLowPitchTextView.setText("");
