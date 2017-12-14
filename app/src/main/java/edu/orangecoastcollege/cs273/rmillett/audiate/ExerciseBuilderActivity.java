@@ -181,6 +181,10 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                 exerciseIntent = new Intent();
         }
 
+        Log.i(TAG, mExerciseActivity.getExerciseName()
+                + " | " + mExerciseActivity.getExerciseMode()
+                + " | "+ mExerciseActivity.getExerciseMaterial());
+
         // Parcel Exercise information
         exerciseIntent.putExtra("SelectedExercise",mExerciseActivity);
 
@@ -347,9 +351,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             }
         }
 
-        Log.i(TAG, mExerciseActivity.getExerciseName()
-                + " | " + mExerciseActivity.getExerciseMode()
-                + " | "+ mExerciseActivity.getExerciseMaterial());
+
 
     }
 

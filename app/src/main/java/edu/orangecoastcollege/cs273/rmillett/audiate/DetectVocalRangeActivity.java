@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import static android.widget.Toast.makeText;
 
 public class DetectVocalRangeActivity extends AppCompatActivity {
 
@@ -28,8 +25,8 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
     private String toastText = "";
     private String detectedPitch = "";
 
-    private String highPitch = "";
-    private String lowPitch = "";
+    private String highPitch;
+    private String lowPitch;
 
     private Handler handler;
 
@@ -75,7 +72,9 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
         }
 
         // instructional toast
-        makeText(this, "Sing your " + toastText + " note!", Toast.LENGTH_LONG).show();
+        Toast instructionToast = Toast.makeText(this, "Sing your " + toastText + " note!", Toast.LENGTH_LONG);
+        instructionToast.setGravity(Gravity.CENTER,0,0);
+        instructionToast.show();
 
         // TODO: change view to "listening mode"
 
@@ -99,7 +98,7 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
                 // TODO: change view back to resting mode
 
             }
-        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE);
+        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE / 2);
 
         // save value into user profile
         switch (toastText) {

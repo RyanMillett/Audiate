@@ -2,12 +2,12 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,7 +42,7 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
 
     private List<ChordScale> mQuizList;
 
-    private String mQuizType; // Stores what quiz choice is selected (interval, chord, or mode)
+    private String mQuizMode; // Stores what quiz choice is selected (interval, chord, or mode)
 
     private ChordScale mCorrectChordScale;
     private String mCorrectAnswer;
@@ -57,11 +57,8 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
     private ImageView mEarTrainingImageView; // this loads a play button with an interval behind it
     private TextView mAnswerTextView; // displays the correct answer
 
-    private String mExerciseName;
-    private String mExerciseMode;
-    private String mExerciseMaterial;
-
     private TextView mGuessTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +77,17 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         // Assign QuizType to whatever is packed into Intent
         // Create a filtered list based on the String
         // i.e. Historical -->
-        Intent intentFromExerciseBuilder = getIntent();
+        // Intent exerciseIntent = getIntent();
         Exercise selectedExercise = getIntent().getExtras().getParcelable("SelectedExercise");
-        mExerciseName = selectedExercise.getExerciseName();
-        mExerciseMode = selectedExercise.getExerciseMode();
-        mExerciseMaterial = selectedExercise.getExerciseMaterial();
+        mQuizMode = selectedExercise.getExerciseMode();
 
+        mDBMusicalMaterials = new DBMusicalMaterials("Quiz Music Materials", this);
 
+        mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
 
-                // Initializes a new SoundObjectPlayer
+        mAllIntervalsList = new ArrayList<>(mDBMusicalMaterials.getAllEqualTemperedIntervals());
+
+        // Initializes a new SoundObjectPlayer
         mSoundObjectPlayer = new SoundObjectPlayer();
 
         // TODO: In the future delete
@@ -140,25 +139,10 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         // Condition handled later
         mQuizList.clear();
 
-        mGuessTextView.setText(getString(R.string.guess, mQuizType));
-
-        /*
-        if (mQuizType.equals(getString(R.string.ear_training_selection)))
-        {
-            mQuizType = new ArrayList<>(mAllSuperheroNamesList);
-            mCorrectAnswer = mCorrectSuperhero.getName();
-        } else if (mQuizType.equals(getString(R.string.power_type)))
-        {
-            mAllSuperheroTypeList = new ArrayList<>(mAllSuperheroPowersList);
-            mCorrectAnswer = mCorrectSuperhero.getPower();
-        } else if (mQuizType.equals(getString(R.string.one_thing_type)))
-        {
-            mAllSuperheroTypeList = new ArrayList<>(mAllSuperheroThingsList);
-            mCorrectAnswer = mCorrectSuperhero.getThing();
-        }
-        */
+        mGuessTextView.setText(getString(R.string.guess, "Interval")); // need to be changed later
 
         while(mQuizList.size() < QUESTIONS_IN_QUIZ) {
+            Log.i(TAG, "Output size of all Intervals list: " + mAllIntervalsList.size());
             int randomPosition = rng.nextInt(mAllIntervalsList.size());
             ChordScale randomChordScale = mAllChordScaleList.get(randomPosition);
 
@@ -185,7 +169,7 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         // Check the correct answer
         // This will need to be changed later
 
-        mQuizList = new ArrayList<>(mAllIntervalsList);
+        // mQuizList = new ArrayList<>(mAllIntervalsList);
         mCorrectAnswer = mCorrectChordScale.getName();
 
         // Shuffles the Collection
