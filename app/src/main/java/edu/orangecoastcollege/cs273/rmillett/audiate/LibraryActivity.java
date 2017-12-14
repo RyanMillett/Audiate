@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -200,6 +201,7 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     // SPINNER LISTENERS //
+
     public AdapterView.OnItemSelectedListener selectMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
@@ -257,52 +259,33 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
 
-            if (selectMaterialSpinner.getSelectedItemPosition() <= 0) return;
-
-            String filterMaterial = filterBySpinner.getSelectedItem().toString();
-            Log.i(TAG, filterMaterial);
+            // Determine selected material
+            String selectedMaterial = spinner.getSelectedItem().toString();
+            Log.i(TAG, selectedMaterial);
 
             // Update Library ListView
             mLibraryListAdapter.clear();
             filteredMaterialsList.clear();
 
-            // Determine selected material
-            switch (i) {
-                case 0:
-                    // all
-                    filteredMaterialsList = new ArrayList<>(mAllIntervalsList);
-                    break;
-                case 1:
-                    // add intervals
-                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllHarmonics());
-                    break;
-                case 2:
-                    // TODO: limit intervals
-                    break;
-                case 3:
-                    // meantone
-                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllMeantoneIntervals());
-                    break;
-                case 4:
-                    // TODO: superparticular
-                    break;
-                case 5:
-                    // ET
-                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllEqualTemperedIntervals());
-                    break;
-                default:
-                    // Do nothing
+            if (selectedMaterial.equalsIgnoreCase(getString(R.string.select_intervals))) {
+                // filter interval materials
+                filteredMaterialsList = new ArrayList<>(filterIntervals());
+            }
+            else if (selectedMaterial.equalsIgnoreCase(getString(R.string.select_chords))) {
+                // filter chord materials
+                filteredMaterialsList = new ArrayList<>(filterChords());
+            }
+            else if (selectedMaterial.equalsIgnoreCase(getString(R.string.select_scales))) {
+                // filter scale materials
+                filteredMaterialsList = new ArrayList<>(filterScales());
+            }
+            else {
+                // clear (nothing)
             }
 
             // Update list adapter
             mLibraryListAdapter.addAll(filteredMaterialsList);
             mLibraryListAdapter.notifyDataSetChanged();
-
-            // Update "Filter" spinner adapter
-            filterMaterialSpinnerAdapter.clear();
-            filterMaterialSpinnerAdapter.addAll(getFilterCriteria());
-            filterMaterialSpinnerAdapter.notifyDataSetChanged();
-
         }
 
         @Override
@@ -311,7 +294,52 @@ public class LibraryActivity extends AppCompatActivity {
         }
     };
 
+
+    // FILTER METHODS //
+
+    private ArrayList<ChordScale> filterIntervals() {
+
+        if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.all_intervals))) {
+            return new ArrayList<>(mAllIntervalsList);
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.all_harmonics))) {
+            return new ArrayList<>(mDBMusicalMaterials.getAllHarmonics());
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.limit_intervals))) {
+            // TODO: all limit intervals
+            return null;
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.meantone_intervals))) {
+            return new ArrayList<>(mDBMusicalMaterials.getAllMeantoneIntervals());
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.superparticular_intervals))) {
+            // TODO: all superparticular
+            return null;
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.et_intervals))) {
+            return new ArrayList<>(mDBMusicalMaterials.getAllEqualTemperedIntervals());
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.pythag_intervals))) {
+            // TODO: all pythag
+            return null;
+        }
+        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.comma_intervals))) {
+            // TODO: all commas
+            return null;
+        }
+        return null;
+    }
+
+    private ArrayList<ChordScale> filterChords() {
+        return null;
+    }
+
+    private ArrayList<ChordScale> filterScales() {
+        return null;
+    }
+
     // SPINNER STRINGS //
+
     private String[] getAllMusicalMaterialTypes() {
         String[] musicalMaterials = new String[4];
 
@@ -356,6 +384,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         return filters;
     }
+
+
+    // SELECTION HANDLERS //
 
     /**
      * Handles audio playback
@@ -413,7 +444,10 @@ public class LibraryActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: consider adding this to an OnChangeListener if possible
+
+    // PLAYBACK OPTIONS //
+
+    // TODO: consider adding this to an OnChangeListener
     private void detectPlaybackMode() {
         // Set PlayBack mode
         if (mode1RadioButton.isChecked()) {

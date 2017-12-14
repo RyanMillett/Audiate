@@ -106,7 +106,22 @@
     <string name="sort_small_large">Size (Ascending)</string>
     <string name="sort_large_small">Size (Descending)</string>
 
-    <string name="header_info_hint">Header text / info / instructions...</string>
+    <!-- Filters -->
+    <string name="all_intervals">List of Pitch Intervals</string>
+    <string name="all_harmonics">Harmonics (First 127)</string>
+    <string name="limit_intervals">Limit Intervals</string>
+    <string name="meantone_intervals">Meantone Intervals</string>
+    <string name="superparticular_intervals">Superparticular Intervals</string>
+    <string name="et_intervals">Equal-Tempered (by approximation)</string>
+    <string name="pythag_intervals">Pythagorean Ratios</string>
+    <string name="comma_intervals">Commas</string>
+    <string name="oct_anatomy">"Anatomy of an Octave" by Kyle Gann</string>
+
+
+
+
+
+    <string name="header_info_hint">Header text / info / instructions…</string>
     <string name="select_material">Select material to audition: </string>
     <string name="sort_material">Sort by: </string>
     <string name="filter_material">Filter: </string>
@@ -114,7 +129,7 @@
     <string name="set_fundamental_frequency_hint">Set fundamental frequency in Hertz</string>
     <string name="test_fundamental_frequency">(Test Fundamental Frequency)</string>
     <string name="selection_name">Selection Name</string>
-    <string name="selection_description">Selection Description...</string>
+    <string name="selection_description">Selection Description…</string>
     <string name="interval_ratio">Ratio: </string>
     <string name="interval_cents">Size in cents: </string>
     <string name="chordScale_size">Size: </string>
