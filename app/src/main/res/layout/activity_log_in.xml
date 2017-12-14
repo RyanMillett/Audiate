@@ -55,7 +55,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="80dp"
             android:layout_weight="1"
-            android:background="@drawable/custom_green_bg"
+            android:background="@color/colorPrimary"
             android:onClick="handleLoginButtons"
             android:fontFamily="serif-monospace"
             android:text="@string/log_in_button"
@@ -70,7 +70,7 @@
             android:layout_marginTop="50dp"
             android:layout_weight="1"
             android:fontFamily="serif-monospace"
-            android:background="@drawable/custom_blue_bg"
+            android:background="@color/colorPrimary"
             android:onClick="handleLoginButtons"
             android:text="@string/create_profile_button"
             android:textSize="@dimen/medium_text_size"/>

@@ -45,7 +45,7 @@
     <string name="general_settings">General Settings</string>
 
     <!-- Exercise Selection Texts -->
-    <string name="exercise_selection_menu_title">Exercise Selection Menu</string>
+    <string name="exercise_selection_menu_title">Configure an Exercise</string>
     <string name="return_to_main_button">Return to Main Menu</string>
     <string name="search_exercises">Search </string>
     <string name="exercises"> Exercises</string>
