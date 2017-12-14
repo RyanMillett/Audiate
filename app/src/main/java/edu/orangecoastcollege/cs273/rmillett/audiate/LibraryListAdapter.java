@@ -55,11 +55,29 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
         libraryListLinearLayout.setTag(selectedChordScale);
 
         libraryListNameTextView.setText(selectedChordScale.getName());
-        libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
         // Determine Interval or ChordScale
+        switch (selectedChordScale.getSize()) {
+            case 2: // interval
+                libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
+                if (selectedChordScale.getChordMemberAtPos(1).isMeantone()) {
+                    libraryListDescription2TextView.setText("Meantone");
 
+                }
+                else if (selectedChordScale.getChordMemberAtPos(1).isSuperparticular()) {
+                    libraryListDescription2TextView.setText("Superparticular");
+                }
+                else {
+                    libraryListDescription2TextView.setText("");
+                }
+
+                break;
+            default: // chord/scale
+                libraryListDescription1TextView.setText(R.string.scale_size);
+                libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize())
+                        + " | " + selectedChordScale.getDescription());
+        }
 
         return view;
     }

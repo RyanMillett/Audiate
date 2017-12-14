@@ -161,7 +161,7 @@ public class LibraryActivity extends AppCompatActivity {
 
         filterMaterialSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
-        // TODO: spinner listener
+        filterBySpinner.setOnItemSelectedListener(filterMaterialSpinnerListener);
 
 
         // playback settings group
@@ -214,7 +214,7 @@ public class LibraryActivity extends AppCompatActivity {
             // Determine selected material
             switch (i) {
                 case 1:
-                    // TODO: add intervals
+                    // add intervals
                     filteredMaterialsList = new ArrayList<>(mAllIntervalsList);
                     // Update playback options
                     enablePlaybackSettings();
@@ -257,6 +257,51 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
 
+            if (selectMaterialSpinner.getSelectedItemPosition() <= 0) return;
+
+            String filterMaterial = filterBySpinner.getSelectedItem().toString();
+            Log.i(TAG, filterMaterial);
+
+            // Update Library ListView
+            mLibraryListAdapter.clear();
+            filteredMaterialsList.clear();
+
+            // Determine selected material
+            switch (i) {
+                case 0:
+                    // all
+                    filteredMaterialsList = new ArrayList<>(mAllIntervalsList);
+                    break;
+                case 1:
+                    // add intervals
+                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllHarmonics());
+                    break;
+                case 2:
+                    // TODO: limit intervals
+                    break;
+                case 3:
+                    // meantone
+                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllMeantoneIntervals());
+                    break;
+                case 4:
+                    // TODO: superparticular
+                    break;
+                case 5:
+                    // ET
+                    filteredMaterialsList = new ArrayList<>(mDBMusicalMaterials.getAllEqualTemperedIntervals());
+                    break;
+                default:
+                    // Do nothing
+            }
+
+            // Update list adapter
+            mLibraryListAdapter.addAll(filteredMaterialsList);
+            mLibraryListAdapter.notifyDataSetChanged();
+
+            // Update "Filter" spinner adapter
+            filterMaterialSpinnerAdapter.clear();
+            filterMaterialSpinnerAdapter.addAll(getFilterCriteria());
+            filterMaterialSpinnerAdapter.notifyDataSetChanged();
 
         }
 
@@ -305,6 +350,7 @@ public class LibraryActivity extends AppCompatActivity {
                 break;
             default: // nothing selected
                 filters = new String[]{""};
+            playSelectionButton.setEnabled(false);
                 break;
         }
 
@@ -352,8 +398,6 @@ public class LibraryActivity extends AppCompatActivity {
             if (mChordScale.getSize() > ChordScale.CHORDSCALE_DEFAULT_INITIAL_SIZE) {
                 mDBMusicalMaterials.buildChordScaleFromSCL(mChordScale, "scl/", mChordScale.getSCLfileName());
             }
-
-            //mChordScale.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
 
             Log.i(TAG,"mChordScale->" + mChordScale.getName() + " | size:" + mChordScale.getSize());
             for (int i = 0; i < mChordScale.getSize(); ++i) {

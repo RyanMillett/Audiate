@@ -457,7 +457,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
                     // Create ChordScale
                     ChordScale interval =
-                            new ChordScale(cursor.getString(1), cursor.getString(7));
+                            new ChordScale(cursor.getString(1), cursor.getString(8));
 
                     boolean meantone =
                             cursor.getString(5).equalsIgnoreCase("Meantone");
@@ -465,17 +465,15 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                     boolean superparticular =
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
-                    // Add interval
-                    interval.addChordMember(new Note(
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getDouble(3),
-                            cursor.getString(4),
-                            cursor.getInt(5),
-                            meantone,
-                            superparticular,
-                            cursor.getString(7)
-                    ));
+                    // Configure interval
+                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
+                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAtPos(1).setMeantone(meantone);
+                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
 
                     allEqualTemperedIntervalsList.add(interval);
                 }
@@ -513,7 +511,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
                     // Create ChordScale
                     ChordScale interval =
-                            new ChordScale(cursor.getString(1), cursor.getString(7));
+                            new ChordScale(cursor.getString(1), cursor.getString(8));
 
                     boolean meantone =
                             cursor.getString(5).equalsIgnoreCase("Meantone");
@@ -521,17 +519,15 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                     boolean superparticular =
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
-                    // Add interval
-                    interval.addChordMember(new Note(
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getDouble(3),
-                            cursor.getString(4),
-                            cursor.getInt(5),
-                            meantone,
-                            superparticular,
-                            cursor.getString(7)
-                    ));
+                    // Configure interval
+                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
+                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAtPos(1).setMeantone(meantone);
+                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
 
                     allAllJustIntervalsList.add(interval);
                 }
@@ -565,22 +561,20 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 // Create ChordScale
-                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(7));
+                ChordScale interval = new ChordScale(cursor.getString(1), cursor.getString(8));
 
                 boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
                 boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
 
-                // Add interval
-                interval.addChordMember(new Note(
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getDouble(3),
-                        cursor.getString(4),
-                        cursor.getInt(5),
-                        meantone,
-                        superparticular,
-                        cursor.getString(7)
-                ));
+                // Configure interval
+                interval.getChordMemberAtPos(1).setName(cursor.getString(1));
+                interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
+                interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
+                interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
+                interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
+                interval.getChordMemberAtPos(1).setMeantone(meantone);
+                interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
+                interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
 
                 // add to list
                 allMeantoneIntervalsList.add(interval);
@@ -592,7 +586,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
     }
 
     public List<ChordScale> getAllHarmonics() {
-        ArrayList<ChordScale> allHarmonicssList = new ArrayList<>();
+        ArrayList<ChordScale> allHarmonicsList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query(
                 INTERVALS_TABLE,
@@ -614,11 +608,11 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                if (cursor.getString(1).toUpperCase().contains("harmonic")) {
+                if (cursor.getString(1).toUpperCase().contains("HARMONIC")) {
 
                     // Create ChordScale
                     ChordScale interval =
-                            new ChordScale(cursor.getString(1), cursor.getString(7));
+                            new ChordScale(cursor.getString(1), cursor.getString(8));
 
                     boolean meantone =
                             cursor.getString(5).equalsIgnoreCase("Meantone");
@@ -626,25 +620,25 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                     boolean superparticular =
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
-                    // Add interval
-                    interval.addChordMember(new Note(
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getDouble(3),
-                            cursor.getString(4),
-                            cursor.getInt(5),
-                            meantone,
-                            superparticular,
-                            cursor.getString(7)
-                    ));
+                    // Configure interval
+                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
+                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAtPos(1).setMeantone(meantone);
+                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
 
-                    allHarmonicssList.add(interval);
+                    Log.i(TAG, interval.getName());
+
+                    allHarmonicsList.add(interval);
                 }
             } while (cursor.moveToNext());
         }
         cursor.close();
         database.close();
-        return allHarmonicssList;
+        return allHarmonicsList;
     }
 
 
@@ -817,7 +811,6 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
     }
 
     public boolean importChordsFromCSV(String csvFileName) {
-        // TODO: this method
         AssetManager manager = mContext.getAssets();
         InputStream inputStream;
         try {

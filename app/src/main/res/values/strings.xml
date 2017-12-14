@@ -157,7 +157,8 @@
     
     
     <!-- SoundObject Strings -->
-    <string name="scale_period">Period: \s</string>
+    <string name="scale_period">Periodic Interval: \s</string>
+    <string name="scale_size">Size: \s</string>
 
 
 </resources>
