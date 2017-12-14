@@ -267,7 +267,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         logTV.setText("Frequency of the interval: " + (String.valueOf(Math.abs(mChordScale.getChordMemberAtPos(1).getPitchFrequency()))));
 
         // Sets the PlayBackMode to an Arpeggiator
-        mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
+        mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
 
         // Sets the duration in milliseconds for how long each note plays
         mChordScale.setDurationMilliseconds(500);
