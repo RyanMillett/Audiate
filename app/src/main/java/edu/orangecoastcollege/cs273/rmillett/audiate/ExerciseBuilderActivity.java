@@ -110,6 +110,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mExercisesListView.setSelector(R.color.colorPrimary);
+
                 exerciseSelectionHandler(view);
             }
         });
@@ -149,6 +150,9 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                 break;
             case R.id.exerciseListLinearLayout:
                 mStartButton.setVisibility(View.VISIBLE);
+                LinearLayout selectedLayout = (LinearLayout) view;
+                Exercise selectedExercise = (Exercise) selectedLayout.getTag();
+                mExerciseActivity.setExerciseName(selectedExercise.getExerciseName());
                 updateDescriptionTextView(view);
                 return;
         }
@@ -272,18 +276,21 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         mFilteredExerciseList.clear();
         switch (view.getId()) {
             case R.id.exercise1Button:
+                mExerciseActivity.setExerciseMaterial(Exercise.EXERCISE_MATERIAL_INTERVALS);
                 mFilteredExerciseList =
                         new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
                                 Exercise.EXERCISE_MATERIAL_INTERVALS));
                 break;
             case R.id.exercise2Button:
+                mExerciseActivity.setExerciseMaterial(Exercise.EXERCISE_MATERIAL_CHORDS);
                 mFilteredExerciseList =
                         new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
                                 Exercise.EXERCISE_MATERIAL_CHORDS));
                 break;
             case R.id.exercise3Button:
+                mExerciseActivity.setExerciseMaterial(Exercise.EXERCISE_MATERIAL_SCALES);
                 mFilteredExerciseList =
                         new ArrayList<>(mDBExercises.getAllIntervalExercisesByModeAndMaterial(
                                 mExerciseActivity.getExerciseMode(),
@@ -339,6 +346,11 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
                     break;
             }
         }
+
+        Log.i(TAG, mExerciseActivity.getExerciseName()
+                + " | " + mExerciseActivity.getExerciseMode()
+                + " | "+ mExerciseActivity.getExerciseMaterial());
+
     }
 
     private void updateImageViewColors(View view) {
