@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -56,6 +57,10 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
     private ImageView mEarTrainingImageView; // this loads a play button with an interval behind it
     private TextView mAnswerTextView; // displays the correct answer
 
+    private String mExerciseName;
+    private String mExerciseMode;
+    private String mExerciseMaterial;
+
     private TextView mGuessTextView;
 
     @Override
@@ -75,8 +80,15 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         // Assign QuizType to whatever is packed into Intent
         // Create a filtered list based on the String
         // i.e. Historical -->
+        Intent intentFromExerciseBuilder = getIntent();
+        Exercise selectedExercise = getIntent().getExtras().getParcelable("SelectedExercise");
+        mExerciseName = selectedExercise.getExerciseName();
+        mExerciseMode = selectedExercise.getExerciseMode();
+        mExerciseMaterial = selectedExercise.getExerciseMaterial();
 
-        // Initializes a new SoundObjectPlayer
+
+
+                // Initializes a new SoundObjectPlayer
         mSoundObjectPlayer = new SoundObjectPlayer();
 
         // TODO: In the future delete
