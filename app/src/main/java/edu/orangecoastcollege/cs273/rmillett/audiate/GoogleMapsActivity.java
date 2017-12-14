@@ -249,9 +249,9 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         // creates a new Chord Scale with a new Chord Member.
 
         if (mLastLocation.getLongitude() > mLastLocation.getLatitude())
-            mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLongitude() / mLastLocation.getLatitude()));
+            mChordScale.getChordMemberAtPos(1).setRatio(Music.convertDecimalToRatio(mLastLocation.getLongitude() / mLastLocation.getLatitude()));
         else
-            mChordScale.getChordMemberAtPos(1).setPitchFrequency(mChordScale.getChordMemberAtPos(0).getPitchFrequency() * (mLastLocation.getLatitude() / mLastLocation.getLongitude()));
+            mChordScale.getChordMemberAtPos(1).setRatio(Music.convertDecimalToRatio(mLastLocation.getLatitude() / mLastLocation.getLongitude()));
 
 
         // Adds notes to the mChordScale
