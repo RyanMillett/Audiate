@@ -47,6 +47,9 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
         handler = new Handler();
 
+        highPitch = "";
+        lowPitch = "";
+
         pitchDetector.activatePitchDetection();
     }
 
@@ -97,26 +100,25 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
                 // TODO: change view back to resting mode
 
+                // save value into user profile
+                switch (toastText) {
+                    case "highest":
+                        // set user highest note
+                        highPitch = detectedPitch;
+                        break;
+                    case "lowest":
+                        // set user lowest note
+                        lowPitch = detectedPitch;
+                        break;
+                }
+
+                if (!lowPitch.isEmpty() && !highPitch.isEmpty()) {
+                    confirmButton.setVisibility(View.VISIBLE);
+                }
+
+                enableDetectionButtons();
             }
-        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE / 2);
-
-        // save value into user profile
-        switch (toastText) {
-            case "highest":
-                // set user highest note
-                highPitch = detectedPitch;
-                break;
-            case "lowest":
-                // set user lowest note
-                lowPitch = detectedPitch;
-                break;
-        }
-
-        if (!lowPitch.isEmpty() && !highPitch.isEmpty()) {
-            confirmButton.setVisibility(View.VISIBLE);
-        }
-
-        enableDetectionButtons();
+        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE);
     }
 
     /**
