@@ -117,7 +117,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_blue_bg"
+            android:background="@color/colorPrimary"
             android:fontFamily="serif"
             android:onClick="activitySelectionHandler"
             android:text="@string/log_out_button"
