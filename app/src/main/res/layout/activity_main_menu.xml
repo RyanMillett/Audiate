@@ -84,7 +84,7 @@
                 android:focusable="true"
                 android:clickable="true"
                 android:onClick="activitySelectionHandler"
-                app:srcCompat="@drawable/music_library"/>
+                app:srcCompat="@drawable/sound_library_icon"/>
 
             <TextView
                 android:id="@+id/textView3"
