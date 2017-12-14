@@ -2,6 +2,7 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.icu.text.DecimalFormat;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.text.NumberFormat;
 
 /**
  * The <code>GoogleMapsActivity</code> allows the user to find their place
@@ -260,7 +263,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         // mChordScale.addChordMember(new Note("interval", mChordScale.getChordMemberAtPos(3).getPitchFrequency() * interval));
 
 
-        Log.i("Google Maps Activity", "frequency of the interval" + mChordScale.getChordMemberAtPos(1).getPitchFrequency());
+        Log.i("Google Maps Activity", String.format("%.2f", "frequency of the interval" + mChordScale.getChordMemberAtPos(1).getPitchFrequency()));
 
         TextView logTV = (TextView) findViewById(R.id.logITV);
 
