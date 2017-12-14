@@ -15,10 +15,8 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
@@ -107,7 +105,7 @@ public class LibraryActivity extends AppCompatActivity {
 //            mDBMusicalMaterials.deleteAllIntervals();
 //            mDBMusicalMaterials.deleteAllScales();
 //            mDBScalaArchive.deleteAllScales();
-
+//
 //            mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
 //            // TODO: import chords
 //            // TODO: import scales

@@ -63,12 +63,12 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         mExerciseActivity = new Exercise();
 
         // DB
-        deleteDatabase(DBHelper.DATABASE_NAME);
+//        deleteDatabase(DBHelper.DATABASE_NAME);
+
         mDBExercises = new DBExercises(this);
 
-        mDBExercises.deleteAllExercies();
-
-        mDBExercises.importAllExercisesFromCSV("exercises.csv");
+//        mDBExercises.deleteAllExercies();
+//        mDBExercises.importAllExercisesFromCSV("exercises.csv");
 
         // Lists
         mAllListeningExercises = new ArrayList<>(mDBExercises.getAllExercisesByMode(Exercise.EXERCISE_MODE_LISTENING));

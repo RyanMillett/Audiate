@@ -118,7 +118,7 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
                 enableDetectionButtons();
             }
-        }, SoundObjectPlayer.DEFAULT_SAMPLE_RATE);
+        }, 5 * 1000);
     }
 
     /**
