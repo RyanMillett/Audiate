@@ -331,11 +331,11 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     private ArrayList<ChordScale> filterChords() {
-        return new ArrayList<>(mAllIntervalsList);
+        return new ArrayList<>(mAllChordsList);
     }
 
     private ArrayList<ChordScale> filterScales() {
-        return new ArrayList<>(mAllIntervalsList);
+        return new ArrayList<>(mAllScalesList);
     }
 
 

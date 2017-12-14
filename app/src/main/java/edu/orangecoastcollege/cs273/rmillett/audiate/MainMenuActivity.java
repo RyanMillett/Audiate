@@ -44,18 +44,18 @@ public class MainMenuActivity extends AppCompatActivity {
         // Get this to work later
         // User user = getIntent().getExtras().getParcelable("user");
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mAuth.getCurrentUser();
-        mDBUser = new DBUser(this);
-
-        String email = mFirebaseUser.getEmail();
-        String displayName = mFirebaseUser.getDisplayName();
-        List<User> users = new ArrayList<>(mDBUser.getAllUsers());
-        for (User u : users) {
-            Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
-                    + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
-                    + "\nvocal_range: " + u.getVocalRange());
-        }
+//        mAuth = FirebaseAuth.getInstance();
+//        mFirebaseUser = mAuth.getCurrentUser();
+//        mDBUser = new DBUser(this);
+//
+//        String email = mFirebaseUser.getEmail();
+//        String displayName = mFirebaseUser.getDisplayName();
+//        List<User> users = new ArrayList<>(mDBUser.getAllUsers());
+//        for (User u : users) {
+//            Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
+//                    + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
+//                    + "\nvocal_range: " + u.getVocalRange());
+//        }
 
         // CRASHES CODE IF RETURNING FROM ANY PREVIOUS WINDOW
         // user = mDBUser.getUser(email);
@@ -84,7 +84,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 activityIntent = new Intent(this, LibraryActivity.class);
                 break;
             case R.id.logoutButton:
-                mAuth.signOut();
+                //mAuth.signOut();
                 finish();
                 activityIntent = new Intent(this, LoginActivity.class);
                 break;
