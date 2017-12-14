@@ -260,8 +260,8 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                boolean meantone = cursor.getString(5).equalsIgnoreCase("Meantone");
-                boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
+                boolean meantone = cursor.getString(6).equalsIgnoreCase("Meantone");
+                boolean superparticular = cursor.getString(7).equalsIgnoreCase("Superparticular");
 
                 // Create interval
                 Note interval = new Note(
@@ -272,7 +272,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                         cursor.getInt(5),
                         meantone,
                         superparticular,
-                        cursor.getString(7)
+                        cursor.getString(8)
                 );
 
                 // add to list
@@ -308,13 +308,13 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
             do {
                 // Create ChordScale
                 ChordScale interval =
-                        new ChordScale(cursor.getString(1), cursor.getString(7));
+                        new ChordScale(cursor.getString(1), cursor.getString(8));
 
                 boolean meantone =
-                        cursor.getString(5).equalsIgnoreCase("Meantone");
+                        cursor.getString(6).equalsIgnoreCase("Meantone");
 
                 boolean superparticular =
-                        cursor.getString(6).equalsIgnoreCase("Superparticular");
+                        cursor.getString(7).equalsIgnoreCase("Superparticular");
 
                 // Configure interval
                 interval.getChordMemberAtPos(1).setName(cursor.getString(1));
@@ -324,9 +324,11 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
                 interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
                 interval.getChordMemberAtPos(1).setMeantone(meantone);
                 interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                interval.getChordMemberAtPos(1).setDescription(cursor.getString(7));
+                interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
 
-                interval.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
+                //Log.i(TAG, interval.getChordMemberAtPos(1).getRatio());
+
+                //interval.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
 
                 // add to list
                 allIntervalsList.add(interval);
@@ -662,14 +664,15 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
             }
 
             // ChordScale size
-            line = br.readLine();
 
             Log.i(TAG, "chordScale size->" + chordScale.getSize() + " | archive size->" + line);
 
+            chordScale.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
             double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
 
+            line = br.readLine();
             // read each interval line
-            for (int i = 1; i < chordScale.getSize() && line != null; ++i) {
+            for (int i = 1; i < chordScale.getSize() && line != null;) {
 
                 // skip any scl comments
                 if (line.startsWith("!")) {
@@ -681,6 +684,9 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
                     Log.i(TAG, "[Confirm freq: " + chordScale.getChordMemberAtPos(i).getPitchFrequency()
                             + " | scala line: " + line + "]");
+
+                    i++;
+                    line = br.readLine();
                 }
             }
         }

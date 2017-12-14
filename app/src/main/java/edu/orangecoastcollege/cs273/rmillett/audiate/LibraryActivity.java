@@ -88,9 +88,9 @@ public class LibraryActivity extends AppCompatActivity {
 
         // ---------- DELETE IF EXISTS, OTHERWISE COMMENT OUT ---------- //
 
-//            deleteDatabase(mDBMusicalMaterials.getDataBaseName());
-//            deleteDatabase(mDBScalaArchive.getDataBaseName());
-        deleteDatabase(DBHelper.DATABASE_NAME);
+            deleteDatabase("MusicalMaterials");
+            deleteDatabase("ScalaArchive");
+            deleteDatabase(DBHelper.DATABASE_NAME);
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -112,7 +112,7 @@ public class LibraryActivity extends AppCompatActivity {
             // TODO: import scales
 
             // Import Scala Archive
-            //mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
+            mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -192,7 +192,7 @@ public class LibraryActivity extends AppCompatActivity {
         playSelectionButton.setEnabled(false);
 
         // Sound Object
-        //mChordScale = new ChordScale("Selected SoundObject");
+        mChordScale = new ChordScale("Selected ChordScale");
 
         // Sound Object Player
         mSoundObjectPlayer = new SoundObjectPlayer();
@@ -215,7 +215,7 @@ public class LibraryActivity extends AppCompatActivity {
             switch (i) {
                 case 1:
                     // TODO: add intervals
-                    filteredMaterialsList.addAll(mAllIntervalsList);
+                    filteredMaterialsList = new ArrayList<>(mAllIntervalsList);
                     // Update playback options
                     enablePlaybackSettings();
                     break;
@@ -227,7 +227,7 @@ public class LibraryActivity extends AppCompatActivity {
                     break;
                 case 3:
                     // TODO: add scales
-
+                    filteredMaterialsList = new ArrayList<>(mScalaArchiveList);
                     // Update playback options
                     enablePlaybackSettings();
                     break;
@@ -237,7 +237,8 @@ public class LibraryActivity extends AppCompatActivity {
                     break;
             }
 
-            // Notify list adapter
+            // Update list adapter
+            mLibraryListAdapter.addAll(filteredMaterialsList);
             mLibraryListAdapter.notifyDataSetChanged();
 
             // Update "Filter" spinner adapter
@@ -346,20 +347,18 @@ public class LibraryActivity extends AppCompatActivity {
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
             Log.i(TAG, selectedChordScale.getName() + ", size: " + selectedChordScale.getSize());
 
-            mChordScale = new ChordScale(
-                    selectedChordScale.getName(),
-                    selectedChordScale.getSize(),
-                    selectedChordScale.getDescription(),
-                    selectedChordScale.getSCLfileName());
-//            mChordScale.buildChordScaleFromSCL(db.createScaleFromSCL(mChordScale, mChordScale.getSCLfileName()));
-//
-//            Log.i(TAG,"mChordScale-> " + mChordScale.getName() + ", " + mChordScale.getSize());
-            Log.i(TAG, "Description->" + mChordScale.getDescription());
+            mChordScale = selectedChordScale;
 
-//            int i = 0;
-//            for (Note note : mChordScale.getAllChordMembers()) {
-//                Log.i(TAG, "" + i++ + " " + note.getPitchFrequency());
-//            }
+            if (mChordScale.getSize() > ChordScale.CHORDSCALE_DEFAULT_INITIAL_SIZE) {
+                mDBMusicalMaterials.buildChordScaleFromSCL(mChordScale, "scl/", mChordScale.getSCLfileName());
+            }
+
+            //mChordScale.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
+
+            Log.i(TAG,"mChordScale->" + mChordScale.getName() + " | size:" + mChordScale.getSize());
+            for (int i = 0; i < mChordScale.getSize(); ++i) {
+                Log.i(TAG, i + " " + mChordScale.getChordMemberAtPos(i).getRatio());
+            }
 
             displayNameTextView.setText(selectedChordScale.getName());
             displayDescriptionTextView.setText(selectedChordScale.getDescription());

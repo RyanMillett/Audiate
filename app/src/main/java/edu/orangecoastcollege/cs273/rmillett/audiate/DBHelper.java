@@ -648,7 +648,9 @@ public class DBHelper extends SQLiteOpenHelper {
     // ---------- DELETE ALL ---------- //
 
     public void deleteAllIntervals() {
-        // TODO: this method
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(INTERVALS_TABLE, null, null);
+        database.close();
     }
 
     public void deleteAllChords() {

@@ -47,7 +47,7 @@ public class Note extends SoundObject {
      */
     public Note() {
         super();
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY;
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
 
@@ -64,7 +64,7 @@ public class Note extends SoundObject {
      */
     public Note(String name) {
         super(name);
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY;
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY;
         mRatio = DEFAULT_RATIO;
         mSizeInCents = DEFAULT_SIZE_IN_CENTS;
 
@@ -76,7 +76,7 @@ public class Note extends SoundObject {
 
     public Note(String name, String ratio) {
         super(name);
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio;
         mSizeInCents = Music.convertRatioToCents(ratio);
 
@@ -88,7 +88,7 @@ public class Note extends SoundObject {
 
     public Note(double decimalInterval) {
         super();
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * decimalInterval;
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY * decimalInterval;
         mRatio = Music.convertDecimalToRatio(decimalInterval);
         mSizeInCents = Music.convertRatioToCents(mRatio);
 
@@ -128,7 +128,7 @@ public class Note extends SoundObject {
      */
     public Note(String name, String ratio, double cents, String description) {
         super(name);
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio;
         mSizeInCents = cents;
         mDescription = description;
@@ -142,7 +142,7 @@ public class Note extends SoundObject {
     public Note(String name, String ratio, double cents,
                 String tet, int limit, boolean meantone, boolean superparticular, String description) {
         super(name);
-        mPitchFrequency = DEFAULT_INITIAL_PITCH_FREQUENCY * Music.convertRatioToDecimal(ratio);
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY * Music.convertRatioToDecimal(ratio);
         mRatio = ratio.contains("power") || ratio.contains("root") || ratio.contains("PI")  || ratio.contains("(")
                 ? Music.convertDecimalToRatio(Music.convertCentsToDecimal(cents)) : ratio;
         mSizeInCents = cents;
@@ -199,6 +199,7 @@ public class Note extends SoundObject {
      */
     public void setRatio(String ratio) {
         mRatio = ratio;
+        mPitchFrequency = ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY * Music.convertRatioToDecimal(ratio);
     }
 
     /**
