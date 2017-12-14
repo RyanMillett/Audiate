@@ -46,7 +46,7 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
      */
     public static final int COARSE_LOCATION_REQUEST_CODE = 100;
 
-    private ChordScale mChordScale = new ChordScale("myLocationSound", 2);
+    private ChordScale mChordScale = new ChordScale("myLocationSound");
 
     private SoundObjectPlayer mSoundObjectPlayer;
 
@@ -72,9 +72,9 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_maps);
 
-        mChordScale.addChordMember(new Note("fundamental"));
+        // mChordScale.addChordMember(new Note("fundamental"));
 
-        mChordScale.addChordMember(new Note("interval"));
+        // mChordScale.addChordMember(new Note("interval"));
 
         mSoundObjectPlayer = new SoundObjectPlayer();
 
