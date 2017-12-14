@@ -1,12 +1,8 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Ryan Millett
@@ -117,15 +113,15 @@ public class Exercise implements Parcelable {
     public String getExerciseDifficultyString() {
         switch (this.getExerciseDifficulty()) {
             case EXERCISE_DIFFICULTY_INTERMEDIATE:
-            return EXERCISE_DIFFICULTY_2;
+                return EXERCISE_DIFFICULTY_2;
             case EXERCISE_DIFFICULTY_PROFICIENT:
-            return EXERCISE_DIFFICULTY_3;
+                return EXERCISE_DIFFICULTY_3;
             case EXERCISE_DIFFICULTY_ADVANCED:
-            return EXERCISE_DIFFICULTY_4;
+                return EXERCISE_DIFFICULTY_4;
             case EXERCISE_DIFFICULTY_EXPERT:
-            return EXERCISE_DIFFICULTY_5;
+                return EXERCISE_DIFFICULTY_5;
             case EXERCISE_DIFFICULTY_MASTER:
-            return EXERCISE_DIFFICULTY_6;
+                return EXERCISE_DIFFICULTY_6;
             default:
                 return EXERCISE_DIFFICULTY_1;
         }

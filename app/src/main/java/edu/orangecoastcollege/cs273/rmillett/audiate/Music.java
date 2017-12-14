@@ -36,7 +36,6 @@ public class Music {
 
     // TODO: make constant Strings and arrays compatible with 24-TET, 48-TET, 36-TET, 53-TET systems
 
-    public static final String UNKNOWN_NOTE = "";
     public static final String FLAT = "\u266D";
     public static final String SHARP = "\u266F";
     public static final String C = "C";

@@ -21,7 +21,7 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
 
     private static final String TAG = "Ear Training Quiz";
 
-    private DBHelper mDBHelper;
+    private DBMusicalMaterials mDBMusicalMaterials;
 
     private Context mContext;
 
@@ -84,11 +84,8 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
         // Database handled for practice, will remove later
         //
         deleteDatabase(DBHelper.DATABASE_NAME);
-        mDBHelper = new DBHelper(this);
-        mDBHelper.importKyleGannOctaveAnatomyFromCSV("OctaveAnatomy.csv");
 
-        mAllIntervalsList = mDBHelper.getAllIntervals();
-        mAllChordsList = new ArrayList<>(4); // TODO: get all chords
+
         // mAllScalesList = mDBHelper.getAllScalesFromSCL();
         //
         // Delete after learning how to make parcelable classes

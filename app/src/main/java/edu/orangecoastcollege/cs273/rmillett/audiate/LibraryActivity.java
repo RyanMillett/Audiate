@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,7 @@ import java.util.List;
 public class LibraryActivity extends AppCompatActivity {
 
     private static final String TAG = "LibraryActivity";
+
 
     // Databases
     private DBMusicalMaterials mDBMusicalMaterials;
@@ -89,9 +91,8 @@ public class LibraryActivity extends AppCompatActivity {
 
         // ---------- DELETE IF EXISTS, OTHERWISE COMMENT OUT ---------- //
 
-            deleteDatabase("MusicalMaterials");
-            deleteDatabase("ScalaArchive");
-            deleteDatabase(DBHelper.DATABASE_NAME);
+//            deleteDatabase("MusicalMaterials");
+//            deleteDatabase("ScalaArchive");
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -103,17 +104,15 @@ public class LibraryActivity extends AppCompatActivity {
 
         // ---------- DO IMPORTS ONCE, THEN COMMENT OUT ---------- //
 
-            mDBMusicalMaterials.deleteAllIntervals();
-            mDBMusicalMaterials.deleteAllScales();
-            mDBScalaArchive.deleteAllScales();
+//            mDBMusicalMaterials.deleteAllIntervals();
+//            mDBMusicalMaterials.deleteAllScales();
+//            mDBScalaArchive.deleteAllScales();
 
-            // Import materials
-            mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
-            // TODO: import chords
-            // TODO: import scales
-
-            // Import Scala Archive
-            mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
+//            mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
+//            // TODO: import chords
+//            // TODO: import scales
+//
+//            mDBScalaArchive.importScalesFromCSV("ScalaArchiveRedux.csv");
 
         // ---------- ---------- ---------- ---------- ---------- //
 
@@ -260,8 +259,8 @@ public class LibraryActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l) {
 
             // Determine selected material
-            String selectedMaterial = spinner.getSelectedItem().toString();
-            Log.i(TAG, selectedMaterial);
+            String selectedMaterial = selectMaterialSpinner.getSelectedItem().toString();
+            //Log.i(TAG, selectedMaterial);
 
             // Update Library ListView
             mLibraryListAdapter.clear();
@@ -299,44 +298,46 @@ public class LibraryActivity extends AppCompatActivity {
 
     private ArrayList<ChordScale> filterIntervals() {
 
-        if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.all_intervals))) {
-            return new ArrayList<>(mAllIntervalsList);
-        }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.all_harmonics))) {
+        String filterMaterial = filterBySpinner.getSelectedItem().toString();
+
+        if (filterMaterial.equalsIgnoreCase(getString(R.string.all_harmonics))) {
             return new ArrayList<>(mDBMusicalMaterials.getAllHarmonics());
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.limit_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.limit_intervals))) {
             // TODO: all limit intervals
-            return null;
+            return new ArrayList<>(mAllIntervalsList);
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.meantone_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.meantone_intervals))) {
             return new ArrayList<>(mDBMusicalMaterials.getAllMeantoneIntervals());
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.superparticular_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.superparticular_intervals))) {
             // TODO: all superparticular
-            return null;
+            return new ArrayList<>(mAllIntervalsList);
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.et_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.et_intervals))) {
             return new ArrayList<>(mDBMusicalMaterials.getAllEqualTemperedIntervals());
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.pythag_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.pythag_intervals))) {
             // TODO: all pythag
-            return null;
+            return new ArrayList<>(mAllIntervalsList);
         }
-        else if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase(getString(R.string.comma_intervals))) {
+        else if (filterMaterial.equalsIgnoreCase(getString(R.string.comma_intervals))) {
             // TODO: all commas
-            return null;
+            return new ArrayList<>(mAllIntervalsList);
         }
-        return null;
+        else {
+            return new ArrayList<>(mAllIntervalsList);
+        }
     }
 
     private ArrayList<ChordScale> filterChords() {
-        return null;
+        return new ArrayList<>(mAllIntervalsList);
     }
 
     private ArrayList<ChordScale> filterScales() {
-        return null;
+        return new ArrayList<>(mAllIntervalsList);
     }
+
 
     // SPINNER STRINGS //
 
