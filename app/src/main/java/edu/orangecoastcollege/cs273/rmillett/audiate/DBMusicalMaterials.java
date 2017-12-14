@@ -641,6 +641,42 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
         return allHarmonicsList;
     }
 
+        // Scales:
+
+    public List<ChordScale> getAllNonOctaveScales() {
+        ArrayList<ChordScale> allNonOctaveScalesList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.query(
+                SCALES_TABLE,
+                new String[]{SCALES_KEY_FIELD_ID,
+                        FIELD_SCALE_NAME,
+                        FIELD_SCALE_SIZE,
+                        FIELD_SCALE_DESCRIPTION,
+                        FIELD_SCALE_SCL_FILE_NAME},
+                null,
+                null,
+                null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // TODO: insert condition logic here
+
+                // Build scale
+                ChordScale scale = new ChordScale(
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+
+                // add scale
+                allNonOctaveScalesList.add(scale);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return allNonOctaveScalesList;
+    }
+
 
     // ---------- Scala HELPER METHODS:
 
