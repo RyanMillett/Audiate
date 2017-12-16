@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class LibraryActivity extends AppCompatActivity {
 
+    // Debug Tags
     private static final String TAG = "LibraryActivity";
-
 
     // Databases
     private DBMusicalMaterials mDBMusicalMaterials;
@@ -52,21 +53,25 @@ public class LibraryActivity extends AppCompatActivity {
     private TextView displayNameTextView;
     private TextView displayDescriptionTextView;
 
-    // playback mode Radio Group
-    private RadioButton mode1RadioButton;
-    private RadioButton mode2RadioButton;
-    private RadioButton mode3RadioButton;
-    private RadioButton mode4RadioButton;
-    private RadioButton[] radioButtonArray;
+    // Playback
+    private LinearLayout playbackLinearLayout;
 
-    // playback mode CheckBox group
-    private CheckBox aux1CheckBox;
-    private CheckBox aux2CheckBox;
-    private CheckBox[] checkBoxArray;
+        // playback mode RadioGroup
+        private RadioGroup mModeRadioGroup;
+        private RadioButton mode1RadioButton;
+        private RadioButton mode2RadioButton;
+        private RadioButton mode3RadioButton;
+        private RadioButton mode4RadioButton;
+        private RadioButton[] radioButtonArray;
 
-    // playback buttons
-    private Button testFundamentalButton;
-    private Button playSelectionButton;
+        // playback mode CheckBox group
+        private CheckBox aux1CheckBox;
+        private CheckBox aux2CheckBox;
+        private CheckBox[] checkBoxArray;
+
+        // playback buttons
+        private Button testFundamentalButton;
+        private Button playSelectionButton;
 
     // List adapter
     private LibraryListAdapter mLibraryListAdapter;
@@ -86,6 +91,12 @@ public class LibraryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+
+        // Sound Object
+        mChordScale = new ChordScale("Selected Material");
+
+        // Sound Object Player
+        mSoundObjectPlayer = new SoundObjectPlayer();
 
         // ---------- DELETE IF EXISTS, OTHERWISE COMMENT OUT ---------- //
 
@@ -161,20 +172,24 @@ public class LibraryActivity extends AppCompatActivity {
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
         filterBySpinner.setOnItemSelectedListener(filterMaterialSpinnerListener);
 
+        playbackLinearLayout = findViewById(R.id.playbackLinearLayout);
+        playbackLinearLayout.setVisibility(View.INVISIBLE);
 
         // playback settings group
-        // TODO: add OnCheckedListener
-        mode1RadioButton = findViewById(R.id.mode1RadioButton);
-        mode1RadioButton.setChecked(true); // Default playback mode
-        mode2RadioButton = findViewById(R.id.mode2RadioButton);
-        mode3RadioButton = findViewById(R.id.mode3RadioButton);
-        mode4RadioButton = findViewById(R.id.mode4RadioButton);
-        radioButtonArray = new RadioButton[]{
-                mode1RadioButton,
-                mode2RadioButton,
-                mode3RadioButton,
-                mode4RadioButton
-        };
+        mModeRadioGroup = findViewById(R.id.playbackOptionsRadioGroup);
+        mModeRadioGroup.setOnCheckedChangeListener(playbackRadioGroupListener);
+
+            mode1RadioButton = findViewById(R.id.mode1RadioButton);
+            mode1RadioButton.setChecked(true); // Default playback mode
+            mode2RadioButton = findViewById(R.id.mode2RadioButton);
+            mode3RadioButton = findViewById(R.id.mode3RadioButton);
+            mode4RadioButton = findViewById(R.id.mode4RadioButton);
+            radioButtonArray = new RadioButton[]{
+                    mode1RadioButton,
+                    mode2RadioButton,
+                    mode3RadioButton,
+                    mode4RadioButton
+            };
 
         // CheckBoxes
         aux1CheckBox = findViewById(R.id.aux1CheckBox);
@@ -187,17 +202,12 @@ public class LibraryActivity extends AppCompatActivity {
         // Playback Buttons
         //testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
         playSelectionButton = findViewById(R.id.playSelectionButton);
-        playSelectionButton.setEnabled(false);
-
-        // Sound Object
-        mChordScale = new ChordScale("Selected Material");
-
-        // Sound Object Player
-        mSoundObjectPlayer = new SoundObjectPlayer();
+        playSelectionButton.setVisibility(View.INVISIBLE);
 
     }
 
-    // SPINNER LISTENERS //
+
+    // LISTENERS //
 
     public AdapterView.OnItemSelectedListener selectMaterialSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -232,6 +242,7 @@ public class LibraryActivity extends AppCompatActivity {
                     break;
                 default:
                     // Do nothing
+                    playSelectionButton.setVisibility(View.INVISIBLE);
                     disablePlaybackSettings();
                     break;
             }
@@ -288,6 +299,13 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
             // UNUSED
+        }
+    };
+
+    public RadioGroup.OnCheckedChangeListener playbackRadioGroupListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            detectPlaybackMode(checkedId);
         }
     };
 
@@ -358,7 +376,7 @@ public class LibraryActivity extends AppCompatActivity {
                 return getResources().getStringArray(R.array.ScalesArray);
             default: // nothing selected
                 disablePlaybackSettings();
-                playSelectionButton.setEnabled(false);
+                playSelectionButton.setVisibility(View.INVISIBLE);
                 return new String[]{""};
         }
     }
@@ -366,27 +384,11 @@ public class LibraryActivity extends AppCompatActivity {
 
     // SELECTION HANDLERS //
 
-    /**
-     * Handles audio playback
-     *
-     * @param view
-     */
     public void playbackHandler(View view) {
-
-        // TODO: consider adding this to an OnChangeListener if possible
-        // Get fundamental frequency
-        if (!TextUtils.isEmpty(setFundamentalEditText.getText())) {
-            mChordScale.resetFundamentalFrequency(Double.parseDouble(setFundamentalEditText.getText().toString()));
-        }
 
         // Determine button ID
         switch (view.getId()) {
-//            case R.id.testFundamentalFreqButton:
-//                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-//                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
-//                break;
             case R.id.playSelectionButton:
-                detectPlaybackMode();
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
@@ -398,6 +400,8 @@ public class LibraryActivity extends AppCompatActivity {
     public void selectionDetailsHandler(View view) {
 
         if (view instanceof LinearLayout) {
+
+            // ListView item
             LinearLayout selectedLayout = (LinearLayout) view;
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
             Log.i(TAG, selectedChordScale.getName() + ", size: " + selectedChordScale.getSize());
@@ -406,7 +410,16 @@ public class LibraryActivity extends AppCompatActivity {
             mChordScale = selectedChordScale;
 
             if (mChordScale.getSize() > ChordScale.CHORDSCALE_DEFAULT_INITIAL_SIZE) {
-                mDBMusicalMaterials.buildChordScaleFromSCL(mChordScale, "scl/", mChordScale.getSCLfileName());
+                String pathName = "";
+
+                if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase("Full Scala Archive")) {
+                    pathName = "scl/";
+                }
+                else {
+                    pathName = "";
+                }
+
+                mDBMusicalMaterials.buildChordScaleFromSCL(mChordScale, pathName, mChordScale.getSCLfileName());
             }
 
             Log.i(TAG,"mChordScale->" + mChordScale.getName() + " | size:" + mChordScale.getSize());
@@ -414,31 +427,47 @@ public class LibraryActivity extends AppCompatActivity {
                 Log.i(TAG, i + " " + mChordScale.getChordMemberAtPos(i).getRatio());
             }
 
+            // Info text
             displayNameTextView.setText(selectedChordScale.getName());
             displayDescriptionTextView.setText(selectedChordScale.getDescription());
 
-            // Enable playback // TODO: add to listener
-            playSelectionButton.setEnabled(true);
+            // Enable playback
+            playSelectionButton.setVisibility(View.VISIBLE);
+        }
+        else {
+
+            // Info text
+            displayNameTextView.setText("");
+            displayDescriptionTextView.setText("");
+
+            // disable playback
+            playSelectionButton.setVisibility(View.INVISIBLE);
         }
     }
 
 
     // PLAYBACK OPTIONS //
 
-    // TODO: consider adding this to an OnChangeListener
-    private void detectPlaybackMode() {
+    private void detectPlaybackMode(int checkedID) {
+
         // Set PlayBack mode
-        if (mode1RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 3);
-        }
-        else if (mode2RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
-        }
-        else if (mode3RadioButton.isChecked()) {
-            mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+
+        switch (checkedID) {
+            case R.id.mode1RadioButton:
+                mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
+                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 3);
+                break;
+            case R.id.mode2RadioButton:
+                mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
+                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+                break;
+            case R.id.mode3RadioButton:
+                mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_DOWN);
+                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_SHORT);
+                break;
+            case R.id.mode4RadioButton:
+                break;
+            default:
         }
     }
 

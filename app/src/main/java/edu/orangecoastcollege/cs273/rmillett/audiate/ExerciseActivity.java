@@ -64,7 +64,7 @@ public class ExerciseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ear_training_quiz);
+        setContentView(R.layout.activity_exercise);
 
         // This displays the back button
         // The functionality is handled in the manifest
