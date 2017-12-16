@@ -88,7 +88,7 @@ Exercise: 36-Tone Equal-Tempered Intervals
 Mode: Singing
 Material: Intervals
 Difficulty: 5
-Description: The 36-tone equal-tempered scale dives the octave in thirty-six equally-space "third-tone" intervals (approximately 33.33 cents).
+Description: The 36-tone equal-tempered scale dives the octave in thirty-six equally-space "sixth-tone" intervals (approximately 33.33 cents).
 The basis for this scale is using the difference between an equally-tempered minor-seventh and a just-minor seventh as the generative interval.
 This exercise tests the user's ability to perform intervals from this scale.
 //

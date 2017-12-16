@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="SelectMaterialsArray">
+        <item>@string/select_materials</item>
+        <item>@string/select_intervals</item>
+        <item>@string/select_chords</item>
+        <item>@string/select_scales</item>
+    </string-array>
+
+    <string-array name="SortMaterialsArray">
+        <item>@string/sort_small_large</item>
+        <item>@string/sort_small_large</item>
+        <item>@string/sort_name_a_z</item>
+        <item>@string/sort_name_z_a</item>
+    </string-array>
+
     <string-array name="IntervalsArray">
-        <item>List of Pitch Intervals</item>
-        <item>Harmonics (First 127)</item>
-        <item>Limit Intervals</item>
-        <item>Meantone Intervals</item>
-        <item>Superparticular Intervals</item>
-        <item>Equal-Tempered (by approximation)</item>
-        <item>Pythagorean Ratios</item>
-        <item>Commas</item>
-        <item>"Anatomy of an Octave" by Kyle Gann</item>
+        <item>@string/all_intervals</item>
+        <item>@string/all_harmonics</item>
+        <item>@string/limit_intervals</item>
+        <item>@string/meantone_intervals</item>
+        <item>@string/superparticular_intervals</item>
+        <item>@string/et_intervals</item>
+        <item>@string/pythag_intervals</item>
+        <item>@string/comma_intervals</item>
+        <item>@string/oct_anatomy</item>
     </string-array>
 
     <string-array name="ChordsArray">

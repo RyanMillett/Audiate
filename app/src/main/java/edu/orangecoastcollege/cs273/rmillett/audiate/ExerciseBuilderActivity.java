@@ -172,10 +172,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // Determine Exercise Mode
         switch (mExerciseActivity.getExerciseMode()) {
             case Exercise.EXERCISE_MODE_LISTENING:
-                exerciseIntent = new Intent(this, EarTrainingExerciseActivity.class);
-                break;
-            case Exercise.EXERCISE_MODE_SINGING:
-                exerciseIntent = new Intent(this, SingingExerciseActivity.class);
+                exerciseIntent = new Intent(this, ExerciseActivity.class);
                 break;
             default:
                 exerciseIntent = new Intent();

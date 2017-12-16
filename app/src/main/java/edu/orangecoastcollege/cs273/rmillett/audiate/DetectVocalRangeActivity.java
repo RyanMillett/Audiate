@@ -127,14 +127,7 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
      * @param view
      */
     public void confirmVocalRange(View view) {
-        // once both high- and low-notes have been detected, save to user profile and leave the activity
-                                        // TODO: go to confirm screen, not profile
-        Intent launchProfile = new Intent(this, ProfileActivity.class);
-        launchProfile.putExtra("HighPitch", highPitch);
-        launchProfile.putExtra("LowPitch", lowPitch);
-        launchProfile.putExtra("VocalRange", lowPitch + " - " + highPitch);
 
-        startActivity(launchProfile);
     }
 
     private void disableDetectionButtons() {

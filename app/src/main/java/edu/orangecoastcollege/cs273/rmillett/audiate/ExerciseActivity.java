@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EarTrainingExerciseActivity extends AppCompatActivity {
+public class ExerciseActivity extends AppCompatActivity {
 
-    private static final String TAG = "Ear Training Quiz";
+    private static final String TAG = "ExerciseActivity";
 
     private DBMusicalMaterials mDBMusicalMaterials;
 
@@ -89,12 +89,6 @@ public class EarTrainingExerciseActivity extends AppCompatActivity {
 
         // Initializes a new SoundObjectPlayer
         mSoundObjectPlayer = new SoundObjectPlayer();
-
-        // TODO: In the future delete
-        //
-        // Database handled for practice, will remove later
-        //
-        deleteDatabase(DBHelper.DATABASE_NAME);
 
 
         // mAllScalesList = mDBHelper.getAllScalesFromSCL();

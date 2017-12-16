@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 finish();
 
-                Intent logInIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent logInIntent = new Intent(SplashActivity.this, MainMenuActivity.class);
 
                 startActivity(logInIntent);
 
@@ -61,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         Timer timer = new Timer();
-        timer.schedule(task, 2500);
+        timer.schedule(task, 3 * 1000);
     }
 
     /**

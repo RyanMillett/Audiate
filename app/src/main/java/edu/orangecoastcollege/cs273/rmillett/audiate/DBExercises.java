@@ -72,7 +72,7 @@ public class DBExercises extends SQLiteOpenHelper {
         values.put(FIELD_EXERCISE_NAME, exercise.getExerciseName());
         values.put(FIELD_EXERCISE_MODE, exercise.getExerciseMode());
         values.put(FIELD_EXERCISE_MATERIAL, exercise.getExerciseMaterial());
-        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficulty());
+        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficultyLevel());
         values.put(FIELD_EXERCISE_DESCRIPTION, exercise.getExerciseDescriptionTextFileName());
 
         db.insert(EXERCISE_TABLE, null, values);
@@ -86,7 +86,7 @@ public class DBExercises extends SQLiteOpenHelper {
         values.put(FIELD_EXERCISE_NAME, exercise.getExerciseName());
         values.put(FIELD_EXERCISE_MODE, exercise.getExerciseMode());
         values.put(FIELD_EXERCISE_MATERIAL, exercise.getExerciseMaterial());
-        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficulty());
+        values.put(FIELD_EXERCISE_DIFFICULTY, exercise.getExerciseDifficultyLevel());
         values.put(FIELD_EXERCISE_DESCRIPTION, exercise.getExerciseDescriptionTextFileName());
 
         db.update(EXERCISE_TABLE, values, EXERCISE_KEY_FIELD_ID + " = ?",

@@ -20,15 +20,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MainMenuActivity";
 
-    private DBUser mDBUser;
-
-    User user;
-
-    private FirebaseAuth mAuth;
-    private FirebaseUser mFirebaseUser;
-
-    // Will not be used
-    // private TextView welcomeTextView;
 
     /**
      * This sets up the activity with the database and gets the current user.
@@ -40,31 +31,6 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-
-        // Get this to work later
-        // User user = getIntent().getExtras().getParcelable("user");
-
-//        mAuth = FirebaseAuth.getInstance();
-//        mFirebaseUser = mAuth.getCurrentUser();
-//        mDBUser = new DBUser(this);
-//
-//        String email = mFirebaseUser.getEmail();
-//        String displayName = mFirebaseUser.getDisplayName();
-//        List<User> users = new ArrayList<>(mDBUser.getAllUsers());
-//        for (User u : users) {
-//            Log.i(TAG, "Users in database :\nuser_name: " + u.getUserName() + "\nemail: "
-//                    + u.getEmail() + "\nlow_pitch: " + u.getLowPitch() + "\nhigh_pitch: " + u.getHighPitch()
-//                    + "\nvocal_range: " + u.getVocalRange());
-//        }
-
-        // CRASHES CODE IF RETURNING FROM ANY PREVIOUS WINDOW
-        // user = mDBUser.getUser(email);
-
-
-        // welcomeTextView = (TextView) findViewById(R.id.welcomeTextView);
-
-        // Should display a welcome message to the user at the main menu
-        // welcomeTextView.setText(getString(R.string.welcome_message, user.getUserName()));
     }
 
     /**
@@ -83,14 +49,11 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.libraryButton:
                 activityIntent = new Intent(this, LibraryActivity.class);
                 break;
-            case R.id.logoutButton:
-                //mAuth.signOut();
-                finish();
-                activityIntent = new Intent(this, LoginActivity.class);
-                break;
-            default:
+            case R.id.exercisesButton:
                 activityIntent = new Intent(this, ExerciseBuilderActivity.class);
                 break;
+            default:
+                activityIntent = new Intent();
         }
 
         startActivity(activityIntent);

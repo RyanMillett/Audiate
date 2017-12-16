@@ -3,28 +3,6 @@
     <string name="app_name" translatable="false">Audiate</string>
     <string name="splash_screen_text" translatable="false">Audiate</string>
 
-    <!-- Log-In -->
-    <string name="log_in_button">Log In</string>
-    <string name="about_button">About "Audiate"</string>
-    <string name="create_profile_button">Create Profile</string>
-    <string name="clear_all_users_button">Clear All Users</string>
-
-    <!-- Create / Edit Profile -->
-    <string name="user_name">User Name</string>
-    <string name="password">Password</string>
-    <string name="low_pitch">Low Pitch</string>
-    <string name="high_pitch">High Pitch</string>
-    <string name="vocal_range">Vocal Range</string>
-    <string name="confirm_profile_button">Confirm Profile</string>
-    <string name="detect_vocal_range_button">Detect Vocal Range</string>
-
-    <!-- Unused in Profile Right Now -->
-    <string name="user_name_email">User Name or Email</string>
-    <string name="cancel_button">Cancel</string>
-    <string name="email">Email</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-
     <!-- Detect Vocal Range Activity -->
     <string name="detect_vocal_range_activity_title_text" translatable="false">@string/detect_vocal_range_button</string>
     <string name="detect_vocal_range_activity_info_text">TODO: add activity instructions here…</string>
@@ -94,7 +72,11 @@
     <string name="chord_type">Chords</string>
     <string name="mode_type">Modes</string>
 
-    <!-- SoundObjectLibrary Activity -->
+    <!-- // // // // // // // // // // // // // // // // // // // // // // // // // // // // // -->
+
+
+    <!-- SOUND LIBRARY-->
+
     <string name="select_materials">[Select Musical Materials]</string>
     <string name="select_intervals">Intervals</string>
     <string name="select_chords">Chords</string>
@@ -106,23 +88,28 @@
     <string name="sort_small_large">Size (Ascending)</string>
     <string name="sort_large_small">Size (Descending)</string>
 
-    <!-- Filters -->
-    <string name="all_intervals">List of Pitch Intervals</string>
-    <string name="all_harmonics">Harmonics (First 127)</string>
-    <string name="limit_intervals">Limit Intervals</string>
-    <string name="meantone_intervals">Meantone Intervals</string>
-    <string name="superparticular_intervals">Superparticular Intervals</string>
-    <string name="et_intervals">Equal-Tempered (by approximation)</string>
-    <string name="pythag_intervals">Pythagorean Ratios</string>
-    <string name="comma_intervals">Commas</string>
-    <string name="oct_anatomy">"Anatomy of an Octave" by Kyle Gann</string>
+    <!-- Material Filters -->
+
+        <!-- Intervals -->
+        <string name="all_intervals">List of Pitch Intervals</string>
+        <string name="all_harmonics">Harmonics (First 127)</string>
+        <string name="limit_intervals">Limit Intervals</string>
+        <string name="meantone_intervals">Meantone Intervals</string>
+        <string name="superparticular_intervals">Superparticular Intervals</string>
+        <string name="et_intervals">Equal-Tempered (by approximation)</string>
+        <string name="pythag_intervals">Pythagorean Ratios</string>
+        <string name="comma_intervals">Commas</string>
+        <string name="oct_anatomy">"Anatomy of an Octave" by Kyle Gann</string>
+
+
+        <!-- Scales -->
 
 
 
 
 
     <string name="header_info_hint">Header text / info / instructions…</string>
-    <string name="select_material">Select material to audition: </string>
+    <string name="select_material">Material to audition: </string>
     <string name="sort_material">Sort by: </string>
     <string name="filter_material">Filter: </string>
     <string name="search">Search: </string>
@@ -144,7 +131,7 @@
     <string name="arp_up">Arp. Up</string>
     <string name="arp_down">Arp. Down</string>
 
-    <string name="cluster_chord">Cluster Chord</string>
+    <string name="cluster_chord">Scale Cluster</string>
     <string name="scale_up">Scale Up</string>
     <string name="scale_down">Scale Down</string>
 
@@ -174,6 +161,7 @@
     <!-- SoundObject Strings -->
     <string name="scale_period">Periodic Interval: \s</string>
     <string name="scale_size">Size: \s</string>
+    <string name="material_intervals">Intervals</string>
 
 
 </resources>

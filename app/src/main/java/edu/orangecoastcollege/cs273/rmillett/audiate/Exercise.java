@@ -14,8 +14,10 @@ public class Exercise implements Parcelable {
     public static final String EXERCISE_MODE_SINGING = "Singing";
 
     public static final String EXERCISE_MATERIAL_INTERVALS = "Intervals";
+
     public static final String EXERCISE_MATERIAL_CHORDS = "Chords";
     public static final String EXERCISE_MATERIAL_CHORDS_SEQUENCES = "Chord Sequences";
+
     public static final String EXERCISE_MATERIAL_SCALES = "Scales";
     public static final String EXERCISE_MATERIAL_MELODIC_PATTERNS = "Melodic Patterns";
 
@@ -102,16 +104,16 @@ public class Exercise implements Parcelable {
         mExerciseMaterial = exerciseMaterial;
     }
 
-    public int getExerciseDifficulty() {
+    public int getExerciseDifficultyLevel() {
         return mExerciseDifficulty;
     }
 
-    public void setExerciseDifficulty(int exerciseDifficulty) {
+    public void setExerciseDifficultyLevel(int exerciseDifficulty) {
         mExerciseDifficulty = exerciseDifficulty;
     }
 
     public String getExerciseDifficultyString() {
-        switch (this.getExerciseDifficulty()) {
+        switch (this.getExerciseDifficultyLevel()) {
             case EXERCISE_DIFFICULTY_INTERMEDIATE:
                 return EXERCISE_DIFFICULTY_2;
             case EXERCISE_DIFFICULTY_PROFICIENT:
@@ -143,6 +145,7 @@ public class Exercise implements Parcelable {
         mExerciseDifficulty = EXERCISE_DIFFICULTY_BEGINNER;
         mExerciseDescriptionTextFileName = DEFAULT_DESCRIPTION_TEXT_FILE_NAME;
     }
+
 
     // PARCELABLE IMPLEMENTATION //
 
@@ -181,8 +184,4 @@ public class Exercise implements Parcelable {
             return new Exercise[size];
         }
     };
-
-    public void setDescription() {
-
-    }
 }

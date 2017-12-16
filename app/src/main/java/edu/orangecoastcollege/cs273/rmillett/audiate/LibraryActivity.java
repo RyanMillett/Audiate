@@ -147,17 +147,17 @@ public class LibraryActivity extends AppCompatActivity {
 
         // spinner adapters
         ArrayAdapter<String> selectMaterialSpinnerAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllMusicalMaterialTypes());
+                new ArrayAdapter<String>(this, R.layout.library_spinner_item, getAllMusicalMaterialTypes());
         selectMaterialSpinner.setAdapter(selectMaterialSpinnerAdapter);
         selectMaterialSpinner.setOnItemSelectedListener(selectMaterialSpinnerListener);
         selectMaterialSpinner.setSelection(0);
 
         ArrayAdapter<String> sortMaterialBySpinnerAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getAllSortCriteria());
+                new ArrayAdapter<String>(this, R.layout.library_spinner_item, getAllSortCriteria());
         sortBySpinner.setAdapter(sortMaterialBySpinnerAdapter);
         // TODO: spinner listener
 
-        filterMaterialSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        filterMaterialSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.library_spinner_item);
         filterBySpinner.setAdapter(filterMaterialSpinnerAdapter);
         filterBySpinner.setOnItemSelectedListener(filterMaterialSpinnerListener);
 
@@ -182,15 +182,15 @@ public class LibraryActivity extends AppCompatActivity {
         checkBoxArray = new CheckBox[]{aux1CheckBox,aux2CheckBox};
 
         // Set fundamental
-        setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
+        //setFundamentalEditText = findViewById(R.id.setFundamentalFreqEditText);
 
         // Playback Buttons
-        testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
+        //testFundamentalButton = findViewById(R.id.testFundamentalFreqButton);
         playSelectionButton = findViewById(R.id.playSelectionButton);
         playSelectionButton.setEnabled(false);
 
         // Sound Object
-        mChordScale = new ChordScale("Selected ChordScale");
+        mChordScale = new ChordScale("Selected Material");
 
         // Sound Object Player
         mSoundObjectPlayer = new SoundObjectPlayer();
@@ -340,48 +340,27 @@ public class LibraryActivity extends AppCompatActivity {
     // SPINNER STRINGS //
 
     private String[] getAllMusicalMaterialTypes() {
-        String[] musicalMaterials = new String[4];
-
-        musicalMaterials[0] = getString(R.string.select_materials);
-        musicalMaterials[1] = getString(R.string.select_intervals);
-        musicalMaterials[2] = getString(R.string.select_chords);
-        musicalMaterials[3] = getString(R.string.select_scales);
-
-        return musicalMaterials;
+        return getResources().getStringArray(R.array.SelectMaterialsArray);
     }
 
     private String[] getAllSortCriteria() {
-        String[] sortByCriteria = new String[4];
-
-        sortByCriteria[0] = getString(R.string.sort_small_large);
-        sortByCriteria[1] = getString(R.string.sort_large_small);
-        sortByCriteria[2] = getString(R.string.sort_name_a_z);
-        sortByCriteria[3] = getString(R.string.sort_name_z_a);
-
-        return sortByCriteria;
+        return getResources().getStringArray(R.array.SortMaterialsArray);
     }
 
     private String[] getFilterCriteria() {
 
-        String[] filters;
-
         switch (selectMaterialSpinner.getSelectedItemPosition()) {
             case 1: // "Intervals" selected
-                filters = getResources().getStringArray(R.array.IntervalsArray);
-                break;
+                return getResources().getStringArray(R.array.IntervalsArray);
             case 2: // "Chords" selected
-                filters = getResources().getStringArray(R.array.ChordsArray);
-                break;
+                return getResources().getStringArray(R.array.ChordsArray);
             case 3: // "Scales" selected
-                filters = getResources().getStringArray(R.array.ScalesArray);
-                break;
+                return getResources().getStringArray(R.array.ScalesArray);
             default: // nothing selected
-                filters = new String[]{""};
-            playSelectionButton.setEnabled(false);
-                break;
+                disablePlaybackSettings();
+                playSelectionButton.setEnabled(false);
+                return new String[]{""};
         }
-
-        return filters;
     }
 
 
@@ -402,10 +381,10 @@ public class LibraryActivity extends AppCompatActivity {
 
         // Determine button ID
         switch (view.getId()) {
-            case R.id.testFundamentalFreqButton:
-                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
-                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
-                break;
+//            case R.id.testFundamentalFreqButton:
+//                mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG);
+//                mSoundObjectPlayer.playSoundObject(mChordScale.getChordMemberAtPos(0));
+//                break;
             case R.id.playSelectionButton:
                 detectPlaybackMode();
                 mSoundObjectPlayer.playSoundObject(mChordScale);
@@ -417,12 +396,13 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     public void selectionDetailsHandler(View view) {
-        // Build SoundObject
+
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
             ChordScale selectedChordScale = (ChordScale) selectedLayout.getTag();
             Log.i(TAG, selectedChordScale.getName() + ", size: " + selectedChordScale.getSize());
 
+            // Build SoundObject
             mChordScale = selectedChordScale;
 
             if (mChordScale.getSize() > ChordScale.CHORDSCALE_DEFAULT_INITIAL_SIZE) {
@@ -437,7 +417,6 @@ public class LibraryActivity extends AppCompatActivity {
             displayNameTextView.setText(selectedChordScale.getName());
             displayDescriptionTextView.setText(selectedChordScale.getDescription());
 
-
             // Enable playback // TODO: add to listener
             playSelectionButton.setEnabled(true);
         }
@@ -451,7 +430,7 @@ public class LibraryActivity extends AppCompatActivity {
         // Set PlayBack mode
         if (mode1RadioButton.isChecked()) {
             mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER);
-            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 2);
+            mChordScale.setDurationMilliseconds(SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG * 3);
         }
         else if (mode2RadioButton.isChecked()) {
             mChordScale.setPlayBackMode(ChordScale.PLAYBACK_MODE_CHORDSCALE_UP);
