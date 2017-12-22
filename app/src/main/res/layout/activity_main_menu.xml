@@ -21,18 +21,6 @@
         android:textAlignment="center"
         android:textSize="@dimen/medium_text_size"/>
 
-    <TextView
-        android:id="@+id/mainMenuTitleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="25dp"
-        android:layout_weight=".5"
-        android:fontFamily="serif"
-        android:text="@string/main_menu"
-        android:textAlignment="center"
-        android:textSize="@dimen/medium_text_size"/>
-
     <LinearLayout
         android:id="@+id/activityButtonLinearLayout"
         android:layout_width="wrap_content"
@@ -98,30 +86,6 @@
                 android:textSize="@dimen/small_text_size"/>
 
         </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="0.94"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/buttons_padding">
-
-
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:fontFamily="serif"
-            android:onClick="activitySelectionHandler"
-            android:text="@string/log_out_button"
-            android:textSize="@dimen/medium_text_size"/>
 
 
     </LinearLayout>

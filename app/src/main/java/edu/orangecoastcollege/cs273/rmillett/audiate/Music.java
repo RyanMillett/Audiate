@@ -34,7 +34,7 @@ public class Music {
 
     private static String TAG = "Music";
 
-    // TODO: make constant Strings and arrays compatible with 24-TET, 48-TET, 36-TET, 53-TET systems
+    // TODO: make constant Strings and arrays compatible with 24-, 48-, 36-, 53-, and 72-TET systems
 
     public static final String FLAT = "\u266D";
     public static final String SHARP = "\u266F";
@@ -261,6 +261,7 @@ public class Music {
 //        int i = binSearch(frequencyInHz, _12_TET_PITCH_FREQUENCIES,
 //                0, _12_TET_PITCH_FREQUENCIES.length);
 
+        // temporary iterative fix
         int i = -1;
         for (int j = 0; j < freqArray.length; ++j) {
             // finds approx range without going over
@@ -269,6 +270,8 @@ public class Music {
                 i = j;
             }
         }
+
+        // ------- //
 
         if (i == -1) {
             return "No pitch detected";

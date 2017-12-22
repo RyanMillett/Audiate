@@ -37,7 +37,7 @@ public class PitchDetector {
     private static final int GRANTED = PackageManager.PERMISSION_GRANTED;
     private static final int DENIED = PackageManager.PERMISSION_DENIED;
 
-    public static final int DEFAULT_COLLECTION_LIMIT = 2 * SoundObjectPlayer.DEFAULT_SAMPLE_RATE;
+    public static final int DEFAULT_COLLECTION_LIMIT = 2 * SoundObjectPlayer.DEFAULT_PLAYBACK_SAMPLE_RATE;
 
     private int mHasAudioPerm;
 
@@ -127,15 +127,10 @@ public class PitchDetector {
             Log.i(TAG, "collections size-> " + mCollectionCounter + "/" + mCollectionLimit);
         }
         //Log.i(TAG, "Collections bin is full!");
-        //resetCollections();
     }
 
     public double getFrequencyAverage() {
         return mFrequencySum /= mCollectionCounter;
-    }
-
-    public int getCollectionCounter() {
-        return mCollectionCounter;
     }
 
     public void resetCollections() {

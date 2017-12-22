@@ -61,8 +61,45 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
             case 2: // interval
                 libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
+                switch (selectedChordScale.getChordMemberAtPos(1).getLimit()) {
+                    case -1:
+                        break;
+                    case 3:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_3));
+                        break;
+                    case 5:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_5));
+                        break;
+                    case 7:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_7));
+                        break;
+                    case 11:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_11));
+                        break;
+                    case 13:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_13));
+                        break;
+                    case 17:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_17));
+                        break;
+                    case 19:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.limit_19));
+                        break;
+                    default:
+                        libraryListLinearLayout
+                                .setBackgroundColor(mContext.getResources().getColor(R.color.high_limit));
+                }
+
                 if (selectedChordScale.getChordMemberAtPos(1).isMeantone()) {
                     libraryListDescription2TextView.setText("Meantone");
+                    libraryListLinearLayout.setBackgroundColor(mContext.getResources().getColor(R.color.meantone));
 
                 }
                 else if (selectedChordScale.getChordMemberAtPos(1).isSuperparticular()) {
@@ -70,6 +107,11 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                 }
                 else {
                     libraryListDescription2TextView.setText("");
+                }
+
+                if (selectedChordScale.getChordMemberAtPos(1).getTET()[0] != 0) {
+                    libraryListLinearLayout
+                            .setBackgroundColor(mContext.getResources().getColor(R.color.x_tone_et));
                 }
 
                 break;

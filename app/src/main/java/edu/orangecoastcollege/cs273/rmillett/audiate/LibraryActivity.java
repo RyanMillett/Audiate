@@ -2,7 +2,6 @@ package edu.orangecoastcollege.cs273.rmillett.audiate;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -347,10 +346,12 @@ public class LibraryActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: this
     private ArrayList<ChordScale> filterChords() {
         return new ArrayList<>(mAllChordsList);
     }
 
+    // TODO: this
     private ArrayList<ChordScale> filterScales() {
         return new ArrayList<>(mAllScalesList);
     }
@@ -414,10 +415,10 @@ public class LibraryActivity extends AppCompatActivity {
                 String pathName = "";
 
                 if (filterBySpinner.getSelectedItem().toString().equalsIgnoreCase("Full Scala Archive")) {
-                    pathName = "scl/";
+                    pathName = "scl/"; // dir for HUGE Scala libaray
                 }
                 else {
-                    pathName = "";
+                    pathName = "basic_scales"; // separate directory for basic scales .scl files
                 }
 
                 mDBMusicalMaterials.buildChordScaleFromSCL(mChordScale, pathName, mChordScale.getSCLfileName());

@@ -643,6 +643,7 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
 
         // Scales:
 
+    // TODO: this
     public List<ChordScale> getAllNonOctaveScales() {
         ArrayList<ChordScale> allNonOctaveScalesList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();

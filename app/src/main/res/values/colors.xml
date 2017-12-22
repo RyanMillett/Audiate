@@ -30,6 +30,22 @@
     <!-- Custom Colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="brown">#4b311b</color>
+
+
+
+
+    <!-- Interval Color Legend -->
+    <color name="x_tone_et">#f2adad</color>
+    <color name="limit_3">#d4d199</color>
+    <color name="limit_5">#a1be82</color>
+    <color name="limit_7">#afeae7</color>
+    <color name="limit_11">#9a8ab7</color>
+    <color name="limit_13">#d0a6de</color>
+    <color name="limit_17">#dedede</color>
+    <color name="limit_19">#a9a9a9</color>
+    <color name="high_limit">#975f5f</color>
+    <color name="meantone">#c5ff92</color>
 
 
 
