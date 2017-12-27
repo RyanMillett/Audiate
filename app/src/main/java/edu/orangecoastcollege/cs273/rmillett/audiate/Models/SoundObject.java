@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Models;
 
 import android.os.Parcelable;
 
@@ -85,7 +85,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @return String representing the name of the <code>SoundObject</code>
      */
-    protected String getName() {
+    public String getName() {
         return mName;
     }
 
@@ -94,7 +94,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @param name String representing the name of the <code>SoundObject</code>
      */
-    protected void setName(String name) {
+    public void setName(String name) {
         mName = name;
     }
 
@@ -121,7 +121,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @return String containing a description of the <code>SoundObject</code>
      */
-    protected String getDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
@@ -130,7 +130,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @param description String containing a description of a <code>SoundObject</code>
      */
-    protected void setDescription(String description) {
+    public void setDescription(String description) {
         mDescription = description;
     }
 

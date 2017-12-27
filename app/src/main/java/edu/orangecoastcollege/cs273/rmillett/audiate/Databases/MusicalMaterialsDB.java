@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,16 +16,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.*;
+
 /**
  * Created by Ryan Millett on 12/13/17.
  */
-public class DBMusicalMaterials extends SQLiteOpenHelper {
+public class MusicalMaterialsDB extends SQLiteOpenHelper {
 
     private Context mContext;
 
-    private static final String TAG = "DBMusicalMaterials";
+    private static final String TAG = "MusicalMaterialsDB";
 
-    private String mMusicalMaterialsDatabaseName;
+    private String mDatabaseName;
     private static final int DATABASE_VERSION = 2;
 
     // Table of intervals
@@ -57,13 +59,13 @@ public class DBMusicalMaterials extends SQLiteOpenHelper {
     private static final String FIELD_SCALE_SCL_FILE_NAME = "scl_file_name";
 
 
-    public DBMusicalMaterials(String musicalMaterialsDatabaseName, Context context) {
-        super(context, musicalMaterialsDatabaseName, null, DATABASE_VERSION);
+    public MusicalMaterialsDB(String databaseName, Context context) {
+        super(context, databaseName, null, DATABASE_VERSION);
         mContext = context;
     }
 
     public String getDataBaseName() {
-        return mMusicalMaterialsDatabaseName;
+        return mDatabaseName;
     }
 
     @Override

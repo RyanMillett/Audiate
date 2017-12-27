@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,14 +16,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.Exercise;
+
 /**
  * Created by RyanMillett on 12/13/17.
  */
-public class DBExercises extends SQLiteOpenHelper {
+public class ExercisesDB extends SQLiteOpenHelper {
 
     private Context mContext;
 
-    private static final String TAG = "DBExercises";
+    private static final String TAG = "ExercisesDB";
 
     static final String EXERCISES_DATABASE = "ExercisesDatabase";
     private static final int DATABASE_VERSION = 2;
@@ -37,7 +39,7 @@ public class DBExercises extends SQLiteOpenHelper {
     private static final String FIELD_EXERCISE_DIFFICULTY = "exercise_difficulty";
     private static final String FIELD_EXERCISE_DESCRIPTION = "exercise_description";
 
-    public DBExercises(Context context) {
+    public ExercisesDB(Context context) {
         super(context, EXERCISES_DATABASE, null, DATABASE_VERSION);
         mContext = context;
     }

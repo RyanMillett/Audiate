@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,11 +18,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.ChordScale;
+import edu.orangecoastcollege.cs273.rmillett.audiate.Databases.MusicalMaterialsDB;
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.Exercise;
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.SoundObjectPlayer;
+
 public class ExerciseActivity extends AppCompatActivity {
 
     private static final String TAG = "ExerciseActivity";
 
-    private DBMusicalMaterials mDBMusicalMaterials;
+    private MusicalMaterialsDB mDBMusicalMaterials;
 
     private Context mContext;
 
@@ -81,7 +87,7 @@ public class ExerciseActivity extends AppCompatActivity {
         Exercise selectedExercise = getIntent().getExtras().getParcelable("SelectedExercise");
         mQuizMode = selectedExercise.getExerciseMode();
 
-        mDBMusicalMaterials = new DBMusicalMaterials("Quiz Music Materials", this);
+        mDBMusicalMaterials = new MusicalMaterialsDB("Quiz Music Materials", this);
 
         mDBMusicalMaterials.importIntervalsFromCSV("pitch_intervals_redux.csv");
 

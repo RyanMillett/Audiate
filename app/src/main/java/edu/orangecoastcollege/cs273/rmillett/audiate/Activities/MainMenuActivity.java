@@ -1,16 +1,11 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
-import java.util.List;
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
 
 /**
  * The <code>MainMenuActivity</code> allows the user to choose

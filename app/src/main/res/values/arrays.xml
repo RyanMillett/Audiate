@@ -43,4 +43,21 @@
         <item>Olivier Messiaen\'s "Modes of Limited Transposition"</item>
     </string-array>
 
+
+    <!-- Playback Modes -->
+
+    <string-array name="ChordsPlaybackModes">
+        <item>@string/block_chord</item>
+        <item>@string/arp_up</item>
+        <item>@string/arp_down</item>
+    </string-array>
+
+    <string-array name="ScalesPlaybackModes">
+        <item>@string/cluster_chord</item>
+        <item>@string/scale_up</item>
+        <item>@string/scale_down</item>
+    </string-array>
+
+
+
 </resources>

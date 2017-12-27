@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activities.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,33 +22,33 @@
         </activity>
 
         <activity
-            android:name=".DetectVocalRangeActivity"
+            android:name=".Activities.DetectVocalRangeActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".Activities.MainMenuActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ExerciseBuilderActivity"
+            android:name=".Activities.ExerciseBuilderActivity"
             android:windowSoftInputMode="stateHidden"
             android:exported="true"
-            android:parentActivityName=".MainMenuActivity"
+            android:parentActivityName=".Activities.MainMenuActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ExerciseActivity"
+            android:name=".Activities.ExerciseActivity"
             android:exported="true"
-            android:parentActivityName=".ExerciseBuilderActivity"
+            android:parentActivityName=".Activities.ExerciseBuilderActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".LibraryActivity"
+            android:name=".Activities.LibraryActivity"
             android:windowSoftInputMode="stateHidden"
             android:exported="true"
-            android:parentActivityName=".MainMenuActivity"
+            android:parentActivityName=".Activities.MainMenuActivity"
             android:screenOrientation="portrait"/>
 
     </application>

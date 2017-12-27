@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Models;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;

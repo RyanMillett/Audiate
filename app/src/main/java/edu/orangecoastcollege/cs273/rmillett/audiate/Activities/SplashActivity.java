@@ -1,18 +1,16 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import java.io.FileOutputStream;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
 
 /**
  * The <code>SplashActivity</code> displays the name of the app through means

@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.ListAdapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.ChordScale;
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
 
 /**
  * @author Ryan Millett
@@ -61,6 +64,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
             case 2: // interval
                 libraryListDescription1TextView.setText(selectedChordScale.getDescription());
 
+                // Determine limit (if applicable)
                 switch (selectedChordScale.getChordMemberAtPos(1).getLimit()) {
                     case -1:
                         break;
@@ -97,6 +101,7 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                                 .setBackgroundColor(mContext.getResources().getColor(R.color.high_limit));
                 }
 
+                // Determine if Meantone or Superparticular
                 if (selectedChordScale.getChordMemberAtPos(1).isMeantone()) {
                     libraryListDescription2TextView.setText("Meantone");
                     libraryListLinearLayout.setBackgroundColor(mContext.getResources().getColor(R.color.meantone));
@@ -109,13 +114,14 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                     libraryListDescription2TextView.setText("");
                 }
 
+                // Determine if ET
                 if (selectedChordScale.getChordMemberAtPos(1).getTET()[0] != 0) {
                     libraryListLinearLayout
                             .setBackgroundColor(mContext.getResources().getColor(R.color.x_tone_et));
                 }
-
                 break;
-            default: // chord/scale
+
+            default: // ChordScale
                 libraryListDescription1TextView.setText(R.string.scale_size);
                 libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize())
                         + " | " + selectedChordScale.getDescription());

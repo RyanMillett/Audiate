@@ -1,4 +1,4 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.Activities;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -22,13 +22,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.orangecoastcollege.cs273.rmillett.audiate.Databases.ExercisesDB;
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.Exercise;
+import edu.orangecoastcollege.cs273.rmillett.audiate.ListAdapters.ExerciseBuilderListAdapter;
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
+
 public class ExerciseBuilderActivity extends AppCompatActivity {
 
     private static final String TAG = "ExerciseBuilder";
 
     private Exercise mExerciseActivity;
 
-    private DBExercises mDBExercises;
+    private ExercisesDB mDBExercises;
 
     private List<Exercise> mAllListeningExercises;
     private List<Exercise> mAllSingingExercises;
@@ -65,7 +70,7 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // DB
 //        deleteDatabase(DBHelper.DATABASE_NAME);
 
-        mDBExercises = new DBExercises(this);
+        mDBExercises = new ExercisesDB(this);
 
 //        mDBExercises.deleteAllExercies();
 //        mDBExercises.importAllExercisesFromCSV("exercises.csv");

@@ -1,8 +1,7 @@
-package edu.orangecoastcollege.cs273.rmillett.audiate;
+package edu.orangecoastcollege.cs273.rmillett.audiate.ListAdapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.Exercise;
+import edu.orangecoastcollege.cs273.rmillett.audiate.R;
 
 /**
  * @author Ryan Millett
