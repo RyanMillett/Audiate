@@ -1,8 +1,8 @@
 package edu.orangecoastcollege.cs273.rmillett.audiate.Activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,6 +66,8 @@ public class LibraryActivity extends AppCompatActivity {
 
     // SoundObjectPlayer
     private SoundObjectPlayer mSoundObjectPlayer;
+
+    private Handler mHandler;
 
     /**
      * Creates an instance of <code>LibraryActivity</code> in the view
@@ -166,6 +168,8 @@ public class LibraryActivity extends AppCompatActivity {
         mPlaySelectionButton.setVisibility(View.INVISIBLE);
         mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
 
+        mHandler = new Handler();
+
     }
 
 
@@ -185,9 +189,6 @@ public class LibraryActivity extends AppCompatActivity {
             mPlaybackModesSpinnerAdapter.addAll(getPlaybackModes());
             mPlaybackModesSpinnerAdapter.notifyDataSetChanged();
 
-            // Update playback group text
-            setPlaybackSettingsText(i);
-
             // Update Library ListView
             mLibraryListAdapter.clear();
             mFilteredMaterialsList.clear();
@@ -198,27 +199,25 @@ public class LibraryActivity extends AppCompatActivity {
                     // add intervals
                     mFilteredMaterialsList = new ArrayList<>(mAllIntervalsList);
                     // Update playback options
-                    enablePlaybackSettings();
+                    setPlaybackGroupVisibility(true);
                     mPlaybackModesSpinner.setSelection(0);
                     break;
                 case 2:
                     // TODO: add chords
                     // Update playback options
-                    enablePlaybackSettings();
+                    setPlaybackGroupVisibility(true);
                     mPlaybackModesSpinner.setSelection(0);
                     break;
                 case 3:
                     // TODO: add scales
                     mFilteredMaterialsList = new ArrayList<>(mScalaArchiveList);
                     // Update playback options
-                    enablePlaybackSettings();
+                    setPlaybackGroupVisibility(true);
                     mPlaybackModesSpinner.setSelection(1);
                     break;
                 default:
                     // Do nothing
-                    mPlaySelectionButton.setVisibility(View.INVISIBLE);
-                    mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
-                    disablePlaybackSettings();
+                    setPlaybackGroupVisibility(false);
                     break;
             }
 
@@ -352,9 +351,7 @@ public class LibraryActivity extends AppCompatActivity {
             case 3: // "Scales" selected
                 return getResources().getStringArray(R.array.ScalesArray);
             default: // nothing selected
-                disablePlaybackSettings();
-                mPlaySelectionButton.setVisibility(View.INVISIBLE);
-                mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
+                setPlaybackGroupVisibility(false);
                 return new String[]{""};
         }
     }
@@ -378,17 +375,23 @@ public class LibraryActivity extends AppCompatActivity {
 
     public void playbackHandler(View view) {
 
-        detectPlaybackMode(mPlaybackModesSpinner.getSelectedItemPosition());
-
         // Determine button ID
         switch (view.getId()) {
             case R.id.playSelectionButton:
+                detectPlaybackMode(mPlaybackModesSpinner.getSelectedItemPosition());
                 mSoundObjectPlayer.playSoundObject(mChordScale);
                 break;
         }
 
-        // TODO: disable/change color of button on play, re-enable on stop
+        setPlaybackGroupEnable(false);
 
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // disable/change color of button on play, re-enable on stop
+                setPlaybackGroupEnable(true);
+            }
+        }, mChordScale.getDurationMilliseconds() + 500);
     }
 
     public void selectionDetailsHandler(View view) {
@@ -460,41 +463,27 @@ public class LibraryActivity extends AppCompatActivity {
         }
     }
 
-    private void disablePlaybackSettings() {
-
+    private void setPlaybackGroupVisibility(boolean visible) {
+        if (visible) {
+            mPlaySelectionButton.setVisibility(View.VISIBLE);
+            mPlaybackModesSpinner.setVisibility(View.VISIBLE);
+        }
+        else {
+            mPlaySelectionButton.setVisibility(View.INVISIBLE);
+            mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
+        }
     }
 
-    private void enablePlaybackSettings() {
-
-    }
-
-    private void setPlaybackSettingsText(int materials) {
-
-//        switch (materials) {
-//            case 1:
-//                mode1RadioButton.setText(getString(R.string.block_chord));
-//                mode1RadioButton.setChecked(true);
-//                mode2RadioButton.setText(getString(R.string.arp_up));
-//                mode3RadioButton.setText(getString(R.string.arp_down));
-//                aux1CheckBox.setText(getString(R.string.aux_interval_invert));
-//                break;
-//            case 2:
-//                mode1RadioButton.setText(getString(R.string.block_chord));
-//                mode1RadioButton.setChecked(true);
-//                mode2RadioButton.setText(getString(R.string.arp_up));
-//                mode3RadioButton.setText(getString(R.string.arp_down));
-//                aux1CheckBox.setText(getString(R.string.aux_chord_invert));
-//                break;
-//            case 3:
-//                mode1RadioButton.setText(getString(R.string.cluster_chord));
-//                mode2RadioButton.setText(getString(R.string.scale_up));
-//                mode2RadioButton.setChecked(true);
-//                mode3RadioButton.setText(getString(R.string.scale_down));
-//                aux1CheckBox.setText(getString(R.string.aux_scale_invert));
-//                break;
-//            default:
-//                disablePlaybackSettings();
-//                break;
-//        }
+    private void setPlaybackGroupEnable(boolean enabled) {
+        if (enabled) {
+            mPlaySelectionButton.setBackgroundColor(getResources().getColor(R.color.colorPlayActive));
+            mPlaySelectionButton.setEnabled(true);
+            mPlaybackModesSpinner.setEnabled(true);
+        }
+        else {
+            mPlaySelectionButton.setBackgroundColor(getResources().getColor(R.color.colorPlayInactive));
+            mPlaySelectionButton.setEnabled(false);
+            mPlaybackModesSpinner.setEnabled(false);
+        }
     }
 }

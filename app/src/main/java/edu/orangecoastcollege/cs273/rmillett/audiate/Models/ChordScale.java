@@ -129,15 +129,6 @@ public class ChordScale extends SoundObject {
         resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
     }
 
-    public void buildChordScaleFromSCL(double[] decimalIntervals) {
-        //Log.i("BuilderMethod", "inArrSize->" + decimalIntervals.length + "scaleSize->" + this.getSize());
-        double fundamental = mChordMembers.get(0).getPitchFrequency();
-
-        for (int i = 1; i < mChordMembers.size(); ++i) {
-            mChordMembers.get(i).setPitchFrequency(fundamental * decimalIntervals[i]);
-        }
-    }
-
     /**
      * Overloaded constructor
      *
@@ -321,6 +312,16 @@ public class ChordScale extends SoundObject {
         mDurationMilliseconds = durationMilliseconds;
         for (Note note : this.mChordMembers) {
             note.setDurationMilliseconds(durationMilliseconds);
+        }
+    }
+
+    @Override
+    public int getDurationMilliseconds() {
+        if (this.getPlayBackMode().equalsIgnoreCase(PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER)) {
+            return mDurationMilliseconds;
+        }
+        else {
+            return mDurationMilliseconds * this.getSize();
         }
     }
 

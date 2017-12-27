@@ -103,7 +103,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @return int representing the duration of the <code>SoundObject</code> in milliseconds
      */
-    protected int getDurationMilliseconds() {
+    public int getDurationMilliseconds() {
         return mDurationMilliseconds;
     }
 
@@ -112,7 +112,7 @@ public abstract class SoundObject { // TODO: implement PLAYABLE interface (?)
      *
      * @param durationMilliseconds Duration of the <code>SoundObject</code> in milliseconds
      */
-    protected void setDurationMilliseconds(int durationMilliseconds) {
+    public void setDurationMilliseconds(int durationMilliseconds) {
         mDurationMilliseconds = durationMilliseconds;
     }
 
