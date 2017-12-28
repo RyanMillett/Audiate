@@ -23,7 +23,7 @@ import edu.orangecoastcollege.cs273.rmillett.audiate.R;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private static final String TAG = "SpashActivity";
+    private static final String TAG = "SplashActivity";
 
     private Animation alphaAnim;
 
@@ -45,7 +45,6 @@ public class SplashActivity extends AppCompatActivity {
 
         RunAnimation();
 
-
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -54,7 +53,6 @@ public class SplashActivity extends AppCompatActivity {
                 Intent logInIntent = new Intent(SplashActivity.this, MainMenuActivity.class);
 
                 startActivity(logInIntent);
-
             }
         };
 

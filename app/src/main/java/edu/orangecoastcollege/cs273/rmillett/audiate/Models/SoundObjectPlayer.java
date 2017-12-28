@@ -106,10 +106,10 @@ public class SoundObjectPlayer {
         }
         else if (chordScale.getSize() == 3 && chordScale.getPlayBackMode()
                 .equalsIgnoreCase(ChordScale.PLAYBACK_MODE_ALBERTI)) {
-            sequence.add(chordScale.getChordMemberAtPos(0));
-            sequence.add(chordScale.getChordMemberAtPos(2));
-            sequence.add(chordScale.getChordMemberAtPos(1));
-            sequence.add(chordScale.getChordMemberAtPos(2));
+            sequence.add(chordScale.getChordMemberAt(0));
+            sequence.add(chordScale.getChordMemberAt(2));
+            sequence.add(chordScale.getChordMemberAt(1));
+            sequence.add(chordScale.getChordMemberAt(2));
         }
 
         // Create waveform

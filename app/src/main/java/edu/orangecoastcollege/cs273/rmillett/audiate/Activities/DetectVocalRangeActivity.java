@@ -64,7 +64,7 @@ public class DetectVocalRangeActivity extends AppCompatActivity {
 
         Button selectedButton = (Button) view;
 
-        //disableDetectionButtons();
+        disableDetectionButtons();
 
         // determine which button was pressed
         switch (view.getId()) {

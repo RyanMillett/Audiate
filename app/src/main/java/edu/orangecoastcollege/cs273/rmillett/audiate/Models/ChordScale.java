@@ -58,18 +58,6 @@ public class ChordScale extends SoundObject {
     private String mPlayBackMode;
     private String mSCLfileName;
 
-    /**
-     * Default constructor
-     */
-    public ChordScale() {
-        super();
-        mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
-        mChordMembers.add(0,new Note("Fundamental"));
-        mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
-        mDescription = "No information";
-        mSCLfileName = "No associated .scl file";
-    }
 
     /**
      * Overloaded constructor
@@ -87,17 +75,6 @@ public class ChordScale extends SoundObject {
         initializeChordScale(CHORDSCALE_DEFAULT_INITIAL_SIZE);
     }
 
-    public ChordScale(String name, int initialSize) {
-        super(name);
-        mChordMembers = new ArrayList<>(initialSize);
-        mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
-        mDescription = "No information";
-        mSCLfileName = "No associated .scl file";
-
-        initializeChordScale(initialSize);
-    }
-
     public ChordScale(String name, String description) {
         super(name);
         mChordMembers = new ArrayList<>(CHORDSCALE_DEFAULT_INITIAL_SIZE);
@@ -108,7 +85,6 @@ public class ChordScale extends SoundObject {
 
         initializeChordScale(CHORDSCALE_DEFAULT_INITIAL_SIZE);
     }
-
 
     public ChordScale(String name, int initialSize, String description, String sclFileName) {
         super(name);
@@ -129,19 +105,16 @@ public class ChordScale extends SoundObject {
         resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
     }
 
-    /**
-     * Overloaded constructor
-     *
-     * @param name
-     * @param id
-     */
-    public ChordScale(long id, String name, int initialSize) {
-        super(id, name);
-        mChordMembers = new ArrayList<>(initialSize);
-        mPlayBackMode = PLAYBACK_MODE_CHORDSCALE_BLOCK_CLUSTER;
-        mDurationMilliseconds = SoundObject.DEFAULT_DURATION_MILLISECONDS_LONG;
-        mDescription = "No information";
-        mSCLfileName = "No associated .scl file";
+    public void resetFundamentalFrequency(double newFundamentalFrequency) {
+        // reset fundamental
+        this.getChordMemberAt(0).setPitchFrequency(newFundamentalFrequency);
+
+        // adjust all chord members
+        for (int i = 1; i < this.mChordMembers.size(); ++i) {
+            this.getChordMemberAt(i).setPitchFrequency(
+                    Music.convertRatioToDecimal(getChordMemberAt(i).getRatio())
+                            * newFundamentalFrequency);
+        }
     }
 
     /**
@@ -198,7 +171,7 @@ public class ChordScale extends SoundObject {
      * @param note <code>Note</code> object to be inserted into <code>ChordScale</code>.
      * @param pos position where <code>Note</code> object is to be inserted.
      */
-    public void insertChordMemberAtPos(int pos, Note note) {
+    public void insertChordMemberAt(int pos, Note note) {
         note.setDurationMilliseconds(this.mDurationMilliseconds);
         mChordMembers.add(pos, note);
     }
@@ -209,20 +182,8 @@ public class ChordScale extends SoundObject {
      * @param pos specified position of the chord member.
      * @return a <code>Note</code> object found at specified position.
      */
-    public Note getChordMemberAtPos(int pos) {
+    public Note getChordMemberAt(int pos) {
         return mChordMembers.get(pos);
-    }
-
-    public void resetFundamentalFrequency(double newFundamentalFrequency) {
-        // reset fundamental
-        this.getChordMemberAtPos(0).setPitchFrequency(newFundamentalFrequency);
-
-        // adjust all chord members
-        for (int i = 1; i < this.mChordMembers.size(); ++i) {
-            this.getChordMemberAtPos(i).setPitchFrequency(
-                    Music.convertRatioToDecimal(getChordMemberAtPos(i).getRatio())
-                            * newFundamentalFrequency);
-        }
     }
 
     /**
@@ -277,8 +238,8 @@ public class ChordScale extends SoundObject {
     public double getIntervalDistanceInCents(int pos1, int pos2) {
         // Get whole-number ratio
         String ratio = Music.convertDecimalToRatio(
-                        this.getChordMemberAtPos(pos2).getPitchFrequency()
-                                / this.getChordMemberAtPos(pos1).getPitchFrequency());
+                        this.getChordMemberAt(pos2).getPitchFrequency()
+                                / this.getChordMemberAt(pos1).getPitchFrequency());
         // Convert to cents
         return Music.convertRatioToCents(ratio);
     }

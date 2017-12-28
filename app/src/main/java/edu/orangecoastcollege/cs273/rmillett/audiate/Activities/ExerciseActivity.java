@@ -18,11 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import edu.orangecoastcollege.cs273.rmillett.audiate.Models.ChordScale;
+import edu.orangecoastcollege.cs273.rmillett.audiate.Models.*;
 import edu.orangecoastcollege.cs273.rmillett.audiate.Databases.MusicalMaterialsDB;
-import edu.orangecoastcollege.cs273.rmillett.audiate.Models.Exercise;
 import edu.orangecoastcollege.cs273.rmillett.audiate.R;
-import edu.orangecoastcollege.cs273.rmillett.audiate.Models.SoundObjectPlayer;
 
 public class ExerciseActivity extends AppCompatActivity {
 

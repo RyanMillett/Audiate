@@ -127,7 +127,7 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
         values.put(FIELD_INTERVAL_CENTS, interval.getSizeInCents());
         values.put(FIELD_INTERVAL_TET, Arrays.toString(interval.getTET()));
         values.put(FIELD_INTERVAL_LIMIT, interval.getLimit());
-        values.put(FIELD_INTERVAL_MEANTONE,interval.isMeantone() ? "Meantone":"");
+        values.put(FIELD_INTERVAL_MEANTONE, interval.isMeantone() ? "Meantone":"");
         values.put(FIELD_INTERVAL_SUPERPARTICULAR, interval.isSuperparticular() ? "Superparticular":"");
         values.put(FIELD_INTERVAL_DESCRIPTION, interval.getDescription());
 
@@ -319,16 +319,16 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                         cursor.getString(7).equalsIgnoreCase("Superparticular");
 
                 // Configure interval
-                interval.getChordMemberAtPos(1).setName(cursor.getString(1));
-                interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
-                interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
-                interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
-                interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
-                interval.getChordMemberAtPos(1).setMeantone(meantone);
-                interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
+                interval.getChordMemberAt(1).setName(cursor.getString(1));
+                interval.getChordMemberAt(1).setRatio(cursor.getString(2));
+                interval.getChordMemberAt(1).setSizeInCents(cursor.getDouble(3));
+                interval.getChordMemberAt(1).setTET(Music.parseTET(cursor.getString(4)));
+                interval.getChordMemberAt(1).setLimit(cursor.getInt(5));
+                interval.getChordMemberAt(1).setMeantone(meantone);
+                interval.getChordMemberAt(1).setSuperparticular(superparticular);
+                interval.getChordMemberAt(1).setDescription(cursor.getString(8));
 
-                //Log.i(TAG, interval.getChordMemberAtPos(1).getRatio());
+                //Log.i(TAG, interval.getChordMemberAt(1).getRatio());
 
                 //interval.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
 
@@ -468,14 +468,14 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                     // Configure interval
-                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
-                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
-                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
-                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
-                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
-                    interval.getChordMemberAtPos(1).setMeantone(meantone);
-                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
+                    interval.getChordMemberAt(1).setName(cursor.getString(1));
+                    interval.getChordMemberAt(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAt(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAt(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAt(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAt(1).setMeantone(meantone);
+                    interval.getChordMemberAt(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAt(1).setDescription(cursor.getString(8));
 
                     allEqualTemperedIntervalsList.add(interval);
                 }
@@ -522,14 +522,14 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                     // Configure interval
-                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
-                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
-                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
-                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
-                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
-                    interval.getChordMemberAtPos(1).setMeantone(meantone);
-                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
+                    interval.getChordMemberAt(1).setName(cursor.getString(1));
+                    interval.getChordMemberAt(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAt(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAt(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAt(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAt(1).setMeantone(meantone);
+                    interval.getChordMemberAt(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAt(1).setDescription(cursor.getString(8));
 
                     allAllJustIntervalsList.add(interval);
                 }
@@ -569,14 +569,14 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                 boolean superparticular = cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                 // Configure interval
-                interval.getChordMemberAtPos(1).setName(cursor.getString(1));
-                interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
-                interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
-                interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
-                interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
-                interval.getChordMemberAtPos(1).setMeantone(meantone);
-                interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
+                interval.getChordMemberAt(1).setName(cursor.getString(1));
+                interval.getChordMemberAt(1).setRatio(cursor.getString(2));
+                interval.getChordMemberAt(1).setSizeInCents(cursor.getDouble(3));
+                interval.getChordMemberAt(1).setTET(Music.parseTET(cursor.getString(4)));
+                interval.getChordMemberAt(1).setLimit(cursor.getInt(5));
+                interval.getChordMemberAt(1).setMeantone(meantone);
+                interval.getChordMemberAt(1).setSuperparticular(superparticular);
+                interval.getChordMemberAt(1).setDescription(cursor.getString(8));
 
                 // add to list
                 allMeantoneIntervalsList.add(interval);
@@ -623,14 +623,14 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                             cursor.getString(6).equalsIgnoreCase("Superparticular");
 
                     // Configure interval
-                    interval.getChordMemberAtPos(1).setName(cursor.getString(1));
-                    interval.getChordMemberAtPos(1).setRatio(cursor.getString(2));
-                    interval.getChordMemberAtPos(1).setSizeInCents(cursor.getDouble(3));
-                    interval.getChordMemberAtPos(1).setTET(Music.parseTET(cursor.getString(4)));
-                    interval.getChordMemberAtPos(1).setLimit(cursor.getInt(5));
-                    interval.getChordMemberAtPos(1).setMeantone(meantone);
-                    interval.getChordMemberAtPos(1).setSuperparticular(superparticular);
-                    interval.getChordMemberAtPos(1).setDescription(cursor.getString(8));
+                    interval.getChordMemberAt(1).setName(cursor.getString(1));
+                    interval.getChordMemberAt(1).setRatio(cursor.getString(2));
+                    interval.getChordMemberAt(1).setSizeInCents(cursor.getDouble(3));
+                    interval.getChordMemberAt(1).setTET(Music.parseTET(cursor.getString(4)));
+                    interval.getChordMemberAt(1).setLimit(cursor.getInt(5));
+                    interval.getChordMemberAt(1).setMeantone(meantone);
+                    interval.getChordMemberAt(1).setSuperparticular(superparticular);
+                    interval.getChordMemberAt(1).setDescription(cursor.getString(8));
 
                     Log.i(TAG, interval.getName());
 
@@ -701,7 +701,7 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
             Log.i(TAG, "chordScale size->" + chordScale.getSize() + " | archive size->" + line);
 
             chordScale.resetFundamentalFrequency(ChordScale.DEFAULT_FUNDAMENTAL_FREQUENCY);
-            double fundamentalFrequency = chordScale.getChordMemberAtPos(0).getPitchFrequency();
+            double fundamentalFrequency = chordScale.getChordMemberAt(0).getPitchFrequency();
 
             line = br.readLine();
             // read each interval line
@@ -712,16 +712,18 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                     line = br.readLine();
                 }
                 else {
-                    chordScale.getChordMemberAtPos(i)
+                    chordScale.getChordMemberAt(i)
                             .buildFromSCL(Music.parseDecimalFromScalaLine(line), fundamentalFrequency);
 
-                    Log.i(TAG, "[Confirm freq: " + chordScale.getChordMemberAtPos(i).getPitchFrequency()
-                            + " | scala line: " + line + "]");
+//                    Log.i(TAG, "[Confirm freq: " + chordScale.getChordMemberAt(i).getPitchFrequency()
+//                            + " | scala line: " + line + "]");
 
                     i++;
                     line = br.readLine();
                 }
             }
+            // add terminating interval
+            //chordScale.addChordMember(new Note(Music.parseDecimalFromScalaLine(line)));
         }
         catch (IOException e) {
             Log.e(TAG, "Unable to locate " + sclFileName + " in " + pathName);
@@ -744,7 +746,7 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         int i = 6; String line; int num = 1; int totalIntervals = 0;
-        String tempStr = "temp";
+        StringBuilder tempStr = new StringBuilder("temp");
         try {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] fields = line.split(",");
@@ -752,7 +754,6 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                     Log.d(TAG, "Skipping Bad CSV Row" + Arrays.toString(fields));
                     continue;
                 }
-
 
                 //int id = Integer.parseInt(fields[0].trim());
                 Log.i(TAG, "No.->" + num++);
@@ -773,12 +774,11 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                 boolean superparticular = fields[5].trim().contains("Superparticular");
                 Log.i(TAG, "superparticular->" + superparticular);
 
-                String tet = "";
-                ;
+                String tet;
                 if (fields[6].startsWith("\"")) {
-                    tempStr = "";
+                    tempStr = new StringBuilder();
                     while (!fields[i].endsWith("\"")) {
-                        tempStr += (fields[i] + ",");
+                        tempStr.append(fields[i]).append(",");
                         i++;
                     }
                     tet = tempStr + fields[i];
@@ -795,10 +795,10 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
 
                 i++;
                 String name = "";
-                tempStr = "";
+                tempStr = new StringBuilder();
                 if (fields[i].startsWith("\"")) {
                     while (i < fields.length - 1) {
-                        tempStr += (fields[i] + ", ");
+                        tempStr.append(fields[i]).append(", ");
                         i++;
                     }
                     name = tempStr + fields[i];
@@ -882,15 +882,15 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                 int size = Integer.parseInt(fields[3].trim());
                 Log.i(TAG, "size-> " + size);
 
-                String description = "";
+                StringBuilder description = new StringBuilder();
 
                 for (int j = 4; j < fields.length; ++j) {
-                    description += fields[j];
+                    description.append(fields[j]);
                 }
 
                 Log.i(TAG, "description-> " + description);
 
-                ChordScale chord = new ChordScale(name, size, description, sclFileName);
+                ChordScale chord = new ChordScale(name, size, description.toString(), sclFileName);
 
                 Log.i(TAG, "[Confirm size-> " + chord.getSize() + "]");
                 Log.i(TAG, "//----------//----------//");
@@ -941,17 +941,17 @@ public class MusicalMaterialsDB extends SQLiteOpenHelper {
                 int size = Integer.parseInt(fields[3].trim());
                 Log.i(TAG, "size-> " + size);
 
-                String description = "";
+                StringBuilder description = new StringBuilder();
 
                 for (int j = 4; j < fields.length; ++j) {
-                    description += fields[j];
+                    description.append(fields[j]);
                 }
 
-                description = description.replaceAll("\"", "");
+                description = new StringBuilder(description.toString().replaceAll("\"", ""));
 
                 Log.i(TAG, "description-> " + description);
 
-                ChordScale scale = new ChordScale(name, size, description, sclFileName);
+                ChordScale scale = new ChordScale(name, size + 1, description.toString(), sclFileName);
 
                 Log.i(TAG, "[Confirm size-> " + scale.getSize() + "]");
                 Log.i(TAG, "//----------//----------//");

@@ -15,7 +15,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private static final String TAG = "MainMenuActivity";
 
-
     /**
      * This sets up the activity with the database and gets the current user.
      *
@@ -25,7 +24,6 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
     }
 
     /**
@@ -47,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.exercisesButton:
                 activityIntent = new Intent(this, ExerciseBuilderActivity.class);
                 break;
-            default:
+            default: // add more later...
                 activityIntent = new Intent();
         }
 

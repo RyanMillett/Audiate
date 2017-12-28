@@ -67,9 +67,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         // Exercise to build
         mExerciseActivity = new Exercise();
 
-        // DB
-//        deleteDatabase(DBHelper.DATABASE_NAME);
-
         mDBExercises = new ExercisesDB(this);
 
 //        mDBExercises.deleteAllExercies();
@@ -127,9 +124,8 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
         mExerciseDescriptionTextView = findViewById(R.id.exerciseDescriptionTextView);
         mExerciseDescriptionTextView.setMovementMethod(new ScrollingMovementMethod());
 
-        // This should create the return button
+        // Create the return button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 
@@ -141,8 +137,6 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
             mStartButton.setVisibility(View.INVISIBLE);
             mExercisesListView.setSelector(R.color.white);
         }
-
-        //mExerciseActivity.reset();
 
         switch (view.getId()) {
             case R.id.earsImageView: // ear training exercises
@@ -171,21 +165,9 @@ public class ExerciseBuilderActivity extends AppCompatActivity {
     }
 
     public void startActivity(View view) {
-        // Declare intent
-        Intent exerciseIntent;
 
-        // Determine Exercise Mode
-        switch (mExerciseActivity.getExerciseMode()) {
-            case Exercise.EXERCISE_MODE_LISTENING:
-                exerciseIntent = new Intent(this, ExerciseActivity.class);
-                break;
-            default:
-                exerciseIntent = new Intent();
-        }
-
-        Log.i(TAG, mExerciseActivity.getExerciseName()
-                + " | " + mExerciseActivity.getExerciseMode()
-                + " | "+ mExerciseActivity.getExerciseMaterial());
+        // Make Intent
+        Intent exerciseIntent = new Intent(this, ExerciseActivity.class);
 
         // Parcel Exercise information
         exerciseIntent.putExtra("SelectedExercise",mExerciseActivity);

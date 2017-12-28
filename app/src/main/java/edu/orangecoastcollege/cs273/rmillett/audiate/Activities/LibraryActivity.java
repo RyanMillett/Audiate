@@ -165,8 +165,7 @@ public class LibraryActivity extends AppCompatActivity {
         mPlaybackModesSpinner.setOnItemSelectedListener(mPlaybackModeSpinnerListener);
 
         mPlaySelectionButton = findViewById(R.id.playSelectionButton);
-        mPlaySelectionButton.setVisibility(View.INVISIBLE);
-        mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
+        setPlaybackGroupVisibility(false);
 
         mHandler = new Handler();
 
@@ -331,7 +330,7 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
 
-    // SPINNER STRINGS //
+    // SPINNER STRING-ARRAYS //
 
     private String[] getAllMusicalMaterialTypes() {
         return getResources().getStringArray(R.array.SelectMaterialsArray);
@@ -424,8 +423,7 @@ public class LibraryActivity extends AppCompatActivity {
             mDisplayDescriptionTextView.setText(selectedChordScale.getDescription());
 
             // Enable playback
-            mPlaySelectionButton.setVisibility(View.VISIBLE);
-            mPlaybackModesSpinner.setVisibility(View.VISIBLE);
+            setPlaybackGroupVisibility(true);
         }
         else {
             // Info text
@@ -433,8 +431,7 @@ public class LibraryActivity extends AppCompatActivity {
             mDisplayDescriptionTextView.setText("");
 
             // disable playback
-            mPlaySelectionButton.setVisibility(View.INVISIBLE);
-            mPlaybackModesSpinner.setVisibility(View.INVISIBLE);
+            setPlaybackGroupVisibility(false);
         }
     }
 
@@ -442,7 +439,6 @@ public class LibraryActivity extends AppCompatActivity {
     // PLAYBACK OPTIONS //
 
     private void detectPlaybackMode(int pos) {
-
         // Set PlayBack mode
         switch (pos) {
             case 0: // Block/Cluster

@@ -317,7 +317,7 @@
 317,barca_a.scl,barca a,12,"""Barca A"""
 318,barkechli.scl,barkechli,27,"""Mehdi Barkechli, 27-tone pyth. Arabic scale"""
 319,barlow_13.scl,barlow 13,13,"""7-limit rational 13-equal, Barlow, On the Quantification of Harmony and Metre"""
-320,Barlow_17.scl,Barlow 17,17,"""11-limit rational 17-equal, Barlow, On the Quantification of Harmony and Metre"""
+320,barlow_17.scl,Barlow 17,17,"""11-limit rational 17-equal, Barlow, On the Quantification of Harmony and Metre"""
 321,barnes.scl,barnes,12,"""John Barnes' temperament (1977) made after analysis of Wohltemperierte Klavier, 1/6 P"""
 322,barnes2.scl,barnes2,12,"""John Barnes' temperament (1971), 1/8 P"""
 323,barton.scl,barton,12,"""Jacob Barton, tetratetradic scale on 6:7:9:11"""
