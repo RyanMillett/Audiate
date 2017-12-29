@@ -91,14 +91,32 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                 libraryListDescription1TextView.append(String.valueOf(selectedChordScale.getSize())
                         + " | " + selectedChordScale.getDescription());
 
+                // Determine limit (if applicable)
                 if (selectedChordScale.getDescription().contains("-limit")) {
-                    Log.i(TAG, "Limit Found");
-                    int i = selectedChordScale.getDescription().indexOf("-limit");
-                    Log.i(TAG, i + "");
+                    //Log.i(TAG, "Limit Found");
+                    libraryListLinearLayout.setBackgroundColor(mContext.getResources().getColor(findScaleLimitColorID(selectedChordScale)));
                 }
+
+                // Determine if ET
+                if (selectedChordScale.getDescription().toUpperCase().contains("ET")
+                        || selectedChordScale.getDescription().toUpperCase().contains("EQUAL")
+                        || selectedChordScale.getDescription().toUpperCase().contains("E.T.")) {
+                    libraryListLinearLayout
+                            .setBackgroundColor(mContext.getResources().getColor(R.color.x_tone_et));
+                }
+
         }
 
         return view;
+    }
+
+    private int findScaleLimitColorID(ChordScale chordScale) {
+        int i = chordScale.getDescription().indexOf("-limit");
+        int j = i;
+        while (chordScale.getDescription().charAt(i) != ' ' && i > 0) {
+            i--;
+        }
+        return findLimitColorID(Integer.parseInt(chordScale.getDescription().substring(i,j).trim()));
     }
 
     private int findLimitColorID(int limit) {
