@@ -105,6 +105,9 @@ public class LibraryListAdapter extends ArrayAdapter<ChordScale> {
                             .setBackgroundColor(mContext.getResources().getColor(R.color.x_tone_et));
                 }
 
+                // Determine if non-octave
+
+
         }
 
         return view;
